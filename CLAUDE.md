@@ -37,67 +37,42 @@ docs/initial/
 
 ---
 
-## 테스트 가이드 (Claude Code용)
-
-### 콘텐츠 생성 스크립트 테스트
+## 환경 설정
 
 ```bash
-# 1. 설치
-cd scripts
-npm install
-
-# 2. 단일 상황 테스트
-ANTHROPIC_API_KEY=$ANTHROPIC_API_KEY npx ts-node generate-lines.ts --situation=convenience_store
-
-# 3. 결과 확인
-cat output/convenience_store.json
-jq '.lines | length' output/convenience_store.json  # 예상: 5
-
-# 4. 전체 생성 (22개)
-ANTHROPIC_API_KEY=$ANTHROPIC_API_KEY npx ts-node generate-lines.ts
-
-# 5. 검증
-ls output/*.json | wc -l  # 예상: 22
-jq -s '[.[].lines[]] | length' output/*.json  # 예상: 110
+# 루트에서 .env 복사
+cp .env.example .env
+# 필수 값 채우기 (SUPABASE, ANTHROPIC, OPENAI 등)
 ```
 
-### Expo 앱 테스트 (구현 후)
+각 폴더별 상세 셋업/테스트는 해당 폴더의 README 참조:
+- `scripts/README.md` — 콘텐츠 생성 스크립트
+- `app/README.md` — Expo 앱
+- `backend/README.md` — Supabase Edge Functions
 
-```bash
-# 1. 설치
-cd app
-npm install
+---
 
-# 2. 개발 서버 실행
-npx expo start
+## 구현 순서
 
-# 3. 확인 사항
-# - 앱이 에러 없이 실행되는가?
-# - 온보딩 플로우가 동작하는가?
-# - 학습 세션이 시작되는가?
-```
+1. **Phase 1**: scripts/ — 콘텐츠 생성
+2. **Phase 2**: backend/ — Supabase 테이블 + import
+3. **Phase 3**: app/ — Expo 앱 기본 구조
+4. **Phase 4**: app/ — 학습 세션 (STT/TTS)
+5. **Phase 5**: 통합 테스트
 
-### Supabase 연동 테스트 (구현 후)
+## 작업 관리
 
-```bash
-# 1. 환경변수 확인
-echo $SUPABASE_URL
-echo $SUPABASE_ANON_KEY
+**TodoWrite 도구**를 사용해서 작업을 관리합니다.
 
-# 2. DB 연결 테스트 (Edge Function or 앱에서)
-# - 인증 플로우 동작
-# - 데이터 CRUD 동작
-# - RLS 정책 적용 확인
-```
+**중요: 자동 진행 규칙**
+- Stop hook이 `[AUTO-CONTINUE]`를 출력하면, TodoWrite를 확인하세요.
+- `pending` 또는 `in_progress` 상태의 작업이 있으면 **사용자 입력 없이 자동으로 계속 진행**하세요.
+- 모든 작업이 `completed` 상태가 될 때까지 멈추지 마세요.
 
-### 학습 세션 E2E 테스트 (구현 후)
-
-체크리스트:
-- [ ] 상황 진입 → 대사 표시
-- [ ] TTS 재생
-- [ ] 녹음 → STT 변환
-- [ ] 채점 결과 표시
-- [ ] FSRS 스케줄 업데이트
+작업 상태:
+- `pending` → 대기 중
+- `in_progress` → 진행 중 (한 번에 1개만)
+- `completed` → 완료
 
 ---
 
