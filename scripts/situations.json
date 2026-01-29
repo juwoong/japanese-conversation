@@ -1,0 +1,202 @@
+{
+  "situations": [
+    {
+      "persona": "tourist",
+      "persona_ko": "관광",
+      "slug": "convenience_store",
+      "name_ko": "편의점에서 물건 사기",
+      "location_ko": "편의점",
+      "difficulty": 1,
+      "context": "편의점에서 물과 간식을 사려고 함"
+    },
+    {
+      "persona": "tourist",
+      "persona_ko": "관광",
+      "slug": "cafe",
+      "name_ko": "카페에서 주문",
+      "location_ko": "카페",
+      "difficulty": 1,
+      "context": "카페에서 아이스 커피를 주문하려고 함"
+    },
+    {
+      "persona": "tourist",
+      "persona_ko": "관광",
+      "slug": "restaurant",
+      "name_ko": "식당에서 주문",
+      "location_ko": "식당",
+      "difficulty": 2,
+      "context": "식당에서 메뉴를 보고 주문, 계산까지"
+    },
+    {
+      "persona": "tourist",
+      "persona_ko": "관광",
+      "slug": "train_station",
+      "name_ko": "역에서 표 사기",
+      "location_ko": "역",
+      "difficulty": 2,
+      "context": "역 창구에서 목적지까지 표를 구매"
+    },
+    {
+      "persona": "tourist",
+      "persona_ko": "관광",
+      "slug": "ask_directions",
+      "name_ko": "길 묻기",
+      "location_ko": "거리",
+      "difficulty": 2,
+      "context": "지나가는 행인에게 역 위치를 물어봄"
+    },
+    {
+      "persona": "tourist",
+      "persona_ko": "관광",
+      "slug": "hotel_checkin",
+      "name_ko": "호텔 체크인",
+      "location_ko": "호텔",
+      "difficulty": 2,
+      "context": "호텔 프론트에서 예약 확인 후 체크인"
+    },
+    {
+      "persona": "tourist",
+      "persona_ko": "관광",
+      "slug": "taxi",
+      "name_ko": "택시 타기",
+      "location_ko": "택시",
+      "difficulty": 3,
+      "context": "택시를 타고 목적지까지 이동, 결제"
+    },
+    {
+      "persona": "business",
+      "persona_ko": "비즈니스",
+      "slug": "airport_pickup",
+      "name_ko": "공항 마중",
+      "location_ko": "공항",
+      "difficulty": 1,
+      "context": "공항에서 마중 나온 일본 비즈니스 파트너를 만남"
+    },
+    {
+      "persona": "business",
+      "persona_ko": "비즈니스",
+      "slug": "business_card",
+      "name_ko": "명함 교환",
+      "location_ko": "회의실",
+      "difficulty": 2,
+      "context": "처음 만난 비즈니스 파트너와 명함 교환"
+    },
+    {
+      "persona": "business",
+      "persona_ko": "비즈니스",
+      "slug": "office_guide",
+      "name_ko": "회의실 안내",
+      "location_ko": "사무실",
+      "difficulty": 2,
+      "context": "일본인 직원이 회의실로 안내해줌"
+    },
+    {
+      "persona": "business",
+      "persona_ko": "비즈니스",
+      "slug": "business_taxi",
+      "name_ko": "택시 이동",
+      "location_ko": "택시",
+      "difficulty": 2,
+      "context": "비즈니스 미팅 후 택시로 이동"
+    },
+    {
+      "persona": "business",
+      "persona_ko": "비즈니스",
+      "slug": "meeting_response",
+      "name_ko": "회의 중 기본 응답",
+      "location_ko": "회의실",
+      "difficulty": 2,
+      "context": "회의 중 이해했다, 확인하겠다 등 기본 응답"
+    },
+    {
+      "persona": "business",
+      "persona_ko": "비즈니스",
+      "slug": "business_dinner",
+      "name_ko": "식사 접대",
+      "location_ko": "식당",
+      "difficulty": 3,
+      "context": "일본 파트너와 저녁 식사, 건배와 음식 이야기"
+    },
+    {
+      "persona": "business",
+      "persona_ko": "비즈니스",
+      "slug": "farewell",
+      "name_ko": "작별 인사",
+      "location_ko": "현관",
+      "difficulty": 3,
+      "context": "비즈니스 미팅 종료 후 작별 인사"
+    },
+    {
+      "persona": "workingholiday",
+      "persona_ko": "워홀/유학",
+      "slug": "supermarket",
+      "name_ko": "슈퍼에서 장보기",
+      "location_ko": "슈퍼",
+      "difficulty": 1,
+      "context": "슈퍼에서 장을 보고 계산"
+    },
+    {
+      "persona": "workingholiday",
+      "persona_ko": "워홀/유학",
+      "slug": "neighbor_greeting",
+      "name_ko": "이웃에게 인사",
+      "location_ko": "아파트",
+      "difficulty": 1,
+      "context": "새로 이사 와서 옆집 이웃에게 인사"
+    },
+    {
+      "persona": "workingholiday",
+      "persona_ko": "워홀/유학",
+      "slug": "post_office",
+      "name_ko": "우체국 택배",
+      "location_ko": "우체국",
+      "difficulty": 2,
+      "context": "우체국에서 한국으로 택배 보내기"
+    },
+    {
+      "persona": "workingholiday",
+      "persona_ko": "워홀/유학",
+      "slug": "phone_contract",
+      "name_ko": "휴대폰 개통",
+      "location_ko": "매장",
+      "difficulty": 2,
+      "context": "휴대폰 매장에서 플랜 선택 및 계약"
+    },
+    {
+      "persona": "workingholiday",
+      "persona_ko": "워홀/유학",
+      "slug": "hospital",
+      "name_ko": "병원에서 증상 설명",
+      "location_ko": "병원",
+      "difficulty": 2,
+      "context": "병원에서 의사에게 증상을 설명하고 약 처방"
+    },
+    {
+      "persona": "workingholiday",
+      "persona_ko": "워홀/유학",
+      "slug": "bank_account",
+      "name_ko": "은행 계좌 개설",
+      "location_ko": "은행",
+      "difficulty": 3,
+      "context": "은행에서 계좌 개설, 필요 서류 확인"
+    },
+    {
+      "persona": "workingholiday",
+      "persona_ko": "워홀/유학",
+      "slug": "real_estate",
+      "name_ko": "부동산 집 보기",
+      "location_ko": "부동산",
+      "difficulty": 3,
+      "context": "부동산에서 원하는 조건 설명, 집 보기"
+    },
+    {
+      "persona": "workingholiday",
+      "persona_ko": "워홀/유학",
+      "slug": "part_time_interview",
+      "name_ko": "아르바이트 면접",
+      "location_ko": "매장/사무실",
+      "difficulty": 3,
+      "context": "아르바이트 면접, 지원 동기와 가능 시간"
+    }
+  ]
+}
