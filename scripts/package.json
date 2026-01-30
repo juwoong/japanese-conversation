@@ -1,6 +1,7 @@
 {
   "name": "japanese-conversation-generator",
   "version": "1.0.0",
+  "type": "module",
   "description": "대사 자동 생성 스크립트",
   "scripts": {
     "generate": "npx ts-node generate-lines.ts",
@@ -8,11 +9,13 @@
     "generate:one": "npx ts-node generate-lines.ts --situation="
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.52.0"
+    "@anthropic-ai/sdk": "^0.52.0",
+    "@supabase/supabase-js": "^2.93.3"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
     "ts-node": "^10.9.2",
+    "tsx": "^4.21.0",
     "typescript": "^5.0.0"
   }
 }

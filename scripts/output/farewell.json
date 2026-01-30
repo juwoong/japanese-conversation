@@ -1,0 +1,60 @@
+{
+  "situation_slug": "farewell",
+  "lines": [
+    {
+      "line_order": 1,
+      "speaker": "npc",
+      "text_ja": "本日はお忙しい中、お越しいただきありがとうございました。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "혼지츠와 오이소가시-나카, 오코시이타다키 아리가토- 고자이마시타",
+      "text_ko": "오늘 바쁘신 중에 와 주셔서 감사했습니다.",
+      "grammar_hint": "お越しいただき는 '와 주셔서'의 겸양 표현입니다.",
+      "key_expressions": ["お忙しい中", "お越しいただき"]
+    },
+    {
+      "line_order": 2,
+      "speaker": "user",
+      "text_ja": "こちらこそ、大変お世話になりました。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "코치라코소, 타이헨 오세와니 나리마시타",
+      "text_ko": "저야말로, 대단히 신세 많이 졌습니다.",
+      "grammar_hint": "お世話になりました는 도움을 받은 것에 대한 감사 인사입니다.",
+      "key_expressions": ["こちらこそ", "お世話になりました"]
+    },
+    {
+      "line_order": 3,
+      "speaker": "npc",
+      "text_ja": "お気をつけてお帰りください。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "오키오츠케테 오카에리쿠다사이",
+      "text_ko": "조심해서 돌아가세요.",
+      "grammar_hint": "お気をつけて는 '조심해서'라는 배려 표현입니다.",
+      "key_expressions": ["お気をつけて", "お帰りください"]
+    },
+    {
+      "line_order": 4,
+      "speaker": "user",
+      "text_ja": "ありがとうございます。また近いうちにお会いできればと思います。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "아리가토- 고자이마스. 마타 치카이우치니 오아이데키레바토 오모이마스",
+      "text_ko": "감사합니다. 가까운 시일 내에 다시 뵐 수 있으면 좋겠습니다.",
+      "grammar_hint": "~できればと思います는 희망을 정중하게 표현합니다.",
+      "key_expressions": ["近いうちに", "お会いできれば"]
+    },
+    {
+      "line_order": 5,
+      "speaker": "npc",
+      "text_ja": "ぜひまたお待ちしております。失礼いたします。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "제히 마타 오마치시테오리마스. 시츠레- 이타시마스",
+      "text_ko": "꼭 다시 기다리고 있겠습니다. 실례하겠습니다.",
+      "grammar_hint": "お待ちしております는 '기다리고 있겠습니다'의 겸양 표현입니다.",
+      "key_expressions": ["お待ちしております", "失礼いたします"]
+    }
+  ]
+}

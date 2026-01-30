@@ -1,0 +1,60 @@
+{
+  "situation_slug": "part_time_interview",
+  "lines": [
+    {
+      "line_order": 1,
+      "speaker": "npc",
+      "text_ja": "本日は面接にお越しいただき、ありがとうございます。では、自己紹介をお願いします。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "혼지츠와 멘세츠니 오코시이타다키, 아리가토- 고자이마스. 데와, 지코쇼-카이오 오네가이시마스",
+      "text_ko": "오늘 면접에 와 주셔서 감사합니다. 그럼, 자기소개 부탁드립니다.",
+      "grammar_hint": "自己紹介(지코쇼-카이)는 '자기소개'입니다.",
+      "key_expressions": ["面接", "自己紹介"]
+    },
+    {
+      "line_order": 2,
+      "speaker": "user",
+      "text_ja": "キムと申します。韓国から来て、今日本語学校に通っています。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "키무토 모-시마스. 칸코쿠카라 키테, 이마 니혼고갓코-니 카욧테이마스",
+      "text_ko": "김이라고 합니다. 한국에서 왔고, 지금 일본어학교에 다니고 있어요.",
+      "grammar_hint": "通っています(카욧테이마스)는 '다니고 있다'의 진행형입니다.",
+      "key_expressions": ["と申します", "通っています"]
+    },
+    {
+      "line_order": 3,
+      "speaker": "npc",
+      "text_ja": "週に何日くらい入れますか。土日はどうですか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "슈-니 난니치쿠라이 하이레마스카. 도니치와 도-데스카",
+      "text_ko": "주에 며칠 정도 들어올 수 있어요? 토일은 어때요?",
+      "grammar_hint": "入れます(하이레마스)는 시프트에 '들어갈 수 있다'는 의미입니다.",
+      "key_expressions": ["週に", "入れます", "土日"]
+    },
+    {
+      "line_order": 4,
+      "speaker": "user",
+      "text_ja": "週に三日は入れます。土曜日は大丈夫ですが、日曜日は難しいです。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "슈-니 밋카와 하이레마스. 도요-비와 다이죠-부데스가, 니치요-비와 무즈카시-데스",
+      "text_ko": "주 3일은 들어갈 수 있어요. 토요일은 괜찮지만, 일요일은 어려워요.",
+      "grammar_hint": "難しいです(무즈카시-데스)는 '어렵습니다'로 거절할 때도 씁니다.",
+      "key_expressions": ["週に三日", "難しいです"]
+    },
+    {
+      "line_order": 5,
+      "speaker": "npc",
+      "text_ja": "分かりました。では、来週から来られますか。時給は九百五十円です。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "와카리마시타. 데와, 라이슈-카라 코라레마스카. 지큐-와 큐-햐쿠고쥬-엔데스",
+      "text_ko": "알겠습니다. 그럼, 다음 주부터 올 수 있어요? 시급은 950엔이에요.",
+      "grammar_hint": "時給(지큐-)는 '시급'입니다. 来られます는 '올 수 있다'의 존경 표현.",
+      "key_expressions": ["来週から", "時給"]
+    }
+  ]
+}

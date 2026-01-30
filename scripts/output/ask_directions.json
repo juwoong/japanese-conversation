@@ -1,0 +1,60 @@
+{
+  "situation_slug": "ask_directions",
+  "lines": [
+    {
+      "line_order": 1,
+      "speaker": "npc",
+      "text_ja": "何かお探しですか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "나니카 오사가시데스카",
+      "text_ko": "뭔가 찾으시나요?",
+      "grammar_hint": "お探し는 '찾다(探す)'의 존경 표현입니다.",
+      "key_expressions": ["何か", "お探しですか"]
+    },
+    {
+      "line_order": 2,
+      "speaker": "user",
+      "text_ja": "すみません、駅はどこですか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "스미마셍, 에키와 도코데스카",
+      "text_ko": "실례합니다, 역이 어디에요?",
+      "grammar_hint": "どこですか는 장소를 물을 때 쓰는 기본 표현입니다.",
+      "key_expressions": ["すみません", "どこですか"]
+    },
+    {
+      "line_order": 3,
+      "speaker": "npc",
+      "text_ja": "この道をまっすぐ行って、右に曲がってください。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "코노 미치오 맛스구 잇테, 미기니 마갓테쿠다사이",
+      "text_ko": "이 길을 직진해서, 오른쪽으로 꺾어주세요.",
+      "grammar_hint": "まっすぐ(직진), 右(오른쪽), 左(왼쪽)은 길 안내 필수 단어입니다.",
+      "key_expressions": ["まっすぐ", "右に曲がって"]
+    },
+    {
+      "line_order": 4,
+      "speaker": "user",
+      "text_ja": "どのくらいかかりますか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "도노 쿠라이 카카리마스카",
+      "text_ko": "얼마나 걸려요?",
+      "grammar_hint": "どのくらい는 시간이나 양을 물을 때 씁니다.",
+      "key_expressions": ["どのくらい", "かかりますか"]
+    },
+    {
+      "line_order": 5,
+      "speaker": "npc",
+      "text_ja": "歩いて五分くらいですよ。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "아루이테 고훈 쿠라이데스요",
+      "text_ko": "걸어서 5분 정도예요.",
+      "grammar_hint": "歩いて(걸어서), 分(분)은 시간 표현에 자주 쓰입니다.",
+      "key_expressions": ["歩いて", "分くらい"]
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "situation_slug": "meeting_response",
+  "lines": [
+    {
+      "line_order": 1,
+      "speaker": "npc",
+      "text_ja": "この件について、いかがお考えでしょうか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "코노 켄니츠이테, 이카가 오칸가에데쇼-카",
+      "text_ko": "이 건에 대해서 어떻게 생각하시나요?",
+      "grammar_hint": "いかがお考えでしょうか는 의견을 정중하게 묻는 표현입니다.",
+      "key_expressions": ["この件について", "いかがお考えでしょうか"]
+    },
+    {
+      "line_order": 2,
+      "speaker": "user",
+      "text_ja": "ご提案の内容、承知いたしました。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "고테-안노 나이요-, 쇼-치 이타시마시타",
+      "text_ko": "제안해 주신 내용, 이해했습니다.",
+      "grammar_hint": "承知いたしました는 '알겠습니다/이해했습니다'의 비즈니스 표현입니다.",
+      "key_expressions": ["ご提案", "承知いたしました"]
+    },
+    {
+      "line_order": 3,
+      "speaker": "npc",
+      "text_ja": "ご検討いただけますでしょうか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "고켄토- 이타다케마스데쇼-카",
+      "text_ko": "검토해 주실 수 있으신가요?",
+      "grammar_hint": "ご検討(고켄토-)는 '검토'의 존경 표현입니다.",
+      "key_expressions": ["ご検討", "いただけますでしょうか"]
+    },
+    {
+      "line_order": 4,
+      "speaker": "user",
+      "text_ja": "社内で確認の上、改めてご連絡いたします。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "샤나이데 카쿠닌노 우에, 아라타메테 고렌라쿠 이타시마스",
+      "text_ko": "사내에서 확인 후, 다시 연락드리겠습니다.",
+      "grammar_hint": "~の上(~노 우에)는 '~한 후에'라는 비즈니스 표현입니다.",
+      "key_expressions": ["社内で確認", "改めてご連絡いたします"]
+    },
+    {
+      "line_order": 5,
+      "speaker": "npc",
+      "text_ja": "お忙しいところ恐れ入りますが、よろしくお願いいたします。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "오이소가시-토코로 오소레이리마스가, 요로시쿠 오네가이 이타시마스",
+      "text_ko": "바쁘신 와중에 죄송합니다만, 잘 부탁드립니다.",
+      "grammar_hint": "お忙しいところ는 상대의 바쁨을 배려하는 표현입니다.",
+      "key_expressions": ["お忙しいところ", "恐れ入りますが"]
+    }
+  ]
+}

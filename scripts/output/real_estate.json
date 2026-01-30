@@ -1,0 +1,60 @@
+{
+  "situation_slug": "real_estate",
+  "lines": [
+    {
+      "line_order": 1,
+      "speaker": "npc",
+      "text_ja": "いらっしゃいませ。お部屋をお探しですか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "이랏샤이마세. 오헤야오 오사가시데스카",
+      "text_ko": "어서 오세요. 방을 찾으시나요?",
+      "grammar_hint": "お探し는 '探す(찾다)'의 존경 표현입니다.",
+      "key_expressions": ["お部屋", "お探しですか"]
+    },
+    {
+      "line_order": 2,
+      "speaker": "user",
+      "text_ja": "はい、駅から近くて、家賃五万円以下の部屋を探しています。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "하이, 에키카라 치카쿠테, 야친 고만엔이카노 헤야오 사가시테이마스",
+      "text_ko": "네, 역에서 가깝고, 월세 5만엔 이하인 방을 찾고 있어요.",
+      "grammar_hint": "家賃(야친)는 '월세', 以下(이카)는 '이하'입니다.",
+      "key_expressions": ["家賃", "以下", "探しています"]
+    },
+    {
+      "line_order": 3,
+      "speaker": "npc",
+      "text_ja": "ワンルームでよろしいですか。こちらの物件はいかがでしょう。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "완루-무데 요로시-데스카. 코치라노 붓켄와 이카가데쇼-",
+      "text_ko": "원룸이면 괜찮으세요? 이 물건은 어떠세요?",
+      "grammar_hint": "物件(붓켄)은 '물건/매물'로 부동산 용어입니다.",
+      "key_expressions": ["ワンルーム", "物件"]
+    },
+    {
+      "line_order": 4,
+      "speaker": "user",
+      "text_ja": "いいですね。初期費用はどのくらいかかりますか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "이-데스네. 쇼키히요-와 도노쿠라이 카카리마스카",
+      "text_ko": "좋네요. 초기 비용은 얼마나 드나요?",
+      "grammar_hint": "初期費用(쇼키히요-)은 '초기비용'으로 보증금, 사례금 등을 포함합니다.",
+      "key_expressions": ["初期費用", "どのくらいかかりますか"]
+    },
+    {
+      "line_order": 5,
+      "speaker": "npc",
+      "text_ja": "敷金一ヶ月、礼金なしで、約十五万円です。内見されますか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "시키킨 잇카게츠, 레-킨나시데, 야쿠 쥬-고만엔데스. 나이켄 사레마스카",
+      "text_ko": "보증금 1개월, 사례금 없이 약 15만엔입니다. 내부 보실래요?",
+      "grammar_hint": "敷金(보증금), 礼金(사례금)은 일본 부동산의 특수한 비용입니다.",
+      "key_expressions": ["敷金", "礼金", "内見"]
+    }
+  ]
+}

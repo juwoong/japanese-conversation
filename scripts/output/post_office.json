@@ -1,0 +1,60 @@
+{
+  "situation_slug": "post_office",
+  "lines": [
+    {
+      "line_order": 1,
+      "speaker": "npc",
+      "text_ja": "いらっしゃいませ。どのようなご用件でしょうか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "이랏샤이마세. 도노요-나 고요-켄데쇼-카",
+      "text_ko": "어서 오세요. 어떤 용건이신가요?",
+      "grammar_hint": "ご用件는 '용건'의 존경 표현입니다.",
+      "key_expressions": ["いらっしゃいませ", "ご用件"]
+    },
+    {
+      "line_order": 2,
+      "speaker": "user",
+      "text_ja": "韓国に荷物を送りたいんですが。",
+      "text_ja_male": "韓国に荷物を送りたいんだけど。",
+      "text_ja_female": null,
+      "pronunciation_ko": "칸코쿠니 니모츠오 오쿠리타인데스가",
+      "text_ko": "한국에 짐을 보내고 싶은데요.",
+      "grammar_hint": "~たいんですが는 '~하고 싶은데요'라는 희망 표현입니다.",
+      "key_expressions": ["荷物", "送りたい"]
+    },
+    {
+      "line_order": 3,
+      "speaker": "npc",
+      "text_ja": "中身は何ですか。航空便と船便がありますが。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "나카미와 난데스카. 코-쿠-빈토 후나빈가 아리마스가",
+      "text_ko": "내용물은 뭔가요? 항공편과 배편이 있는데요.",
+      "grammar_hint": "航空便(항공편)은 빠르고 비쌈, 船便(배편)은 느리고 쌈.",
+      "key_expressions": ["中身", "航空便", "船便"]
+    },
+    {
+      "line_order": 4,
+      "speaker": "user",
+      "text_ja": "お菓子と本です。航空便でお願いします。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "오카시토 혼데스. 코-쿠-빈데 오네가이시마스",
+      "text_ko": "과자와 책이에요. 항공편으로 부탁드려요.",
+      "grammar_hint": "と는 '~와/과'로 두 가지를 나열할 때 씁니다.",
+      "key_expressions": ["お菓子", "本", "でお願いします"]
+    },
+    {
+      "line_order": 5,
+      "speaker": "npc",
+      "text_ja": "三千五百円です。一週間ほどで届きます。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "산젠고햐쿠엔데스. 잇슈-칸호도데 토도키마스",
+      "text_ko": "3,500엔입니다. 일주일 정도면 도착합니다.",
+      "grammar_hint": "ほど는 '정도'라는 뜻으로 대략적인 시간/양을 표현합니다.",
+      "key_expressions": ["週間ほど", "届きます"]
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "situation_slug": "hospital",
+  "lines": [
+    {
+      "line_order": 1,
+      "speaker": "npc",
+      "text_ja": "今日はどうされましたか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "쿄-와 도-사레마시타카",
+      "text_ko": "오늘 어떻게 오셨어요?",
+      "grammar_hint": "どうされましたか는 병원에서 '어디가 아프세요?'라는 의미로 씁니다.",
+      "key_expressions": ["今日は", "どうされましたか"]
+    },
+    {
+      "line_order": 2,
+      "speaker": "user",
+      "text_ja": "昨日から頭が痛くて、熱もあります。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "키노-카라 아타마가 이타쿠테, 네츠모 아리마스",
+      "text_ko": "어제부터 머리가 아프고, 열도 있어요.",
+      "grammar_hint": "~くて는 형용사를 연결할 때 씁니다. 痛い→痛くて.",
+      "key_expressions": ["頭が痛い", "熱"]
+    },
+    {
+      "line_order": 3,
+      "speaker": "npc",
+      "text_ja": "のどは痛いですか。咳は出ますか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "노도와 이타이데스카. 세키와 데마스카",
+      "text_ko": "목은 아프세요? 기침은 나오나요?",
+      "grammar_hint": "のど(목), 咳(기침)는 병원에서 자주 쓰는 단어입니다.",
+      "key_expressions": ["のど", "咳", "出ます"]
+    },
+    {
+      "line_order": 4,
+      "speaker": "user",
+      "text_ja": "少し痛いです。咳は出ません。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "스코시 이타이데스. 세키와 데마셍",
+      "text_ko": "조금 아파요. 기침은 안 나와요.",
+      "grammar_hint": "少し(조금), 出ません(안 나와요)은 증상 설명에 자주 씁니다.",
+      "key_expressions": ["少し", "出ません"]
+    },
+    {
+      "line_order": 5,
+      "speaker": "npc",
+      "text_ja": "風邪ですね。薬を三日分出しておきます。ゆっくり休んでください。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "카제데스네. 쿠스리오 밋카분 다시테오키마스. 윳쿠리 야슨데쿠다사이",
+      "text_ko": "감기네요. 약을 3일분 처방해 드릴게요. 푹 쉬세요.",
+      "grammar_hint": "~日分(~니치분)은 '~일분'으로 약 처방 기간을 나타냅니다.",
+      "key_expressions": ["風邪", "薬", "日分"]
+    }
+  ]
+}

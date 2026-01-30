@@ -1,0 +1,60 @@
+{
+  "situation_slug": "restaurant",
+  "lines": [
+    {
+      "line_order": 1,
+      "speaker": "npc",
+      "text_ja": "いらっしゃいませ。何名様ですか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "이랏샤이마세. 난메-사마데스카",
+      "text_ko": "어서 오세요. 몇 분이세요?",
+      "grammar_hint": "何名様(난메-사마)는 인원수를 정중하게 묻는 표현입니다.",
+      "key_expressions": ["何名様", "ですか"]
+    },
+    {
+      "line_order": 2,
+      "speaker": "user",
+      "text_ja": "一人です。メニューをお願いします。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "히토리데스. 메뉴-오 오네가이시마스",
+      "text_ko": "한 명이요. 메뉴 부탁드립니다.",
+      "grammar_hint": "一人(히토리)는 1명을 뜻합니다. 二人(후타리)는 2명.",
+      "key_expressions": ["一人", "メニュー"]
+    },
+    {
+      "line_order": 3,
+      "speaker": "npc",
+      "text_ja": "ご注文がお決まりになりましたら、お呼びください。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "고츄-몬가 오키마리니 나리마시타라, 오요비쿠다사이",
+      "text_ko": "주문이 정해지시면 불러주세요.",
+      "grammar_hint": "お決まりになりましたら는 '정해지시면'이라는 존경 표현입니다.",
+      "key_expressions": ["お決まり", "お呼びください"]
+    },
+    {
+      "line_order": 4,
+      "speaker": "user",
+      "text_ja": "すみません、これをお願いします。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "스미마셍, 코레오 오네가이시마스",
+      "text_ko": "저기요, 이것으로 부탁드립니다.",
+      "grammar_hint": "すみません은 '실례합니다/저기요' 등 여러 상황에서 씁니다.",
+      "key_expressions": ["すみません", "これ"]
+    },
+    {
+      "line_order": 5,
+      "speaker": "npc",
+      "text_ja": "かしこまりました。少々お待ちください。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "카시코마리마시타. 쇼-쇼- 오마치쿠다사이",
+      "text_ko": "알겠습니다. 잠시만 기다려주세요.",
+      "grammar_hint": "かしこまりました는 '알겠습니다'의 가장 정중한 표현입니다.",
+      "key_expressions": ["かしこまりました", "少々お待ちください"]
+    }
+  ]
+}
