@@ -1,0 +1,60 @@
+{
+  "situation_slug": "cafe",
+  "lines": [
+    {
+      "line_order": 1,
+      "speaker": "npc",
+      "text_ja": "いらっしゃいませ。ご注文は?",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "이랏샤이마세. 고츄-몬와?",
+      "text_ko": "어서 오세요. 주문하시겠어요?",
+      "grammar_hint": "ご注文は는 '주문은?'이라는 뜻으로 주문을 물을 때 씁니다.",
+      "key_expressions": ["いらっしゃいませ", "ご注文"]
+    },
+    {
+      "line_order": 2,
+      "speaker": "user",
+      "text_ja": "アイスコーヒーをお願いします。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "아이스 코-히-오 오네가이시마스",
+      "text_ko": "아이스 커피 부탁드립니다.",
+      "grammar_hint": "お願いします(부탁드립니다)는 ください보다 정중한 표현입니다.",
+      "key_expressions": ["お願いします", "アイスコーヒー"]
+    },
+    {
+      "line_order": 3,
+      "speaker": "npc",
+      "text_ja": "サイズはいかがなさいますか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "사이즈와 이카가 나사이마스카",
+      "text_ko": "사이즈는 어떻게 하시겠어요?",
+      "grammar_hint": "いかがなさいますか는 매우 정중하게 의향을 묻는 표현입니다.",
+      "key_expressions": ["サイズ", "いかがなさいますか"]
+    },
+    {
+      "line_order": 4,
+      "speaker": "user",
+      "text_ja": "Mサイズでお願いします。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "에무 사이즈데 오네가이시마스",
+      "text_ko": "M사이즈로 부탁드려요.",
+      "grammar_hint": "で는 '~로'라는 수단/선택을 나타냅니다.",
+      "key_expressions": ["Mサイズ", "で"]
+    },
+    {
+      "line_order": 5,
+      "speaker": "npc",
+      "text_ja": "四百円です。少々お待ちください。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "욘햐쿠엔데스. 쇼-쇼- 오마치쿠다사이",
+      "text_ko": "400엔입니다. 잠시만 기다려주세요.",
+      "grammar_hint": "少々는 '조금'이라는 뜻의 정중한 표현입니다.",
+      "key_expressions": ["少々お待ちください", "円です"]
+    }
+  ]
+}

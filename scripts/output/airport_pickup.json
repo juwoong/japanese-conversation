@@ -1,0 +1,60 @@
+{
+  "situation_slug": "airport_pickup",
+  "lines": [
+    {
+      "line_order": 1,
+      "speaker": "npc",
+      "text_ja": "失礼ですが、キムさんでいらっしゃいますか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "시츠레-데스가, 키무상데 이랏샤이마스카",
+      "text_ko": "실례지만, 김 씨이신가요?",
+      "grammar_hint": "でいらっしゃいますか는 'ですか'의 가장 정중한 표현입니다.",
+      "key_expressions": ["失礼ですが", "でいらっしゃいますか"]
+    },
+    {
+      "line_order": 2,
+      "speaker": "user",
+      "text_ja": "はい、そうです。本日はよろしくお願いします。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "하이, 소-데스. 혼지츠와 요로시쿠 오네가이시마스",
+      "text_ko": "네, 맞습니다. 오늘 잘 부탁드립니다.",
+      "grammar_hint": "本日(혼지츠)는 '今日(오늘)'의 격식 표현입니다.",
+      "key_expressions": ["本日", "よろしくお願いします"]
+    },
+    {
+      "line_order": 3,
+      "speaker": "npc",
+      "text_ja": "お疲れ様でした。フライトはいかがでしたか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "오츠카레사마데시타. 후라이토와 이카가데시타카",
+      "text_ko": "수고 많으셨습니다. 비행은 어떠셨어요?",
+      "grammar_hint": "お疲れ様でした는 수고한 상대를 위로하는 인사입니다.",
+      "key_expressions": ["お疲れ様でした", "いかがでしたか"]
+    },
+    {
+      "line_order": 4,
+      "speaker": "user",
+      "text_ja": "おかげさまで、快適でした。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "오카게사마데, 카이테키데시타",
+      "text_ko": "덕분에 편안했습니다.",
+      "grammar_hint": "おかげさまで는 상대에게 감사를 표하며 대답할 때 씁니다.",
+      "key_expressions": ["おかげさまで", "快適"]
+    },
+    {
+      "line_order": 5,
+      "speaker": "npc",
+      "text_ja": "では、お車までご案内いたします。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "데와, 오쿠루마마데 고안나이 이타시마스",
+      "text_ko": "그럼, 차량까지 안내해 드리겠습니다.",
+      "grammar_hint": "いたします는 'します'의 겸양어로 자신을 낮추는 표현입니다.",
+      "key_expressions": ["ご案内いたします", "お車"]
+    }
+  ]
+}

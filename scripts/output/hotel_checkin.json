@@ -1,0 +1,60 @@
+{
+  "situation_slug": "hotel_checkin",
+  "lines": [
+    {
+      "line_order": 1,
+      "speaker": "npc",
+      "text_ja": "いらっしゃいませ。ご予約のお名前をお願いします。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "이랏샤이마세. 고요야쿠노 오나마에오 오네가이시마스",
+      "text_ko": "어서 오세요. 예약하신 성함을 말씀해 주세요.",
+      "grammar_hint": "ご予約(예약)의 ご는 존경 접두사입니다.",
+      "key_expressions": ["ご予約", "お名前"]
+    },
+    {
+      "line_order": 2,
+      "speaker": "user",
+      "text_ja": "山田です。今日から二泊です。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "야마다데스. 쿄-카라 니하쿠데스",
+      "text_ko": "야마다입니다. 오늘부터 2박이에요.",
+      "grammar_hint": "泊(하쿠)는 숙박을 세는 단위입니다. 一泊(1박), 二泊(2박).",
+      "key_expressions": ["今日から", "二泊"]
+    },
+    {
+      "line_order": 3,
+      "speaker": "npc",
+      "text_ja": "はい、確認できました。こちらにサインをお願いします。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "하이, 카쿠닌데키마시타. 코치라니 사인오 오네가이시마스",
+      "text_ko": "네, 확인되었습니다. 여기에 서명해 주세요.",
+      "grammar_hint": "確認できました는 '확인되었습니다'라는 뜻입니다.",
+      "key_expressions": ["確認できました", "こちらに"]
+    },
+    {
+      "line_order": 4,
+      "speaker": "user",
+      "text_ja": "チェックアウトは何時ですか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "첵쿠아우토와 난지데스카",
+      "text_ko": "체크아웃은 몇 시예요?",
+      "grammar_hint": "何時(난지)는 '몇 시'를 묻는 표현입니다.",
+      "key_expressions": ["チェックアウト", "何時ですか"]
+    },
+    {
+      "line_order": 5,
+      "speaker": "npc",
+      "text_ja": "十時でございます。お部屋は五階の五〇二号室です。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "쥬-지데 고자이마스. 오헤야와 고카이노 고-마루니 고-시츠데스",
+      "text_ko": "10시입니다. 방은 5층 502호실입니다.",
+      "grammar_hint": "でございます는 です의 가장 정중한 표현입니다.",
+      "key_expressions": ["でございます", "号室"]
+    }
+  ]
+}

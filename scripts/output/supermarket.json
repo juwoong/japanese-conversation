@@ -1,0 +1,60 @@
+{
+  "situation_slug": "supermarket",
+  "lines": [
+    {
+      "line_order": 1,
+      "speaker": "npc",
+      "text_ja": "ポイントカードはお持ちですか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "포인토 카-도와 오모치데스카",
+      "text_ko": "포인트 카드 갖고 계세요?",
+      "grammar_hint": "お持ちですか는 '持っていますか'의 존경 표현입니다.",
+      "key_expressions": ["ポイントカード", "お持ちですか"]
+    },
+    {
+      "line_order": 2,
+      "speaker": "user",
+      "text_ja": "いいえ、持っていません。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "이이에, 못테이마셍",
+      "text_ko": "아니요, 없어요.",
+      "grammar_hint": "持っていません은 '가지고 있지 않습니다'의 정중한 부정형입니다.",
+      "key_expressions": ["持っていません", "いいえ"]
+    },
+    {
+      "line_order": 3,
+      "speaker": "npc",
+      "text_ja": "袋は有料になりますが、いりますか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "후쿠로와 유-료-니 나리마스가, 이리마스카",
+      "text_ko": "봉투는 유료인데, 필요하세요?",
+      "grammar_hint": "有料(유-료-)는 '유료'입니다. 반대는 無料(무-료-, 무료).",
+      "key_expressions": ["有料", "いりますか"]
+    },
+    {
+      "line_order": 4,
+      "speaker": "user",
+      "text_ja": "小さいのを一枚お願いします。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "치-사이노오 이치마이 오네가이시마스",
+      "text_ko": "작은 거 한 장 주세요.",
+      "grammar_hint": "~いの는 '~한 것'으로 형용사를 명사화합니다.",
+      "key_expressions": ["小さいの", "一枚"]
+    },
+    {
+      "line_order": 5,
+      "speaker": "npc",
+      "text_ja": "千二百円になります。Paypayも使えますよ。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "센니햐쿠엔니 나리마스. 페이페이모 츠카에마스요",
+      "text_ko": "1,200엔입니다. 페이페이도 쓸 수 있어요.",
+      "grammar_hint": "~も使えます는 '~도 사용 가능합니다'라는 표현입니다.",
+      "key_expressions": ["になります", "も使えます"]
+    }
+  ]
+}

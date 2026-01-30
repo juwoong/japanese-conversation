@@ -1,0 +1,60 @@
+{
+  "situation_slug": "neighbor_greeting",
+  "lines": [
+    {
+      "line_order": 1,
+      "speaker": "npc",
+      "text_ja": "こんにちは。お隣に引っ越してきた方ですか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "콘니치와. 오토나리니 힉코시테키타 카타데스카",
+      "text_ko": "안녕하세요. 옆집에 이사 오신 분이세요?",
+      "grammar_hint": "引っ越してきた는 '이사해 온'이라는 뜻입니다.",
+      "key_expressions": ["お隣", "引っ越してきた"]
+    },
+    {
+      "line_order": 2,
+      "speaker": "user",
+      "text_ja": "はい、先週引っ越してきました。キムと申します。よろしくお願いします。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "하이, 센슈- 힉코시테키마시타. 키무토 모-시마스. 요로시쿠 오네가이시마스",
+      "text_ko": "네, 지난주에 이사 왔어요. 김이라고 합니다. 잘 부탁드려요.",
+      "grammar_hint": "先週(센슈-)는 '지난주'입니다. 今週(콘슈-)는 '이번 주'.",
+      "key_expressions": ["先週", "と申します"]
+    },
+    {
+      "line_order": 3,
+      "speaker": "npc",
+      "text_ja": "私は佐藤です。何かあったらいつでも声をかけてくださいね。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "와타시와 사토-데스. 나니카 앗타라 이츠데모 코에오 카케테쿠다사이네",
+      "text_ko": "저는 사토입니다. 뭐든 있으면 언제든 말씀해 주세요.",
+      "grammar_hint": "声をかける는 '말을 걸다'라는 표현입니다.",
+      "key_expressions": ["何かあったら", "声をかけてください"]
+    },
+    {
+      "line_order": 4,
+      "speaker": "user",
+      "text_ja": "ありがとうございます。これ、つまらないものですが。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "아리가토- 고자이마스. 코레, 츠마라나이 모노데스가",
+      "text_ko": "감사합니다. 이거, 별거 아니지만요.",
+      "grammar_hint": "つまらないものですが는 선물을 줄 때 겸손하게 말하는 표현입니다.",
+      "key_expressions": ["つまらないものですが", "これ"]
+    },
+    {
+      "line_order": 5,
+      "speaker": "npc",
+      "text_ja": "わあ、ありがとうございます。ゴミ出しのことなど分からなければ聞いてください。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "와-, 아리가토- 고자이마스. 고미다시노 코토나도 와카라나케레바 키이테쿠다사이",
+      "text_ko": "와, 감사합니다. 쓰레기 버리는 것 등 모르면 물어봐 주세요.",
+      "grammar_hint": "ゴミ出し는 '쓰레기 버리기'입니다. 일본은 분리수거가 엄격합니다.",
+      "key_expressions": ["ゴミ出し", "分からなければ"]
+    }
+  ]
+}

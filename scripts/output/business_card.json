@@ -1,0 +1,60 @@
+{
+  "situation_slug": "business_card",
+  "lines": [
+    {
+      "line_order": 1,
+      "speaker": "npc",
+      "text_ja": "はじめまして。株式会社山田の田中と申します。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "하지메마시테. 카부시키가이샤 야마다노 타나카토 모-시마스",
+      "text_ko": "처음 뵙겠습니다. 야마다 주식회사의 타나카라고 합니다.",
+      "grammar_hint": "と申します는 자기소개 시 이름을 말하는 겸양 표현입니다.",
+      "key_expressions": ["はじめまして", "と申します"]
+    },
+    {
+      "line_order": 2,
+      "speaker": "user",
+      "text_ja": "はじめまして。韓国のキムと申します。名刺をどうぞ。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "하지메마시테. 칸코쿠노 키무토 모-시마스. 메-시오 도-조",
+      "text_ko": "처음 뵙겠습니다. 한국의 김이라고 합니다. 명함 받으세요.",
+      "grammar_hint": "名刺(메-시)는 명함입니다. どうぞ는 '여기요/받으세요'.",
+      "key_expressions": ["名刺", "どうぞ"]
+    },
+    {
+      "line_order": 3,
+      "speaker": "npc",
+      "text_ja": "頂戴いたします。こちらこそ、どうぞよろしくお願いいたします。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "쵸-다이 이타시마스. 코치라코소, 도-조 요로시쿠 오네가이 이타시마스",
+      "text_ko": "받겠습니다. 저야말로, 잘 부탁드립니다.",
+      "grammar_hint": "頂戴いたします는 물건을 받을 때 쓰는 매우 정중한 표현입니다.",
+      "key_expressions": ["頂戴いたします", "こちらこそ"]
+    },
+    {
+      "line_order": 4,
+      "speaker": "user",
+      "text_ja": "今後ともよろしくお願いいたします。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "콘고토모 요로시쿠 오네가이 이타시마스",
+      "text_ko": "앞으로도 잘 부탁드립니다.",
+      "grammar_hint": "今後とも는 '앞으로도'라는 뜻으로 관계 지속을 표현합니다.",
+      "key_expressions": ["今後とも", "よろしくお願いいたします"]
+    },
+    {
+      "line_order": 5,
+      "speaker": "npc",
+      "text_ja": "こちらこそ。本日は貴重なお時間をいただき、ありがとうございます。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "코치라코소. 혼지츠와 키쵸-나 오지칸오 이타다키, 아리가토- 고자이마스",
+      "text_ko": "저야말로요. 오늘 귀중한 시간 내주셔서 감사합니다.",
+      "grammar_hint": "いただき는 '받다'의 겸양어로 감사 표현에 자주 씁니다.",
+      "key_expressions": ["貴重な", "お時間をいただき"]
+    }
+  ]
+}

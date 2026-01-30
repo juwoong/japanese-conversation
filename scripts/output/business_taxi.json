@@ -1,0 +1,60 @@
+{
+  "situation_slug": "business_taxi",
+  "lines": [
+    {
+      "line_order": 1,
+      "speaker": "npc",
+      "text_ja": "ご乗車ありがとうございます。どちらまで?",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "고조-샤 아리가토- 고자이마스. 도치라마데?",
+      "text_ko": "승차해 주셔서 감사합니다. 어디까지요?",
+      "grammar_hint": "ご乗車(고조-샤)는 '탑승'의 존경 표현입니다.",
+      "key_expressions": ["ご乗車", "どちらまで"]
+    },
+    {
+      "line_order": 2,
+      "speaker": "user",
+      "text_ja": "新宿駅西口までお願いします。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "신쥬쿠에키 니시구치마데 오네가이시마스",
+      "text_ko": "신주쿠역 서쪽 출구까지 부탁드립니다.",
+      "grammar_hint": "西口(니시구치)는 '서쪽 출구', 東口(히가시구치)는 '동쪽 출구'입니다.",
+      "key_expressions": ["西口", "までお願いします"]
+    },
+    {
+      "line_order": 3,
+      "speaker": "npc",
+      "text_ja": "かしこまりました。首都高速を使ってもよろしいでしょうか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "카시코마리마시타. 슈토코-소쿠오 츠캇테모 요로시-데쇼-카",
+      "text_ko": "알겠습니다. 수도고속도로를 이용해도 될까요?",
+      "grammar_hint": "~てもよろしいでしょうか는 허락을 구하는 매우 정중한 표현입니다.",
+      "key_expressions": ["かしこまりました", "よろしいでしょうか"]
+    },
+    {
+      "line_order": 4,
+      "speaker": "user",
+      "text_ja": "はい、お願いします。領収書をお願いできますか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "하이, 오네가이시마스. 료-슈-쇼오 오네가이데키마스카",
+      "text_ko": "네, 부탁드립니다. 영수증 받을 수 있을까요?",
+      "grammar_hint": "領収書(료-슈-쇼)는 영수증입니다. 비즈니스 경비 처리에 필수입니다.",
+      "key_expressions": ["領収書", "お願いできますか"]
+    },
+    {
+      "line_order": 5,
+      "speaker": "npc",
+      "text_ja": "もちろんでございます。お降りの際にお渡しいたします。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "모치론데 고자이마스. 오오리노 사이니 오와타시 이타시마스",
+      "text_ko": "물론입니다. 하차하실 때 드리겠습니다.",
+      "grammar_hint": "お渡しいたします는 '드리겠습니다'의 겸양 표현입니다.",
+      "key_expressions": ["もちろん", "お渡しいたします"]
+    }
+  ]
+}

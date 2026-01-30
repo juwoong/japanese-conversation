@@ -1,0 +1,60 @@
+{
+  "situation_slug": "business_dinner",
+  "lines": [
+    {
+      "line_order": 1,
+      "speaker": "npc",
+      "text_ja": "お口に合うかどうか分かりませんが、どうぞ召し上がってください。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "오쿠치니 아우카 도-카 와카리마셍가, 도-조 메시아갓테쿠다사이",
+      "text_ko": "입에 맞으실지 모르겠지만, 드셔 보세요.",
+      "grammar_hint": "召し上がる는 '食べる(먹다)'의 존경어입니다.",
+      "key_expressions": ["お口に合う", "召し上がってください"]
+    },
+    {
+      "line_order": 2,
+      "speaker": "user",
+      "text_ja": "ありがとうございます。いただきます。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "아리가토- 고자이마스. 이타다키마스",
+      "text_ko": "감사합니다. 잘 먹겠습니다.",
+      "grammar_hint": "いただきます는 식사 전에 하는 일본 인사입니다.",
+      "key_expressions": ["いただきます", "ありがとうございます"]
+    },
+    {
+      "line_order": 3,
+      "speaker": "npc",
+      "text_ja": "では、乾杯しましょうか。今日のご成功を祝して。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "데와, 캄파이시마쇼-카. 쿄-노 고세-코-오 슈쿠시테",
+      "text_ko": "그럼, 건배할까요. 오늘의 성공을 축하하며.",
+      "grammar_hint": "乾杯(캄파이)는 건배입니다. ~を祝して는 '~를 축하하며'.",
+      "key_expressions": ["乾杯", "を祝して"]
+    },
+    {
+      "line_order": 4,
+      "speaker": "user",
+      "text_ja": "乾杯! とてもおいしいですね。何という料理ですか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "캄파이! 토테모 오이시-데스네. 난토이우 료-리데스카",
+      "text_ko": "건배! 정말 맛있네요. 무슨 요리인가요?",
+      "grammar_hint": "何という~는 '무엇이라고 하는 ~'를 묻는 표현입니다.",
+      "key_expressions": ["おいしい", "何という"]
+    },
+    {
+      "line_order": 5,
+      "speaker": "npc",
+      "text_ja": "これは京都の郷土料理です。お気に召していただけて嬉しいです。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "코레와 쿄-토노 쿄-도료-리데스. 오키니 메시테이타다케테 우레시-데스",
+      "text_ko": "이건 교토의 향토 요리입니다. 마음에 드셨다니 기쁩니다.",
+      "grammar_hint": "お気に召す는 '마음에 들다'의 존경 표현입니다.",
+      "key_expressions": ["郷土料理", "お気に召す"]
+    }
+  ]
+}
