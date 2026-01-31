@@ -11,77 +11,72 @@ import {
 import * as Speech from "expo-speech";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { supabase } from "../lib/supabase";
-import type { RootStackParamList, Situation, Line, Profile } from "../types";
+import { startRecording, stopRecording } from "../lib/audio";
+import { transcribeAudio } from "../lib/stt";
+import { useSession } from "../hooks/useSession";
+import type { RootStackParamList, Line } from "../types";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Session">;
 
-type LineLevel = 1 | 2 | 3; // 1: pronunciation+translation, 2: translation only, 3: hidden
+type LineLevel = 1 | 2 | 3;
+type SessionPhase = "viewing" | "recording" | "processing" | "feedback";
+
+interface FeedbackData {
+  accuracy: number;
+  userInput: string;
+  expectedText: string;
+  feedback: string;
+}
 
 export default function SessionScreen({ navigation, route }: Props) {
   const { situationId } = route.params;
+  const session = useSession(situationId);
 
-  const [loading, setLoading] = useState(true);
-  const [situation, setSituation] = useState<Situation | null>(null);
-  const [lines, setLines] = useState<Line[]>([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [level, setLevel] = useState<LineLevel>(1);
   const [showAnswer, setShowAnswer] = useState(false);
   const [userGender, setUserGender] = useState<string>("neutral");
   const [isSpeaking, setIsSpeaking] = useState(false);
 
-  const loadSession = useCallback(async () => {
-    try {
-      // Load user profile
-      const { data: { user } } = await supabase.auth.getUser();
-      if (user) {
-        const { data: profile } = await supabase
-          .from("profiles")
-          .select("gender")
-          .eq("id", user.id)
-          .single();
-        if (profile?.gender) {
-          setUserGender(profile.gender);
-        }
-      }
-
-      // Load situation
-      const { data: situationData } = await supabase
-        .from("situations")
-        .select("*")
-        .eq("id", situationId)
-        .single();
-
-      if (situationData) {
-        setSituation(situationData);
-      }
-
-      // Load lines
-      const { data: linesData } = await supabase
-        .from("lines")
-        .select("*")
-        .eq("situation_id", situationId)
-        .order("line_order");
-
-      if (linesData) {
-        setLines(linesData);
-      }
-    } catch (error) {
-      console.error("Error loading session:", error);
-    } finally {
-      setLoading(false);
-    }
-  }, [situationId]);
+  // Recording & feedback state
+  const [phase, setPhase] = useState<SessionPhase>("viewing");
+  const [isRecording, setIsRecording] = useState(false);
+  const [feedbackData, setFeedbackData] = useState<FeedbackData | null>(null);
 
   useEffect(() => {
-    loadSession();
-  }, [loadSession]);
+    loadUserProfile();
+  }, []);
 
-  const currentLine = lines[currentIndex];
+  // Auto-play TTS for NPC lines
+  useEffect(() => {
+    if (session.lines.length > 0 && !session.loading) {
+      const currentLine = session.lines[session.currentIndex];
+      if (currentLine?.speaker === "npc") {
+        setPhase("viewing");
+        setTimeout(() => speakLine(), 500);
+      } else {
+        setPhase("viewing");
+      }
+    }
+  }, [session.currentIndex, session.loading]);
+
+  const loadUserProfile = async () => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user) {
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("gender")
+        .eq("id", user.id)
+        .single();
+      if (profile?.gender) {
+        setUserGender(profile.gender);
+      }
+    }
+  };
+
+  const currentLine = session.lines[session.currentIndex];
 
   const getDisplayText = (): string => {
     if (!currentLine) return "";
-
-    // Handle gender variants
     if (userGender === "male" && currentLine.text_ja_male) {
       return currentLine.text_ja_male;
     }
@@ -104,21 +99,74 @@ export default function SessionScreen({ navigation, route }: Props) {
     });
   };
 
+  // Start recording user's voice
+  const handleStartRecording = async () => {
+    try {
+      setIsRecording(true);
+      setPhase("recording");
+      await startRecording();
+    } catch (error) {
+      console.error("Recording error:", error);
+      setIsRecording(false);
+      setPhase("viewing");
+      Alert.alert("오류", "녹음을 시작할 수 없습니다.");
+    }
+  };
+
+  // Stop recording and process
+  const handleStopRecording = async () => {
+    try {
+      setIsRecording(false);
+      setPhase("processing");
+
+      const result = await stopRecording();
+      if (!result) {
+        setPhase("viewing");
+        return;
+      }
+
+      // Transcribe audio using Whisper
+      const sttResult = await transcribeAudio(result.uri);
+      const expectedText = getDisplayText();
+
+      // Submit attempt and get feedback
+      const attemptResult = await session.submitAttempt(sttResult.text, expectedText);
+
+      setFeedbackData({
+        accuracy: attemptResult.accuracy,
+        userInput: sttResult.text,
+        expectedText,
+        feedback: attemptResult.feedback,
+      });
+      setPhase("feedback");
+    } catch (error) {
+      console.error("Processing error:", error);
+      setPhase("viewing");
+      Alert.alert("오류", "음성 처리 중 오류가 발생했습니다.");
+    }
+  };
+
   const handleNext = () => {
-    if (currentIndex < lines.length - 1) {
-      setCurrentIndex(currentIndex + 1);
-      setShowAnswer(false);
+    setFeedbackData(null);
+    setPhase("viewing");
+    setShowAnswer(false);
+
+    if (session.currentIndex < session.lines.length - 1) {
+      session.moveNext();
     } else {
-      // Session complete
       handleComplete();
     }
+  };
+
+  const handleRetry = () => {
+    setFeedbackData(null);
+    setPhase("viewing");
   };
 
   const handleComplete = async () => {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return;
 
-    // Update progress
     await supabase.from("user_situation_progress").upsert({
       user_id: user.id,
       situation_id: situationId,
@@ -131,8 +179,8 @@ export default function SessionScreen({ navigation, route }: Props) {
     const { data: nextSituation } = await supabase
       .from("situations")
       .select("id")
-      .eq("persona_id", situation?.persona_id)
-      .gt("sort_order", situation?.sort_order)
+      .eq("persona_id", session.situation?.persona_id)
+      .gt("sort_order", session.situation?.sort_order)
       .order("sort_order")
       .limit(1)
       .single();
@@ -147,34 +195,27 @@ export default function SessionScreen({ navigation, route }: Props) {
 
     Alert.alert(
       "학습 완료!",
-      `${situation?.name_ko} 상황을 완료했습니다.`,
-      [
-        {
-          text: "확인",
-          onPress: () => navigation.goBack(),
-        },
-      ]
+      `${session.situation?.name_ko} 상황을 완료했습니다.`,
+      [{ text: "확인", onPress: () => navigation.goBack() }]
     );
   };
 
   const handleExit = () => {
-    Alert.alert(
-      "학습 종료",
-      "학습을 종료하시겠습니까?",
-      [
-        { text: "취소", style: "cancel" },
-        { text: "종료", onPress: () => navigation.goBack() },
-      ]
-    );
+    Alert.alert("학습 종료", "학습을 종료하시겠습니까?", [
+      { text: "취소", style: "cancel" },
+      { text: "종료", onPress: () => navigation.goBack() },
+    ]);
   };
 
-  if (loading || !currentLine) {
+  if (session.loading || !currentLine) {
     return (
       <SafeAreaView style={styles.container}>
         <ActivityIndicator size="large" color="#6366f1" />
       </SafeAreaView>
     );
   }
+
+  const isUserTurn = currentLine.speaker === "user";
 
   return (
     <SafeAreaView style={styles.container}>
@@ -183,9 +224,9 @@ export default function SessionScreen({ navigation, route }: Props) {
         <TouchableOpacity onPress={handleExit}>
           <Text style={styles.closeButton}>✕</Text>
         </TouchableOpacity>
-        <Text style={styles.situationTitle}>{situation?.name_ko}</Text>
+        <Text style={styles.situationTitle}>{session.situation?.name_ko}</Text>
         <Text style={styles.progress}>
-          {currentIndex + 1} / {lines.length}
+          {session.currentIndex + 1} / {session.lines.length}
         </Text>
       </View>
 
@@ -194,7 +235,7 @@ export default function SessionScreen({ navigation, route }: Props) {
         <View
           style={[
             styles.progressFill,
-            { width: `${((currentIndex + 1) / lines.length) * 100}%` },
+            { width: `${((session.currentIndex + 1) / session.lines.length) * 100}%` },
           ]}
         />
       </View>
@@ -202,62 +243,124 @@ export default function SessionScreen({ navigation, route }: Props) {
       {/* Content */}
       <View style={styles.content}>
         {/* Speaker Badge */}
-        <View
-          style={[
-            styles.speakerBadge,
-            currentLine.speaker === "user" && styles.userBadge,
-          ]}
-        >
+        <View style={[styles.speakerBadge, isUserTurn && styles.userBadge]}>
           <Text style={styles.speakerText}>
-            {currentLine.speaker === "npc" ? "상대방" : "나"}
+            {isUserTurn ? "내 차례" : "상대방"}
           </Text>
         </View>
 
-        {/* Line Card */}
-        <View style={styles.lineCard}>
-          {/* Japanese Text */}
-          {level <= 2 && (
-            <TouchableOpacity onPress={speakLine} style={styles.japaneseContainer}>
-              <Text style={styles.japaneseText}>{getDisplayText()}</Text>
-              <Text style={styles.speakerIcon}>{isSpeaking ? "🔊" : "🔈"}</Text>
-            </TouchableOpacity>
-          )}
+        {/* Feedback Card */}
+        {phase === "feedback" && feedbackData && (
+          <View style={styles.feedbackCard}>
+            <Text style={styles.feedbackEmoji}>
+              {feedbackData.accuracy >= 0.8 ? "✅" : feedbackData.accuracy >= 0.5 ? "🔶" : "❌"}
+            </Text>
+            <Text style={styles.feedbackTitle}>{feedbackData.feedback}</Text>
 
-          {/* Pronunciation (Level 1 only) */}
-          {level === 1 && currentLine.pronunciation_ko && (
-            <Text style={styles.pronunciation}>{currentLine.pronunciation_ko}</Text>
-          )}
-
-          {/* Translation (Level 1 & 2) */}
-          {level <= 2 && (
-            <Text style={styles.translation}>{currentLine.text_ko}</Text>
-          )}
-
-          {/* Level 3: Hidden until revealed */}
-          {level === 3 && !showAnswer && (
-            <TouchableOpacity
-              style={styles.revealButton}
-              onPress={() => setShowAnswer(true)}
-            >
-              <Text style={styles.revealButtonText}>정답 보기</Text>
-            </TouchableOpacity>
-          )}
-
-          {level === 3 && showAnswer && (
-            <>
-              <Text style={styles.japaneseText}>{getDisplayText()}</Text>
-              <Text style={styles.translation}>{currentLine.text_ko}</Text>
-            </>
-          )}
-
-          {/* Grammar Hint */}
-          {currentLine.grammar_hint && (level <= 2 || showAnswer) && (
-            <View style={styles.grammarHint}>
-              <Text style={styles.grammarLabel}>💡 문법 힌트</Text>
-              <Text style={styles.grammarText}>{currentLine.grammar_hint}</Text>
+            <View style={styles.comparisonBox}>
+              <Text style={styles.comparisonLabel}>내 발화:</Text>
+              <Text style={styles.comparisonText}>{feedbackData.userInput || "(인식 안됨)"}</Text>
             </View>
-          )}
-        </View>
+
+            <View style={styles.comparisonBox}>
+              <Text style={styles.comparisonLabel}>정답:</Text>
+              <Text style={styles.comparisonTextCorrect}>{feedbackData.expectedText}</Text>
+            </View>
+
+            <Text style={styles.accuracyText}>
+              정확도: {Math.round(feedbackData.accuracy * 100)}%
+            </Text>
+
+            <View style={styles.feedbackButtons}>
+              {feedbackData.accuracy < 0.8 && (
+                <TouchableOpacity style={styles.retryButton} onPress={handleRetry}>
+                  <Text style={styles.retryButtonText}>다시 하기</Text>
+                </TouchableOpacity>
+              )}
+              <TouchableOpacity style={styles.nextButtonSmall} onPress={handleNext}>
+                <Text style={styles.nextButtonText}>
+                  {session.currentIndex < session.lines.length - 1 ? "다음" : "완료"}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        )}
+
+        {/* Processing Indicator */}
+        {phase === "processing" && (
+          <View style={styles.lineCard}>
+            <ActivityIndicator size="large" color="#6366f1" />
+            <Text style={styles.processingText}>음성 처리 중...</Text>
+          </View>
+        )}
+
+        {/* Main Line Card */}
+        {(phase === "viewing" || phase === "recording") && (
+          <View style={styles.lineCard}>
+            {/* For NPC: always show text */}
+            {!isUserTurn && (
+              <>
+                <TouchableOpacity onPress={speakLine} style={styles.japaneseContainer}>
+                  <Text style={styles.japaneseText}>{getDisplayText()}</Text>
+                  <Text style={styles.speakerIcon}>{isSpeaking ? "🔊" : "🔈"}</Text>
+                </TouchableOpacity>
+                {level === 1 && currentLine.pronunciation_ko && (
+                  <Text style={styles.pronunciation}>{currentLine.pronunciation_ko}</Text>
+                )}
+                <Text style={styles.translation}>{currentLine.text_ko}</Text>
+              </>
+            )}
+
+            {/* For User: show based on level */}
+            {isUserTurn && (
+              <>
+                {/* Level 1-2: show hints */}
+                {level <= 2 && (
+                  <>
+                    <Text style={styles.translation}>{currentLine.text_ko}</Text>
+                    {level === 1 && (
+                      <Text style={styles.hintText}>힌트: {getDisplayText()}</Text>
+                    )}
+                  </>
+                )}
+
+                {/* Level 3: hidden */}
+                {level === 3 && !showAnswer && (
+                  <Text style={styles.translation}>{currentLine.text_ko}</Text>
+                )}
+
+                {/* Recording UI */}
+                <View style={styles.recordingSection}>
+                  {phase === "recording" ? (
+                    <TouchableOpacity
+                      style={styles.recordingButton}
+                      onPress={handleStopRecording}
+                    >
+                      <Text style={styles.recordingIcon}>⏹️</Text>
+                      <Text style={styles.recordingText}>녹음 중... 탭하여 완료</Text>
+                    </TouchableOpacity>
+                  ) : (
+                    <TouchableOpacity
+                      style={styles.micButton}
+                      onPress={handleStartRecording}
+                    >
+                      <Text style={styles.micIcon}>🎤</Text>
+                      <Text style={styles.micText}>탭하여 말하기</Text>
+                    </TouchableOpacity>
+                  )}
+                </View>
+              </>
+            )}
+
+            {/* Grammar Hint */}
+            {currentLine.grammar_hint && !isUserTurn && (
+              <View style={styles.grammarHint}>
+                <Text style={styles.grammarLabel}>💡 문법 힌트</Text>
+                <Text style={styles.grammarText}>{currentLine.grammar_hint}</Text>
+              </View>
+            )}
+          </View>
+        )}
       </View>
 
       {/* Level Toggle */}
@@ -283,12 +386,14 @@ export default function SessionScreen({ navigation, route }: Props) {
         ))}
       </View>
 
-      {/* Next Button */}
-      <TouchableOpacity style={styles.nextButton} onPress={handleNext}>
-        <Text style={styles.nextButtonText}>
-          {currentIndex < lines.length - 1 ? "다음" : "완료"}
-        </Text>
-      </TouchableOpacity>
+      {/* Next Button (only for NPC turns) */}
+      {!isUserTurn && phase === "viewing" && (
+        <TouchableOpacity style={styles.nextButton} onPress={handleNext}>
+          <Text style={styles.nextButtonText}>
+            {session.currentIndex < session.lines.length - 1 ? "다음" : "완료"}
+          </Text>
+        </TouchableOpacity>
+      )}
     </SafeAreaView>
   );
 }
@@ -363,6 +468,82 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 4,
   },
+  feedbackCard: {
+    backgroundColor: "#fff",
+    borderRadius: 20,
+    padding: 24,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    elevation: 4,
+  },
+  feedbackEmoji: {
+    fontSize: 48,
+    marginBottom: 12,
+  },
+  feedbackTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#1e293b",
+    marginBottom: 20,
+  },
+  comparisonBox: {
+    width: "100%",
+    backgroundColor: "#f8fafc",
+    borderRadius: 12,
+    padding: 12,
+    marginBottom: 12,
+  },
+  comparisonLabel: {
+    fontSize: 12,
+    color: "#64748b",
+    marginBottom: 4,
+  },
+  comparisonText: {
+    fontSize: 18,
+    color: "#1e293b",
+  },
+  comparisonTextCorrect: {
+    fontSize: 18,
+    color: "#16a34a",
+    fontWeight: "600",
+  },
+  accuracyText: {
+    fontSize: 16,
+    color: "#6366f1",
+    fontWeight: "600",
+    marginTop: 8,
+    marginBottom: 20,
+  },
+  feedbackButtons: {
+    flexDirection: "row",
+    gap: 12,
+  },
+  retryButton: {
+    backgroundColor: "#f1f5f9",
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    borderRadius: 12,
+  },
+  retryButtonText: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#64748b",
+  },
+  nextButtonSmall: {
+    backgroundColor: "#6366f1",
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    borderRadius: 12,
+  },
+  processingText: {
+    fontSize: 16,
+    color: "#64748b",
+    marginTop: 16,
+    textAlign: "center",
+  },
   japaneseContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -390,16 +571,48 @@ const styles = StyleSheet.create({
     marginTop: 16,
     lineHeight: 28,
   },
-  revealButton: {
-    backgroundColor: "#f1f5f9",
-    paddingVertical: 40,
-    borderRadius: 12,
+  hintText: {
+    fontSize: 16,
+    color: "#94a3b8",
+    marginTop: 12,
+    fontStyle: "italic",
+  },
+  recordingSection: {
+    marginTop: 24,
     alignItems: "center",
   },
-  revealButtonText: {
-    fontSize: 16,
-    fontWeight: "500",
-    color: "#6366f1",
+  micButton: {
+    backgroundColor: "#6366f1",
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  micIcon: {
+    fontSize: 48,
+  },
+  micText: {
+    fontSize: 12,
+    color: "#fff",
+    marginTop: 8,
+  },
+  recordingButton: {
+    backgroundColor: "#ef4444",
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  recordingIcon: {
+    fontSize: 48,
+  },
+  recordingText: {
+    fontSize: 11,
+    color: "#fff",
+    marginTop: 8,
+    textAlign: "center",
   },
   grammarHint: {
     marginTop: 20,

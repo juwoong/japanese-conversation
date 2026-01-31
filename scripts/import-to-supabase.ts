@@ -49,10 +49,10 @@ interface Situation {
 // ============ Supabase Client ============
 
 const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY;
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 if (!supabaseUrl || !supabaseServiceKey) {
-  console.error("Missing SUPABASE_URL or SUPABASE_SERVICE_KEY");
+  console.error("Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY");
   process.exit(1);
 }
 
@@ -75,7 +75,8 @@ async function getPersonaId(slug: string): Promise<number> {
 
 async function insertSituation(
   situation: Situation,
-  personaId: number
+  personaId: number,
+  sortOrder: number
 ): Promise<number> {
   const { data, error } = await supabase
     .from("situations")
@@ -86,7 +87,7 @@ async function insertSituation(
         name_ko: situation.name_ko,
         location_ko: situation.location_ko,
         difficulty: situation.difficulty,
-        sort_order: 0,
+        sort_order: sortOrder,
       },
       { onConflict: "persona_id,slug" }
     )
@@ -206,14 +207,17 @@ async function main() {
       continue;
     }
 
+    // Get sort order from original array position
+    const sortOrder = situationsMeta.findIndex((s) => s.slug === slug);
+
     try {
-      console.log(`📝 Processing: ${situationMeta.name_ko} (${slug})`);
+      console.log(`📝 Processing: ${situationMeta.name_ko} (${slug}) [order: ${sortOrder}]`);
 
       // Get persona ID
       const personaId = await getPersonaId(situationMeta.persona);
 
       // Insert situation
-      const situationId = await insertSituation(situationMeta, personaId);
+      const situationId = await insertSituation(situationMeta, personaId, sortOrder);
 
       // Load generated content
       const contentPath = path.join(outputDir, file);
