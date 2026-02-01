@@ -241,6 +241,13 @@ export default function HomeScreen({ navigation }: Props) {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.quickAction}
+            onPress={() => navigation.navigate("Vocabulary")}
+          >
+            <Text style={styles.quickActionIcon}>📝</Text>
+            <Text style={styles.quickActionLabel}>단어장</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.quickAction}
             onPress={() => navigation.navigate("SituationList")}
           >
             <Text style={styles.quickActionIcon}>📚</Text>
