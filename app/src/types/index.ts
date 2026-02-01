@@ -71,6 +71,7 @@ export interface UserSituationProgress {
 
 // Navigation Types
 export type RootStackParamList = {
+  Auth: undefined;
   Onboarding: undefined;
   Home: undefined;
   Session: { situationId: number };

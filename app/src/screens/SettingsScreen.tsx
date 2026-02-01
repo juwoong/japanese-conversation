@@ -107,7 +107,7 @@ export default function SettingsScreen({ navigation }: Props) {
             await supabase.auth.signOut();
             navigation.reset({
               index: 0,
-              routes: [{ name: "Onboarding" }],
+              routes: [{ name: "Auth" }],
             });
           },
         },
