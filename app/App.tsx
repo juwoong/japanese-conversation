@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { supabase } from "./src/lib/supabase";
 import type { RootStackParamList } from "./src/types";
 import {
+  AuthScreen,
   OnboardingScreen,
   HomeScreen,
   SessionScreen,
@@ -49,35 +50,12 @@ export default function App() {
         setIsLoggedIn(true);
         await checkOnboarding(session.user.id);
       } else {
-        // For MVP, auto-create anonymous session
-        await createAnonymousSession();
+        setIsLoggedIn(false);
       }
     } catch (error) {
       console.error("Auth error:", error);
     } finally {
       setIsLoading(false);
-    }
-  };
-
-  const createAnonymousSession = async () => {
-    try {
-      // Generate a random email for anonymous auth
-      const randomId = Math.random().toString(36).substring(2, 15);
-      const email = `${randomId}@anonymous.local`;
-      const password = Math.random().toString(36).substring(2, 15);
-
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-      });
-
-      if (data?.user && !error) {
-        setIsLoggedIn(true);
-        // New user - hasn't completed onboarding
-        setHasCompletedOnboarding(false);
-      }
-    } catch (error) {
-      console.error("Anonymous auth error:", error);
     }
   };
 
@@ -112,9 +90,10 @@ export default function App() {
           animation: "slide_from_right",
         }}
         initialRouteName={
-          isLoggedIn && hasCompletedOnboarding ? "Home" : "Onboarding"
+          !isLoggedIn ? "Auth" : hasCompletedOnboarding ? "Home" : "Onboarding"
         }
       >
+        <Stack.Screen name="Auth" component={AuthScreen} />
         <Stack.Screen name="Onboarding" component={OnboardingScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen
