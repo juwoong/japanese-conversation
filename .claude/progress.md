@@ -118,13 +118,30 @@
 
 ---
 
+### 2026-02-01 Phase 7 - Email/Password Authentication
+
+**완료 항목:**
+- AuthScreen 생성 (로그인/회원가입 토글)
+- Supabase Auth 연동 (signUp, signInWithPassword)
+- App.tsx 네비게이션 수정 (미인증 → Auth 화면)
+- 로그아웃 시 Auth 화면으로 이동
+
+**결과:**
+- 이메일/비밀번호 회원가입
+- 비밀번호 확인 필드
+- 한글 에러 메시지
+- 익명 세션 제거
+
+---
+
 ## 다음 단계
 
 1. ~~Supabase 마이그레이션 실행~~ ✅
 2. ~~시드 데이터 삽입~~ ✅
 3. ~~콘텐츠 임포트~~ ✅
-4. Edge Functions 배포: `supabase functions deploy`
+4. ~~Edge Functions 배포~~ ✅
 5. ~~Expo 시작~~ ✅
 6. ~~시뮬레이터 테스트~~ ✅
-7. 실제 기기 테스트
+7. ~~회원가입 기능~~ ✅
+8. 실제 기기 테스트
 
