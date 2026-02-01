@@ -102,12 +102,29 @@
 
 ---
 
+### 2026-01-31 Phase 6 - STT Integration & E2E Testing
+
+**완료 항목:**
+- Whisper API 연동 (stt.ts)
+- SessionScreen 녹음/피드백 UI
+- 정확도 비교 및 재시도 플로우
+- iOS 시뮬레이터 E2E 테스트
+
+**결과:**
+- STT: OpenAI Whisper API 직접 호출
+- 녹음: expo-av 사용
+- 피드백: 정확도 %, 내 발화 vs 정답 비교
+- 테스트: 홈 → 세션 → 녹음 → 피드백 플로우 확인
+
+---
+
 ## 다음 단계
 
-1. Supabase 마이그레이션 실행: `supabase db reset`
-2. 시드 데이터 삽입: `supabase db seed`
-3. 콘텐츠 임포트: `npx tsx import-to-supabase.ts`
+1. ~~Supabase 마이그레이션 실행~~ ✅
+2. ~~시드 데이터 삽입~~ ✅
+3. ~~콘텐츠 임포트~~ ✅
 4. Edge Functions 배포: `supabase functions deploy`
-5. Expo 시작: `npx expo start`
-6. 시뮬레이터/기기 테스트
+5. ~~Expo 시작~~ ✅
+6. ~~시뮬레이터 테스트~~ ✅
+7. 실제 기기 테스트
 
