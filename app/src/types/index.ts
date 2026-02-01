@@ -78,6 +78,7 @@ export type RootStackParamList = {
   SituationList: undefined;
   Settings: undefined;
   History: undefined;
+  Vocabulary: undefined;
 };
 
 // Session Types

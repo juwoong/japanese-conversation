@@ -12,6 +12,7 @@ import {
   SituationListScreen,
   SettingsScreen,
   HistoryScreen,
+  VocabularyScreen,
 } from "./src/screens";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -107,6 +108,7 @@ export default function App() {
         <Stack.Screen name="SituationList" component={SituationListScreen} />
         <Stack.Screen name="Settings" component={SettingsScreen} />
         <Stack.Screen name="History" component={HistoryScreen} />
+        <Stack.Screen name="Vocabulary" component={VocabularyScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
