@@ -10,6 +10,12 @@ export interface RecordingResult {
   duration: number;
 }
 
+export interface RecordingStatus {
+  durationMillis: number;
+  metering: number | undefined; // dBFS value (-160 to 0, where 0 is max)
+  isRecording: boolean;
+}
+
 let recording: Audio.Recording | null = null;
 
 /**
@@ -25,6 +31,16 @@ export async function requestPermissions(): Promise<boolean> {
  */
 export async function startRecording(): Promise<void> {
   try {
+    // Clean up any existing recording first
+    if (recording) {
+      try {
+        await recording.stopAndUnloadAsync();
+      } catch {
+        // Ignore errors from cleanup
+      }
+      recording = null;
+    }
+
     // Request permissions if needed
     const hasPermission = await requestPermissions();
     if (!hasPermission) {
@@ -37,9 +53,12 @@ export async function startRecording(): Promise<void> {
       playsInSilentModeIOS: true,
     });
 
-    // Create and start recording
+    // Create and start recording with metering enabled
     const { recording: newRecording } = await Audio.Recording.createAsync(
-      Audio.RecordingOptionsPresets.HIGH_QUALITY
+      {
+        ...Audio.RecordingOptionsPresets.HIGH_QUALITY,
+        isMeteringEnabled: true,
+      }
     );
 
     recording = newRecording;
@@ -82,6 +101,26 @@ export async function stopRecording(): Promise<RecordingResult | null> {
     console.error("Failed to stop recording:", error);
     recording = null;
     throw error;
+  }
+}
+
+/**
+ * Get current recording status including metering
+ */
+export async function getRecordingStatus(): Promise<RecordingStatus | null> {
+  if (!recording) {
+    return null;
+  }
+
+  try {
+    const status = await recording.getStatusAsync();
+    return {
+      durationMillis: status.durationMillis || 0,
+      metering: status.metering,
+      isRecording: status.isRecording || false,
+    };
+  } catch {
+    return null;
   }
 }
 

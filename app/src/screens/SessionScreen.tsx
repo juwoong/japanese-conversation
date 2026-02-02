@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import {
   View,
   Text,
@@ -7,11 +7,12 @@ import {
   SafeAreaView,
   ActivityIndicator,
   Alert,
+  Animated,
 } from "react-native";
 import * as Speech from "expo-speech";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { supabase } from "../lib/supabase";
-import { startRecording, stopRecording } from "../lib/audio";
+import { startRecording, stopRecording, getRecordingStatus } from "../lib/audio";
 import { transcribeAudio } from "../lib/stt";
 import { useSession } from "../hooks/useSession";
 import type { RootStackParamList, Line } from "../types";
@@ -42,6 +43,11 @@ export default function SessionScreen({ navigation, route }: Props) {
   const [isRecording, setIsRecording] = useState(false);
   const [feedbackData, setFeedbackData] = useState<FeedbackData | null>(null);
 
+  // Recording feedback state
+  const [recordingDuration, setRecordingDuration] = useState(0);
+  const [audioLevel, setAudioLevel] = useState(0);
+  const glowAnim = useRef(new Animated.Value(0.4)).current;
+
   useEffect(() => {
     loadUserProfile();
   }, []);
@@ -58,6 +64,52 @@ export default function SessionScreen({ navigation, route }: Props) {
       }
     }
   }, [session.currentIndex, session.loading]);
+
+  // Recording animation and status polling
+  useEffect(() => {
+    if (phase === "recording") {
+      // Reset duration when starting
+      setRecordingDuration(0);
+      setAudioLevel(0);
+
+      // Subtle glow animation
+      const glowAnimation = Animated.loop(
+        Animated.sequence([
+          Animated.timing(glowAnim, {
+            toValue: 0.8,
+            duration: 1200,
+            useNativeDriver: true,
+          }),
+          Animated.timing(glowAnim, {
+            toValue: 0.4,
+            duration: 1200,
+            useNativeDriver: true,
+          }),
+        ])
+      );
+      glowAnimation.start();
+
+      // Poll for recording status
+      const interval = setInterval(async () => {
+        const status = await getRecordingStatus();
+        if (status) {
+          setRecordingDuration(status.durationMillis);
+          // Convert dBFS (-160 to 0) to 0-1 range
+          // Typical speech is around -30 to -10 dBFS
+          if (status.metering !== undefined) {
+            const normalized = Math.max(0, Math.min(1, (status.metering + 60) / 60));
+            setAudioLevel(normalized);
+          }
+        }
+      }, 100);
+
+      return () => {
+        glowAnimation.stop();
+        glowAnim.setValue(0.4);
+        clearInterval(interval);
+      };
+    }
+  }, [phase, glowAnim]);
 
   const loadUserProfile = async () => {
     const { data: { user } } = await supabase.auth.getUser();
@@ -207,6 +259,36 @@ export default function SessionScreen({ navigation, route }: Props) {
     ]);
   };
 
+  // Format recording duration as M:SS
+  const formatRecordingTime = (millis: number): string => {
+    const seconds = Math.floor(millis / 1000);
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, "0")}`;
+  };
+
+  // Waveform visualization component
+  const Waveform = ({ level }: { level: number }) => {
+    // Create smooth waveform effect with varying heights
+    const bars = [0.3, 0.5, 0.7, 1, 0.8, 0.6, 0.4, 0.7, 1, 0.5, 0.3];
+    return (
+      <View style={styles.waveform}>
+        {bars.map((baseHeight, i) => {
+          const height = 4 + (level * baseHeight * 16);
+          return (
+            <View
+              key={i}
+              style={[
+                styles.waveBar,
+                { height },
+              ]}
+            />
+          );
+        })}
+      </View>
+    );
+  };
+
   if (session.loading || !currentLine) {
     return (
       <SafeAreaView style={styles.container}>
@@ -286,16 +368,8 @@ export default function SessionScreen({ navigation, route }: Props) {
           </View>
         )}
 
-        {/* Processing Indicator */}
-        {phase === "processing" && (
-          <View style={styles.lineCard}>
-            <ActivityIndicator size="large" color="#6366f1" />
-            <Text style={styles.processingText}>음성 처리 중...</Text>
-          </View>
-        )}
-
         {/* Main Line Card */}
-        {(phase === "viewing" || phase === "recording") && (
+        {(phase === "viewing" || phase === "recording" || phase === "processing") && (
           <View style={styles.lineCard}>
             {/* For NPC: always show text */}
             {!isUserTurn && (
@@ -333,18 +407,41 @@ export default function SessionScreen({ navigation, route }: Props) {
                 <View style={styles.recordingSection}>
                   {phase === "recording" ? (
                     <TouchableOpacity
-                      style={styles.recordingButton}
+                      style={styles.recordingContainer}
                       onPress={handleStopRecording}
+                      activeOpacity={0.8}
                     >
-                      <Text style={styles.recordingIcon}>⏹️</Text>
-                      <Text style={styles.recordingText}>녹음 중... 탭하여 완료</Text>
+                      <Animated.View
+                        style={[
+                          styles.recordingGlow,
+                          { opacity: glowAnim }
+                        ]}
+                      />
+                      <View style={styles.recordingInner}>
+                        <View style={styles.recordingDot} />
+                        <Text style={styles.recordingTime}>
+                          {formatRecordingTime(recordingDuration)}
+                        </Text>
+                      </View>
+                      <Waveform level={audioLevel} />
+                      <Text style={styles.recordingHint}>탭하여 완료</Text>
                     </TouchableOpacity>
+                  ) : phase === "processing" ? (
+                    <View style={styles.processingContainer}>
+                      <View style={styles.processingButton}>
+                        <ActivityIndicator size="small" color="#fff" />
+                      </View>
+                      <Text style={styles.processingText}>처리 중...</Text>
+                    </View>
                   ) : (
                     <TouchableOpacity
                       style={styles.micButton}
                       onPress={handleStartRecording}
+                      activeOpacity={0.8}
                     >
-                      <Text style={styles.micIcon}>🎤</Text>
+                      <View style={styles.micIconContainer}>
+                        <Text style={styles.micIcon}>🎤</Text>
+                      </View>
                       <Text style={styles.micText}>탭하여 말하기</Text>
                     </TouchableOpacity>
                   )}
@@ -538,12 +635,6 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     borderRadius: 12,
   },
-  processingText: {
-    fontSize: 16,
-    color: "#64748b",
-    marginTop: 16,
-    textAlign: "center",
-  },
   japaneseContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -582,37 +673,102 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   micButton: {
+    alignItems: "center",
+    gap: 12,
+  },
+  micIconContainer: {
     backgroundColor: "#6366f1",
-    width: 120,
-    height: 120,
-    borderRadius: 60,
+    width: 72,
+    height: 72,
+    borderRadius: 36,
     alignItems: "center",
     justifyContent: "center",
+    shadowColor: "#6366f1",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 6,
   },
   micIcon: {
-    fontSize: 48,
+    fontSize: 32,
   },
   micText: {
-    fontSize: 12,
-    color: "#fff",
-    marginTop: 8,
+    fontSize: 14,
+    color: "#64748b",
+    fontWeight: "500",
   },
-  recordingButton: {
+  recordingContainer: {
+    alignItems: "center",
+    gap: 16,
+  },
+  recordingGlow: {
+    position: "absolute",
+    top: -8,
+    width: 88,
+    height: 88,
+    borderRadius: 44,
     backgroundColor: "#ef4444",
-    width: 120,
-    height: 120,
-    borderRadius: 60,
+  },
+  recordingInner: {
+    backgroundColor: "#1e293b",
+    width: 72,
+    height: 72,
+    borderRadius: 36,
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
+    gap: 8,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 4,
+    elevation: 4,
+  },
+  recordingDot: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    backgroundColor: "#ef4444",
+  },
+  recordingTime: {
+    fontSize: 18,
+    fontWeight: "600",
+    color: "#fff",
+    fontVariant: ["tabular-nums"],
+  },
+  recordingHint: {
+    fontSize: 13,
+    color: "#94a3b8",
+  },
+  processingContainer: {
+    alignItems: "center",
+    gap: 12,
+  },
+  processingButton: {
+    backgroundColor: "#94a3b8",
+    width: 72,
+    height: 72,
+    borderRadius: 36,
     alignItems: "center",
     justifyContent: "center",
   },
-  recordingIcon: {
-    fontSize: 48,
+  processingText: {
+    fontSize: 14,
+    color: "#94a3b8",
+    fontWeight: "500",
   },
-  recordingText: {
-    fontSize: 11,
-    color: "#fff",
-    marginTop: 8,
-    textAlign: "center",
+  waveform: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    height: 24,
+    gap: 3,
+  },
+  waveBar: {
+    width: 3,
+    backgroundColor: "#6366f1",
+    borderRadius: 1.5,
+    minHeight: 4,
   },
   grammarHint: {
     marginTop: 20,
