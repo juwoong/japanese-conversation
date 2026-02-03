@@ -30,7 +30,7 @@ interface FeedbackData {
 }
 
 export default function SessionScreen({ navigation, route }: Props) {
-  const { situationId } = route.params;
+  const { situationId, isReview } = route.params;
   const session = useSession(situationId);
 
   const [level, setLevel] = useState<LineLevel>(1);
@@ -216,6 +216,15 @@ export default function SessionScreen({ navigation, route }: Props) {
   };
 
   const handleComplete = async () => {
+    if (isReview) {
+      Alert.alert(
+        "복습 완료!",
+        `${session.situation?.name_ko} 복습을 완료했습니다.`,
+        [{ text: "확인", onPress: () => navigation.goBack() }]
+      );
+      return;
+    }
+
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return;
 
@@ -291,7 +300,7 @@ export default function SessionScreen({ navigation, route }: Props) {
 
   if (session.loading || !currentLine) {
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={[styles.container, { justifyContent: "center", alignItems: "center" }]}>
         <ActivityIndicator size="large" color="#6366f1" />
       </SafeAreaView>
     );

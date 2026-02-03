@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import {
   View,
   Text,
@@ -10,6 +10,7 @@ import {
   RefreshControl,
 } from "react-native";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { useFocusEffect } from "@react-navigation/native";
 import { supabase } from "../lib/supabase";
 import type { RootStackParamList, Persona, UserSituationProgress, Situation } from "../types";
 
@@ -26,6 +27,7 @@ export default function HomeScreen({ navigation }: Props) {
   const [situations, setSituations] = useState<SituationWithProgress[]>([]);
   const [completedToday, setCompletedToday] = useState(0);
   const [dailyGoal, setDailyGoal] = useState(3);
+  const [reviewSituations, setReviewSituations] = useState<SituationWithProgress[]>([]);
 
   const loadData = useCallback(async () => {
     try {
@@ -85,6 +87,24 @@ export default function HomeScreen({ navigation }: Props) {
             (p) => p.completed_at?.startsWith(today)
           ).length || 0;
           setCompletedToday(todayCompleted);
+
+          // Load due SRS cards for review
+          const { data: dueCards } = await supabase
+            .from("srs_cards")
+            .select("id, line_id, lines(situation_id)")
+            .eq("user_id", user.id)
+            .neq("state", "new")
+            .lte("due_date", today);
+
+          const reviewMap = new Map<number, number>();
+          dueCards?.forEach((card: any) => {
+            const sitId = card.lines?.situation_id;
+            if (sitId) reviewMap.set(sitId, (reviewMap.get(sitId) || 0) + 1);
+          });
+
+          setReviewSituations(
+            withProgress.filter((s) => reviewMap.has(s.id))
+          );
         }
       }
     } catch (error) {
@@ -95,9 +115,11 @@ export default function HomeScreen({ navigation }: Props) {
     }
   }, []);
 
-  useEffect(() => {
-    loadData();
-  }, [loadData]);
+  useFocusEffect(
+    useCallback(() => {
+      loadData();
+    }, [loadData])
+  );
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -106,6 +128,10 @@ export default function HomeScreen({ navigation }: Props) {
 
   const handleStartSession = (situation: SituationWithProgress) => {
     navigation.navigate("Session", { situationId: situation.id });
+  };
+
+  const handleStartReview = (situation: SituationWithProgress) => {
+    navigation.navigate("Session", { situationId: situation.id, isReview: true });
   };
 
   const getNextAvailableSituation = (): SituationWithProgress | null => {
@@ -121,7 +147,7 @@ export default function HomeScreen({ navigation }: Props) {
 
   if (loading) {
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={[styles.container, styles.centered]}>
         <ActivityIndicator size="large" color="#6366f1" />
       </SafeAreaView>
     );
@@ -168,6 +194,28 @@ export default function HomeScreen({ navigation }: Props) {
             {completedToday} / {dailyGoal} 상황 완료
           </Text>
         </View>
+
+        {/* Review Section */}
+        {reviewSituations.length > 0 && (
+          <View style={styles.reviewSection}>
+            <Text style={styles.reviewTitle}>복습할 상황</Text>
+            {reviewSituations.map((situation) => (
+              <TouchableOpacity
+                key={situation.id}
+                style={styles.reviewCard}
+                onPress={() => handleStartReview(situation)}
+              >
+                <View style={styles.situationInfo}>
+                  <Text style={styles.reviewName}>{situation.name_ko}</Text>
+                  <Text style={styles.situationMeta}>
+                    {situation.location_ko}
+                  </Text>
+                </View>
+                <Text style={styles.reviewArrow}>→</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        )}
 
         {/* Start Session Button */}
         {nextSituation && (
@@ -264,6 +312,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#f8fafc",
   },
+  centered: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
   scrollView: {
     flex: 1,
   },
@@ -323,6 +375,34 @@ const styles = StyleSheet.create({
     color: "#64748b",
     marginTop: 8,
     textAlign: "center",
+  },
+  reviewSection: {
+    marginTop: 20,
+    paddingHorizontal: 20,
+  },
+  reviewTitle: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#1e293b",
+    marginBottom: 12,
+  },
+  reviewCard: {
+    backgroundColor: "#fef3c7",
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  reviewName: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#92400e",
+  },
+  reviewArrow: {
+    fontSize: 20,
+    color: "#92400e",
   },
   startButton: {
     backgroundColor: "#6366f1",

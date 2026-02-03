@@ -74,7 +74,7 @@ export type RootStackParamList = {
   Auth: undefined;
   Onboarding: undefined;
   Home: undefined;
-  Session: { situationId: number };
+  Session: { situationId: number; isReview?: boolean };
   SituationList: undefined;
   Settings: undefined;
   History: undefined;
