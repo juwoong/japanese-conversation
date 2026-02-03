@@ -10,6 +10,8 @@ import {
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { supabase } from "../lib/supabase";
 import type { RootStackParamList, Persona } from "../types";
+import { colors, shadows } from "../constants/theme";
+import LoadingScreen from "../components/LoadingScreen";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Onboarding">;
 
@@ -99,11 +101,7 @@ export default function OnboardingScreen({ navigation }: Props) {
   };
 
   if (loading) {
-    return (
-      <SafeAreaView style={[styles.container, { justifyContent: "center", alignItems: "center" }]}>
-        <ActivityIndicator size="large" color="#6366f1" />
-      </SafeAreaView>
-    );
+    return <LoadingScreen />;
   }
 
   return (
@@ -159,7 +157,7 @@ export default function OnboardingScreen({ navigation }: Props) {
             <Text style={styles.backButtonText}>뒤로</Text>
           </TouchableOpacity>
 
-          {saving && <ActivityIndicator style={styles.loader} color="#6366f1" />}
+          {saving && <ActivityIndicator style={styles.loader} color={colors.primary} />}
         </View>
       )}
     </SafeAreaView>
@@ -169,7 +167,7 @@ export default function OnboardingScreen({ navigation }: Props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f8fafc",
+    backgroundColor: colors.background,
   },
   content: {
     flex: 1,
@@ -179,13 +177,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#1e293b",
+    color: colors.textDark,
     textAlign: "center",
     marginBottom: 8,
   },
   subtitle: {
     fontSize: 16,
-    color: "#64748b",
+    color: colors.textMuted,
     textAlign: "center",
     marginBottom: 40,
   },
@@ -193,16 +191,12 @@ const styles = StyleSheet.create({
     gap: 16,
   },
   option: {
-    backgroundColor: "#fff",
+    backgroundColor: colors.surface,
     borderRadius: 16,
     padding: 20,
     flexDirection: "row",
     alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 4,
-    elevation: 2,
+    ...shadows.md,
   },
   optionIcon: {
     fontSize: 32,
@@ -211,19 +205,15 @@ const styles = StyleSheet.create({
   optionLabel: {
     fontSize: 18,
     fontWeight: "600",
-    color: "#1e293b",
+    color: colors.textDark,
   },
   personaOption: {
-    backgroundColor: "#fff",
+    backgroundColor: colors.surface,
     borderRadius: 16,
     padding: 20,
     flexDirection: "row",
     alignItems: "flex-start",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 4,
-    elevation: 2,
+    ...shadows.md,
   },
   personaInfo: {
     flex: 1,
@@ -231,12 +221,12 @@ const styles = StyleSheet.create({
   personaName: {
     fontSize: 18,
     fontWeight: "600",
-    color: "#1e293b",
+    color: colors.textDark,
     marginBottom: 4,
   },
   personaDesc: {
     fontSize: 14,
-    color: "#64748b",
+    color: colors.textMuted,
     lineHeight: 20,
   },
   backButton: {
@@ -245,7 +235,7 @@ const styles = StyleSheet.create({
   },
   backButtonText: {
     fontSize: 16,
-    color: "#6366f1",
+    color: colors.primary,
     fontWeight: "500",
   },
   loader: {

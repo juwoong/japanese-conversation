@@ -6,11 +6,13 @@ import {
   SafeAreaView,
   ScrollView,
   TouchableOpacity,
-  ActivityIndicator,
 } from "react-native";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { supabase } from "../lib/supabase";
 import type { RootStackParamList } from "../types";
+import { colors, shadows } from "../constants/theme";
+import LoadingScreen from "../components/LoadingScreen";
+import BackHeader from "../components/BackHeader";
 
 type Props = NativeStackScreenProps<RootStackParamList, "History">;
 
@@ -112,22 +114,12 @@ export default function HistoryScreen({ navigation }: Props) {
   };
 
   if (loading) {
-    return (
-      <SafeAreaView style={[styles.container, { justifyContent: "center", alignItems: "center" }]}>
-        <ActivityIndicator size="large" color="#6366f1" />
-      </SafeAreaView>
-    );
+    return <LoadingScreen />;
   }
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Text style={styles.backButton}>← 뒤로</Text>
-        </TouchableOpacity>
-        <Text style={styles.title}>학습 기록</Text>
-        <View style={{ width: 50 }} />
-      </View>
+      <BackHeader title="학습 기록" onBack={() => navigation.goBack()} />
 
       <ScrollView style={styles.scrollView}>
         {/* Summary Card */}
@@ -185,33 +177,14 @@ export default function HistoryScreen({ navigation }: Props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f8fafc",
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: "#e2e8f0",
-  },
-  backButton: {
-    fontSize: 16,
-    color: "#6366f1",
-    fontWeight: "500",
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#1e293b",
+    backgroundColor: colors.background,
   },
   scrollView: {
     flex: 1,
   },
   summaryCard: {
     flexDirection: "row",
-    backgroundColor: "#6366f1",
+    backgroundColor: colors.primary,
     margin: 16,
     borderRadius: 16,
     padding: 20,
@@ -223,7 +196,7 @@ const styles = StyleSheet.create({
   summaryValue: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#fff",
+    color: colors.surface,
   },
   summaryLabel: {
     fontSize: 12,
@@ -241,11 +214,11 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#1e293b",
+    color: colors.textDark,
     marginBottom: 12,
   },
   emptyState: {
-    backgroundColor: "#fff",
+    backgroundColor: colors.surface,
     borderRadius: 16,
     padding: 32,
     alignItems: "center",
@@ -253,26 +226,22 @@ const styles = StyleSheet.create({
   emptyText: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#64748b",
+    color: colors.textMuted,
   },
   emptySubtext: {
     fontSize: 14,
-    color: "#94a3b8",
+    color: colors.textLight,
     marginTop: 4,
   },
   dayCard: {
-    backgroundColor: "#fff",
+    backgroundColor: colors.surface,
     borderRadius: 12,
     padding: 16,
     marginBottom: 8,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.03,
-    shadowRadius: 2,
-    elevation: 1,
+    ...shadows.sm,
   },
   dayInfo: {
     flex: 1,
@@ -280,11 +249,11 @@ const styles = StyleSheet.create({
   dayDate: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#1e293b",
+    color: colors.textDark,
   },
   dayStats: {
     fontSize: 14,
-    color: "#64748b",
+    color: colors.textMuted,
     marginTop: 2,
   },
   accuracyBadge: {
@@ -296,6 +265,6 @@ const styles = StyleSheet.create({
   accuracyText: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#16a34a",
+    color: colors.success,
   },
 });
