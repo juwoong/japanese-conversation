@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   View,
   Text,
@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
   Alert,
   Animated,
+  ScrollView,
 } from "react-native";
 import * as Speech from "expo-speech";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -16,11 +17,12 @@ import { startRecording, stopRecording, getRecordingStatus } from "../lib/audio"
 import { transcribeAudio } from "../lib/stt";
 import { useSession } from "../hooks/useSession";
 import type { RootStackParamList, Line } from "../types";
+import { colors } from "../constants/theme";
+import LoadingScreen from "../components/LoadingScreen";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Session">;
 
-type LineLevel = 1 | 2 | 3;
-type SessionPhase = "viewing" | "recording" | "processing" | "feedback";
+type SessionPhase = "viewing" | "recording" | "processing" | "success";
 
 interface FeedbackData {
   accuracy: number;
@@ -29,14 +31,27 @@ interface FeedbackData {
   feedback: string;
 }
 
+interface ChatMessage {
+  lineIndex: number;
+  line: Line;
+  displayText: string;
+  feedbackData?: { accuracy: number; userInput: string };
+}
+
 export default function SessionScreen({ navigation, route }: Props) {
   const { situationId, isReview } = route.params;
   const session = useSession(situationId);
 
-  const [level, setLevel] = useState<LineLevel>(1);
-  const [showAnswer, setShowAnswer] = useState(false);
+  const [showPronunciation, setShowPronunciation] = useState(true);
   const [userGender, setUserGender] = useState<string>("neutral");
   const [isSpeaking, setIsSpeaking] = useState(false);
+
+  // Chat state
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [revealedTranslations, setRevealedTranslations] = useState<Set<number>>(new Set());
+  const [expandedGrammar, setExpandedGrammar] = useState<Set<number>>(new Set());
+  const scrollRef = useRef<ScrollView>(null);
+  const autoAdvanceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Recording & feedback state
   const [phase, setPhase] = useState<SessionPhase>("viewing");
@@ -65,14 +80,17 @@ export default function SessionScreen({ navigation, route }: Props) {
     }
   }, [session.currentIndex, session.loading]);
 
+  // Scroll to bottom when messages change or phase changes
+  useEffect(() => {
+    setTimeout(() => scrollRef.current?.scrollToEnd({ animated: true }), 100);
+  }, [messages, phase, session.currentIndex]);
+
   // Recording animation and status polling
   useEffect(() => {
     if (phase === "recording") {
-      // Reset duration when starting
       setRecordingDuration(0);
       setAudioLevel(0);
 
-      // Subtle glow animation
       const glowAnimation = Animated.loop(
         Animated.sequence([
           Animated.timing(glowAnim, {
@@ -89,13 +107,10 @@ export default function SessionScreen({ navigation, route }: Props) {
       );
       glowAnimation.start();
 
-      // Poll for recording status
       const interval = setInterval(async () => {
         const status = await getRecordingStatus();
         if (status) {
           setRecordingDuration(status.durationMillis);
-          // Convert dBFS (-160 to 0) to 0-1 range
-          // Typical speech is around -30 to -10 dBFS
           if (status.metering !== undefined) {
             const normalized = Math.max(0, Math.min(1, (status.metering + 60) / 60));
             setAudioLevel(normalized);
@@ -110,6 +125,13 @@ export default function SessionScreen({ navigation, route }: Props) {
       };
     }
   }, [phase, glowAnim]);
+
+  // Cleanup auto-advance timer on unmount
+  useEffect(() => {
+    return () => {
+      if (autoAdvanceRef.current) clearTimeout(autoAdvanceRef.current);
+    };
+  }, []);
 
   const loadUserProfile = async () => {
     const { data: { user } } = await supabase.auth.getUser();
@@ -127,21 +149,19 @@ export default function SessionScreen({ navigation, route }: Props) {
 
   const currentLine = session.lines[session.currentIndex];
 
-  const getDisplayText = (): string => {
-    if (!currentLine) return "";
-    if (userGender === "male" && currentLine.text_ja_male) {
-      return currentLine.text_ja_male;
-    }
-    if (userGender === "female" && currentLine.text_ja_female) {
-      return currentLine.text_ja_female;
-    }
-    return currentLine.text_ja;
+  const getDisplayTextForLine = (line: Line): string => {
+    if (userGender === "male" && line.text_ja_male) return line.text_ja_male;
+    if (userGender === "female" && line.text_ja_female) return line.text_ja_female;
+    return line.text_ja;
   };
 
-  const speakLine = async () => {
-    const text = getDisplayText();
-    if (!text || isSpeaking) return;
+  const getDisplayText = (): string => {
+    if (!currentLine) return "";
+    return getDisplayTextForLine(currentLine);
+  };
 
+  const speakText = (text: string) => {
+    if (!text || isSpeaking) return;
     setIsSpeaking(true);
     Speech.speak(text, {
       language: "ja-JP",
@@ -151,7 +171,10 @@ export default function SessionScreen({ navigation, route }: Props) {
     });
   };
 
-  // Start recording user's voice
+  const speakLine = () => {
+    speakText(getDisplayText());
+  };
+
   const handleStartRecording = async () => {
     try {
       setIsRecording(true);
@@ -165,7 +188,6 @@ export default function SessionScreen({ navigation, route }: Props) {
     }
   };
 
-  // Stop recording and process
   const handleStopRecording = async () => {
     try {
       setIsRecording(false);
@@ -177,20 +199,36 @@ export default function SessionScreen({ navigation, route }: Props) {
         return;
       }
 
-      // Transcribe audio using Whisper
       const sttResult = await transcribeAudio(result.uri);
       const expectedText = getDisplayText();
-
-      // Submit attempt and get feedback
       const attemptResult = await session.submitAttempt(sttResult.text, expectedText);
 
-      setFeedbackData({
+      const newFeedback: FeedbackData = {
         accuracy: attemptResult.accuracy,
         userInput: sttResult.text,
         expectedText,
         feedback: attemptResult.feedback,
-      });
-      setPhase("feedback");
+      };
+      setFeedbackData(newFeedback);
+
+      if (attemptResult.accuracy >= 0.8) {
+        // Success: add user bubble to chat
+        setMessages((prev) => [
+          ...prev,
+          {
+            lineIndex: session.currentIndex,
+            line: currentLine,
+            displayText: getDisplayText(),
+            feedbackData: { accuracy: attemptResult.accuracy, userInput: sttResult.text },
+          },
+        ]);
+        setPhase("success");
+        // Auto-advance after 1.5s
+        autoAdvanceRef.current = setTimeout(() => handleNext(), 1500);
+      } else {
+        // Failure: don't add bubble, show feedback in footer
+        setPhase("success");
+      }
     } catch (error) {
       console.error("Processing error:", error);
       setPhase("viewing");
@@ -199,9 +237,25 @@ export default function SessionScreen({ navigation, route }: Props) {
   };
 
   const handleNext = () => {
+    if (autoAdvanceRef.current) {
+      clearTimeout(autoAdvanceRef.current);
+      autoAdvanceRef.current = null;
+    }
+
+    // Add current NPC line to messages if it's an NPC turn
+    if (currentLine?.speaker === "npc") {
+      setMessages((prev) => [
+        ...prev,
+        {
+          lineIndex: session.currentIndex,
+          line: currentLine,
+          displayText: getDisplayTextForLine(currentLine),
+        },
+      ]);
+    }
+
     setFeedbackData(null);
     setPhase("viewing");
-    setShowAnswer(false);
 
     if (session.currentIndex < session.lines.length - 1) {
       session.moveNext();
@@ -211,6 +265,10 @@ export default function SessionScreen({ navigation, route }: Props) {
   };
 
   const handleRetry = () => {
+    if (autoAdvanceRef.current) {
+      clearTimeout(autoAdvanceRef.current);
+      autoAdvanceRef.current = null;
+    }
     setFeedbackData(null);
     setPhase("viewing");
   };
@@ -236,7 +294,6 @@ export default function SessionScreen({ navigation, route }: Props) {
       attempt_count: 1,
     });
 
-    // Unlock next situation
     const { data: nextSituation } = await supabase
       .from("situations")
       .select("id")
@@ -268,7 +325,6 @@ export default function SessionScreen({ navigation, route }: Props) {
     ]);
   };
 
-  // Format recording duration as M:SS
   const formatRecordingTime = (millis: number): string => {
     const seconds = Math.floor(millis / 1000);
     const mins = Math.floor(seconds / 60);
@@ -276,49 +332,262 @@ export default function SessionScreen({ navigation, route }: Props) {
     return `${mins}:${secs.toString().padStart(2, "0")}`;
   };
 
-  // Waveform visualization component
   const Waveform = ({ level }: { level: number }) => {
-    // Create smooth waveform effect with varying heights
     const bars = [0.3, 0.5, 0.7, 1, 0.8, 0.6, 0.4, 0.7, 1, 0.5, 0.3];
     return (
       <View style={styles.waveform}>
         {bars.map((baseHeight, i) => {
-          const height = 4 + (level * baseHeight * 16);
-          return (
-            <View
-              key={i}
-              style={[
-                styles.waveBar,
-                { height },
-              ]}
-            />
-          );
+          const height = 4 + level * baseHeight * 16;
+          return <View key={i} style={[styles.waveBar, { height }]} />;
         })}
       </View>
     );
   };
 
-  if (session.loading || !currentLine) {
+  const toggleTranslation = (lineIndex: number) => {
+    setRevealedTranslations((prev) => {
+      const next = new Set(prev);
+      if (next.has(lineIndex)) next.delete(lineIndex);
+      else next.add(lineIndex);
+      return next;
+    });
+  };
+
+  const toggleGrammar = (lineIndex: number) => {
+    setExpandedGrammar((prev) => {
+      const next = new Set(prev);
+      if (next.has(lineIndex)) next.delete(lineIndex);
+      else next.add(lineIndex);
+      return next;
+    });
+  };
+
+  // --- Render helpers ---
+
+  const renderNpcBubble = (msg: ChatMessage, isActive: boolean = false) => {
+    const key = isActive ? "active-npc" : `msg-${msg.lineIndex}`;
+    const isRevealed = revealedTranslations.has(msg.lineIndex);
+    const isGrammarOpen = expandedGrammar.has(msg.lineIndex);
+
     return (
-      <SafeAreaView style={[styles.container, { justifyContent: "center", alignItems: "center" }]}>
-        <ActivityIndicator size="large" color="#6366f1" />
-      </SafeAreaView>
+      <View key={key} style={styles.npcBubbleWrapper}>
+        <View style={styles.npcBubble}>
+          {showPronunciation && msg.line.pronunciation_ko && (
+            <Text style={styles.bubblePronunciation}>{msg.line.pronunciation_ko}</Text>
+          )}
+          <View style={styles.bubbleJapaneseRow}>
+            <Text style={styles.bubbleJapanese}>{msg.displayText}</Text>
+            <TouchableOpacity onPress={() => speakText(msg.displayText)}>
+              <Text style={styles.bubbleSpeaker}>{isSpeaking ? "🔊" : "🔈"}</Text>
+            </TouchableOpacity>
+          </View>
+
+          {/* Translation - blurred until tapped */}
+          <TouchableOpacity
+            style={styles.translationArea}
+            onPress={() => toggleTranslation(msg.lineIndex)}
+            activeOpacity={0.7}
+          >
+            {isRevealed ? (
+              <Text style={styles.bubbleTranslation}>{msg.line.text_ko}</Text>
+            ) : (
+              <View style={styles.blurredTranslation}>
+                <Text style={styles.blurredText}>터치하여 번역</Text>
+              </View>
+            )}
+          </TouchableOpacity>
+
+          {/* Grammar hint */}
+          {msg.line.grammar_hint && (
+            <TouchableOpacity
+              onPress={() => toggleGrammar(msg.lineIndex)}
+              style={styles.grammarToggle}
+            >
+              <Text style={styles.grammarToggleText}>💡 문법 팁</Text>
+              {isGrammarOpen && (
+                <Text style={styles.grammarContent}>{msg.line.grammar_hint}</Text>
+              )}
+            </TouchableOpacity>
+          )}
+        </View>
+      </View>
     );
+  };
+
+  const renderUserBubble = (msg: ChatMessage) => {
+    if (!msg.feedbackData) return null;
+    const { accuracy, userInput } = msg.feedbackData;
+    const pct = Math.round(accuracy * 100);
+    const badgeColor = accuracy >= 0.8 ? colors.success : accuracy >= 0.5 ? colors.warning : colors.danger;
+
+    return (
+      <View key={`msg-${msg.lineIndex}`} style={styles.userBubbleWrapper}>
+        <View style={styles.userBubble}>
+          <Text style={styles.userBubbleText}>{userInput}</Text>
+          <View style={[styles.accuracyBadge, { backgroundColor: badgeColor }]}>
+            <Text style={styles.accuracyBadgeText}>✓ {pct}%</Text>
+          </View>
+        </View>
+      </View>
+    );
+  };
+
+  const renderUserPlaceholder = () => (
+    <View style={styles.userBubbleWrapper}>
+      <View style={styles.placeholderBubble}>
+        <Text style={styles.placeholderText}>답변을 생각해보세요...</Text>
+      </View>
+    </View>
+  );
+
+  const renderFooter = () => {
+    if (!currentLine) return null;
+    const isUserTurn = currentLine.speaker === "user";
+
+    // NPC turn: show "next" button
+    if (!isUserTurn && phase === "viewing") {
+      return (
+        <TouchableOpacity style={styles.footerNextButton} onPress={handleNext}>
+          <Text style={styles.footerNextButtonText}>
+            {session.currentIndex < session.lines.length - 1 ? "다음으로 넘어가기 →" : "완료하기 →"}
+          </Text>
+        </TouchableOpacity>
+      );
+    }
+
+    // User turn
+    if (isUserTurn) {
+      if (phase === "success" && feedbackData) {
+        if (feedbackData.accuracy >= 0.8) {
+          // Auto-advancing
+          return (
+            <View style={styles.footerSuccess}>
+              <Text style={styles.footerSuccessText}>
+                잘했어요! {Math.round(feedbackData.accuracy * 100)}%
+              </Text>
+              <Text style={styles.footerAutoAdvance}>자동으로 넘어갑니다...</Text>
+            </View>
+          );
+        } else {
+          // Failed: show feedback + retry/next
+          return (
+            <View style={styles.footerFeedback}>
+              <Text style={styles.footerFeedbackText}>{feedbackData.feedback}</Text>
+              <View style={styles.footerFeedbackCompare}>
+                <Text style={styles.footerCompareLabel}>내 발화:</Text>
+                <Text style={styles.footerCompareText}>{feedbackData.userInput || "(인식 안됨)"}</Text>
+              </View>
+              <Text style={styles.footerAccuracy}>
+                정확도: {Math.round(feedbackData.accuracy * 100)}%
+              </Text>
+              <View style={styles.footerButtons}>
+                <TouchableOpacity style={styles.retryButton} onPress={handleRetry}>
+                  <Text style={styles.retryButtonText}>다시 하기</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.skipButton} onPress={handleNext}>
+                  <Text style={styles.skipButtonText}>
+                    {session.currentIndex < session.lines.length - 1 ? "다음" : "완료"}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          );
+        }
+      }
+
+      if (phase === "recording") {
+        return (
+          <TouchableOpacity
+            style={styles.footerRecording}
+            onPress={handleStopRecording}
+            activeOpacity={0.8}
+          >
+            <Animated.View style={[styles.recordingGlow, { opacity: glowAnim }]} />
+            <View style={styles.recordingInner}>
+              <View style={styles.recordingDot} />
+              <Text style={styles.recordingTime}>{formatRecordingTime(recordingDuration)}</Text>
+            </View>
+            <Waveform level={audioLevel} />
+            <Text style={styles.recordingHint}>탭하여 완료</Text>
+          </TouchableOpacity>
+        );
+      }
+
+      if (phase === "processing") {
+        return (
+          <View style={styles.footerProcessing}>
+            <ActivityIndicator size="small" color={colors.primary} />
+            <Text style={styles.processingText}>처리 중...</Text>
+          </View>
+        );
+      }
+
+      // Default: show target text + mic
+      return (
+        <View style={styles.footerUserTurn}>
+          <Text style={styles.targetJapanese}>{getDisplayText()}</Text>
+          {showPronunciation && currentLine.pronunciation_ko && (
+            <Text style={styles.targetPronunciation}>{currentLine.pronunciation_ko}</Text>
+          )}
+          <Text style={styles.targetKorean}>"{currentLine.text_ko}"</Text>
+          <TouchableOpacity
+            style={styles.micButton}
+            onPress={handleStartRecording}
+            activeOpacity={0.8}
+          >
+            <View style={styles.micIconContainer}>
+              <Text style={styles.micIcon}>🎤</Text>
+            </View>
+            <Text style={styles.micText}>탭하여 말하기</Text>
+          </TouchableOpacity>
+        </View>
+      );
+    }
+
+    return null;
+  };
+
+  // --- Main render ---
+
+  if (session.loading || !currentLine) {
+    return <LoadingScreen />;
   }
 
   const isUserTurn = currentLine.speaker === "user";
+
+  // Build active NPC message (not yet in messages array)
+  const activeNpcMsg: ChatMessage | null =
+    currentLine.speaker === "npc"
+      ? {
+          lineIndex: session.currentIndex,
+          line: currentLine,
+          displayText: getDisplayText(),
+        }
+      : null;
 
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity onPress={handleExit}>
+        <TouchableOpacity onPress={handleExit} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
           <Text style={styles.closeButton}>✕</Text>
         </TouchableOpacity>
-        <Text style={styles.situationTitle}>{session.situation?.name_ko}</Text>
-        <Text style={styles.progress}>
-          {session.currentIndex + 1} / {session.lines.length}
+        <Text style={styles.situationTitle} numberOfLines={1}>
+          {session.situation?.name_ko}
         </Text>
+        <View style={styles.headerRight}>
+          <TouchableOpacity
+            style={[styles.pronToggle, showPronunciation && styles.pronToggleActive]}
+            onPress={() => setShowPronunciation(!showPronunciation)}
+          >
+            <Text style={[styles.pronToggleText, showPronunciation && styles.pronToggleTextActive]}>
+              あ한글
+            </Text>
+          </TouchableOpacity>
+          <Text style={styles.progress}>
+            {session.currentIndex + 1}/{session.lines.length}
+          </Text>
+        </View>
       </View>
 
       {/* Progress Bar */}
@@ -331,175 +600,27 @@ export default function SessionScreen({ navigation, route }: Props) {
         />
       </View>
 
-      {/* Content */}
-      <View style={styles.content}>
-        {/* Speaker Badge */}
-        <View style={[styles.speakerBadge, isUserTurn && styles.userBadge]}>
-          <Text style={styles.speakerText}>
-            {isUserTurn ? "내 차례" : "상대방"}
-          </Text>
-        </View>
-
-        {/* Feedback Card */}
-        {phase === "feedback" && feedbackData && (
-          <View style={styles.feedbackCard}>
-            <Text style={styles.feedbackEmoji}>
-              {feedbackData.accuracy >= 0.8 ? "✅" : feedbackData.accuracy >= 0.5 ? "🔶" : "❌"}
-            </Text>
-            <Text style={styles.feedbackTitle}>{feedbackData.feedback}</Text>
-
-            <View style={styles.comparisonBox}>
-              <Text style={styles.comparisonLabel}>내 발화:</Text>
-              <Text style={styles.comparisonText}>{feedbackData.userInput || "(인식 안됨)"}</Text>
-            </View>
-
-            <View style={styles.comparisonBox}>
-              <Text style={styles.comparisonLabel}>정답:</Text>
-              <Text style={styles.comparisonTextCorrect}>{feedbackData.expectedText}</Text>
-            </View>
-
-            <Text style={styles.accuracyText}>
-              정확도: {Math.round(feedbackData.accuracy * 100)}%
-            </Text>
-
-            <View style={styles.feedbackButtons}>
-              {feedbackData.accuracy < 0.8 && (
-                <TouchableOpacity style={styles.retryButton} onPress={handleRetry}>
-                  <Text style={styles.retryButtonText}>다시 하기</Text>
-                </TouchableOpacity>
-              )}
-              <TouchableOpacity style={styles.nextButtonSmall} onPress={handleNext}>
-                <Text style={styles.nextButtonText}>
-                  {session.currentIndex < session.lines.length - 1 ? "다음" : "완료"}
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
+      {/* Chat Area */}
+      <ScrollView
+        ref={scrollRef}
+        style={styles.chatArea}
+        contentContainerStyle={styles.chatContent}
+        showsVerticalScrollIndicator={false}
+      >
+        {messages.map((msg) =>
+          msg.line.speaker === "npc"
+            ? renderNpcBubble(msg)
+            : renderUserBubble(msg)
         )}
 
-        {/* Main Line Card */}
-        {(phase === "viewing" || phase === "recording" || phase === "processing") && (
-          <View style={styles.lineCard}>
-            {/* For NPC: always show text */}
-            {!isUserTurn && (
-              <>
-                <TouchableOpacity onPress={speakLine} style={styles.japaneseContainer}>
-                  <Text style={styles.japaneseText}>{getDisplayText()}</Text>
-                  <Text style={styles.speakerIcon}>{isSpeaking ? "🔊" : "🔈"}</Text>
-                </TouchableOpacity>
-                {level === 1 && currentLine.pronunciation_ko && (
-                  <Text style={styles.pronunciation}>{currentLine.pronunciation_ko}</Text>
-                )}
-                <Text style={styles.translation}>{currentLine.text_ko}</Text>
-              </>
-            )}
+        {/* Active line */}
+        {activeNpcMsg && renderNpcBubble(activeNpcMsg, true)}
+        {isUserTurn && phase !== "success" && renderUserPlaceholder()}
+        {isUserTurn && phase === "success" && feedbackData && feedbackData.accuracy < 0.8 && renderUserPlaceholder()}
+      </ScrollView>
 
-            {/* For User: show based on level */}
-            {isUserTurn && (
-              <>
-                {/* Level 1-2: show hints */}
-                {level <= 2 && (
-                  <>
-                    <Text style={styles.translation}>{currentLine.text_ko}</Text>
-                    {level === 1 && (
-                      <Text style={styles.hintText}>힌트: {getDisplayText()}</Text>
-                    )}
-                  </>
-                )}
-
-                {/* Level 3: hidden */}
-                {level === 3 && !showAnswer && (
-                  <Text style={styles.translation}>{currentLine.text_ko}</Text>
-                )}
-
-                {/* Recording UI */}
-                <View style={styles.recordingSection}>
-                  {phase === "recording" ? (
-                    <TouchableOpacity
-                      style={styles.recordingContainer}
-                      onPress={handleStopRecording}
-                      activeOpacity={0.8}
-                    >
-                      <Animated.View
-                        style={[
-                          styles.recordingGlow,
-                          { opacity: glowAnim }
-                        ]}
-                      />
-                      <View style={styles.recordingInner}>
-                        <View style={styles.recordingDot} />
-                        <Text style={styles.recordingTime}>
-                          {formatRecordingTime(recordingDuration)}
-                        </Text>
-                      </View>
-                      <Waveform level={audioLevel} />
-                      <Text style={styles.recordingHint}>탭하여 완료</Text>
-                    </TouchableOpacity>
-                  ) : phase === "processing" ? (
-                    <View style={styles.processingContainer}>
-                      <View style={styles.processingButton}>
-                        <ActivityIndicator size="small" color="#fff" />
-                      </View>
-                      <Text style={styles.processingText}>처리 중...</Text>
-                    </View>
-                  ) : (
-                    <TouchableOpacity
-                      style={styles.micButton}
-                      onPress={handleStartRecording}
-                      activeOpacity={0.8}
-                    >
-                      <View style={styles.micIconContainer}>
-                        <Text style={styles.micIcon}>🎤</Text>
-                      </View>
-                      <Text style={styles.micText}>탭하여 말하기</Text>
-                    </TouchableOpacity>
-                  )}
-                </View>
-              </>
-            )}
-
-            {/* Grammar Hint */}
-            {currentLine.grammar_hint && !isUserTurn && (
-              <View style={styles.grammarHint}>
-                <Text style={styles.grammarLabel}>💡 문법 힌트</Text>
-                <Text style={styles.grammarText}>{currentLine.grammar_hint}</Text>
-              </View>
-            )}
-          </View>
-        )}
-      </View>
-
-      {/* Level Toggle */}
-      <View style={styles.levelToggle}>
-        {[1, 2, 3].map((l) => (
-          <TouchableOpacity
-            key={l}
-            style={[styles.levelButton, level === l && styles.levelButtonActive]}
-            onPress={() => {
-              setLevel(l as LineLevel);
-              setShowAnswer(false);
-            }}
-          >
-            <Text
-              style={[
-                styles.levelButtonText,
-                level === l && styles.levelButtonTextActive,
-              ]}
-            >
-              Lv.{l}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </View>
-
-      {/* Next Button (only for NPC turns) */}
-      {!isUserTurn && phase === "viewing" && (
-        <TouchableOpacity style={styles.nextButton} onPress={handleNext}>
-          <Text style={styles.nextButtonText}>
-            {session.currentIndex < session.lines.length - 1 ? "다음" : "완료"}
-          </Text>
-        </TouchableOpacity>
-      )}
+      {/* Footer */}
+      <View style={styles.footer}>{renderFooter()}</View>
     </SafeAreaView>
   );
 }
@@ -507,226 +628,294 @@ export default function SessionScreen({ navigation, route }: Props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f8fafc",
+    backgroundColor: colors.background,
   },
+
+  // Header
   header: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: 20,
-    paddingVertical: 12,
+    paddingHorizontal: 16,
+    paddingVertical: 10,
   },
   closeButton: {
-    fontSize: 24,
-    color: "#64748b",
-    width: 40,
+    fontSize: 22,
+    color: colors.textMuted,
+    width: 32,
   },
   situationTitle: {
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: "600",
-    color: "#1e293b",
+    color: colors.textDark,
+    flex: 1,
+    textAlign: "center",
+    marginHorizontal: 8,
+  },
+  headerRight: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  },
+  pronToggle: {
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 8,
+    backgroundColor: colors.border,
+  },
+  pronToggleActive: {
+    backgroundColor: colors.primary,
+  },
+  pronToggleText: {
+    fontSize: 11,
+    fontWeight: "600",
+    color: colors.textMuted,
+  },
+  pronToggleTextActive: {
+    color: colors.surface,
   },
   progress: {
-    fontSize: 14,
-    color: "#64748b",
-    width: 40,
-    textAlign: "right",
+    fontSize: 13,
+    color: colors.textMuted,
+    fontVariant: ["tabular-nums"],
   },
   progressBar: {
-    height: 4,
-    backgroundColor: "#e2e8f0",
-    marginHorizontal: 20,
+    height: 3,
+    backgroundColor: colors.border,
+    marginHorizontal: 16,
     borderRadius: 2,
     overflow: "hidden",
   },
   progressFill: {
     height: "100%",
-    backgroundColor: "#6366f1",
+    backgroundColor: colors.primary,
   },
-  content: {
+
+  // Chat area
+  chatArea: {
     flex: 1,
-    padding: 20,
-    justifyContent: "center",
   },
-  speakerBadge: {
-    alignSelf: "flex-start",
-    backgroundColor: "#e2e8f0",
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 12,
+  chatContent: {
+    padding: 16,
+    paddingBottom: 8,
+  },
+
+  // NPC bubble
+  npcBubbleWrapper: {
+    alignItems: "flex-start",
     marginBottom: 12,
   },
-  userBadge: {
-    backgroundColor: "#dbeafe",
-  },
-  speakerText: {
-    fontSize: 14,
-    fontWeight: "500",
-    color: "#64748b",
-  },
-  lineCard: {
-    backgroundColor: "#fff",
-    borderRadius: 20,
-    padding: 24,
+  npcBubble: {
+    minWidth: "60%",
+    maxWidth: "80%",
+    backgroundColor: colors.surface,
+    borderRadius: 16,
+    borderTopLeftRadius: 4,
+    padding: 14,
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.08,
-    shadowRadius: 8,
-    elevation: 4,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.04,
+    shadowRadius: 3,
+    elevation: 1,
   },
-  feedbackCard: {
-    backgroundColor: "#fff",
-    borderRadius: 20,
-    padding: 24,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.08,
-    shadowRadius: 8,
-    elevation: 4,
-  },
-  feedbackEmoji: {
-    fontSize: 48,
-    marginBottom: 12,
-  },
-  feedbackTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "#1e293b",
-    marginBottom: 20,
-  },
-  comparisonBox: {
-    width: "100%",
-    backgroundColor: "#f8fafc",
-    borderRadius: 12,
-    padding: 12,
-    marginBottom: 12,
-  },
-  comparisonLabel: {
-    fontSize: 12,
-    color: "#64748b",
+  bubblePronunciation: {
+    fontSize: 13,
+    color: colors.primary,
     marginBottom: 4,
   },
-  comparisonText: {
-    fontSize: 18,
-    color: "#1e293b",
-  },
-  comparisonTextCorrect: {
-    fontSize: 18,
-    color: "#16a34a",
-    fontWeight: "600",
-  },
-  accuracyText: {
-    fontSize: 16,
-    color: "#6366f1",
-    fontWeight: "600",
-    marginTop: 8,
-    marginBottom: 20,
-  },
-  feedbackButtons: {
-    flexDirection: "row",
-    gap: 12,
-  },
-  retryButton: {
-    backgroundColor: "#f1f5f9",
-    paddingHorizontal: 24,
-    paddingVertical: 12,
-    borderRadius: 12,
-  },
-  retryButtonText: {
-    fontSize: 16,
-    fontWeight: "600",
-    color: "#64748b",
-  },
-  nextButtonSmall: {
-    backgroundColor: "#6366f1",
-    paddingHorizontal: 24,
-    paddingVertical: 12,
-    borderRadius: 12,
-  },
-  japaneseContainer: {
+  bubbleJapaneseRow: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
+    gap: 8,
   },
-  japaneseText: {
-    fontSize: 24,
-    fontWeight: "600",
-    color: "#1e293b",
+  bubbleJapanese: {
+    fontSize: 18,
+    fontWeight: "500",
+    color: colors.textDark,
     flex: 1,
-    lineHeight: 36,
+    lineHeight: 26,
   },
-  speakerIcon: {
-    fontSize: 24,
-    marginLeft: 12,
-  },
-  pronunciation: {
-    fontSize: 16,
-    color: "#6366f1",
-    marginTop: 12,
-  },
-  translation: {
+  bubbleSpeaker: {
     fontSize: 18,
-    color: "#64748b",
-    marginTop: 16,
-    lineHeight: 28,
   },
-  hintText: {
-    fontSize: 16,
-    color: "#94a3b8",
-    marginTop: 12,
-    fontStyle: "italic",
+  translationArea: {
+    marginTop: 10,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopColor: colors.border,
+    paddingTop: 10,
   },
-  recordingSection: {
-    marginTop: 24,
+  bubbleTranslation: {
+    fontSize: 14,
+    color: colors.textMuted,
+    lineHeight: 20,
+  },
+  blurredTranslation: {
+    backgroundColor: colors.borderLight,
+    borderRadius: 6,
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+  },
+  blurredText: {
+    fontSize: 13,
+    color: colors.textLight,
+    textAlign: "center",
+  },
+  grammarToggle: {
+    marginTop: 8,
+  },
+  grammarToggleText: {
+    fontSize: 13,
+    color: "#92400e",
+    fontWeight: "500",
+  },
+  grammarContent: {
+    fontSize: 13,
+    color: "#78350f",
+    lineHeight: 18,
+    marginTop: 4,
+    backgroundColor: "#fef3c7",
+    borderRadius: 8,
+    padding: 10,
+  },
+
+  // User bubble
+  userBubbleWrapper: {
+    alignItems: "flex-end",
+    marginBottom: 12,
+  },
+  userBubble: {
+    maxWidth: "80%",
+    backgroundColor: colors.primary,
+    borderRadius: 16,
+    borderTopRightRadius: 4,
+    padding: 14,
+  },
+  userBubbleText: {
+    fontSize: 17,
+    color: colors.surface,
+    lineHeight: 24,
+  },
+  accuracyBadge: {
+    alignSelf: "flex-end",
+    marginTop: 6,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 10,
+  },
+  accuracyBadgeText: {
+    fontSize: 12,
+    fontWeight: "600",
+    color: colors.surface,
+  },
+
+  // Placeholder
+  placeholderBubble: {
+    maxWidth: "80%",
+    borderWidth: 1.5,
+    borderStyle: "dashed",
+    borderColor: colors.border,
+    borderRadius: 16,
+    borderTopRightRadius: 4,
+    padding: 14,
+    opacity: 0.6,
+  },
+  placeholderText: {
+    fontSize: 14,
+    color: colors.textLight,
+    textAlign: "center",
+  },
+
+  // Footer
+  footer: {
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopColor: colors.border,
+    backgroundColor: colors.surface,
+  },
+
+  // Footer - NPC turn next button
+  footerNextButton: {
+    backgroundColor: colors.primary,
+    margin: 16,
+    borderRadius: 14,
+    paddingVertical: 14,
     alignItems: "center",
+  },
+  footerNextButtonText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: colors.surface,
+  },
+
+  // Footer - User turn: target text + mic
+  footerUserTurn: {
+    alignItems: "center",
+    padding: 16,
+    gap: 6,
+  },
+  targetJapanese: {
+    fontSize: 20,
+    fontWeight: "600",
+    color: colors.textDark,
+    textAlign: "center",
+  },
+  targetPronunciation: {
+    fontSize: 14,
+    color: colors.primary,
+  },
+  targetKorean: {
+    fontSize: 14,
+    color: colors.textMuted,
+    marginBottom: 8,
   },
   micButton: {
     alignItems: "center",
-    gap: 12,
+    gap: 8,
   },
   micIconContainer: {
-    backgroundColor: "#6366f1",
-    width: 72,
-    height: 72,
-    borderRadius: 36,
+    backgroundColor: colors.primary,
+    width: 60,
+    height: 60,
+    borderRadius: 30,
     alignItems: "center",
     justifyContent: "center",
-    shadowColor: "#6366f1",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 6,
+    shadowColor: colors.primary,
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.25,
+    shadowRadius: 6,
+    elevation: 5,
   },
   micIcon: {
-    fontSize: 32,
+    fontSize: 28,
   },
   micText: {
-    fontSize: 14,
-    color: "#64748b",
+    fontSize: 13,
+    color: colors.textMuted,
     fontWeight: "500",
   },
-  recordingContainer: {
+
+  // Footer - Recording
+  footerRecording: {
     alignItems: "center",
-    gap: 16,
+    padding: 16,
+    gap: 12,
   },
   recordingGlow: {
     position: "absolute",
-    top: -8,
-    width: 88,
-    height: 88,
-    borderRadius: 44,
-    backgroundColor: "#ef4444",
+    top: 8,
+    width: 76,
+    height: 76,
+    borderRadius: 38,
+    backgroundColor: colors.danger,
   },
   recordingInner: {
-    backgroundColor: "#1e293b",
-    width: 72,
-    height: 72,
-    borderRadius: 36,
+    backgroundColor: colors.textDark,
+    width: 60,
+    height: 60,
+    borderRadius: 30,
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
-    gap: 8,
+    gap: 6,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.15,
@@ -734,102 +923,117 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   recordingDot: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-    backgroundColor: "#ef4444",
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: colors.danger,
   },
   recordingTime: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "600",
-    color: "#fff",
+    color: colors.surface,
     fontVariant: ["tabular-nums"],
   },
   recordingHint: {
-    fontSize: 13,
-    color: "#94a3b8",
-  },
-  processingContainer: {
-    alignItems: "center",
-    gap: 12,
-  },
-  processingButton: {
-    backgroundColor: "#94a3b8",
-    width: 72,
-    height: 72,
-    borderRadius: 36,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  processingText: {
-    fontSize: 14,
-    color: "#94a3b8",
-    fontWeight: "500",
+    fontSize: 12,
+    color: colors.textLight,
   },
   waveform: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    height: 24,
+    height: 20,
     gap: 3,
   },
   waveBar: {
     width: 3,
-    backgroundColor: "#6366f1",
+    backgroundColor: colors.primary,
     borderRadius: 1.5,
     minHeight: 4,
   },
-  grammarHint: {
-    marginTop: 20,
-    padding: 16,
-    backgroundColor: "#fef3c7",
-    borderRadius: 12,
-  },
-  grammarLabel: {
-    fontSize: 14,
-    fontWeight: "600",
-    color: "#92400e",
-    marginBottom: 4,
-  },
-  grammarText: {
-    fontSize: 14,
-    color: "#78350f",
-    lineHeight: 20,
-  },
-  levelToggle: {
-    flexDirection: "row",
-    justifyContent: "center",
-    gap: 12,
-    paddingVertical: 16,
-  },
-  levelButton: {
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 20,
-    backgroundColor: "#e2e8f0",
-  },
-  levelButtonActive: {
-    backgroundColor: "#6366f1",
-  },
-  levelButtonText: {
-    fontSize: 14,
-    fontWeight: "600",
-    color: "#64748b",
-  },
-  levelButtonTextActive: {
-    color: "#fff",
-  },
-  nextButton: {
-    backgroundColor: "#6366f1",
-    marginHorizontal: 20,
-    marginBottom: 20,
-    borderRadius: 16,
-    paddingVertical: 16,
+
+  // Footer - Processing
+  footerProcessing: {
     alignItems: "center",
+    padding: 24,
+    gap: 8,
   },
-  nextButtonText: {
+  processingText: {
+    fontSize: 14,
+    color: colors.textLight,
+    fontWeight: "500",
+  },
+
+  // Footer - Success (auto-advance)
+  footerSuccess: {
+    alignItems: "center",
+    padding: 20,
+    gap: 4,
+  },
+  footerSuccessText: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#fff",
+    color: colors.success,
+  },
+  footerAutoAdvance: {
+    fontSize: 13,
+    color: colors.textLight,
+  },
+
+  // Footer - Feedback (failed)
+  footerFeedback: {
+    padding: 16,
+    alignItems: "center",
+    gap: 8,
+  },
+  footerFeedbackText: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: colors.textDark,
+  },
+  footerFeedbackCompare: {
+    flexDirection: "row",
+    gap: 6,
+    alignItems: "center",
+  },
+  footerCompareLabel: {
+    fontSize: 13,
+    color: colors.textLight,
+  },
+  footerCompareText: {
+    fontSize: 14,
+    color: colors.textMuted,
+  },
+  footerAccuracy: {
+    fontSize: 14,
+    color: colors.primary,
+    fontWeight: "600",
+  },
+  footerButtons: {
+    flexDirection: "row",
+    gap: 12,
+    marginTop: 4,
+  },
+  retryButton: {
+    backgroundColor: colors.borderLight,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 12,
+  },
+  retryButtonText: {
+    fontSize: 15,
+    fontWeight: "600",
+    color: colors.textMuted,
+  },
+  skipButton: {
+    backgroundColor: colors.primary,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 12,
+  },
+  skipButtonText: {
+    fontSize: 15,
+    fontWeight: "bold",
+    color: colors.surface,
   },
 });

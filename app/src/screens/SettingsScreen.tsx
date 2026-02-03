@@ -11,6 +11,8 @@ import {
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { supabase } from "../lib/supabase";
 import type { RootStackParamList, Persona, Profile } from "../types";
+import { colors, shadows } from "../constants/theme";
+import BackHeader from "../components/BackHeader";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Settings">;
 
@@ -123,13 +125,7 @@ export default function SettingsScreen({ navigation }: Props) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Text style={styles.backButton}>← 뒤로</Text>
-        </TouchableOpacity>
-        <Text style={styles.title}>설정</Text>
-        <View style={{ width: 50 }} />
-      </View>
+      <BackHeader title="설정" onBack={() => navigation.goBack()} />
 
       <ScrollView style={styles.scrollView}>
         {/* Profile Section */}
@@ -217,26 +213,7 @@ export default function SettingsScreen({ navigation }: Props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f8fafc",
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: "#e2e8f0",
-  },
-  backButton: {
-    fontSize: 16,
-    color: "#6366f1",
-    fontWeight: "500",
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#1e293b",
+    backgroundColor: colors.background,
   },
   scrollView: {
     flex: 1,
@@ -248,19 +225,15 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#64748b",
+    color: colors.textMuted,
     marginBottom: 12,
     marginLeft: 4,
   },
   card: {
-    backgroundColor: "#fff",
+    backgroundColor: colors.surface,
     borderRadius: 16,
     overflow: "hidden",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 4,
-    elevation: 2,
+    ...shadows.md,
   },
   row: {
     flexDirection: "row",
@@ -268,15 +241,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 16,
     borderBottomWidth: 1,
-    borderBottomColor: "#f1f5f9",
+    borderBottomColor: colors.borderLight,
   },
   label: {
     fontSize: 16,
-    color: "#1e293b",
+    color: colors.textDark,
   },
   value: {
     fontSize: 16,
-    color: "#64748b",
+    color: colors.textMuted,
   },
   goalButtons: {
     flexDirection: "row",
@@ -287,26 +260,26 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingVertical: 12,
     borderRadius: 12,
-    backgroundColor: "#f1f5f9",
+    backgroundColor: colors.borderLight,
     alignItems: "center",
   },
   goalButtonActive: {
-    backgroundColor: "#6366f1",
+    backgroundColor: colors.primary,
   },
   goalButtonText: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#64748b",
+    color: colors.textMuted,
   },
   goalButtonTextActive: {
-    color: "#fff",
+    color: colors.surface,
   },
   personaRow: {
     flexDirection: "row",
     alignItems: "center",
     padding: 16,
     borderBottomWidth: 1,
-    borderBottomColor: "#f1f5f9",
+    borderBottomColor: colors.borderLight,
   },
   personaRowActive: {
     backgroundColor: "#f0f9ff",
@@ -321,31 +294,27 @@ const styles = StyleSheet.create({
   personaName: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#1e293b",
+    color: colors.textDark,
   },
   personaDesc: {
     fontSize: 13,
-    color: "#64748b",
+    color: colors.textMuted,
     marginTop: 2,
   },
   checkmark: {
     fontSize: 20,
-    color: "#6366f1",
+    color: colors.primary,
   },
   signOutButton: {
-    backgroundColor: "#fff",
+    backgroundColor: colors.surface,
     borderRadius: 16,
     padding: 16,
     alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 4,
-    elevation: 2,
+    ...shadows.md,
   },
   signOutText: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#ef4444",
+    color: colors.danger,
   },
 });

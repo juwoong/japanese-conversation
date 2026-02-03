@@ -6,17 +6,15 @@ import {
   TouchableOpacity,
   SafeAreaView,
   ScrollView,
-  ActivityIndicator,
 } from "react-native";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { supabase } from "../lib/supabase";
-import type { RootStackParamList, Persona, Situation, UserSituationProgress } from "../types";
+import type { RootStackParamList, Persona, SituationWithProgress, UserSituationProgress } from "../types";
+import { colors, shadows } from "../constants/theme";
+import LoadingScreen from "../components/LoadingScreen";
+import BackHeader from "../components/BackHeader";
 
 type Props = NativeStackScreenProps<RootStackParamList, "SituationList">;
-
-interface SituationWithProgress extends Situation {
-  progress?: UserSituationProgress;
-}
 
 interface PersonaWithSituations extends Persona {
   situations: SituationWithProgress[];
@@ -91,33 +89,23 @@ export default function SituationListScreen({ navigation }: Props) {
   const getStatusColor = (status?: string) => {
     switch (status) {
       case "completed":
-        return "#16a34a";
+        return colors.success;
       case "in_progress":
-        return "#f59e0b";
+        return colors.warning;
       case "available":
-        return "#6366f1";
+        return colors.primary;
       default:
-        return "#94a3b8";
+        return colors.textLight;
     }
   };
 
   if (loading) {
-    return (
-      <SafeAreaView style={[styles.container, { justifyContent: "center", alignItems: "center" }]}>
-        <ActivityIndicator size="large" color="#6366f1" />
-      </SafeAreaView>
-    );
+    return <LoadingScreen />;
   }
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Text style={styles.backButton}>← 뒤로</Text>
-        </TouchableOpacity>
-        <Text style={styles.title}>전체 상황</Text>
-        <View style={{ width: 50 }} />
-      </View>
+      <BackHeader title="전체 상황" onBack={() => navigation.goBack()} />
 
       <ScrollView style={styles.scrollView}>
         {personas.map((persona) => (
@@ -190,26 +178,7 @@ export default function SituationListScreen({ navigation }: Props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f8fafc",
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: "#e2e8f0",
-  },
-  backButton: {
-    fontSize: 16,
-    color: "#6366f1",
-    fontWeight: "500",
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#1e293b",
+    backgroundColor: colors.background,
   },
   scrollView: {
     flex: 1,
@@ -217,20 +186,16 @@ const styles = StyleSheet.create({
   personaSection: {
     marginTop: 16,
     marginHorizontal: 16,
-    backgroundColor: "#fff",
+    backgroundColor: colors.surface,
     borderRadius: 16,
     overflow: "hidden",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 4,
-    elevation: 2,
+    ...shadows.md,
   },
   personaHeader: {
     flexDirection: "row",
     alignItems: "center",
     padding: 16,
-    backgroundColor: "#f8fafc",
+    backgroundColor: colors.background,
   },
   personaIcon: {
     fontSize: 24,
@@ -240,27 +205,27 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 16,
     fontWeight: "600",
-    color: "#1e293b",
+    color: colors.textDark,
   },
   situationCount: {
     fontSize: 14,
-    color: "#64748b",
+    color: colors.textMuted,
     marginRight: 8,
   },
   expandIcon: {
     fontSize: 12,
-    color: "#94a3b8",
+    color: colors.textLight,
   },
   situationsList: {
     borderTopWidth: 1,
-    borderTopColor: "#e2e8f0",
+    borderTopColor: colors.border,
   },
   situationItem: {
     flexDirection: "row",
     alignItems: "center",
     padding: 16,
     borderBottomWidth: 1,
-    borderBottomColor: "#f1f5f9",
+    borderBottomColor: colors.borderLight,
   },
   lockedItem: {
     opacity: 0.5,
@@ -277,16 +242,16 @@ const styles = StyleSheet.create({
   situationName: {
     fontSize: 15,
     fontWeight: "500",
-    color: "#1e293b",
+    color: colors.textDark,
   },
   situationMeta: {
     fontSize: 13,
-    color: "#94a3b8",
+    color: colors.textLight,
     marginTop: 2,
   },
   checkmark: {
     fontSize: 18,
-    color: "#16a34a",
+    color: colors.success,
   },
   lock: {
     fontSize: 16,

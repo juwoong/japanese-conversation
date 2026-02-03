@@ -6,12 +6,14 @@ import {
   TouchableOpacity,
   SafeAreaView,
   FlatList,
-  ActivityIndicator,
 } from "react-native";
 import * as Speech from "expo-speech";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { supabase } from "../lib/supabase";
 import type { RootStackParamList } from "../types";
+import { colors, shadows } from "../constants/theme";
+import LoadingScreen from "../components/LoadingScreen";
+import BackHeader from "../components/BackHeader";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Vocabulary">;
 
@@ -198,23 +200,12 @@ export default function VocabularyScreen({ navigation }: Props) {
   );
 
   if (loading) {
-    return (
-      <SafeAreaView style={[styles.container, { justifyContent: "center", alignItems: "center" }]}>
-        <ActivityIndicator size="large" color="#6366f1" />
-      </SafeAreaView>
-    );
+    return <LoadingScreen />;
   }
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Text style={styles.backButton}>← 뒤로</Text>
-        </TouchableOpacity>
-        <Text style={styles.title}>단어장</Text>
-        <View style={{ width: 50 }} />
-      </View>
+      <BackHeader title="단어장" onBack={() => navigation.goBack()} />
 
       {/* Stats */}
       <View style={styles.statsBar}>
@@ -268,37 +259,18 @@ export default function VocabularyScreen({ navigation }: Props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f8fafc",
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: "#e2e8f0",
-  },
-  backButton: {
-    fontSize: 16,
-    color: "#6366f1",
-    fontWeight: "500",
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#1e293b",
+    backgroundColor: colors.background,
   },
   statsBar: {
     paddingHorizontal: 20,
     paddingVertical: 12,
-    backgroundColor: "#fff",
+    backgroundColor: colors.surface,
     borderBottomWidth: 1,
-    borderBottomColor: "#e2e8f0",
+    borderBottomColor: colors.border,
   },
   totalCount: {
     fontSize: 14,
-    color: "#64748b",
+    color: colors.textMuted,
   },
   filterTabs: {
     flexDirection: "row",
@@ -310,32 +282,28 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 20,
-    backgroundColor: "#e2e8f0",
+    backgroundColor: colors.border,
   },
   filterTabActive: {
-    backgroundColor: "#6366f1",
+    backgroundColor: colors.primary,
   },
   filterTabText: {
     fontSize: 14,
     fontWeight: "500",
-    color: "#64748b",
+    color: colors.textMuted,
   },
   filterTabTextActive: {
-    color: "#fff",
+    color: colors.surface,
   },
   listContent: {
     padding: 16,
     gap: 12,
   },
   itemCard: {
-    backgroundColor: "#fff",
+    backgroundColor: colors.surface,
     borderRadius: 16,
     padding: 16,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 4,
-    elevation: 2,
+    ...shadows.md,
     marginBottom: 12,
   },
   itemHeader: {
@@ -346,7 +314,7 @@ const styles = StyleSheet.create({
   japaneseText: {
     fontSize: 20,
     fontWeight: "600",
-    color: "#1e293b",
+    color: colors.textDark,
     flex: 1,
   },
   speakerIcon: {
@@ -355,12 +323,12 @@ const styles = StyleSheet.create({
   },
   pronunciationText: {
     fontSize: 14,
-    color: "#6366f1",
+    color: colors.primary,
     marginTop: 4,
   },
   koreanText: {
     fontSize: 16,
-    color: "#64748b",
+    color: colors.textMuted,
     marginTop: 8,
   },
   itemFooter: {
@@ -370,7 +338,7 @@ const styles = StyleSheet.create({
     marginTop: 12,
     paddingTop: 12,
     borderTopWidth: 1,
-    borderTopColor: "#f1f5f9",
+    borderTopColor: colors.borderLight,
   },
   tagContainer: {
     flexDirection: "row",
@@ -388,7 +356,7 @@ const styles = StyleSheet.create({
   },
   situationText: {
     fontSize: 12,
-    color: "#94a3b8",
+    color: colors.textLight,
   },
   statsContainer: {
     flexDirection: "row",
@@ -397,7 +365,7 @@ const styles = StyleSheet.create({
   },
   statsText: {
     fontSize: 12,
-    color: "#94a3b8",
+    color: colors.textLight,
   },
   accuracyText: {
     fontSize: 14,
@@ -415,7 +383,7 @@ const styles = StyleSheet.create({
   },
   emptyText: {
     fontSize: 16,
-    color: "#64748b",
+    color: colors.textMuted,
     textAlign: "center",
     lineHeight: 24,
   },

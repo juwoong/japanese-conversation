@@ -14,6 +14,7 @@ import {
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { supabase } from "../lib/supabase";
 import type { RootStackParamList } from "../types";
+import { colors } from "../constants/theme";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Auth">;
 
@@ -123,7 +124,7 @@ export default function AuthScreen({ navigation }: Props) {
           <TextInput
             style={styles.input}
             placeholder="이메일"
-            placeholderTextColor="#94a3b8"
+            placeholderTextColor={colors.textLight}
             value={email}
             onChangeText={setEmail}
             keyboardType="email-address"
@@ -134,7 +135,7 @@ export default function AuthScreen({ navigation }: Props) {
           <TextInput
             style={styles.input}
             placeholder="비밀번호"
-            placeholderTextColor="#94a3b8"
+            placeholderTextColor={colors.textLight}
             value={password}
             onChangeText={setPassword}
             secureTextEntry
@@ -144,7 +145,7 @@ export default function AuthScreen({ navigation }: Props) {
             <TextInput
               style={styles.input}
               placeholder="비밀번호 확인"
-              placeholderTextColor="#94a3b8"
+              placeholderTextColor={colors.textLight}
               value={confirmPassword}
               onChangeText={setConfirmPassword}
               secureTextEntry
@@ -185,7 +186,7 @@ export default function AuthScreen({ navigation }: Props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f8fafc",
+    backgroundColor: colors.background,
   },
   content: {
     flex: 1,
@@ -203,27 +204,27 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: "bold",
-    color: "#1e293b",
+    color: colors.textDark,
     marginBottom: 8,
   },
   subtitle: {
     fontSize: 16,
-    color: "#64748b",
+    color: colors.textMuted,
   },
   form: {
     gap: 16,
   },
   input: {
-    backgroundColor: "#fff",
+    backgroundColor: colors.surface,
     borderRadius: 12,
     padding: 16,
     fontSize: 16,
-    color: "#1e293b",
+    color: colors.textDark,
     borderWidth: 1,
-    borderColor: "#e2e8f0",
+    borderColor: colors.border,
   },
   button: {
-    backgroundColor: "#6366f1",
+    backgroundColor: colors.primary,
     borderRadius: 12,
     padding: 16,
     alignItems: "center",
@@ -235,7 +236,7 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#fff",
+    color: colors.surface,
   },
   footer: {
     flexDirection: "row",
@@ -246,11 +247,11 @@ const styles = StyleSheet.create({
   },
   footerText: {
     fontSize: 14,
-    color: "#64748b",
+    color: colors.textMuted,
   },
   toggleText: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#6366f1",
+    color: colors.primary,
   },
 });

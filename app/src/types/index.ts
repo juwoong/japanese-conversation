@@ -81,6 +81,10 @@ export type RootStackParamList = {
   Vocabulary: undefined;
 };
 
+export interface SituationWithProgress extends Situation {
+  progress?: UserSituationProgress;
+}
+
 // Session Types
 export interface SessionLine extends Line {
   situation: Situation;

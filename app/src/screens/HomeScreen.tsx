@@ -6,19 +6,16 @@ import {
   TouchableOpacity,
   SafeAreaView,
   ScrollView,
-  ActivityIndicator,
   RefreshControl,
 } from "react-native";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useFocusEffect } from "@react-navigation/native";
 import { supabase } from "../lib/supabase";
-import type { RootStackParamList, Persona, UserSituationProgress, Situation } from "../types";
+import type { RootStackParamList, Persona, SituationWithProgress } from "../types";
+import { colors, shadows } from "../constants/theme";
+import LoadingScreen from "../components/LoadingScreen";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Home">;
-
-interface SituationWithProgress extends Situation {
-  progress?: UserSituationProgress;
-}
 
 export default function HomeScreen({ navigation }: Props) {
   const [loading, setLoading] = useState(true);
@@ -146,11 +143,7 @@ export default function HomeScreen({ navigation }: Props) {
   };
 
   if (loading) {
-    return (
-      <SafeAreaView style={[styles.container, styles.centered]}>
-        <ActivityIndicator size="large" color="#6366f1" />
-      </SafeAreaView>
-    );
+    return <LoadingScreen />;
   }
 
   const nextSituation = getNextAvailableSituation();
@@ -310,11 +303,7 @@ export default function HomeScreen({ navigation }: Props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f8fafc",
-  },
-  centered: {
-    justifyContent: "center",
-    alignItems: "center",
+    backgroundColor: colors.background,
   },
   scrollView: {
     flex: 1,
@@ -329,11 +318,11 @@ const styles = StyleSheet.create({
   greeting: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#1e293b",
+    color: colors.textDark,
   },
   personaLabel: {
     fontSize: 16,
-    color: "#64748b",
+    color: colors.textMuted,
     marginTop: 4,
   },
   settingsButton: {
@@ -343,36 +332,32 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
   progressCard: {
-    backgroundColor: "#fff",
+    backgroundColor: colors.surface,
     marginHorizontal: 20,
     borderRadius: 16,
     padding: 20,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 4,
-    elevation: 2,
+    ...shadows.md,
   },
   progressTitle: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#64748b",
+    color: colors.textMuted,
     marginBottom: 12,
   },
   progressBar: {
     height: 8,
-    backgroundColor: "#e2e8f0",
+    backgroundColor: colors.border,
     borderRadius: 4,
     overflow: "hidden",
   },
   progressFill: {
     height: "100%",
-    backgroundColor: "#6366f1",
+    backgroundColor: colors.primary,
     borderRadius: 4,
   },
   progressText: {
     fontSize: 14,
-    color: "#64748b",
+    color: colors.textMuted,
     marginTop: 8,
     textAlign: "center",
   },
@@ -383,7 +368,7 @@ const styles = StyleSheet.create({
   reviewTitle: {
     fontSize: 16,
     fontWeight: "bold",
-    color: "#1e293b",
+    color: colors.textDark,
     marginBottom: 12,
   },
   reviewCard: {
@@ -405,7 +390,7 @@ const styles = StyleSheet.create({
     color: "#92400e",
   },
   startButton: {
-    backgroundColor: "#6366f1",
+    backgroundColor: colors.primary,
     marginHorizontal: 20,
     marginTop: 20,
     borderRadius: 16,
@@ -415,7 +400,7 @@ const styles = StyleSheet.create({
   startButtonText: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#fff",
+    color: colors.surface,
   },
   startButtonSubtext: {
     fontSize: 14,
@@ -435,26 +420,22 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#1e293b",
+    color: colors.textDark,
   },
   seeAll: {
     fontSize: 14,
-    color: "#6366f1",
+    color: colors.primary,
     fontWeight: "500",
   },
   situationCard: {
-    backgroundColor: "#fff",
+    backgroundColor: colors.surface,
     borderRadius: 12,
     padding: 16,
     marginBottom: 12,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.03,
-    shadowRadius: 2,
-    elevation: 1,
+    ...shadows.sm,
   },
   completedCard: {
     backgroundColor: "#f0fdf4",
@@ -468,14 +449,14 @@ const styles = StyleSheet.create({
   situationName: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#1e293b",
+    color: colors.textDark,
   },
   completedText: {
-    color: "#16a34a",
+    color: colors.success,
   },
   situationMeta: {
     fontSize: 13,
-    color: "#94a3b8",
+    color: colors.textLight,
     marginTop: 4,
   },
   statusBadge: {
@@ -483,14 +464,14 @@ const styles = StyleSheet.create({
   },
   checkmark: {
     fontSize: 20,
-    color: "#16a34a",
+    color: colors.success,
   },
   lock: {
     fontSize: 18,
   },
   arrow: {
     fontSize: 20,
-    color: "#6366f1",
+    color: colors.primary,
   },
   quickActions: {
     flexDirection: "row",
@@ -500,15 +481,11 @@ const styles = StyleSheet.create({
   },
   quickAction: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: colors.surface,
     borderRadius: 12,
     padding: 16,
     alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.03,
-    shadowRadius: 2,
-    elevation: 1,
+    ...shadows.sm,
   },
   quickActionIcon: {
     fontSize: 24,
@@ -517,6 +494,6 @@ const styles = StyleSheet.create({
   quickActionLabel: {
     fontSize: 14,
     fontWeight: "500",
-    color: "#64748b",
+    color: colors.textMuted,
   },
 });
