@@ -14,20 +14,25 @@ import { supabase } from "../lib/supabase";
 import type { RootStackParamList, Persona, SituationWithProgress } from "../types";
 import { colors, shadows } from "../constants/theme";
 import LoadingScreen from "../components/LoadingScreen";
+import OfflineBanner from "../components/OfflineBanner";
+import { useNetworkStatus } from "../hooks/useNetworkStatus";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Home">;
 
 export default function HomeScreen({ navigation }: Props) {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [persona, setPersona] = useState<Persona | null>(null);
   const [situations, setSituations] = useState<SituationWithProgress[]>([]);
   const [completedToday, setCompletedToday] = useState(0);
   const [dailyGoal, setDailyGoal] = useState(3);
   const [reviewSituations, setReviewSituations] = useState<SituationWithProgress[]>([]);
+  const [streakCount, setStreakCount] = useState(0);
 
   const loadData = useCallback(async () => {
     try {
+      setError(null);
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
@@ -85,6 +90,32 @@ export default function HomeScreen({ navigation }: Props) {
           ).length || 0;
           setCompletedToday(todayCompleted);
 
+          // Calculate streak
+          const completedDates = new Set(
+            progressData
+              ?.filter((p) => p.completed_at)
+              .map((p) => p.completed_at!.split("T")[0]) || []
+          );
+          let streak = 0;
+          const d = new Date();
+          // Check today first
+          const todayStr = d.toISOString().split("T")[0];
+          if (completedDates.has(todayStr)) {
+            streak = 1;
+            d.setDate(d.getDate() - 1);
+          }
+          // Count consecutive past days
+          while (true) {
+            const dateStr = d.toISOString().split("T")[0];
+            if (completedDates.has(dateStr)) {
+              streak++;
+              d.setDate(d.getDate() - 1);
+            } else {
+              break;
+            }
+          }
+          setStreakCount(streak);
+
           // Load due SRS cards for review
           const { data: dueCards } = await supabase
             .from("srs_cards")
@@ -104,8 +135,9 @@ export default function HomeScreen({ navigation }: Props) {
           );
         }
       }
-    } catch (error) {
-      console.error("Error loading data:", error);
+    } catch (err) {
+      console.error("Error loading data:", err);
+      setError("데이터를 불러오는데 실패했습니다.");
     } finally {
       setLoading(false);
       setRefreshing(false);
@@ -146,10 +178,31 @@ export default function HomeScreen({ navigation }: Props) {
     return <LoadingScreen />;
   }
 
+  if (error) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={styles.errorContainer}>
+          <Text style={styles.errorIcon}>⚠️</Text>
+          <Text style={styles.errorText}>{error}</Text>
+          <TouchableOpacity
+            style={styles.retryButton}
+            onPress={() => {
+              setLoading(true);
+              loadData();
+            }}
+          >
+            <Text style={styles.retryButtonText}>다시 시도</Text>
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
+    );
+  }
+
   const nextSituation = getNextAvailableSituation();
 
   return (
     <SafeAreaView style={styles.container}>
+      <OfflineBanner />
       <ScrollView
         style={styles.scrollView}
         refreshControl={
@@ -164,13 +217,30 @@ export default function HomeScreen({ navigation }: Props) {
               {persona?.icon} {persona?.name_ko}
             </Text>
           </View>
-          <TouchableOpacity
-            style={styles.settingsButton}
-            onPress={() => navigation.navigate("Settings")}
-          >
-            <Text style={styles.settingsIcon}>⚙️</Text>
-          </TouchableOpacity>
+          <View style={styles.headerRight}>
+            {streakCount > 0 && (
+              <View style={styles.streakBadge}>
+                <Text style={styles.streakText}>🔥 {streakCount}일</Text>
+              </View>
+            )}
+            <TouchableOpacity
+              style={styles.settingsButton}
+              onPress={() => navigation.navigate("Settings")}
+            >
+              <Text style={styles.settingsIcon}>⚙️</Text>
+            </TouchableOpacity>
+          </View>
         </View>
+
+        {/* Review Nudge */}
+        {reviewSituations.length > 0 && (
+          <View style={styles.reviewNudge}>
+            <Text style={styles.reviewNudgeIcon}>📖</Text>
+            <Text style={styles.reviewNudgeText}>
+              복습할 상황이 {reviewSituations.length}개 있어요!
+            </Text>
+          </View>
+        )}
 
         {/* Progress Card */}
         <View style={styles.progressCard}>
@@ -495,5 +565,66 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "500",
     color: colors.textMuted,
+  },
+  headerRight: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  },
+  streakBadge: {
+    backgroundColor: "#fef3c7",
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 12,
+  },
+  streakText: {
+    fontSize: 14,
+    fontWeight: "600",
+    color: "#92400e",
+  },
+  reviewNudge: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#eff6ff",
+    marginHorizontal: 20,
+    marginBottom: 12,
+    padding: 12,
+    borderRadius: 12,
+    gap: 8,
+  },
+  reviewNudgeIcon: {
+    fontSize: 20,
+  },
+  reviewNudgeText: {
+    fontSize: 14,
+    fontWeight: "500",
+    color: "#1e40af",
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 40,
+  },
+  errorIcon: {
+    fontSize: 48,
+    marginBottom: 16,
+  },
+  errorText: {
+    fontSize: 16,
+    color: colors.textMuted,
+    textAlign: "center",
+    marginBottom: 20,
+  },
+  retryButton: {
+    backgroundColor: colors.primary,
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    borderRadius: 12,
+  },
+  retryButtonText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: colors.surface,
   },
 });
