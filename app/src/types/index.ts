@@ -79,6 +79,7 @@ export type RootStackParamList = {
   Settings: undefined;
   History: undefined;
   Vocabulary: undefined;
+  Flashcard: undefined;
 };
 
 export interface SituationWithProgress extends Situation {
