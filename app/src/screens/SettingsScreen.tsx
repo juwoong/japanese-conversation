@@ -8,22 +8,56 @@ import {
   ScrollView,
   Alert,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { supabase } from "../lib/supabase";
 import type { RootStackParamList, Persona, Profile } from "../types";
-import { colors, shadows } from "../constants/theme";
+import { colors, shadows, type ColorScheme, setColorScheme, getColorScheme } from "../constants/theme";
 import BackHeader from "../components/BackHeader";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Settings">;
+
+const TTS_SPEED_KEY = "@tts_speed";
+const TTS_SPEEDS = [
+  { value: 0.5, label: "0.5x (느림)" },
+  { value: 0.8, label: "0.8x (보통)" },
+  { value: 1.0, label: "1.0x (빠름)" },
+];
 
 export default function SettingsScreen({ navigation }: Props) {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [currentPersona, setCurrentPersona] = useState<Persona | null>(null);
   const [allPersonas, setAllPersonas] = useState<Persona[]>([]);
+  const [ttsSpeed, setTtsSpeed] = useState(0.8);
+  const [colorScheme, setColorSchemeState] = useState<ColorScheme>(getColorScheme());
 
   useEffect(() => {
     loadSettings();
+    loadTtsSpeed();
+    AsyncStorage.getItem("@color_scheme").then((v) => {
+      if (v) {
+        const scheme = v as ColorScheme;
+        setColorSchemeState(scheme);
+        setColorScheme(scheme);
+      }
+    });
   }, []);
+
+  const loadTtsSpeed = async () => {
+    const saved = await AsyncStorage.getItem(TTS_SPEED_KEY);
+    if (saved) setTtsSpeed(parseFloat(saved));
+  };
+
+  const handleTtsSpeedChange = async (speed: number) => {
+    setTtsSpeed(speed);
+    await AsyncStorage.setItem(TTS_SPEED_KEY, speed.toString());
+  };
+
+  const handleColorSchemeChange = async (scheme: ColorScheme) => {
+    setColorSchemeState(scheme);
+    setColorScheme(scheme);
+    await AsyncStorage.setItem("@color_scheme", scheme);
+  };
 
   const loadSettings = async () => {
     const { data: { user } } = await supabase.auth.getUser();
@@ -173,6 +207,34 @@ export default function SettingsScreen({ navigation }: Props) {
           </View>
         </View>
 
+        {/* TTS Speed */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>음성 속도</Text>
+          <View style={styles.card}>
+            <View style={styles.goalButtons}>
+              {TTS_SPEEDS.map((s) => (
+                <TouchableOpacity
+                  key={s.value}
+                  style={[
+                    styles.goalButton,
+                    ttsSpeed === s.value && styles.goalButtonActive,
+                  ]}
+                  onPress={() => handleTtsSpeedChange(s.value)}
+                >
+                  <Text
+                    style={[
+                      styles.goalButtonText,
+                      ttsSpeed === s.value && styles.goalButtonTextActive,
+                    ]}
+                  >
+                    {s.label}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </View>
+        </View>
+
         {/* Persona Section */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>학습 페르소나</Text>
@@ -196,6 +258,38 @@ export default function SettingsScreen({ navigation }: Props) {
                 )}
               </TouchableOpacity>
             ))}
+          </View>
+        </View>
+
+        {/* Theme */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>화면 테마</Text>
+          <View style={styles.card}>
+            <View style={styles.goalButtons}>
+              {([
+                { value: "system" as const, label: "시스템" },
+                { value: "light" as const, label: "라이트" },
+                { value: "dark" as const, label: "다크" },
+              ]).map((opt) => (
+                <TouchableOpacity
+                  key={opt.value}
+                  style={[
+                    styles.goalButton,
+                    colorScheme === opt.value && styles.goalButtonActive,
+                  ]}
+                  onPress={() => handleColorSchemeChange(opt.value)}
+                >
+                  <Text
+                    style={[
+                      styles.goalButtonText,
+                      colorScheme === opt.value && styles.goalButtonTextActive,
+                    ]}
+                  >
+                    {opt.label}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
           </View>
         </View>
 

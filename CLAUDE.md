@@ -9,6 +9,7 @@
 **일본어 회화 학습 앱** — 스크립트 기반 + 페르소나 + SRS 조합
 
 ### 기술 스택
+
 - **프레임워크**: Expo (React Native)
 - **백엔드**: Supabase (DB + Auth + Edge Functions)
 - **AI**: Claude API (대사 생성)
@@ -16,6 +17,7 @@
 - **TTS**: ElevenLabs or expo-speech (TBD)
 
 ### 콘텐츠 구조
+
 ```
 페르소나 (3개: 관광/비즈니스/워홀)
   └─ 상황 (22개)
@@ -24,6 +26,7 @@
 ```
 
 ### 문서 위치
+
 ```
 docs/initial/
 ├── README.md           ← 문서 인덱스
@@ -46,6 +49,7 @@ cp .env.example .env
 ```
 
 각 폴더별 상세 셋업/테스트는 해당 폴더의 README 참조:
+
 - `scripts/README.md` — 콘텐츠 생성 스크립트
 - `app/README.md` — Expo 앱
 - `backend/README.md` — Supabase Edge Functions
@@ -65,30 +69,37 @@ cp .env.example .env
 **TodoWrite 도구**를 사용해서 작업을 관리합니다.
 
 **중요: 자동 진행 규칙**
+
 - Stop hook이 `[AUTO-CONTINUE]`를 출력하면, TodoWrite를 확인하세요.
 - `pending` 또는 `in_progress` 상태의 작업이 있으면 **사용자 입력 없이 자동으로 계속 진행**하세요.
 - 모든 작업이 `completed` 상태가 될 때까지 멈추지 마세요.
 
 작업 상태:
+
 - `pending` → 대기 중
 - `in_progress` → 진행 중 (한 번에 1개만)
 - `completed` → 완료
 
 **중요: 결과 기록 규칙**
+
 - Phase 하나가 완료되면 `.claude/progress.md`에 결과를 기록하세요.
 - 기록 형식:
+
 ```markdown
 ### [날짜] Phase X - 작업명
 
 **완료 항목:**
+
 - 항목 1
 - 항목 2
 
 **결과:**
+
 - 생성된 파일: X개
 - 테스트 결과: 통과/실패
 
 **다음 작업:**
+
 - 다음에 할 일
 ```
 
@@ -192,3 +203,23 @@ const journals = await getJournalsByUser(userId);
 > "I'm not a great programmer; I'm just a good programmer with great habits."
 
 — Kent Beck
+
+## Workflow Conventions section at the top of CLAUDE.md
+
+When asked about 'remaining tasks' or project status, provide a concise bullet-point summary (max 10 lines) and immediately ask which task to start. Do not re-explore the codebase if a TODO list or plan already exists.
+
+## Workflow Conventions section in CLAUDE.md
+
+When asked to create a plan, deliver the plan FIRST before exploring the codebase in depth. Limit codebase exploration to 3-5 key files maximum before producing an initial plan outline, then refine if the user wants more detail.
+
+## Workflow Conventions section in CLAUDE.md
+
+For multi-step feature implementations, always start by checking for existing plans or TODO files in the repo (e.g., TODO.md, PLAN.md, or TodoWrite history) before generating a new plan from scratch.
+
+## After Finish Session
+
+세션을 끝내기 전에, 완료된 항목과 다음 할 일을 체크박스로 표시하여 PLAN.md를 업데이트해줘. 완료 항목은 [x]로 표시해줘. 상단에 '## 다음 세션' 섹션을 추가하고 즉시 다음 단계와 재개에 필요한 맥락을 적어줘.
+
+## Before Complex Tasks
+
+코드를 변경하기 전에, 먼저 수정할 파일 목록과 각 변경의 한 줄 설명을 나열해줘. 내 승인을 기다린 후에 편집해줘. 변경은 최소한으로 유지하고 현재 작업에만 집중해줘.

@@ -6,3 +6,4 @@ export { default as SituationListScreen } from "./SituationListScreen";
 export { default as SettingsScreen } from "./SettingsScreen";
 export { default as HistoryScreen } from "./HistoryScreen";
 export { default as VocabularyScreen } from "./VocabularyScreen";
+export { default as FlashcardScreen } from "./FlashcardScreen";

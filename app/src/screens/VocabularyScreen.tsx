@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
   FlatList,
+  TextInput,
 } from "react-native";
 import * as Speech from "expo-speech";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -36,6 +37,7 @@ export default function VocabularyScreen({ navigation }: Props) {
   const [filter, setFilter] = useState<FilterType>("all");
   const [loading, setLoading] = useState(true);
   const [speakingId, setSpeakingId] = useState<number | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     loadVocabulary();
@@ -110,15 +112,31 @@ export default function VocabularyScreen({ navigation }: Props) {
   };
 
   const filteredItems = items.filter((item) => {
+    // Apply filter
+    let passesFilter = true;
     switch (filter) {
       case "weak":
-        return item.accuracy !== null && item.accuracy < 0.7;
+        passesFilter = item.accuracy !== null && item.accuracy < 0.7;
+        break;
       case "mastered":
-        return item.state === "review" && (item.accuracy ?? 0) >= 0.9;
-      default:
-        return true;
+        passesFilter = item.state === "review" && (item.accuracy ?? 0) >= 0.9;
+        break;
     }
+
+    // Apply search
+    if (searchQuery.trim()) {
+      const q = searchQuery.trim().toLowerCase();
+      const matchesSearch =
+        item.text_ja.toLowerCase().includes(q) ||
+        item.text_ko.toLowerCase().includes(q) ||
+        (item.pronunciation_ko?.toLowerCase().includes(q) ?? false);
+      return passesFilter && matchesSearch;
+    }
+
+    return passesFilter;
   });
+
+  const weakCount = items.filter((i) => i.accuracy !== null && i.accuracy < 0.7).length;
 
   const speakText = async (text: string, id: number) => {
     if (speakingId === id) {
@@ -207,9 +225,32 @@ export default function VocabularyScreen({ navigation }: Props) {
     <SafeAreaView style={styles.container}>
       <BackHeader title="단어장" onBack={() => navigation.goBack()} />
 
-      {/* Stats */}
+      {/* Search Bar */}
+      <View style={styles.searchBar}>
+        <TextInput
+          style={styles.searchInput}
+          placeholder="일본어 또는 한국어로 검색..."
+          placeholderTextColor={colors.textLight}
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+          clearButtonMode="while-editing"
+          autoCorrect={false}
+        />
+      </View>
+
+      {/* Stats + Practice Button */}
       <View style={styles.statsBar}>
         <Text style={styles.totalCount}>배운 표현: {items.length}개</Text>
+        {weakCount > 0 && (
+          <TouchableOpacity
+            style={styles.practiceButton}
+            onPress={() => navigation.navigate("Flashcard")}
+          >
+            <Text style={styles.practiceButtonText}>
+              약한 표현 연습 ({weakCount})
+            </Text>
+          </TouchableOpacity>
+        )}
       </View>
 
       {/* Filter Tabs */}
@@ -236,7 +277,9 @@ export default function VocabularyScreen({ navigation }: Props) {
         <View style={styles.emptyContainer}>
           <Text style={styles.emptyIcon}>📚</Text>
           <Text style={styles.emptyText}>
-            {filter === "all"
+            {searchQuery.trim()
+              ? "검색 결과가 없습니다."
+              : filter === "all"
               ? "아직 학습한 표현이 없습니다.\n학습을 시작해보세요!"
               : filter === "weak"
               ? "약한 표현이 없습니다.\n잘하고 계세요!"
@@ -261,7 +304,23 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background,
   },
+  searchBar: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    backgroundColor: colors.surface,
+  },
+  searchInput: {
+    backgroundColor: colors.borderLight,
+    borderRadius: 10,
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    fontSize: 15,
+    color: colors.textDark,
+  },
   statsBar: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     paddingHorizontal: 20,
     paddingVertical: 12,
     backgroundColor: colors.surface,
@@ -271,6 +330,17 @@ const styles = StyleSheet.create({
   totalCount: {
     fontSize: 14,
     color: colors.textMuted,
+  },
+  practiceButton: {
+    backgroundColor: colors.warning + "20",
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 8,
+  },
+  practiceButtonText: {
+    fontSize: 13,
+    fontWeight: "600",
+    color: "#92400e",
   },
   filterTabs: {
     flexDirection: "row",

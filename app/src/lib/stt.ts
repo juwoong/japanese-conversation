@@ -1,8 +1,10 @@
 /**
- * Speech-to-Text using OpenAI Whisper API
+ * Speech-to-Text via Supabase Edge Function (proxies to Whisper API)
+ * API key stays server-side, not exposed in client bundle.
  */
 
-const OPENAI_API_KEY = process.env.EXPO_PUBLIC_OPENAI_API_KEY;
+import { supabase } from "./supabase";
+import { audioToBase64 } from "./audio";
 
 export interface STTResult {
   text: string;
@@ -10,43 +12,21 @@ export interface STTResult {
 }
 
 /**
- * Transcribe audio to text using Whisper API
+ * Transcribe audio to text using the Edge Function
  */
 export async function transcribeAudio(audioUri: string): Promise<STTResult> {
-  if (!OPENAI_API_KEY) {
-    throw new Error("OpenAI API key not configured");
-  }
+  const base64 = await audioToBase64(audioUri);
 
-  // Read file and create form data
-  const response = await fetch(audioUri);
-  const blob = await response.blob();
-
-  const formData = new FormData();
-  formData.append("file", {
-    uri: audioUri,
-    type: "audio/m4a",
-    name: "recording.m4a",
-  } as any);
-  formData.append("model", "whisper-1");
-  formData.append("language", "ja"); // Japanese
-
-  const result = await fetch("https://api.openai.com/v1/audio/transcriptions", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${OPENAI_API_KEY}`,
-    },
-    body: formData,
+  const { data, error } = await supabase.functions.invoke("transcribe", {
+    body: { audio: base64, language: "ja" },
   });
 
-  if (!result.ok) {
-    const error = await result.text();
-    throw new Error(`Whisper API error: ${error}`);
+  if (error) {
+    throw new Error(`Transcription failed: ${error.message}`);
   }
-
-  const data = await result.json();
 
   return {
     text: data.text || "",
-    language: "ja",
+    language: data.language || "ja",
   };
 }

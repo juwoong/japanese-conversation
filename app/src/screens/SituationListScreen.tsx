@@ -158,9 +158,18 @@ export default function SituationListScreen({ navigation }: Props) {
                       <Text style={styles.situationMeta}>
                         {situation.location_ko} · {getDifficultyStars(situation.difficulty)}
                       </Text>
+                      {situation.progress?.status === "completed" && situation.progress.best_accuracy != null && (
+                        <Text style={styles.bestAccuracy}>
+                          최고 기록: {Math.round(situation.progress.best_accuracy * 100)}%
+                          {situation.progress.attempt_count > 1 && ` · ${situation.progress.attempt_count}회 도전`}
+                        </Text>
+                      )}
                     </View>
                     {situation.progress?.status === "completed" ? (
-                      <Text style={styles.checkmark}>✓</Text>
+                      <View style={styles.completedBadge}>
+                        <Text style={styles.checkmark}>✓</Text>
+                        <Text style={styles.retryHint}>재도전</Text>
+                      </View>
                     ) : !situation.progress || situation.progress.status === "locked" ? (
                       <Text style={styles.lock}>🔒</Text>
                     ) : null}
@@ -252,6 +261,19 @@ const styles = StyleSheet.create({
   checkmark: {
     fontSize: 18,
     color: colors.success,
+  },
+  completedBadge: {
+    alignItems: "center",
+  },
+  retryHint: {
+    fontSize: 10,
+    color: colors.textLight,
+    marginTop: 2,
+  },
+  bestAccuracy: {
+    fontSize: 12,
+    color: colors.success,
+    marginTop: 2,
   },
   lock: {
     fontSize: 16,
