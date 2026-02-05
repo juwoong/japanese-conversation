@@ -51,24 +51,42 @@ describe("C2: Session completion error handling", () => {
   });
 
   test("saveSessionProgress should return success:true on normal operation", async () => {
+    // Build a chainable mock that handles arbitrary supabase query chains
+    const chainable = (): any => {
+      const fn: any = jest.fn().mockImplementation(() => fn);
+      fn.select = jest.fn().mockReturnValue(fn);
+      fn.eq = jest.fn().mockReturnValue(fn);
+      fn.gt = jest.fn().mockReturnValue(fn);
+      fn.order = jest.fn().mockReturnValue(fn);
+      fn.limit = jest.fn().mockReturnValue(fn);
+      fn.single = jest.fn().mockResolvedValue({
+        data: { attempt_count: 1, best_accuracy: 0.7 },
+        error: null,
+      });
+      fn.upsert = jest.fn().mockResolvedValue({ error: null });
+      fn.update = jest.fn().mockReturnValue(fn);
+      // count query returns { count }
+      fn.then = undefined; // not a thenable by default
+      return fn;
+    };
+    const mockChain = chainable();
+    // Override select with count option to resolve with count
+    const origSelect = mockChain.select;
+    mockChain.select = jest.fn().mockImplementation((_fields: any, opts: any) => {
+      if (opts?.count) {
+        const countChain = chainable();
+        countChain.eq = jest.fn().mockReturnValue(countChain);
+        // make it resolve directly (head:true returns { count })
+        (countChain as any).then = (resolve: any) =>
+          resolve({ count: 3, error: null });
+        return countChain;
+      }
+      return origSelect(_fields);
+    });
+
     jest.mock("../lib/supabase", () => ({
       supabase: {
-        from: jest.fn().mockReturnValue({
-          select: jest.fn().mockReturnValue({
-            eq: jest.fn().mockReturnValue({
-              eq: jest.fn().mockReturnValue({
-                single: jest.fn().mockResolvedValue({
-                  data: { attempt_count: 1, best_accuracy: 0.7 },
-                  error: null,
-                }),
-              }),
-            }),
-          }),
-          upsert: jest.fn().mockResolvedValue({ error: null }),
-          update: jest.fn().mockReturnValue({
-            eq: jest.fn().mockResolvedValue({ error: null }),
-          }),
-        }),
+        from: jest.fn().mockReturnValue(mockChain),
       },
     }));
 
