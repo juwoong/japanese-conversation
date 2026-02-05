@@ -40,6 +40,7 @@ const FSRS_PARAMS = {
     1.49, 0.14, 0.94, // stability after lapse
     2.18, 0.05, 0.34, 1.26, // stability increase
     0.29, 2.61, // difficulty adjustment
+    0.32, 0.34, // short-term stability factor & offset
   ],
   requestRetention: 0.9,
   maximumInterval: 36500, // 100 years
