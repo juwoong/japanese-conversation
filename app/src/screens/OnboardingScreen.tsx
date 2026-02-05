@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
   ActivityIndicator,
+  Alert,
 } from "react-native";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { supabase } from "../lib/supabase";
@@ -29,6 +30,7 @@ export default function OnboardingScreen({ navigation }: Props) {
   const [personas, setPersonas] = useState<Persona[]>([]);
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     loadPersonas();
@@ -36,15 +38,22 @@ export default function OnboardingScreen({ navigation }: Props) {
 
   const loadPersonas = async () => {
     setLoading(true);
-    const { data, error } = await supabase
+    setError(null);
+    const { data, error: fetchError } = await supabase
       .from("personas")
       .select("*")
       .order("sort_order");
 
-    if (data && !error) {
+    if (fetchError || !data) {
+      setError("페르소나를 불러오지 못했습니다");
+    } else {
       setPersonas(data);
     }
     setLoading(false);
+  };
+
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
   };
 
   const handleGenderSelect = (selectedGender: Gender) => {
@@ -93,8 +102,8 @@ export default function OnboardingScreen({ navigation }: Props) {
       }
 
       navigation.replace("Home");
-    } catch (error) {
-      console.error("Error saving onboarding:", error);
+    } catch (err) {
+      Alert.alert("오류", "저장 중 문제가 발생했습니다. 다시 시도해주세요.");
     } finally {
       setSaving(false);
     }
@@ -102,6 +111,28 @@ export default function OnboardingScreen({ navigation }: Props) {
 
   if (loading) {
     return <LoadingScreen />;
+  }
+
+  if (error) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={styles.content}>
+          <Text style={styles.title}>{error}</Text>
+          <TouchableOpacity
+            style={[styles.option, { justifyContent: "center" }]}
+            onPress={loadPersonas}
+          >
+            <Text style={styles.optionLabel}>다시 시도</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.backButton}
+            onPress={handleSignOut}
+          >
+            <Text style={styles.backButtonText}>로그아웃</Text>
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
+    );
   }
 
   return (
@@ -125,6 +156,13 @@ export default function OnboardingScreen({ navigation }: Props) {
               </TouchableOpacity>
             ))}
           </View>
+
+          <TouchableOpacity
+            style={styles.backButton}
+            onPress={handleSignOut}
+          >
+            <Text style={[styles.backButtonText, { fontSize: 14 }]}>로그아웃</Text>
+          </TouchableOpacity>
         </View>
       ) : (
         <View style={styles.content}>
