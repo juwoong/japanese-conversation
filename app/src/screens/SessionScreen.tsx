@@ -11,14 +11,18 @@ import {
   ScrollView,
 } from "react-native";
 import * as Speech from "expo-speech";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { supabase } from "../lib/supabase";
 import { startRecording, stopRecording, getRecordingStatus } from "../lib/audio";
 import { transcribeAudio } from "../lib/stt";
 import { useSession } from "../hooks/useSession";
+import { saveSessionProgress } from "../lib/sessionProgress";
 import type { RootStackParamList, Line } from "../types";
 import { colors } from "../constants/theme";
 import LoadingScreen from "../components/LoadingScreen";
+import NpcBubble from "../components/NpcBubble";
+import UserBubble from "../components/UserBubble";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Session">;
 
@@ -45,6 +49,7 @@ export default function SessionScreen({ navigation, route }: Props) {
   const [showPronunciation, setShowPronunciation] = useState(true);
   const [userGender, setUserGender] = useState<string>("neutral");
   const [isSpeaking, setIsSpeaking] = useState(false);
+  const [ttsSpeed, setTtsSpeed] = useState(0.8);
 
   // Chat state
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -65,6 +70,9 @@ export default function SessionScreen({ navigation, route }: Props) {
 
   useEffect(() => {
     loadUserProfile();
+    AsyncStorage.getItem("@tts_speed").then((v) => {
+      if (v) setTtsSpeed(parseFloat(v));
+    });
   }, []);
 
   // Auto-play TTS for NPC lines
@@ -165,7 +173,7 @@ export default function SessionScreen({ navigation, route }: Props) {
     setIsSpeaking(true);
     Speech.speak(text, {
       language: "ja-JP",
-      rate: 0.8,
+      rate: ttsSpeed,
       onDone: () => setIsSpeaking(false),
       onError: () => setIsSpeaking(false),
     });
@@ -273,49 +281,49 @@ export default function SessionScreen({ navigation, route }: Props) {
     setPhase("viewing");
   };
 
-  const handleComplete = async () => {
-    if (isReview) {
-      Alert.alert(
-        "복습 완료!",
-        `${session.situation?.name_ko} 복습을 완료했습니다.`,
-        [{ text: "확인", onPress: () => navigation.goBack() }]
-      );
-      return;
-    }
+  const [showCompletion, setShowCompletion] = useState(false);
+  const [completionStats, setCompletionStats] = useState({
+    totalLines: 0,
+    userLines: 0,
+    avgAccuracy: 0,
+    learnedExpressions: [] as string[],
+  });
 
+  const handleComplete = async () => {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return;
 
-    await supabase.from("user_situation_progress").upsert({
-      user_id: user.id,
-      situation_id: situationId,
-      status: "completed",
-      completed_at: new Date().toISOString(),
-      attempt_count: 1,
+    const attemptAccuracies = messages
+      .filter((m) => m.feedbackData)
+      .map((m) => m.feedbackData!.accuracy);
+
+    // Save progress via extracted function (try-catch inside)
+    const result = await saveSessionProgress({
+      userId: user.id,
+      situationId,
+      personaId: session.situation?.persona_id ?? 0,
+      sortOrder: session.situation?.sort_order ?? 0,
+      accuracies: attemptAccuracies,
+      isReview: isReview ?? false,
     });
 
-    const { data: nextSituation } = await supabase
-      .from("situations")
-      .select("id")
-      .eq("persona_id", session.situation?.persona_id)
-      .gt("sort_order", session.situation?.sort_order)
-      .order("sort_order")
-      .limit(1)
-      .single();
-
-    if (nextSituation) {
-      await supabase.from("user_situation_progress").upsert({
-        user_id: user.id,
-        situation_id: nextSituation.id,
-        status: "available",
-      });
+    if (!result.success) {
+      Alert.alert("저장 오류", "진행 상황 저장에 실패했습니다. 학습 기록은 다음에 다시 시도됩니다.");
     }
 
-    Alert.alert(
-      "학습 완료!",
-      `${session.situation?.name_ko} 상황을 완료했습니다.`,
-      [{ text: "확인", onPress: () => navigation.goBack() }]
-    );
+    // Gather completion stats
+    const userLines = session.lines.filter((l) => l.speaker === "user");
+    const avg = attemptAccuracies.length > 0
+      ? attemptAccuracies.reduce((a, b) => a + b, 0) / attemptAccuracies.length
+      : 0;
+
+    setCompletionStats({
+      totalLines: session.lines.length,
+      userLines: userLines.length,
+      avgAccuracy: avg,
+      learnedExpressions: userLines.slice(0, 3).map((l) => l.text_ja),
+    });
+    setShowCompletion(true);
   };
 
   const handleExit = () => {
@@ -364,76 +372,38 @@ export default function SessionScreen({ navigation, route }: Props) {
 
   // --- Render helpers ---
 
-  const renderNpcBubble = (msg: ChatMessage, isActive: boolean = false) => {
+  const renderNpcBubbleItem = (msg: ChatMessage, isActive: boolean = false) => {
     const key = isActive ? "active-npc" : `msg-${msg.lineIndex}`;
-    const isRevealed = revealedTranslations.has(msg.lineIndex);
-    const isGrammarOpen = expandedGrammar.has(msg.lineIndex);
-
     return (
-      <View key={key} style={styles.npcBubbleWrapper}>
-        <View style={styles.npcBubble}>
-          {showPronunciation && msg.line.pronunciation_ko && (
-            <Text style={styles.bubblePronunciation}>{msg.line.pronunciation_ko}</Text>
-          )}
-          <View style={styles.bubbleJapaneseRow}>
-            <Text style={styles.bubbleJapanese}>{msg.displayText}</Text>
-            <TouchableOpacity onPress={() => speakText(msg.displayText)}>
-              <Text style={styles.bubbleSpeaker}>{isSpeaking ? "🔊" : "🔈"}</Text>
-            </TouchableOpacity>
-          </View>
-
-          {/* Translation - blurred until tapped */}
-          <TouchableOpacity
-            style={styles.translationArea}
-            onPress={() => toggleTranslation(msg.lineIndex)}
-            activeOpacity={0.7}
-          >
-            {isRevealed ? (
-              <Text style={styles.bubbleTranslation}>{msg.line.text_ko}</Text>
-            ) : (
-              <View style={styles.blurredTranslation}>
-                <Text style={styles.blurredText}>터치하여 번역</Text>
-              </View>
-            )}
-          </TouchableOpacity>
-
-          {/* Grammar hint */}
-          {msg.line.grammar_hint && (
-            <TouchableOpacity
-              onPress={() => toggleGrammar(msg.lineIndex)}
-              style={styles.grammarToggle}
-            >
-              <Text style={styles.grammarToggleText}>💡 문법 팁</Text>
-              {isGrammarOpen && (
-                <Text style={styles.grammarContent}>{msg.line.grammar_hint}</Text>
-              )}
-            </TouchableOpacity>
-          )}
-        </View>
-      </View>
+      <NpcBubble
+        key={key}
+        displayText={msg.displayText}
+        line={msg.line}
+        lineIndex={msg.lineIndex}
+        showPronunciation={showPronunciation}
+        isSpeaking={isSpeaking}
+        isRevealed={revealedTranslations.has(msg.lineIndex)}
+        isGrammarOpen={expandedGrammar.has(msg.lineIndex)}
+        onSpeak={speakText}
+        onToggleTranslation={toggleTranslation}
+        onToggleGrammar={toggleGrammar}
+      />
     );
   };
 
-  const renderUserBubble = (msg: ChatMessage) => {
+  const renderUserBubbleItem = (msg: ChatMessage) => {
     if (!msg.feedbackData) return null;
-    const { accuracy, userInput } = msg.feedbackData;
-    const pct = Math.round(accuracy * 100);
-    const badgeColor = accuracy >= 0.8 ? colors.success : accuracy >= 0.5 ? colors.warning : colors.danger;
-
     return (
-      <View key={`msg-${msg.lineIndex}`} style={styles.userBubbleWrapper}>
-        <View style={styles.userBubble}>
-          <Text style={styles.userBubbleText}>{userInput}</Text>
-          <View style={[styles.accuracyBadge, { backgroundColor: badgeColor }]}>
-            <Text style={styles.accuracyBadgeText}>✓ {pct}%</Text>
-          </View>
-        </View>
-      </View>
+      <UserBubble
+        key={`msg-${msg.lineIndex}`}
+        userInput={msg.feedbackData.userInput}
+        accuracy={msg.feedbackData.accuracy}
+      />
     );
   };
 
   const renderUserPlaceholder = () => (
-    <View style={styles.userBubbleWrapper}>
+    <View style={styles.placeholderWrapper}>
       <View style={styles.placeholderBubble}>
         <Text style={styles.placeholderText}>답변을 생각해보세요...</Text>
       </View>
@@ -549,8 +519,95 @@ export default function SessionScreen({ navigation, route }: Props) {
 
   // --- Main render ---
 
-  if (session.loading || !currentLine) {
+  if (showCompletion) {
+    const pct = Math.round(completionStats.avgAccuracy * 100);
+    return (
+      <SafeAreaView style={styles.container}>
+        <ScrollView contentContainerStyle={styles.completionContainer}>
+          <Text style={styles.completionEmoji}>
+            {pct >= 80 ? "🎉" : pct >= 50 ? "👍" : "💪"}
+          </Text>
+          <Text style={styles.completionTitle}>
+            {isReview ? "복습 완료!" : "학습 완료!"}
+          </Text>
+          <Text style={styles.completionSituation}>
+            {session.situation?.name_ko}
+          </Text>
+
+          {/* Stats */}
+          <View style={styles.completionStats}>
+            <View style={styles.completionStat}>
+              <Text style={styles.completionStatValue}>{completionStats.totalLines}</Text>
+              <Text style={styles.completionStatLabel}>대사</Text>
+            </View>
+            <View style={styles.completionStatDivider} />
+            <View style={styles.completionStat}>
+              <Text style={styles.completionStatValue}>{completionStats.userLines}</Text>
+              <Text style={styles.completionStatLabel}>연습</Text>
+            </View>
+            <View style={styles.completionStatDivider} />
+            <View style={styles.completionStat}>
+              <Text style={[
+                styles.completionStatValue,
+                { color: pct >= 80 ? colors.success : pct >= 50 ? colors.warning : colors.danger },
+              ]}>
+                {pct}%
+              </Text>
+              <Text style={styles.completionStatLabel}>정확도</Text>
+            </View>
+          </View>
+
+          {/* Learned expressions */}
+          {completionStats.learnedExpressions.length > 0 && (
+            <View style={styles.completionExpressions}>
+              <Text style={styles.completionExpTitle}>배운 표현</Text>
+              {completionStats.learnedExpressions.map((expr, i) => (
+                <Text key={i} style={styles.completionExpr}>• {expr}</Text>
+              ))}
+            </View>
+          )}
+
+          <TouchableOpacity
+            style={styles.completionButton}
+            onPress={() => navigation.goBack()}
+          >
+            <Text style={styles.completionButtonText}>확인</Text>
+          </TouchableOpacity>
+        </ScrollView>
+      </SafeAreaView>
+    );
+  }
+
+  if (session.loading) {
     return <LoadingScreen />;
+  }
+
+  if (session.error) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={styles.errorContainer}>
+          <Text style={styles.errorIcon}>⚠️</Text>
+          <Text style={styles.errorText}>{session.error}</Text>
+          <TouchableOpacity style={styles.errorButton} onPress={() => navigation.goBack()}>
+            <Text style={styles.errorButtonText}>돌아가기</Text>
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
+    );
+  }
+
+  if (session.lines.length === 0 || !currentLine) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={styles.errorContainer}>
+          <Text style={styles.errorIcon}>📭</Text>
+          <Text style={styles.errorText}>이 상황에 대사가 없습니다.</Text>
+          <TouchableOpacity style={styles.errorButton} onPress={() => navigation.goBack()}>
+            <Text style={styles.errorButtonText}>돌아가기</Text>
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
+    );
   }
 
   const isUserTurn = currentLine.speaker === "user";
@@ -609,12 +666,12 @@ export default function SessionScreen({ navigation, route }: Props) {
       >
         {messages.map((msg) =>
           msg.line.speaker === "npc"
-            ? renderNpcBubble(msg)
-            : renderUserBubble(msg)
+            ? renderNpcBubbleItem(msg)
+            : renderUserBubbleItem(msg)
         )}
 
         {/* Active line */}
-        {activeNpcMsg && renderNpcBubble(activeNpcMsg, true)}
+        {activeNpcMsg && renderNpcBubbleItem(activeNpcMsg, true)}
         {isUserTurn && phase !== "success" && renderUserPlaceholder()}
         {isUserTurn && phase === "success" && feedbackData && feedbackData.accuracy < 0.8 && renderUserPlaceholder()}
       </ScrollView>
@@ -700,115 +757,11 @@ const styles = StyleSheet.create({
     paddingBottom: 8,
   },
 
-  // NPC bubble
-  npcBubbleWrapper: {
-    alignItems: "flex-start",
-    marginBottom: 12,
-  },
-  npcBubble: {
-    minWidth: "60%",
-    maxWidth: "80%",
-    backgroundColor: colors.surface,
-    borderRadius: 16,
-    borderTopLeftRadius: 4,
-    padding: 14,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.04,
-    shadowRadius: 3,
-    elevation: 1,
-  },
-  bubblePronunciation: {
-    fontSize: 13,
-    color: colors.primary,
-    marginBottom: 4,
-  },
-  bubbleJapaneseRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
-  },
-  bubbleJapanese: {
-    fontSize: 18,
-    fontWeight: "500",
-    color: colors.textDark,
-    flex: 1,
-    lineHeight: 26,
-  },
-  bubbleSpeaker: {
-    fontSize: 18,
-  },
-  translationArea: {
-    marginTop: 10,
-    borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: colors.border,
-    paddingTop: 10,
-  },
-  bubbleTranslation: {
-    fontSize: 14,
-    color: colors.textMuted,
-    lineHeight: 20,
-  },
-  blurredTranslation: {
-    backgroundColor: colors.borderLight,
-    borderRadius: 6,
-    paddingVertical: 6,
-    paddingHorizontal: 10,
-  },
-  blurredText: {
-    fontSize: 13,
-    color: colors.textLight,
-    textAlign: "center",
-  },
-  grammarToggle: {
-    marginTop: 8,
-  },
-  grammarToggleText: {
-    fontSize: 13,
-    color: "#92400e",
-    fontWeight: "500",
-  },
-  grammarContent: {
-    fontSize: 13,
-    color: "#78350f",
-    lineHeight: 18,
-    marginTop: 4,
-    backgroundColor: "#fef3c7",
-    borderRadius: 8,
-    padding: 10,
-  },
-
-  // User bubble
-  userBubbleWrapper: {
-    alignItems: "flex-end",
-    marginBottom: 12,
-  },
-  userBubble: {
-    maxWidth: "80%",
-    backgroundColor: colors.primary,
-    borderRadius: 16,
-    borderTopRightRadius: 4,
-    padding: 14,
-  },
-  userBubbleText: {
-    fontSize: 17,
-    color: colors.surface,
-    lineHeight: 24,
-  },
-  accuracyBadge: {
-    alignSelf: "flex-end",
-    marginTop: 6,
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    borderRadius: 10,
-  },
-  accuracyBadgeText: {
-    fontSize: 12,
-    fontWeight: "600",
-    color: colors.surface,
-  },
-
   // Placeholder
+  placeholderWrapper: {
+    alignItems: "flex-end" as const,
+    marginBottom: 12,
+  },
   placeholderBubble: {
     maxWidth: "80%",
     borderWidth: 1.5,
@@ -1033,6 +986,119 @@ const styles = StyleSheet.create({
   },
   skipButtonText: {
     fontSize: 15,
+    fontWeight: "bold",
+    color: colors.surface,
+  },
+
+  // Completion screen
+  completionContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 32,
+  },
+  completionEmoji: {
+    fontSize: 64,
+    marginBottom: 16,
+  },
+  completionTitle: {
+    fontSize: 28,
+    fontWeight: "bold",
+    color: colors.textDark,
+    marginBottom: 4,
+  },
+  completionSituation: {
+    fontSize: 16,
+    color: colors.textMuted,
+    marginBottom: 32,
+  },
+  completionStats: {
+    flexDirection: "row",
+    backgroundColor: colors.surface,
+    borderRadius: 16,
+    padding: 20,
+    width: "100%",
+    marginBottom: 24,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  completionStat: {
+    flex: 1,
+    alignItems: "center",
+  },
+  completionStatValue: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: colors.textDark,
+  },
+  completionStatLabel: {
+    fontSize: 13,
+    color: colors.textMuted,
+    marginTop: 4,
+  },
+  completionStatDivider: {
+    width: 1,
+    backgroundColor: colors.border,
+  },
+  completionExpressions: {
+    backgroundColor: colors.surface,
+    borderRadius: 16,
+    padding: 20,
+    width: "100%",
+    marginBottom: 32,
+  },
+  completionExpTitle: {
+    fontSize: 14,
+    fontWeight: "600",
+    color: colors.textMuted,
+    marginBottom: 12,
+  },
+  completionExpr: {
+    fontSize: 16,
+    color: colors.textDark,
+    lineHeight: 28,
+  },
+  completionButton: {
+    backgroundColor: colors.primary,
+    paddingHorizontal: 48,
+    paddingVertical: 16,
+    borderRadius: 14,
+  },
+  completionButtonText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: colors.surface,
+  },
+
+  // Error state
+  errorContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 40,
+  },
+  errorIcon: {
+    fontSize: 48,
+    marginBottom: 16,
+  },
+  errorText: {
+    fontSize: 16,
+    color: colors.textMuted,
+    textAlign: "center",
+    marginBottom: 20,
+    lineHeight: 24,
+  },
+  errorButton: {
+    backgroundColor: colors.primary,
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    borderRadius: 12,
+  },
+  errorButtonText: {
+    fontSize: 16,
     fontWeight: "bold",
     color: colors.surface,
   },
