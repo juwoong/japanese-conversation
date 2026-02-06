@@ -291,10 +291,68 @@
 **빌드 상태:** `npx tsc --noEmit` 통과
 **테스트 상태:** 21/21 통과
 
+---
+
+### 2026-02-05 UX 감사 — 6개 서브에이전트 분석 완료
+
+**완료 항목:**
+- Agent 1: User flow completeness audit
+- Agent 2: Session screen UX deep dive
+- Agent 3: Flashcard + vocabulary feature gaps
+- Agent 4: HomeScreen + navigation UX audit
+- Agent 5: Data model + backend integration gaps
+- Agent 6: Visual polish + micro-interactions audit
+
+**핵심 발견:**
+1. **CRITICAL**: `gradeFlashcard()`가 구현되어 있지만 UI에서 호출하지 않음 (SRS 스케줄 절대 업데이트 안됨)
+2. **CRITICAL**: 오프라인 배너 중복 (App.tsx + HomeScreen의 OfflineBanner)
+3. **HIGH**: 마이크 권한 사전 확인 없음, 녹음 타임아웃 없음
+4. **HIGH**: TTS/STT 실패 시 피드백 부족
+5. **MEDIUM**: 상황 잠금해제 시스템 검증 필요
+6. **LOW**: 채팅 버블 애니메이션, 햅틱 피드백 등 시각적 완성도
+
+**결과:**
+- 16개 개선 항목 도출
+- 4개 Sprint로 우선순위 분류
+- PLAN.md 작성 완료
+
+---
+
+---
+
+### 2026-02-06 Sprint 2-5 전체 완료
+
+**Sprint 2 (Critical) 완료:**
+- [x] C1: FlashcardScreen 자가평가 버튼 (Again/Hard/Good/Easy) + gradeFlashcard() 연동
+- [x] C2: HomeScreen quickActions에 플래시카드 바로가기 추가
+- [x] C3: App.tsx 오프라인 배너 중복 제거 (OfflineBanner 컴포넌트만 사용)
+
+**Sprint 3 (High) 완료:**
+- [x] H1: 마이크 권한 사전 확인 (Audio.getPermissionsAsync + 안내 Alert)
+- [x] H2: 녹음 타임아웃 30초 (recordingTimeoutRef)
+- [x] H3: STT 실패 시 구체적 안내 (STTError 클래스 + userMessage)
+- [x] H4: TTS 실패 피드백 배너 (ttsError state + 3초 자동 숨김)
+
+**Sprint 4 (Medium) 완료:**
+- [x] M1: 상황 잠금해제 검증 (sessionProgress.ts 로직 확인 OK)
+- [x] M2: SituationListScreen에 available/in_progress 라벨 추가
+- [x] M3: 세션 완료 화면 fade+scale 애니메이션
+- [x] M4: 페르소나 변경 후 navigation.reset으로 HomeScreen 갱신
+
+**Sprint 5 (Low) 완료:**
+- [x] L1: NpcBubble/UserBubble fadeInUp 애니메이션
+- [x] L2: 녹음 시작/종료 햅틱 피드백 (expo-haptics)
+- [x] L3: HomeScreen 스켈레톤 로딩
+- [x] L4: FlashcardScreen 카드 슬라이드 애니메이션
+- [x] L5: 완료 화면 이모지 bounce 애니메이션
+
+**결과:**
+- TypeScript: `npx tsc --noEmit` 통과
+- 의존성 추가: expo-haptics
+
 **다음 세션에서 할 일:**
-1. FlashcardScreen에 자가평가 UI + gradeFlashcard 연동
-2. Sprint 2 (High priority) 이슈 시작
-3. 시뮬레이터 통합 테스트
+1. 시뮬레이터 통합 테스트
+2. 실제 기기 테스트
 
 ---
 

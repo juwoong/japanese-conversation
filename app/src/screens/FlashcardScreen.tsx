@@ -1,15 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
   SafeAreaView,
+  Alert,
+  Animated,
 } from "react-native";
 import * as Speech from "expo-speech";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { supabase } from "../lib/supabase";
+import { gradeFlashcard } from "../lib/flashcardGrading";
 import type { RootStackParamList } from "../types";
+import type { Rating } from "../lib/fsrs";
 import { colors } from "../constants/theme";
 import LoadingScreen from "../components/LoadingScreen";
 import BackHeader from "../components/BackHeader";
@@ -30,6 +34,9 @@ export default function FlashcardScreen({ navigation }: Props) {
   const [showAnswer, setShowAnswer] = useState(false);
   const [loading, setLoading] = useState(true);
   const [isSpeaking, setIsSpeaking] = useState(false);
+  const [isGrading, setIsGrading] = useState(false);
+  const slideAnim = useRef(new Animated.Value(0)).current;
+  const fadeAnim = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
     loadWeakCards();
@@ -100,17 +107,74 @@ export default function FlashcardScreen({ navigation }: Props) {
     });
   };
 
+  const animateCardTransition = (direction: "left" | "right", callback: () => void) => {
+    const targetX = direction === "left" ? -300 : 300;
+    Animated.parallel([
+      Animated.timing(slideAnim, {
+        toValue: targetX,
+        duration: 200,
+        useNativeDriver: true,
+      }),
+      Animated.timing(fadeAnim, {
+        toValue: 0,
+        duration: 200,
+        useNativeDriver: true,
+      }),
+    ]).start(() => {
+      callback();
+      slideAnim.setValue(direction === "left" ? 300 : -300);
+      Animated.parallel([
+        Animated.timing(slideAnim, {
+          toValue: 0,
+          duration: 200,
+          useNativeDriver: true,
+        }),
+        Animated.timing(fadeAnim, {
+          toValue: 1,
+          duration: 200,
+          useNativeDriver: true,
+        }),
+      ]).start();
+    });
+  };
+
+  const handleGrade = async (rating: Rating) => {
+    if (isGrading) return;
+    setIsGrading(true);
+    try {
+      await gradeFlashcard(cards[currentIndex].id, rating);
+      // Animate and move to next card
+      if (currentIndex < cards.length - 1) {
+        animateCardTransition("left", () => {
+          setShowAnswer(false);
+          setCurrentIndex(currentIndex + 1);
+        });
+      } else {
+        navigation.goBack();
+      }
+    } catch (error) {
+      console.error("Grading error:", error);
+      Alert.alert("오류", "평가 저장에 실패했습니다.");
+    } finally {
+      setIsGrading(false);
+    }
+  };
+
   const handleNext = () => {
-    setShowAnswer(false);
     if (currentIndex < cards.length - 1) {
-      setCurrentIndex(currentIndex + 1);
+      animateCardTransition("left", () => {
+        setShowAnswer(false);
+        setCurrentIndex(currentIndex + 1);
+      });
     }
   };
 
   const handlePrev = () => {
-    setShowAnswer(false);
     if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
+      animateCardTransition("right", () => {
+        setShowAnswer(false);
+        setCurrentIndex(currentIndex - 1);
+      });
     }
   };
 
@@ -153,11 +217,20 @@ export default function FlashcardScreen({ navigation }: Props) {
       </View>
 
       {/* Card */}
-      <TouchableOpacity
-        style={styles.card}
-        onPress={() => setShowAnswer(!showAnswer)}
-        activeOpacity={0.9}
+      <Animated.View
+        style={[
+          styles.cardWrapper,
+          {
+            opacity: fadeAnim,
+            transform: [{ translateX: slideAnim }],
+          },
+        ]}
       >
+        <TouchableOpacity
+          style={styles.card}
+          onPress={() => setShowAnswer(!showAnswer)}
+          activeOpacity={0.9}
+        >
         {!showAnswer ? (
           <>
             <Text style={styles.cardKorean}>{card.text_ko}</Text>
@@ -178,35 +251,75 @@ export default function FlashcardScreen({ navigation }: Props) {
                 {isSpeaking ? "🔊 재생 중..." : "🔈 발음 듣기"}
               </Text>
             </TouchableOpacity>
+
+            {/* Self-grading buttons */}
+            <Text style={styles.gradeLabel}>얼마나 잘 기억했나요?</Text>
+            <View style={styles.gradeButtons}>
+              <TouchableOpacity
+                style={[styles.gradeButton, styles.gradeAgain]}
+                onPress={() => handleGrade(1)}
+                disabled={isGrading}
+              >
+                <Text style={styles.gradeButtonText}>다시</Text>
+                <Text style={styles.gradeButtonSub}>Again</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.gradeButton, styles.gradeHard]}
+                onPress={() => handleGrade(2)}
+                disabled={isGrading}
+              >
+                <Text style={styles.gradeButtonText}>어려움</Text>
+                <Text style={styles.gradeButtonSub}>Hard</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.gradeButton, styles.gradeGood]}
+                onPress={() => handleGrade(3)}
+                disabled={isGrading}
+              >
+                <Text style={styles.gradeButtonText}>좋음</Text>
+                <Text style={styles.gradeButtonSub}>Good</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.gradeButton, styles.gradeEasy]}
+                onPress={() => handleGrade(4)}
+                disabled={isGrading}
+              >
+                <Text style={styles.gradeButtonText}>쉬움</Text>
+                <Text style={styles.gradeButtonSub}>Easy</Text>
+              </TouchableOpacity>
+            </View>
           </>
         )}
-      </TouchableOpacity>
-
-      {/* Navigation */}
-      <View style={styles.navRow}>
-        <TouchableOpacity
-          style={[styles.navButton, currentIndex === 0 && styles.navButtonDisabled]}
-          onPress={handlePrev}
-          disabled={currentIndex === 0}
-        >
-          <Text style={[styles.navButtonText, currentIndex === 0 && styles.navButtonTextDisabled]}>
-            ← 이전
-          </Text>
         </TouchableOpacity>
+      </Animated.View>
 
-        {currentIndex < cards.length - 1 ? (
-          <TouchableOpacity style={styles.navButtonPrimary} onPress={handleNext}>
-            <Text style={styles.navButtonPrimaryText}>다음 →</Text>
-          </TouchableOpacity>
-        ) : (
+      {/* Navigation - only show when answer is hidden */}
+      {!showAnswer && (
+        <View style={styles.navRow}>
           <TouchableOpacity
-            style={styles.navButtonPrimary}
-            onPress={() => navigation.goBack()}
+            style={[styles.navButton, currentIndex === 0 && styles.navButtonDisabled]}
+            onPress={handlePrev}
+            disabled={currentIndex === 0}
           >
-            <Text style={styles.navButtonPrimaryText}>완료</Text>
+            <Text style={[styles.navButtonText, currentIndex === 0 && styles.navButtonTextDisabled]}>
+              ← 이전
+            </Text>
           </TouchableOpacity>
-        )}
-      </View>
+
+          {currentIndex < cards.length - 1 ? (
+            <TouchableOpacity style={styles.navButtonPrimary} onPress={handleNext}>
+              <Text style={styles.navButtonPrimaryText}>다음 →</Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              style={styles.navButtonPrimary}
+              onPress={() => navigation.goBack()}
+            >
+              <Text style={styles.navButtonPrimaryText}>완료</Text>
+            </TouchableOpacity>
+          )}
+        </View>
+      )}
     </SafeAreaView>
   );
 }
@@ -215,6 +328,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
+  },
+  cardWrapper: {
+    flex: 1,
   },
   progressRow: {
     flexDirection: "row",
@@ -288,6 +404,44 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: colors.primary,
     fontWeight: "500",
+  },
+  gradeLabel: {
+    fontSize: 14,
+    color: colors.textMuted,
+    marginTop: 24,
+    marginBottom: 12,
+  },
+  gradeButtons: {
+    flexDirection: "row",
+    gap: 8,
+  },
+  gradeButton: {
+    flex: 1,
+    paddingVertical: 12,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  gradeAgain: {
+    backgroundColor: colors.danger + "20",
+  },
+  gradeHard: {
+    backgroundColor: colors.warning + "20",
+  },
+  gradeGood: {
+    backgroundColor: colors.success + "20",
+  },
+  gradeEasy: {
+    backgroundColor: colors.primary + "20",
+  },
+  gradeButtonText: {
+    fontSize: 13,
+    fontWeight: "600",
+    color: colors.textDark,
+  },
+  gradeButtonSub: {
+    fontSize: 10,
+    color: colors.textLight,
+    marginTop: 2,
   },
   navRow: {
     flexDirection: "row",

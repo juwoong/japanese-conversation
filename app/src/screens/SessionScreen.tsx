@@ -14,8 +14,10 @@ import * as Speech from "expo-speech";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { supabase } from "../lib/supabase";
+import { Audio } from "expo-av";
+import * as Haptics from "expo-haptics";
 import { startRecording, stopRecording, getRecordingStatus } from "../lib/audio";
-import { transcribeAudio } from "../lib/stt";
+import { transcribeAudio, STTError } from "../lib/stt";
 import { useSession } from "../hooks/useSession";
 import { saveSessionProgress } from "../lib/sessionProgress";
 import type { RootStackParamList, Line } from "../types";
@@ -57,6 +59,8 @@ export default function SessionScreen({ navigation, route }: Props) {
   const [expandedGrammar, setExpandedGrammar] = useState<Set<number>>(new Set());
   const scrollRef = useRef<ScrollView>(null);
   const autoAdvanceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const recordingTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const RECORDING_TIMEOUT_MS = 30000; // 30 seconds
 
   // Recording & feedback state
   const [phase, setPhase] = useState<SessionPhase>("viewing");
@@ -134,10 +138,11 @@ export default function SessionScreen({ navigation, route }: Props) {
     }
   }, [phase, glowAnim]);
 
-  // Cleanup auto-advance timer on unmount
+  // Cleanup timers on unmount
   useEffect(() => {
     return () => {
       if (autoAdvanceRef.current) clearTimeout(autoAdvanceRef.current);
+      if (recordingTimeoutRef.current) clearTimeout(recordingTimeoutRef.current);
     };
   }, []);
 
@@ -168,14 +173,22 @@ export default function SessionScreen({ navigation, route }: Props) {
     return getDisplayTextForLine(currentLine);
   };
 
+  const [ttsError, setTtsError] = useState(false);
+
   const speakText = (text: string) => {
     if (!text || isSpeaking) return;
     setIsSpeaking(true);
+    setTtsError(false);
     Speech.speak(text, {
       language: "ja-JP",
       rate: ttsSpeed,
       onDone: () => setIsSpeaking(false),
-      onError: () => setIsSpeaking(false),
+      onError: () => {
+        setIsSpeaking(false);
+        setTtsError(true);
+        // Auto-hide error after 3 seconds
+        setTimeout(() => setTtsError(false), 3000);
+      },
     });
   };
 
@@ -185,9 +198,33 @@ export default function SessionScreen({ navigation, route }: Props) {
 
   const handleStartRecording = async () => {
     try {
+      // Check microphone permission first
+      const { status } = await Audio.getPermissionsAsync();
+      if (status !== "granted") {
+        const { status: newStatus } = await Audio.requestPermissionsAsync();
+        if (newStatus !== "granted") {
+          Alert.alert(
+            "마이크 권한 필요",
+            "음성 녹음을 위해 마이크 권한이 필요합니다. 설정에서 권한을 허용해주세요.",
+            [{ text: "확인" }]
+          );
+          return;
+        }
+      }
+
+      // Haptic feedback on start
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+
       setIsRecording(true);
       setPhase("recording");
       await startRecording();
+
+      // Set recording timeout
+      recordingTimeoutRef.current = setTimeout(() => {
+        if (isRecording) {
+          handleStopRecording();
+        }
+      }, RECORDING_TIMEOUT_MS);
     } catch (error) {
       console.error("Recording error:", error);
       setIsRecording(false);
@@ -197,6 +234,15 @@ export default function SessionScreen({ navigation, route }: Props) {
   };
 
   const handleStopRecording = async () => {
+    // Clear recording timeout
+    if (recordingTimeoutRef.current) {
+      clearTimeout(recordingTimeoutRef.current);
+      recordingTimeoutRef.current = null;
+    }
+
+    // Haptic feedback on stop
+    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+
     try {
       setIsRecording(false);
       setPhase("processing");
@@ -240,7 +286,12 @@ export default function SessionScreen({ navigation, route }: Props) {
     } catch (error) {
       console.error("Processing error:", error);
       setPhase("viewing");
-      Alert.alert("오류", "음성 처리 중 오류가 발생했습니다.");
+
+      if (error instanceof STTError) {
+        Alert.alert("음성 인식 실패", error.userMessage);
+      } else {
+        Alert.alert("오류", "음성 처리 중 오류가 발생했습니다.");
+      }
     }
   };
 
@@ -288,6 +339,9 @@ export default function SessionScreen({ navigation, route }: Props) {
     avgAccuracy: 0,
     learnedExpressions: [] as string[],
   });
+  const completionFadeAnim = useRef(new Animated.Value(0)).current;
+  const completionScaleAnim = useRef(new Animated.Value(0.9)).current;
+  const emojiBounceAnim = useRef(new Animated.Value(0)).current;
 
   const handleComplete = async () => {
     const { data: { user } } = await supabase.auth.getUser();
@@ -324,6 +378,32 @@ export default function SessionScreen({ navigation, route }: Props) {
       learnedExpressions: userLines.slice(0, 3).map((l) => l.text_ja),
     });
     setShowCompletion(true);
+
+    // Animate completion screen entrance
+    Animated.parallel([
+      Animated.timing(completionFadeAnim, {
+        toValue: 1,
+        duration: 300,
+        useNativeDriver: true,
+      }),
+      Animated.spring(completionScaleAnim, {
+        toValue: 1,
+        friction: 8,
+        tension: 40,
+        useNativeDriver: true,
+      }),
+    ]).start();
+
+    // Bounce emoji animation
+    Animated.sequence([
+      Animated.delay(200),
+      Animated.spring(emojiBounceAnim, {
+        toValue: 1,
+        friction: 3,
+        tension: 150,
+        useNativeDriver: true,
+      }),
+    ]).start();
   };
 
   const handleExit = () => {
@@ -523,10 +603,30 @@ export default function SessionScreen({ navigation, route }: Props) {
     const pct = Math.round(completionStats.avgAccuracy * 100);
     return (
       <SafeAreaView style={styles.container}>
-        <ScrollView contentContainerStyle={styles.completionContainer}>
-          <Text style={styles.completionEmoji}>
+        <Animated.ScrollView
+          contentContainerStyle={styles.completionContainer}
+          style={{
+            opacity: completionFadeAnim,
+            transform: [{ scale: completionScaleAnim }],
+          }}
+        >
+          <Animated.Text
+            style={[
+              styles.completionEmoji,
+              {
+                transform: [
+                  {
+                    scale: emojiBounceAnim.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [0.3, 1],
+                    }),
+                  },
+                ],
+              },
+            ]}
+          >
             {pct >= 80 ? "🎉" : pct >= 50 ? "👍" : "💪"}
-          </Text>
+          </Animated.Text>
           <Text style={styles.completionTitle}>
             {isReview ? "복습 완료!" : "학습 완료!"}
           </Text>
@@ -573,7 +673,7 @@ export default function SessionScreen({ navigation, route }: Props) {
           >
             <Text style={styles.completionButtonText}>확인</Text>
           </TouchableOpacity>
-        </ScrollView>
+        </Animated.ScrollView>
       </SafeAreaView>
     );
   }
@@ -656,6 +756,13 @@ export default function SessionScreen({ navigation, route }: Props) {
           ]}
         />
       </View>
+
+      {/* TTS Error Banner */}
+      {ttsError && (
+        <View style={styles.ttsErrorBanner}>
+          <Text style={styles.ttsErrorText}>음성 재생에 실패했습니다</Text>
+        </View>
+      )}
 
       {/* Chat Area */}
       <ScrollView
@@ -746,6 +853,17 @@ const styles = StyleSheet.create({
   progressFill: {
     height: "100%",
     backgroundColor: colors.primary,
+  },
+  ttsErrorBanner: {
+    backgroundColor: colors.warning,
+    paddingVertical: 6,
+    paddingHorizontal: 16,
+    alignItems: "center",
+  },
+  ttsErrorText: {
+    color: "#fff",
+    fontSize: 12,
+    fontWeight: "500",
   },
 
   // Chat area
