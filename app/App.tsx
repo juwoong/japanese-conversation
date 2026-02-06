@@ -5,7 +5,6 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { supabase } from "./src/lib/supabase";
 import type { RootStackParamList } from "./src/types";
 import ErrorBoundary from "./src/components/ErrorBoundary";
-import { useNetworkStatus } from "./src/hooks/useNetworkStatus";
 import {
   AuthScreen,
   OnboardingScreen,
@@ -24,7 +23,6 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [hasCompletedOnboarding, setHasCompletedOnboarding] = useState(false);
-  const isConnected = useNetworkStatus();
 
   useEffect(() => {
     checkAuth();
@@ -89,11 +87,6 @@ export default function App() {
 
   return (
     <ErrorBoundary>
-      {!isConnected && (
-        <View style={styles.offlineBanner}>
-          <Text style={styles.offlineText}>오프라인 상태입니다</Text>
-        </View>
-      )}
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{
@@ -132,16 +125,5 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#f8fafc",
-  },
-  offlineBanner: {
-    backgroundColor: "#ef4444",
-    paddingVertical: 6,
-    paddingHorizontal: 16,
-    alignItems: "center",
-  },
-  offlineText: {
-    color: "#fff",
-    fontSize: 13,
-    fontWeight: "600",
   },
 });

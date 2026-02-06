@@ -1,0 +1,142 @@
+# UX Improvement Plan
+
+6개 서브에이전트 감사 결과를 종합한 사용자 관점 개선 계획입니다.
+
+## 다음 세션
+
+모든 Sprint 완료 (2026-02-06). 시뮬레이터 통합 테스트 권장.
+
+---
+
+## Sprint 2 — Critical: 핵심 기능 미연결 (3 items)
+
+### [C1] FlashcardScreen 자가평가 버튼 추가
+- **문제**: `gradeFlashcard()`가 `lib/flashcardGrading.ts`에 구현되어 있지만 FlashcardScreen에서 **한 번도 import/호출하지 않음**. 사용자가 카드를 넘기기만 할 뿐 SRS 스케줄이 절대 업데이트되지 않음.
+- **파일**: `src/screens/FlashcardScreen.tsx`
+- **변경**: 답 확인 후 Again/Hard/Good/Easy 4버튼 표시 → `gradeFlashcard(card.id, rating)` 호출 → 다음 카드 이동
+- **난이도**: S
+
+### [C2] HomeScreen에서 플래시카드 직접 접근
+- **문제**: 플래시카드가 VocabularyScreen → "플래시카드" 버튼으로만 접근 가능. 홈에서 2탭 필요.
+- **파일**: `src/screens/HomeScreen.tsx`
+- **변경**: quickActions에 "플래시카드" 추가 또는 복습 알림 배너에 플래시카드 바로가기 추가
+- **난이도**: XS
+
+### [C3] 오프라인 배너 중복 제거
+- **문제**: App.tsx (line 92-96)과 HomeScreen의 `<OfflineBanner />` 컴포넌트가 동시에 표시됨
+- **파일**: `App.tsx`, `src/screens/HomeScreen.tsx`
+- **변경**: App.tsx의 인라인 배너 제거, 각 화면에서 OfflineBanner 사용으로 통일 (또는 반대)
+- **난이도**: XS
+
+---
+
+## Sprint 3 — High: 녹음/STT 안정성 (4 items)
+
+### [H1] 마이크 권한 사전 확인 UX
+- **문제**: 녹음 버튼 탭 시 바로 `startRecording()` 호출. 권한 거부 시 에러만 표시.
+- **파일**: `src/screens/SessionScreen.tsx`, `src/lib/audio.ts`
+- **변경**: `handleStartRecording()`에서 `Audio.getPermissionsAsync()` 확인 → 미허용 시 안내 모달 → `requestPermissionsAsync()`
+- **난이도**: S
+
+### [H2] 녹음 타임아웃 (30초)
+- **문제**: 녹음 시간 제한이 없음. 사용자가 실수로 녹음을 멈추지 않으면 영원히 녹음.
+- **파일**: `src/screens/SessionScreen.tsx`
+- **변경**: recording phase 진입 시 30초 타이머 설정 → 만료 시 자동 `handleStopRecording()`
+- **난이도**: XS
+
+### [H3] STT 실패 시 구체적 안내
+- **문제**: STT 결과가 빈 문자열이면 `"(인식 안됨)"` 표시. 마이크 문제인지, 소리가 작은지, 네트워크 문제인지 사용자가 알 수 없음.
+- **파일**: `src/screens/SessionScreen.tsx`
+- **변경**: `transcribeAudio()` 에러 유형 구분 → "음성이 감지되지 않았습니다. 더 크게 말해보세요." / "네트워크 연결을 확인해주세요." 등 분기
+- **난이도**: S
+
+### [H4] TTS 실패 시 무음 문제
+- **문제**: `Speech.speak()` onError 콜백이 `setIsSpeaking(false)`만 실행. 사용자에게 아무 피드백 없음.
+- **파일**: `src/screens/SessionScreen.tsx`
+- **변경**: onError에서 짧은 Toast 또는 아이콘 변경으로 실패 표시
+- **난이도**: XS
+
+---
+
+## Sprint 4 — Medium: 학습 흐름 개선 (4 items)
+
+### [M1] 상황 잠금해제 시스템 확인/수정
+- **문제**: `saveSessionProgress`에서 다음 상황을 `available`로 업데이트하는 로직이 DB에 정상 반영되는지 확인 필요. 신규 유저가 첫 상황만 풀린 채로 막힐 가능성.
+- **파일**: `src/lib/sessionProgress.ts`, DB migration
+- **변경**: 상황 완료 시 next situation unlock 로직 검증 + 디버깅
+- **난이도**: M
+
+### [M2] SituationListScreen에서 available vs in_progress 구분
+- **문제**: 두 상태 모두 같은 색 도트(primary/warning)로 표시되나, 진행 중인 상황에 진행도 표시가 없음.
+- **파일**: `src/screens/SituationListScreen.tsx`
+- **변경**: in_progress 상황에 "3/5 대사" 같은 진행도 텍스트 추가
+- **난이도**: S
+
+### [M3] 세션 완료 시 자연스러운 전환
+- **문제**: `handleComplete()` 호출 시 `showCompletion = true` 세팅만. 전환 애니메이션 없이 갑자기 화면 교체.
+- **파일**: `src/screens/SessionScreen.tsx`
+- **변경**: 완료 화면 진입 시 fade-in 또는 scale-up 애니메이션
+- **난이도**: S
+
+### [M4] Settings 페르소나 변경 후 HomeScreen 갱신
+- **문제**: Settings에서 페르소나를 바꾸면 HomeScreen으로 돌아갈 때 `useFocusEffect`가 다시 호출되나, 상황 목록이 제대로 바뀌는지 확인 필요.
+- **파일**: `src/screens/SettingsScreen.tsx`, `src/screens/HomeScreen.tsx`
+- **변경**: 페르소나 변경 시 `navigation.reset()`으로 Home 스택 초기화
+- **난이도**: S
+
+---
+
+## Sprint 5 — Low: 시각적 완성도 (5 items)
+
+### [L1] 채팅 버블 입장 애니메이션
+- **문제**: NPC/User 버블이 갑자기 나타남. 대화 느낌이 약함.
+- **파일**: `src/components/NpcBubble.tsx`, `src/components/UserBubble.tsx`
+- **변경**: Animated.View로 fadeInUp (translateY: 20→0, opacity: 0→1) 200ms 적용
+- **난이도**: S
+
+### [L2] 녹음 시작/종료 햅틱 피드백
+- **문제**: 녹음 버튼 탭 시 시각적 피드백(glow)만 있고 촉각 피드백 없음.
+- **파일**: `src/screens/SessionScreen.tsx`
+- **변경**: `expo-haptics` 추가, `handleStartRecording`에 `Haptics.impactAsync(ImpactFeedbackStyle.Medium)`, `handleStopRecording`에 `Haptics.notificationAsync(Success)`
+- **난이도**: XS
+
+### [L3] 스켈레톤 로딩 화면
+- **문제**: 전체 화면 스피너(`<LoadingScreen />`)가 모든 곳에서 동일. 레이아웃 점프 발생.
+- **파일**: `src/screens/HomeScreen.tsx`
+- **변경**: HomeScreen에만 우선 적용. 프로그레스 카드 + 상황 목록 스켈레톤 placeholder.
+- **난이도**: M
+
+### [L4] FlashcardScreen 카드 넘김 애니메이션
+- **문제**: 카드가 즉시 교체됨. 학습 앱 특유의 스와이프/슬라이드 느낌 부재.
+- **파일**: `src/screens/FlashcardScreen.tsx`
+- **변경**: Animated.View로 좌우 슬라이드 전환
+- **난이도**: M
+
+### [L5] 학습 완료 축하 효과
+- **문제**: 완료 화면에 이모지만 표시. 성취감 부족.
+- **파일**: `src/screens/SessionScreen.tsx`
+- **변경**: 이모지 bounce-in 애니메이션 + 배경 confetti-like 파티클 (react-native-reanimated or 간단한 Animated)
+- **난이도**: M
+
+---
+
+## 작업 추적
+
+| ID | 항목 | 상태 | Sprint |
+|----|------|------|--------|
+| C1 | FlashcardScreen 자가평가 | [x] | 2 |
+| C2 | HomeScreen 플래시카드 접근 | [x] | 2 |
+| C3 | 오프라인 배너 중복 제거 | [x] | 2 |
+| H1 | 마이크 권한 사전 확인 | [x] | 3 |
+| H2 | 녹음 타임아웃 | [x] | 3 |
+| H3 | STT 실패 안내 개선 | [x] | 3 |
+| H4 | TTS 실패 피드백 | [x] | 3 |
+| M1 | 상황 잠금해제 검증 | [x] | 4 |
+| M2 | available/in_progress 구분 | [x] | 4 |
+| M3 | 완료 화면 전환 애니메이션 | [x] | 4 |
+| M4 | 페르소나 변경 후 갱신 | [x] | 4 |
+| L1 | 채팅 버블 애니메이션 | [x] | 5 |
+| L2 | 녹음 햅틱 피드백 | [x] | 5 |
+| L3 | 스켈레톤 로딩 | [x] | 5 |
+| L4 | 플래시카드 넘김 애니메이션 | [x] | 5 |
+| L5 | 학습 완료 축하 효과 | [x] | 5 |

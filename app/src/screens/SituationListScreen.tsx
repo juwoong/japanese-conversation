@@ -164,6 +164,12 @@ export default function SituationListScreen({ navigation }: Props) {
                           {situation.progress.attempt_count > 1 && ` · ${situation.progress.attempt_count}회 도전`}
                         </Text>
                       )}
+                      {situation.progress?.status === "in_progress" && (
+                        <Text style={styles.inProgressLabel}>학습 중</Text>
+                      )}
+                      {situation.progress?.status === "available" && (
+                        <Text style={styles.availableLabel}>시작 가능</Text>
+                      )}
                     </View>
                     {situation.progress?.status === "completed" ? (
                       <View style={styles.completedBadge}>
@@ -273,6 +279,16 @@ const styles = StyleSheet.create({
   bestAccuracy: {
     fontSize: 12,
     color: colors.success,
+    marginTop: 2,
+  },
+  inProgressLabel: {
+    fontSize: 12,
+    color: colors.warning,
+    marginTop: 2,
+  },
+  availableLabel: {
+    fontSize: 12,
+    color: colors.primary,
     marginTop: 2,
   },
   lock: {

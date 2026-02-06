@@ -1,5 +1,5 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React, { useEffect, useRef } from "react";
+import { View, Text, StyleSheet, Animated } from "react-native";
 import { colors } from "../constants/theme";
 
 interface Props {
@@ -8,19 +8,45 @@ interface Props {
 }
 
 export default function UserBubble({ userInput, accuracy }: Props) {
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const translateAnim = useRef(new Animated.Value(15)).current;
+
+  useEffect(() => {
+    Animated.parallel([
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 200,
+        useNativeDriver: true,
+      }),
+      Animated.timing(translateAnim, {
+        toValue: 0,
+        duration: 200,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  }, []);
+
   const pct = Math.round(accuracy * 100);
   const badgeColor =
     accuracy >= 0.8 ? colors.success : accuracy >= 0.5 ? colors.warning : colors.danger;
 
   return (
-    <View style={styles.wrapper}>
+    <Animated.View
+      style={[
+        styles.wrapper,
+        {
+          opacity: fadeAnim,
+          transform: [{ translateY: translateAnim }],
+        },
+      ]}
+    >
       <View style={styles.bubble}>
         <Text style={styles.text}>{userInput}</Text>
         <View style={[styles.badge, { backgroundColor: badgeColor }]}>
           <Text style={styles.badgeText}>✓ {pct}%</Text>
         </View>
       </View>
-    </View>
+    </Animated.View>
   );
 }
 

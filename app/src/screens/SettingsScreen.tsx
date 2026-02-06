@@ -127,7 +127,18 @@ export default function SettingsScreen({ navigation }: Props) {
     });
 
     setCurrentPersona(persona);
-    Alert.alert("변경 완료", `${persona.name_ko} 페르소나로 변경되었습니다.`);
+    Alert.alert("변경 완료", `${persona.name_ko} 페르소나로 변경되었습니다.`, [
+      {
+        text: "확인",
+        onPress: () => {
+          // Reset navigation to Home to refresh with new persona
+          navigation.reset({
+            index: 0,
+            routes: [{ name: "Home" }],
+          });
+        },
+      },
+    ]);
   };
 
   const handleSignOut = async () => {

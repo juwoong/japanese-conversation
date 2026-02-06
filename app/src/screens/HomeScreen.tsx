@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect, useRef } from "react";
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   ScrollView,
   RefreshControl,
+  Animated,
 } from "react-native";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useFocusEffect } from "@react-navigation/native";
@@ -18,6 +19,91 @@ import OfflineBanner from "../components/OfflineBanner";
 import { useNetworkStatus } from "../hooks/useNetworkStatus";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Home">;
+
+// Skeleton component for loading state
+function SkeletonHomeScreen() {
+  const pulseAnim = useRef(new Animated.Value(0.4)).current;
+
+  useEffect(() => {
+    const animation = Animated.loop(
+      Animated.sequence([
+        Animated.timing(pulseAnim, {
+          toValue: 1,
+          duration: 800,
+          useNativeDriver: true,
+        }),
+        Animated.timing(pulseAnim, {
+          toValue: 0.4,
+          duration: 800,
+          useNativeDriver: true,
+        }),
+      ])
+    );
+    animation.start();
+    return () => animation.stop();
+  }, []);
+
+  const SkeletonBox = ({ style }: { style?: any }) => (
+    <Animated.View
+      style={[
+        {
+          backgroundColor: colors.border,
+          borderRadius: 8,
+          opacity: pulseAnim,
+        },
+        style,
+      ]}
+    />
+  );
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <ScrollView style={styles.scrollView}>
+        {/* Header skeleton */}
+        <View style={styles.header}>
+          <View>
+            <SkeletonBox style={{ width: 100, height: 24, marginBottom: 8 }} />
+            <SkeletonBox style={{ width: 80, height: 16 }} />
+          </View>
+          <SkeletonBox style={{ width: 40, height: 40, borderRadius: 20 }} />
+        </View>
+
+        {/* Progress card skeleton */}
+        <View style={[styles.progressCard, { padding: 20 }]}>
+          <SkeletonBox style={{ width: 80, height: 14, marginBottom: 12 }} />
+          <SkeletonBox style={{ width: "100%", height: 8, marginBottom: 8 }} />
+          <SkeletonBox style={{ width: 120, height: 14, alignSelf: "center" }} />
+        </View>
+
+        {/* Start button skeleton */}
+        <View style={{ marginHorizontal: 20, marginTop: 20 }}>
+          <SkeletonBox style={{ width: "100%", height: 72, borderRadius: 16 }} />
+        </View>
+
+        {/* Situation list skeleton */}
+        <View style={styles.section}>
+          <SkeletonBox style={{ width: 80, height: 18, marginBottom: 12 }} />
+          {[1, 2, 3].map((i) => (
+            <View key={i} style={[styles.situationCard, { marginBottom: 12 }]}>
+              <View style={{ flex: 1 }}>
+                <SkeletonBox style={{ width: 140, height: 16, marginBottom: 6 }} />
+                <SkeletonBox style={{ width: 100, height: 13 }} />
+              </View>
+              <SkeletonBox style={{ width: 24, height: 24, borderRadius: 12 }} />
+            </View>
+          ))}
+        </View>
+
+        {/* Quick actions skeleton */}
+        <View style={styles.quickActions}>
+          {[1, 2, 3, 4].map((i) => (
+            <SkeletonBox key={i} style={{ flex: 1, height: 80, borderRadius: 12 }} />
+          ))}
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  );
+}
 
 export default function HomeScreen({ navigation }: Props) {
   const [loading, setLoading] = useState(true);
@@ -175,7 +261,7 @@ export default function HomeScreen({ navigation }: Props) {
   };
 
   if (loading) {
-    return <LoadingScreen />;
+    return <SkeletonHomeScreen />;
   }
 
   if (error) {
@@ -345,10 +431,10 @@ export default function HomeScreen({ navigation }: Props) {
         <View style={styles.quickActions}>
           <TouchableOpacity
             style={styles.quickAction}
-            onPress={() => navigation.navigate("History")}
+            onPress={() => navigation.navigate("Flashcard")}
           >
-            <Text style={styles.quickActionIcon}>📊</Text>
-            <Text style={styles.quickActionLabel}>학습 기록</Text>
+            <Text style={styles.quickActionIcon}>🃏</Text>
+            <Text style={styles.quickActionLabel}>플래시카드</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.quickAction}
@@ -356,6 +442,13 @@ export default function HomeScreen({ navigation }: Props) {
           >
             <Text style={styles.quickActionIcon}>📝</Text>
             <Text style={styles.quickActionLabel}>단어장</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.quickAction}
+            onPress={() => navigation.navigate("History")}
+          >
+            <Text style={styles.quickActionIcon}>📊</Text>
+            <Text style={styles.quickActionLabel}>학습 기록</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.quickAction}
