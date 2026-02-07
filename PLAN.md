@@ -4,7 +4,92 @@
 
 ## 다음 세션
 
-모든 Sprint 완료 (2026-02-06). 시뮬레이터 통합 테스트 권장.
+**어휘 데이터 개선 (Sprint 6)** 진행 예정.
+
+---
+
+## Sprint 6 — 어휘 데이터 개선
+
+### 현재 문제점
+
+1. **발음 정보가 문장 단위로만 존재**
+   - 현재: `"いらっしゃいませ。ご注文は?"` → `"이랏샤이마세. 고츄-몬와?"` (전체 문장)
+   - 필요: 각 단어별 발음 (`いらっしゃいませ` → `이랏샤이마세`)
+
+2. **개별 단어/어휘 데이터 없음**
+   - `key_expressions`는 텍스트만 있고 상세 정보(의미, 읽기, 품사) 없음
+   - VocabularyScreen이 "단어장"이 아닌 "문장장"으로 동작
+
+3. **한자 읽기(후리가나) 없음**
+   - `四百円` → `よんひゃくえん` 정보 부재
+   - 한자 학습에 필수적인 정보 누락
+
+### 작업 항목
+
+| ID | 항목 | 상태 | 난이도 |
+|----|------|------|--------|
+| V1 | Vocabulary 타입 추가 (`app/src/types/index.ts`) | [ ] | XS |
+| V2 | vocabulary 테이블 마이그레이션 (`backend/supabase/migrations/`) | [ ] | S |
+| V3 | 어휘 추출 스크립트 작성 (`scripts/generate-vocabulary.ts`) | [ ] | M |
+| V4 | 22개 상황 JSON에 vocabulary 데이터 추가 | [ ] | M |
+| V5 | VocabularyScreen 단어별 UI로 개편 | [ ] | M |
+| V6 | (선택) SessionScreen 단어 탭 인터랙션 | [ ] | S |
+
+### V1: Vocabulary 타입
+```typescript
+interface Vocabulary {
+  id: number;
+  word_ja: string;           // 日本語 단어
+  reading_hiragana: string;  // ひらがな 읽기
+  reading_ko: string;        // 한글 발음
+  meaning_ko: string;        // 한국어 의미
+  pos: string;               // 품사 (명사, 동사, 형용사 등)
+}
+```
+
+### V4: 개선된 데이터 구조 예시
+```json
+{
+  "situation_slug": "cafe",
+  "lines": [...],
+  "vocabulary": [
+    {
+      "word_ja": "ご注文",
+      "reading_hiragana": "ごちゅうもん",
+      "reading_ko": "고츄몬",
+      "meaning_ko": "주문",
+      "pos": "명사",
+      "appears_in_lines": [1]
+    }
+  ]
+}
+```
+
+### 수정 파일 목록
+
+| 파일 | 변경 내용 |
+|------|----------|
+| `app/src/types/index.ts` | Vocabulary 인터페이스 추가 |
+| `backend/supabase/migrations/002_vocabulary.sql` | vocabulary, line_vocabulary 테이블 |
+| `scripts/generate-vocabulary.ts` | 어휘 추출 스크립트 (신규) |
+| `scripts/output/*.json` | 22개 파일에 vocabulary 배열 추가 |
+| `app/src/screens/VocabularyScreen.tsx` | 단어별 UI로 전면 개편 |
+
+### 시작 순서
+1. `app/src/types/index.ts`에 Vocabulary 타입 추가
+2. `scripts/generate-vocabulary.ts` 스크립트 작성
+3. cafe.json으로 테스트 후 전체 22개 파일에 적용
+4. DB 마이그레이션 및 앱 UI 수정
+
+### 필요 컨텍스트
+- Claude API 키: `.env`의 `ANTHROPIC_API_KEY`
+- 기존 스크립트 참고: `scripts/generate-lines.ts`
+
+---
+
+## (완료) Sprint 1-5 — UX 개선
+
+모든 Sprint 완료 (2026-02-06).
 
 ---
 
