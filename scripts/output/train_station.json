@@ -10,7 +10,10 @@
       "pronunciation_ko": "이랏샤이마세. 도치라마데?",
       "text_ko": "어서 오세요. 어디까지요?",
       "grammar_hint": "どちら는 'どこ(어디)'의 정중한 표현입니다.",
-      "key_expressions": ["どちらまで", "いらっしゃいませ"]
+      "key_expressions": [
+        "どちらまで",
+        "いらっしゃいませ"
+      ]
     },
     {
       "line_order": 2,
@@ -21,7 +24,10 @@
       "pronunciation_ko": "토-쿄-에키마데 오네가이시마스",
       "text_ko": "도쿄역까지 부탁드립니다.",
       "grammar_hint": "駅(에키)는 '역'이라는 뜻입니다. まで는 '~까지'.",
-      "key_expressions": ["駅まで", "お願いします"]
+      "key_expressions": [
+        "駅まで",
+        "お願いします"
+      ]
     },
     {
       "line_order": 3,
@@ -32,7 +38,10 @@
       "pronunciation_ko": "카타미치데스카, 오-후쿠데스카",
       "text_ko": "편도입니까, 왕복입니까?",
       "grammar_hint": "片道(편도)와 往復(왕복)은 표를 살 때 필수 단어입니다.",
-      "key_expressions": ["片道", "往復"]
+      "key_expressions": [
+        "片道",
+        "往復"
+      ]
     },
     {
       "line_order": 4,
@@ -43,7 +52,10 @@
       "pronunciation_ko": "카타미치데 이치마이 오네가이시마스",
       "text_ko": "편도로 한 장 부탁드립니다.",
       "grammar_hint": "枚(마이)는 얇고 평평한 것(표, 종이)을 세는 단위입니다.",
-      "key_expressions": ["一枚", "片道で"]
+      "key_expressions": [
+        "一枚",
+        "片道で"
+      ]
     },
     {
       "line_order": 5,
@@ -54,7 +66,135 @@
       "pronunciation_ko": "고햐쿠엔데스. 산반센카라 도-조",
       "text_ko": "500엔입니다. 3번 승강장에서 타세요.",
       "grammar_hint": "番線(반센)은 '승강장/플랫폼'을 뜻합니다.",
-      "key_expressions": ["番線", "どうぞ"]
+      "key_expressions": [
+        "番線",
+        "どうぞ"
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word_ja": "いらっしゃいませ",
+      "reading_hiragana": "いらっしゃいませ",
+      "reading_ko": "이랏샤이마세",
+      "meaning_ko": "어서 오세요",
+      "pos": "표현",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "どちら",
+      "reading_hiragana": "どちら",
+      "reading_ko": "도치라",
+      "meaning_ko": "어디",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "まで",
+      "reading_hiragana": "まで",
+      "reading_ko": "마데",
+      "meaning_ko": "~까지",
+      "pos": "조사",
+      "appears_in_lines": [
+        1,
+        2
+      ]
+    },
+    {
+      "word_ja": "東京駅",
+      "reading_hiragana": "とうきょうえき",
+      "reading_ko": "토-쿄-에키",
+      "meaning_ko": "도쿄역",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "お願い(おねがい)します",
+      "reading_hiragana": "おねがいします",
+      "reading_ko": "오네가이시마스",
+      "meaning_ko": "부탁합니다",
+      "pos": "표현",
+      "appears_in_lines": [
+        2,
+        4
+      ]
+    },
+    {
+      "word_ja": "片道(かたみち)",
+      "reading_hiragana": "かたみち",
+      "reading_ko": "카타미치",
+      "meaning_ko": "편도",
+      "pos": "명사",
+      "appears_in_lines": [
+        3,
+        4
+      ]
+    },
+    {
+      "word_ja": "往復(おうふく)",
+      "reading_hiragana": "おうふく",
+      "reading_ko": "오-후쿠",
+      "meaning_ko": "왕복",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "ですか",
+      "reading_hiragana": "ですか",
+      "reading_ko": "데스카",
+      "meaning_ko": "~입니까?",
+      "pos": "조사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "一枚(いちまい)",
+      "reading_hiragana": "いちまい",
+      "reading_ko": "이치마이",
+      "meaning_ko": "한 장",
+      "pos": "명사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "五百円(ごひゃくえん)",
+      "reading_hiragana": "ごひゃくえん",
+      "reading_ko": "고햐쿠엔",
+      "meaning_ko": "500엔",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "番線(ばんせん)",
+      "reading_hiragana": "ばんせん",
+      "reading_ko": "반센",
+      "meaning_ko": "승강장 번호",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "どうぞ",
+      "reading_hiragana": "どうぞ",
+      "reading_ko": "도-조",
+      "meaning_ko": "어서, 자",
+      "pos": "표현",
+      "appears_in_lines": [
+        5
+      ]
     }
   ]
 }

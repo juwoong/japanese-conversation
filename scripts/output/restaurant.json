@@ -10,7 +10,10 @@
       "pronunciation_ko": "이랏샤이마세. 난메-사마데스카",
       "text_ko": "어서 오세요. 몇 분이세요?",
       "grammar_hint": "何名様(난메-사마)는 인원수를 정중하게 묻는 표현입니다.",
-      "key_expressions": ["何名様", "ですか"]
+      "key_expressions": [
+        "何名様",
+        "ですか"
+      ]
     },
     {
       "line_order": 2,
@@ -21,7 +24,10 @@
       "pronunciation_ko": "히토리데스. 메뉴-오 오네가이시마스",
       "text_ko": "한 명이요. 메뉴 부탁드립니다.",
       "grammar_hint": "一人(히토리)는 1명을 뜻합니다. 二人(후타리)는 2명.",
-      "key_expressions": ["一人", "メニュー"]
+      "key_expressions": [
+        "一人",
+        "メニュー"
+      ]
     },
     {
       "line_order": 3,
@@ -32,7 +38,10 @@
       "pronunciation_ko": "고츄-몬가 오키마리니 나리마시타라, 오요비쿠다사이",
       "text_ko": "주문이 정해지시면 불러주세요.",
       "grammar_hint": "お決まりになりましたら는 '정해지시면'이라는 존경 표현입니다.",
-      "key_expressions": ["お決まり", "お呼びください"]
+      "key_expressions": [
+        "お決まり",
+        "お呼びください"
+      ]
     },
     {
       "line_order": 4,
@@ -43,7 +52,10 @@
       "pronunciation_ko": "스미마셍, 코레오 오네가이시마스",
       "text_ko": "저기요, 이것으로 부탁드립니다.",
       "grammar_hint": "すみません은 '실례합니다/저기요' 등 여러 상황에서 씁니다.",
-      "key_expressions": ["すみません", "これ"]
+      "key_expressions": [
+        "すみません",
+        "これ"
+      ]
     },
     {
       "line_order": 5,
@@ -54,7 +66,143 @@
       "pronunciation_ko": "카시코마리마시타. 쇼-쇼- 오마치쿠다사이",
       "text_ko": "알겠습니다. 잠시만 기다려주세요.",
       "grammar_hint": "かしこまりました는 '알겠습니다'의 가장 정중한 표현입니다.",
-      "key_expressions": ["かしこまりました", "少々お待ちください"]
+      "key_expressions": [
+        "かしこまりました",
+        "少々お待ちください"
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word_ja": "いらっしゃいませ",
+      "reading_hiragana": "いらっしゃいませ",
+      "reading_ko": "이랏샤이마세",
+      "meaning_ko": "어서 오세요",
+      "pos": "표현",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "何名様",
+      "reading_hiragana": "なんめいさま",
+      "reading_ko": "난메-사마",
+      "meaning_ko": "몇 분이십니까",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "一人",
+      "reading_hiragana": "ひとり",
+      "reading_ko": "히토리",
+      "meaning_ko": "한 명",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "メニュー",
+      "reading_hiragana": "メニュー",
+      "reading_ko": "메뉴-",
+      "meaning_ko": "메뉴",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "お願い(する)",
+      "reading_hiragana": "おねがい(する)",
+      "reading_ko": "오네가이(스루)",
+      "meaning_ko": "부탁(하다)",
+      "pos": "동사",
+      "appears_in_lines": [
+        2,
+        4
+      ]
+    },
+    {
+      "word_ja": "ご注文",
+      "reading_hiragana": "ごちゅうもん",
+      "reading_ko": "고츄-몬",
+      "meaning_ko": "주문",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "決まる",
+      "reading_hiragana": "きまる",
+      "reading_ko": "키마루",
+      "meaning_ko": "정해지다, 결정되다",
+      "pos": "동사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "お呼び(する)",
+      "reading_hiragana": "および(する)",
+      "reading_ko": "오요비(스루)",
+      "meaning_ko": "부르다",
+      "pos": "동사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "すみません",
+      "reading_hiragana": "すみません",
+      "reading_ko": "스미마센",
+      "meaning_ko": "죄송합니다, 실례합니다",
+      "pos": "표현",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "これ",
+      "reading_hiragana": "これ",
+      "reading_ko": "코레",
+      "meaning_ko": "이것",
+      "pos": "명사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "かしこまりました",
+      "reading_hiragana": "かしこまりました",
+      "reading_ko": "카시코마리마시타",
+      "meaning_ko": "알겠습니다, 분부대로 하겠습니다",
+      "pos": "표현",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "少々",
+      "reading_hiragana": "しょうしょう",
+      "reading_ko": "쇼-쇼-",
+      "meaning_ko": "잠시, 잠깐",
+      "pos": "부사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "待つ",
+      "reading_hiragana": "まつ",
+      "reading_ko": "마츠",
+      "meaning_ko": "기다리다",
+      "pos": "동사",
+      "appears_in_lines": [
+        5
+      ]
     }
   ]
 }

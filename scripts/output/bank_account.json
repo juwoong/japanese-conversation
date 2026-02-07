@@ -10,7 +10,10 @@
       "pronunciation_ko": "이랏샤이마세. 혼지츠와 도노요-나 고요-켄데쇼-카",
       "text_ko": "어서 오세요. 오늘은 어떤 용건이신가요?",
       "grammar_hint": "本日(혼지츠)는 '今日'의 격식 표현입니다.",
-      "key_expressions": ["本日", "どのようなご用件"]
+      "key_expressions": [
+        "本日",
+        "どのようなご用件"
+      ]
     },
     {
       "line_order": 2,
@@ -21,7 +24,11 @@
       "pronunciation_ko": "코-자오 카이세츠시타인데스가, 가이코쿠진데모 츠쿠레마스카",
       "text_ko": "계좌를 개설하고 싶은데요, 외국인도 만들 수 있나요?",
       "grammar_hint": "開設(카이세츠)는 '개설'입니다. 口座開設=계좌개설.",
-      "key_expressions": ["口座", "開設", "作れますか"]
+      "key_expressions": [
+        "口座",
+        "開設",
+        "作れますか"
+      ]
     },
     {
       "line_order": 3,
@@ -32,7 +39,11 @@
       "pronunciation_ko": "자이류-카-도토, 쥬-쇼가 카쿠닌데키루 쇼루이가 아레바 카노-데스",
       "text_ko": "재류카드와 주소를 확인할 수 있는 서류가 있으면 가능합니다.",
       "grammar_hint": "書類(쇼루이)는 '서류'입니다. 은행에서 자주 쓰는 단어입니다.",
-      "key_expressions": ["在留カード", "住所", "書類"]
+      "key_expressions": [
+        "在留カード",
+        "住所",
+        "書類"
+      ]
     },
     {
       "line_order": 4,
@@ -43,7 +54,10 @@
       "pronunciation_ko": "코레가 자이류-카-도데, 코레가 덴키노 세-큐-쇼데스",
       "text_ko": "이게 재류카드이고, 이게 전기 청구서예요.",
       "grammar_hint": "請求書(세-큐-쇼)는 '청구서'입니다. 주소 증명으로 사용됩니다.",
-      "key_expressions": ["請求書", "電気"]
+      "key_expressions": [
+        "請求書",
+        "電気"
+      ]
     },
     {
       "line_order": 5,
@@ -54,7 +68,234 @@
       "pronunciation_ko": "하이, 다이죠-부데스. 코치라노 요-시니 고키뉴-오 오네가이시마스. 캿슈 카-도와 잇슈-칸고니 토도키마스",
       "text_ko": "네, 됩니다. 이 양식에 기입해 주세요. 현금카드는 일주일 후에 도착합니다.",
       "grammar_hint": "ご記入(고키뉴-)는 '기입'의 존경 표현입니다.",
-      "key_expressions": ["用紙", "ご記入", "キャッシュカード"]
+      "key_expressions": [
+        "用紙",
+        "ご記入",
+        "キャッシュカード"
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word_ja": "いらっしゃいませ",
+      "reading_hiragana": "いらっしゃいませ",
+      "reading_ko": "이랏샤이마세",
+      "meaning_ko": "어서 오세요",
+      "pos": "표현",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "本日",
+      "reading_hiragana": "ほんじつ",
+      "reading_ko": "혼지츠",
+      "meaning_ko": "오늘",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "どのような",
+      "reading_hiragana": "どのような",
+      "reading_ko": "도노요-나",
+      "meaning_ko": "어떤",
+      "pos": "표현",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "ご用件",
+      "reading_hiragana": "ごようけん",
+      "reading_ko": "고요-켄",
+      "meaning_ko": "용건",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "口座",
+      "reading_hiragana": "こうざ",
+      "reading_ko": "코-자",
+      "meaning_ko": "계좌",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "開設",
+      "reading_hiragana": "かいせつ",
+      "reading_ko": "카이세츠",
+      "meaning_ko": "개설",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "する",
+      "reading_hiragana": "する",
+      "reading_ko": "스루",
+      "meaning_ko": "하다",
+      "pos": "동사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "外国人",
+      "reading_hiragana": "がいこくじん",
+      "reading_ko": "가이코쿠진",
+      "meaning_ko": "외국인",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "作る",
+      "reading_hiragana": "つくる",
+      "reading_ko": "츠쿠루",
+      "meaning_ko": "만들다",
+      "pos": "동사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "在留カード",
+      "reading_hiragana": "ざいりゅうカード",
+      "reading_ko": "자이류-카-도",
+      "meaning_ko": "재류 카드",
+      "pos": "명사",
+      "appears_in_lines": [
+        3,
+        4
+      ]
+    },
+    {
+      "word_ja": "住所",
+      "reading_hiragana": "じゅうしょ",
+      "reading_ko": "쥬-쇼",
+      "meaning_ko": "주소",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "確認",
+      "reading_hiragana": "かくにん",
+      "reading_ko": "카쿠닌",
+      "meaning_ko": "확인",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "書類",
+      "reading_hiragana": "しょるい",
+      "reading_ko": "쇼류이",
+      "meaning_ko": "서류",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "電気",
+      "reading_hiragana": "でんき",
+      "reading_ko": "뎅키",
+      "meaning_ko": "전기",
+      "pos": "명사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "請求書",
+      "reading_hiragana": "せいきゅうしょ",
+      "reading_ko": "세-큐-쇼",
+      "meaning_ko": "청구서",
+      "pos": "명사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "大丈夫",
+      "reading_hiragana": "だいじょうぶ",
+      "reading_ko": "다이죠-부",
+      "meaning_ko": "괜찮음",
+      "pos": "형용사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "用紙",
+      "reading_hiragana": "ようし",
+      "reading_ko": "요-시",
+      "meaning_ko": "용지",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "記入",
+      "reading_hiragana": "きにゅう",
+      "reading_ko": "키뉴-",
+      "meaning_ko": "기입",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "お願い",
+      "reading_hiragana": "おねがい",
+      "reading_ko": "오네가이",
+      "meaning_ko": "부탁",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "キャッシュカード",
+      "reading_hiragana": "キャッシュカード",
+      "reading_ko": "캿슈카-도",
+      "meaning_ko": "현금 카드",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "一週間後",
+      "reading_hiragana": "いっしゅうかんご",
+      "reading_ko": "잇슈-칸고",
+      "meaning_ko": "일주일 후",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "届く",
+      "reading_hiragana": "とどく",
+      "reading_ko": "토도쿠",
+      "meaning_ko": "도착하다",
+      "pos": "동사",
+      "appears_in_lines": [
+        5
+      ]
     }
   ]
 }

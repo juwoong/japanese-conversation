@@ -10,7 +10,9 @@
       "pronunciation_ko": "이랏샤이마세",
       "text_ko": "어서 오세요.",
       "grammar_hint": "いらっしゃいませ는 가게에서 손님을 맞이할 때 쓰는 인사입니다.",
-      "key_expressions": ["いらっしゃいませ"]
+      "key_expressions": [
+        "いらっしゃいませ"
+      ]
     },
     {
       "line_order": 2,
@@ -21,7 +23,10 @@
       "pronunciation_ko": "코레오 쿠다사이",
       "text_ko": "이것 주세요.",
       "grammar_hint": "これ(이것) + を(을/를) + ください(주세요)",
-      "key_expressions": ["これ", "ください"]
+      "key_expressions": [
+        "これ",
+        "ください"
+      ]
     },
     {
       "line_order": 3,
@@ -32,7 +37,10 @@
       "pronunciation_ko": "후쿠로와 이리마스카",
       "text_ko": "봉투 필요하세요?",
       "grammar_hint": "袋(봉투) + は(는) + いりますか(필요하세요?)",
-      "key_expressions": ["袋", "いりますか"]
+      "key_expressions": [
+        "袋",
+        "いりますか"
+      ]
     },
     {
       "line_order": 4,
@@ -43,7 +51,10 @@
       "pronunciation_ko": "이이에, 다이죠-부데스",
       "text_ko": "아니요, 괜찮아요.",
       "grammar_hint": "大丈夫(괜찮다)는 거절할 때도 자주 씁니다.",
-      "key_expressions": ["いいえ", "大丈夫です"]
+      "key_expressions": [
+        "いいえ",
+        "大丈夫です"
+      ]
     },
     {
       "line_order": 5,
@@ -54,7 +65,112 @@
       "pronunciation_ko": "산뱍쿠엔데스. 아리가토- 고자이마시타",
       "text_ko": "300엔입니다. 감사합니다.",
       "grammar_hint": "ありがとうございました는 거래가 끝났을 때의 감사 인사입니다.",
-      "key_expressions": ["円です", "ありがとうございました"]
+      "key_expressions": [
+        "円です",
+        "ありがとうございました"
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word_ja": "いらっしゃいませ",
+      "reading_hiragana": "いらっしゃいませ",
+      "reading_ko": "이랏샤이마세",
+      "meaning_ko": "어서 오세요",
+      "pos": "표현",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "これ",
+      "reading_hiragana": "これ",
+      "reading_ko": "코레",
+      "meaning_ko": "이것",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "ください",
+      "reading_hiragana": "ください",
+      "reading_ko": "쿠다사이",
+      "meaning_ko": "주세요",
+      "pos": "표현",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "袋",
+      "reading_hiragana": "ふくろ",
+      "reading_ko": "후쿠로",
+      "meaning_ko": "봉투, 가방",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "いる",
+      "reading_hiragana": "いる",
+      "reading_ko": "이루",
+      "meaning_ko": "필요하다, 있다",
+      "pos": "동사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "いいえ",
+      "reading_hiragana": "いいえ",
+      "reading_ko": "이-에",
+      "meaning_ko": "아니오",
+      "pos": "감탄사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "大丈夫",
+      "reading_hiragana": "だいじょうぶ",
+      "reading_ko": "다이죠-부",
+      "meaning_ko": "괜찮음",
+      "pos": "형용사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "三百",
+      "reading_hiragana": "さんびゃく",
+      "reading_ko": "삼뱌쿠",
+      "meaning_ko": "삼백",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "円",
+      "reading_hiragana": "えん",
+      "reading_ko": "엔",
+      "meaning_ko": "엔 (일본 화폐 단위)",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "ありがとうございました",
+      "reading_hiragana": "ありがとうございました",
+      "reading_ko": "아리가토-고자이마시타",
+      "meaning_ko": "감사했습니다",
+      "pos": "표현",
+      "appears_in_lines": [
+        5
+      ]
     }
   ]
 }

@@ -10,7 +10,10 @@
       "pronunciation_ko": "도치라마데 이카레마스카",
       "text_ko": "어디까지 가시나요?",
       "grammar_hint": "行かれます는 '行く(가다)'의 존경어입니다.",
-      "key_expressions": ["どちらまで", "行かれますか"]
+      "key_expressions": [
+        "どちらまで",
+        "行かれますか"
+      ]
     },
     {
       "line_order": 2,
@@ -21,7 +24,10 @@
       "pronunciation_ko": "코노 쥬-쇼마데 오네가이시마스. 이소이데이룬데스가",
       "text_ko": "이 주소까지 부탁드려요. 좀 급한데요.",
       "grammar_hint": "急いでいる(서두르고 있다) + んですが(~인데요)는 상황 설명할 때 씁니다.",
-      "key_expressions": ["住所まで", "急いでいる"]
+      "key_expressions": [
+        "住所まで",
+        "急いでいる"
+      ]
     },
     {
       "line_order": 3,
@@ -32,7 +38,10 @@
       "pronunciation_ko": "와카리마시타. 미치가 콘데이루 카모시레마셍가, 간바리마스",
       "text_ko": "알겠습니다. 길이 막힐 수도 있지만, 노력하겠습니다.",
       "grammar_hint": "かもしれません은 '~일지도 모른다'라는 추측 표현입니다.",
-      "key_expressions": ["道が混んでいる", "かもしれません"]
+      "key_expressions": [
+        "道が混んでいる",
+        "かもしれません"
+      ]
     },
     {
       "line_order": 4,
@@ -43,7 +52,10 @@
       "pronunciation_ko": "쿠레짓토 카-도와 츠카에마스카",
       "text_ko": "신용카드 사용 가능한가요?",
       "grammar_hint": "使えます는 '쓸 수 있다'의 가능형입니다.",
-      "key_expressions": ["クレジットカード", "使えますか"]
+      "key_expressions": [
+        "クレジットカード",
+        "使えますか"
+      ]
     },
     {
       "line_order": 5,
@@ -54,7 +66,132 @@
       "pronunciation_ko": "하이, 다이죠-부데스. 니센고햐쿠엔니 나리마스",
       "text_ko": "네, 됩니다. 2,500엔입니다.",
       "grammar_hint": "になります는 금액을 말할 때 정중한 표현입니다.",
-      "key_expressions": ["大丈夫です", "になります"]
+      "key_expressions": [
+        "大丈夫です",
+        "になります"
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word_ja": "どちら",
+      "reading_hiragana": "どちら",
+      "reading_ko": "도치라",
+      "meaning_ko": "어느 쪽, 어디",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "行く",
+      "reading_hiragana": "いく",
+      "reading_ko": "이쿠",
+      "meaning_ko": "가다",
+      "pos": "동사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "住所",
+      "reading_hiragana": "じゅうしょ",
+      "reading_ko": "쥬-쇼",
+      "meaning_ko": "주소",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "急ぐ",
+      "reading_hiragana": "いそぐ",
+      "reading_ko": "이소구",
+      "meaning_ko": "서두르다",
+      "pos": "동사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "分かりました",
+      "reading_hiragana": "わかりました",
+      "reading_ko": "와카리마시타",
+      "meaning_ko": "알겠습니다",
+      "pos": "표현",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "道",
+      "reading_hiragana": "みち",
+      "reading_ko": "미치",
+      "meaning_ko": "길",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "混む",
+      "reading_hiragana": "こむ",
+      "reading_ko": "코무",
+      "meaning_ko": "붐비다",
+      "pos": "동사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "頑張る",
+      "reading_hiragana": "がんばる",
+      "reading_ko": "감바루",
+      "meaning_ko": "힘내다",
+      "pos": "동사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "クレジットカード",
+      "reading_hiragana": "クレジットカード",
+      "reading_ko": "쿠레짓토카-도",
+      "meaning_ko": "신용카드",
+      "pos": "명사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "使う",
+      "reading_hiragana": "つかう",
+      "reading_ko": "츠카우",
+      "meaning_ko": "사용하다",
+      "pos": "동사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "大丈夫",
+      "reading_hiragana": "だいじょうぶ",
+      "reading_ko": "다이죠-부",
+      "meaning_ko": "괜찮습니다",
+      "pos": "형용사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "二千五百円",
+      "reading_hiragana": "にせんごひゃくえん",
+      "reading_ko": "니센고햐쿠엔",
+      "meaning_ko": "2500엔",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
     }
   ]
 }

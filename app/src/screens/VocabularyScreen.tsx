@@ -18,26 +18,35 @@ import BackHeader from "../components/BackHeader";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Vocabulary">;
 
-type FilterType = "all" | "weak" | "mastered";
-
-interface VocabItem {
+interface VocabWord {
   id: number;
-  line_id: number;
-  text_ja: string;
-  text_ko: string;
-  pronunciation_ko: string | null;
-  reps: number;
-  state: string;
-  accuracy: number | null;
+  word_ja: string;
+  reading_hiragana: string;
+  reading_ko: string;
+  meaning_ko: string;
+  pos: string;
   situation_name: string;
 }
 
+const POS_COLORS: Record<string, string> = {
+  "명사": "#6366f1",
+  "동사": "#10b981",
+  "형용사": "#f59e0b",
+  "부사": "#ec4899",
+  "조사": "#8b5cf6",
+  "접속사": "#06b6d4",
+  "감탄사": "#f97316",
+  "조동사": "#14b8a6",
+};
+
+const POS_DEFAULT_COLOR = "#64748b";
+
 export default function VocabularyScreen({ navigation }: Props) {
-  const [items, setItems] = useState<VocabItem[]>([]);
-  const [filter, setFilter] = useState<FilterType>("all");
+  const [words, setWords] = useState<VocabWord[]>([]);
   const [loading, setLoading] = useState(true);
   const [speakingId, setSpeakingId] = useState<number | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedPos, setSelectedPos] = useState<string | null>(null);
 
   useEffect(() => {
     loadVocabulary();
@@ -45,31 +54,19 @@ export default function VocabularyScreen({ navigation }: Props) {
 
   const loadVocabulary = async () => {
     setLoading(true);
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return;
 
-    // Get all learned lines from srs_cards
-    const { data: cards, error } = await supabase
-      .from("srs_cards")
+    const { data, error } = await supabase
+      .from("vocabulary")
       .select(`
         id,
-        line_id,
-        reps,
-        state,
-        lines!inner (
-          id,
-          text_ja,
-          text_ko,
-          pronunciation_ko,
-          speaker,
-          situations!inner (
-            name_ko
-          )
-        )
+        word_ja,
+        reading_hiragana,
+        reading_ko,
+        meaning_ko,
+        pos,
+        situations!inner ( name_ko )
       `)
-      .eq("user_id", user.id)
-      .gt("reps", 0)
-      .order("reps", { ascending: false });
+      .order("id", { ascending: true });
 
     if (error) {
       console.error("Error loading vocabulary:", error);
@@ -77,68 +74,42 @@ export default function VocabularyScreen({ navigation }: Props) {
       return;
     }
 
-    // Get accuracy from attempts
-    const { data: attempts } = await supabase
-      .from("user_attempts")
-      .select("line_id, accuracy")
-      .eq("user_id", user.id)
-      .order("attempted_at", { ascending: false });
+    const vocabWords: VocabWord[] = (data || []).map((row: any) => ({
+      id: row.id,
+      word_ja: row.word_ja,
+      reading_hiragana: row.reading_hiragana,
+      reading_ko: row.reading_ko,
+      meaning_ko: row.meaning_ko,
+      pos: row.pos,
+      situation_name: row.situations.name_ko,
+    }));
 
-    // Build accuracy map (latest attempt per line)
-    const accuracyMap: Record<number, number> = {};
-    attempts?.forEach((a) => {
-      if (!(a.line_id in accuracyMap)) {
-        accuracyMap[a.line_id] = a.accuracy;
-      }
-    });
-
-    // Transform data
-    const vocabItems: VocabItem[] = (cards || [])
-      .filter((card: any) => card.lines?.speaker === "user")
-      .map((card: any) => ({
-        id: card.id,
-        line_id: card.line_id,
-        text_ja: card.lines.text_ja,
-        text_ko: card.lines.text_ko,
-        pronunciation_ko: card.lines.pronunciation_ko,
-        reps: card.reps,
-        state: card.state,
-        accuracy: accuracyMap[card.line_id] ?? null,
-        situation_name: card.lines.situations.name_ko,
-      }));
-
-    setItems(vocabItems);
+    setWords(vocabWords);
     setLoading(false);
   };
 
-  const filteredItems = items.filter((item) => {
-    // Apply filter
-    let passesFilter = true;
-    switch (filter) {
-      case "weak":
-        passesFilter = item.accuracy !== null && item.accuracy < 0.7;
-        break;
-      case "mastered":
-        passesFilter = item.state === "review" && (item.accuracy ?? 0) >= 0.9;
-        break;
-    }
+  // Collect unique POS tags for filter
+  const posTags = Array.from(new Set(words.map((w) => w.pos)));
 
-    // Apply search
+  const filteredWords = words.filter((word) => {
+    // POS filter
+    if (selectedPos && word.pos !== selectedPos) return false;
+
+    // Search filter
     if (searchQuery.trim()) {
       const q = searchQuery.trim().toLowerCase();
-      const matchesSearch =
-        item.text_ja.toLowerCase().includes(q) ||
-        item.text_ko.toLowerCase().includes(q) ||
-        (item.pronunciation_ko?.toLowerCase().includes(q) ?? false);
-      return passesFilter && matchesSearch;
+      return (
+        word.word_ja.toLowerCase().includes(q) ||
+        word.reading_hiragana.toLowerCase().includes(q) ||
+        word.reading_ko.toLowerCase().includes(q) ||
+        word.meaning_ko.toLowerCase().includes(q)
+      );
     }
 
-    return passesFilter;
+    return true;
   });
 
-  const weakCount = items.filter((i) => i.accuracy !== null && i.accuracy < 0.7).length;
-
-  const speakText = async (text: string, id: number) => {
+  const speakWord = (text: string, id: number) => {
     if (speakingId === id) {
       Speech.stop();
       setSpeakingId(null);
@@ -154,66 +125,35 @@ export default function VocabularyScreen({ navigation }: Props) {
     });
   };
 
-  const getStateLabel = (state: string): string => {
-    switch (state) {
-      case "new": return "새로운";
-      case "learning": return "학습중";
-      case "review": return "복습";
-      case "relearning": return "재학습";
-      default: return state;
-    }
-  };
+  const getPosColor = (pos: string): string => POS_COLORS[pos] ?? POS_DEFAULT_COLOR;
 
-  const getStateColor = (state: string): string => {
-    switch (state) {
-      case "new": return "#6366f1";
-      case "learning": return "#f59e0b";
-      case "review": return "#10b981";
-      case "relearning": return "#ef4444";
-      default: return "#64748b";
-    }
-  };
-
-  const renderItem = ({ item }: { item: VocabItem }) => (
+  const renderItem = ({ item }: { item: VocabWord }) => (
     <TouchableOpacity
-      style={styles.itemCard}
-      onPress={() => speakText(item.text_ja, item.id)}
+      style={styles.wordCard}
+      onPress={() => speakWord(item.word_ja, item.id)}
+      activeOpacity={0.7}
     >
-      <View style={styles.itemHeader}>
-        <Text style={styles.japaneseText}>{item.text_ja}</Text>
-        <Text style={styles.speakerIcon}>
-          {speakingId === item.id ? "🔊" : "🔈"}
-        </Text>
-      </View>
-
-      {item.pronunciation_ko && (
-        <Text style={styles.pronunciationText}>{item.pronunciation_ko}</Text>
-      )}
-
-      <Text style={styles.koreanText}>{item.text_ko}</Text>
-
-      <View style={styles.itemFooter}>
-        <View style={styles.tagContainer}>
-          <View style={[styles.stateTag, { backgroundColor: getStateColor(item.state) + "20" }]}>
-            <Text style={[styles.stateText, { color: getStateColor(item.state) }]}>
-              {getStateLabel(item.state)}
-            </Text>
+      <View style={styles.cardTop}>
+        <View style={styles.wordSection}>
+          <Text style={styles.wordJa}>{item.word_ja}</Text>
+          <Text style={styles.readingHiragana}>{item.reading_hiragana}</Text>
+        </View>
+        <View style={styles.cardRight}>
+          <View style={[styles.posBadge, { backgroundColor: getPosColor(item.pos) + "18" }]}>
+            <Text style={[styles.posText, { color: getPosColor(item.pos) }]}>{item.pos}</Text>
           </View>
-          <Text style={styles.situationText}>{item.situation_name}</Text>
-        </View>
-
-        <View style={styles.statsContainer}>
-          <Text style={styles.statsText}>연습 {item.reps}회</Text>
-          {item.accuracy !== null && (
-            <Text style={[
-              styles.accuracyText,
-              { color: item.accuracy >= 0.8 ? "#10b981" : item.accuracy >= 0.5 ? "#f59e0b" : "#ef4444" }
-            ]}>
-              {Math.round(item.accuracy * 100)}%
-            </Text>
-          )}
+          <Text style={styles.speakerIcon}>
+            {speakingId === item.id ? "🔊" : "🔈"}
+          </Text>
         </View>
       </View>
+
+      <View style={styles.cardBottom}>
+        <Text style={styles.readingKo}>{item.reading_ko}</Text>
+        <Text style={styles.meaningKo}>{item.meaning_ko}</Text>
+      </View>
+
+      <Text style={styles.situationLabel}>{item.situation_name}</Text>
     </TouchableOpacity>
   );
 
@@ -229,7 +169,7 @@ export default function VocabularyScreen({ navigation }: Props) {
       <View style={styles.searchBar}>
         <TextInput
           style={styles.searchInput}
-          placeholder="일본어 또는 한국어로 검색..."
+          placeholder="단어, 읽기, 뜻으로 검색..."
           placeholderTextColor={colors.textLight}
           value={searchQuery}
           onChangeText={setSearchQuery}
@@ -238,57 +178,56 @@ export default function VocabularyScreen({ navigation }: Props) {
         />
       </View>
 
-      {/* Stats + Practice Button */}
+      {/* Stats */}
       <View style={styles.statsBar}>
-        <Text style={styles.totalCount}>배운 표현: {items.length}개</Text>
-        {weakCount > 0 && (
-          <TouchableOpacity
-            style={styles.practiceButton}
-            onPress={() => navigation.navigate("Flashcard")}
-          >
-            <Text style={styles.practiceButtonText}>
-              약한 표현 연습 ({weakCount})
-            </Text>
-          </TouchableOpacity>
-        )}
+        <Text style={styles.totalCount}>
+          전체 {words.length}개 단어
+          {filteredWords.length !== words.length && ` (${filteredWords.length}개 표시)`}
+        </Text>
       </View>
 
-      {/* Filter Tabs */}
-      <View style={styles.filterTabs}>
-        {[
-          { key: "all", label: "전체" },
-          { key: "weak", label: "약한 표현" },
-          { key: "mastered", label: "마스터" },
-        ].map((tab) => (
-          <TouchableOpacity
-            key={tab.key}
-            style={[styles.filterTab, filter === tab.key && styles.filterTabActive]}
-            onPress={() => setFilter(tab.key as FilterType)}
-          >
-            <Text style={[styles.filterTabText, filter === tab.key && styles.filterTabTextActive]}>
-              {tab.label}
-            </Text>
-          </TouchableOpacity>
-        ))}
+      {/* POS Filter Tabs */}
+      <View style={styles.filterScroll}>
+        <FlatList
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          data={[null, ...posTags]}
+          keyExtractor={(item) => item ?? "all"}
+          contentContainerStyle={styles.filterContent}
+          renderItem={({ item: pos }) => (
+            <TouchableOpacity
+              style={[
+                styles.filterTab,
+                (pos === null ? selectedPos === null : selectedPos === pos) && styles.filterTabActive,
+              ]}
+              onPress={() => setSelectedPos(pos)}
+            >
+              <Text
+                style={[
+                  styles.filterTabText,
+                  (pos === null ? selectedPos === null : selectedPos === pos) && styles.filterTabTextActive,
+                ]}
+              >
+                {pos ?? "전체"}
+              </Text>
+            </TouchableOpacity>
+          )}
+        />
       </View>
 
-      {/* List */}
-      {filteredItems.length === 0 ? (
+      {/* Word List */}
+      {filteredWords.length === 0 ? (
         <View style={styles.emptyContainer}>
           <Text style={styles.emptyIcon}>📚</Text>
           <Text style={styles.emptyText}>
             {searchQuery.trim()
               ? "검색 결과가 없습니다."
-              : filter === "all"
-              ? "아직 학습한 표현이 없습니다.\n학습을 시작해보세요!"
-              : filter === "weak"
-              ? "약한 표현이 없습니다.\n잘하고 계세요!"
-              : "마스터한 표현이 없습니다.\n계속 연습해보세요!"}
+              : "아직 등록된 단어가 없습니다."}
           </Text>
         </View>
       ) : (
         <FlatList
-          data={filteredItems}
+          data={filteredWords}
           renderItem={renderItem}
           keyExtractor={(item) => item.id.toString()}
           contentContainerStyle={styles.listContent}
@@ -318,11 +257,8 @@ const styles = StyleSheet.create({
     color: colors.textDark,
   },
   statsBar: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
     paddingHorizontal: 20,
-    paddingVertical: 12,
+    paddingVertical: 10,
     backgroundColor: colors.surface,
     borderBottomWidth: 1,
     borderBottomColor: colors.border,
@@ -331,19 +267,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: colors.textMuted,
   },
-  practiceButton: {
-    backgroundColor: colors.warning + "20",
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 8,
+  filterScroll: {
+    backgroundColor: colors.background,
   },
-  practiceButtonText: {
-    fontSize: 13,
-    fontWeight: "600",
-    color: "#92400e",
-  },
-  filterTabs: {
-    flexDirection: "row",
+  filterContent: {
     paddingHorizontal: 16,
     paddingVertical: 12,
     gap: 8,
@@ -369,77 +296,67 @@ const styles = StyleSheet.create({
     padding: 16,
     gap: 12,
   },
-  itemCard: {
+  wordCard: {
     backgroundColor: colors.surface,
     borderRadius: 16,
     padding: 16,
     ...shadows.md,
     marginBottom: 12,
   },
-  itemHeader: {
+  cardTop: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
+    alignItems: "flex-start",
   },
-  japaneseText: {
-    fontSize: 20,
-    fontWeight: "600",
-    color: colors.textDark,
+  wordSection: {
     flex: 1,
+  },
+  wordJa: {
+    fontSize: 28,
+    fontWeight: "700",
+    color: colors.textDark,
+  },
+  readingHiragana: {
+    fontSize: 15,
+    color: colors.primary,
+    marginTop: 2,
+  },
+  cardRight: {
+    alignItems: "flex-end",
+    gap: 8,
+  },
+  posBadge: {
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 10,
+  },
+  posText: {
+    fontSize: 12,
+    fontWeight: "600",
   },
   speakerIcon: {
     fontSize: 20,
-    marginLeft: 8,
   },
-  pronunciationText: {
-    fontSize: 14,
-    color: colors.primary,
-    marginTop: 4,
-  },
-  koreanText: {
-    fontSize: 16,
-    color: colors.textMuted,
-    marginTop: 8,
-  },
-  itemFooter: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+  cardBottom: {
     marginTop: 12,
     paddingTop: 12,
     borderTopWidth: 1,
     borderTopColor: colors.borderLight,
   },
-  tagContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
-  },
-  stateTag: {
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 8,
-  },
-  stateText: {
-    fontSize: 12,
+  readingKo: {
+    fontSize: 16,
     fontWeight: "600",
+    color: colors.textDark,
+    marginBottom: 4,
   },
-  situationText: {
+  meaningKo: {
+    fontSize: 15,
+    color: colors.textMuted,
+  },
+  situationLabel: {
     fontSize: 12,
     color: colors.textLight,
-  },
-  statsContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 12,
-  },
-  statsText: {
-    fontSize: 12,
-    color: colors.textLight,
-  },
-  accuracyText: {
-    fontSize: 14,
-    fontWeight: "600",
+    marginTop: 10,
   },
   emptyContainer: {
     flex: 1,
