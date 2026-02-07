@@ -96,3 +96,13 @@ export interface DailySession {
   newLines: SessionLine[];
   totalCount: number;
 }
+
+export interface Vocabulary {
+  id: number;
+  word_ja: string;           // 日本語 단어
+  reading_hiragana: string;  // ひらがな 읽기
+  reading_ko: string;        // 한글 발음
+  meaning_ko: string;        // 한국어 의미
+  pos: string;               // 품사 (명사, 동사, 형용사 등)
+  appears_in_lines?: number[]; // 등장 대사 번호
+}
