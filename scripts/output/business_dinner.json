@@ -10,7 +10,10 @@
       "pronunciation_ko": "오쿠치니 아우카 도-카 와카리마셍가, 도-조 메시아갓테쿠다사이",
       "text_ko": "입에 맞으실지 모르겠지만, 드셔 보세요.",
       "grammar_hint": "召し上がる는 '食べる(먹다)'의 존경어입니다.",
-      "key_expressions": ["お口に合う", "召し上がってください"]
+      "key_expressions": [
+        "お口に合う",
+        "召し上がってください"
+      ]
     },
     {
       "line_order": 2,
@@ -21,7 +24,10 @@
       "pronunciation_ko": "아리가토- 고자이마스. 이타다키마스",
       "text_ko": "감사합니다. 잘 먹겠습니다.",
       "grammar_hint": "いただきます는 식사 전에 하는 일본 인사입니다.",
-      "key_expressions": ["いただきます", "ありがとうございます"]
+      "key_expressions": [
+        "いただきます",
+        "ありがとうございます"
+      ]
     },
     {
       "line_order": 3,
@@ -32,7 +38,10 @@
       "pronunciation_ko": "데와, 캄파이시마쇼-카. 쿄-노 고세-코-오 슈쿠시테",
       "text_ko": "그럼, 건배할까요. 오늘의 성공을 축하하며.",
       "grammar_hint": "乾杯(캄파이)는 건배입니다. ~を祝して는 '~를 축하하며'.",
-      "key_expressions": ["乾杯", "を祝して"]
+      "key_expressions": [
+        "乾杯",
+        "を祝して"
+      ]
     },
     {
       "line_order": 4,
@@ -43,7 +52,10 @@
       "pronunciation_ko": "캄파이! 토테모 오이시-데스네. 난토이우 료-리데스카",
       "text_ko": "건배! 정말 맛있네요. 무슨 요리인가요?",
       "grammar_hint": "何という~는 '무엇이라고 하는 ~'를 묻는 표현입니다.",
-      "key_expressions": ["おいしい", "何という"]
+      "key_expressions": [
+        "おいしい",
+        "何という"
+      ]
     },
     {
       "line_order": 5,
@@ -54,7 +66,193 @@
       "pronunciation_ko": "코레와 쿄-토노 쿄-도료-리데스. 오키니 메시테이타다케테 우레시-데스",
       "text_ko": "이건 교토의 향토 요리입니다. 마음에 드셨다니 기쁩니다.",
       "grammar_hint": "お気に召す는 '마음에 들다'의 존경 표현입니다.",
-      "key_expressions": ["郷土料理", "お気に召す"]
+      "key_expressions": [
+        "郷土料理",
+        "お気に召す"
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word_ja": "お口",
+      "reading_hiragana": "おくち",
+      "reading_ko": "오쿠치",
+      "meaning_ko": "입 (존경어)",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "合う",
+      "reading_hiragana": "あう",
+      "reading_ko": "아우",
+      "meaning_ko": "맞다, 어울리다",
+      "pos": "동사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "どう",
+      "reading_hiragana": "どう",
+      "reading_ko": "도-",
+      "meaning_ko": "어떻게",
+      "pos": "부사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "召し上がる",
+      "reading_hiragana": "めしあがる",
+      "reading_ko": "메시아가루",
+      "meaning_ko": "드시다 (존경어)",
+      "pos": "동사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "いただく",
+      "reading_hiragana": "いただく",
+      "reading_ko": "이타다쿠",
+      "meaning_ko": "잘 먹겠습니다",
+      "pos": "표현",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "乾杯",
+      "reading_hiragana": "かんぱい",
+      "reading_ko": "캄파이",
+      "meaning_ko": "건배",
+      "pos": "명사",
+      "appears_in_lines": [
+        3,
+        4
+      ]
+    },
+    {
+      "word_ja": "今日",
+      "reading_hiragana": "きょう",
+      "reading_ko": "쿄-",
+      "meaning_ko": "오늘",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "ご成功",
+      "reading_hiragana": "ごせいこう",
+      "reading_ko": "고세이코-",
+      "meaning_ko": "성공 (존경어)",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "祝して",
+      "reading_hiragana": "いわいして",
+      "reading_ko": "이와이시테",
+      "meaning_ko": "축하하며",
+      "pos": "표현",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "とても",
+      "reading_hiragana": "とても",
+      "reading_ko": "토테모",
+      "meaning_ko": "매우, 아주",
+      "pos": "부사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "おいしい",
+      "reading_hiragana": "おいしい",
+      "reading_ko": "오이시이",
+      "meaning_ko": "맛있다",
+      "pos": "형용사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "料理",
+      "reading_hiragana": "りょうり",
+      "reading_ko": "료-리",
+      "meaning_ko": "요리",
+      "pos": "명사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "何という",
+      "reading_hiragana": "なんという",
+      "reading_ko": "난토이우",
+      "meaning_ko": "무슨 ~라고 하는",
+      "pos": "표현",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "郷土料理",
+      "reading_hiragana": "きょうどりょうり",
+      "reading_ko": "쿄-도료-리",
+      "meaning_ko": "향토 요리",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "京都",
+      "reading_hiragana": "きょうと",
+      "reading_ko": "쿄-토",
+      "meaning_ko": "교토",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "気",
+      "reading_hiragana": "き",
+      "reading_ko": "키",
+      "meaning_ko": "마음, 기분",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "召す",
+      "reading_hiragana": "めす",
+      "reading_ko": "메스",
+      "meaning_ko": "드시다, 입다 (존경어)",
+      "pos": "동사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "嬉しい",
+      "reading_hiragana": "うれしい",
+      "reading_ko": "우레시이",
+      "meaning_ko": "기쁘다",
+      "pos": "형용사",
+      "appears_in_lines": [
+        5
+      ]
     }
   ]
 }

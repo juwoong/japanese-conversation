@@ -10,7 +10,10 @@
       "pronunciation_ko": "혼지츠와 멘세츠니 오코시이타다키, 아리가토- 고자이마스. 데와, 지코쇼-카이오 오네가이시마스",
       "text_ko": "오늘 면접에 와 주셔서 감사합니다. 그럼, 자기소개 부탁드립니다.",
       "grammar_hint": "自己紹介(지코쇼-카이)는 '자기소개'입니다.",
-      "key_expressions": ["面接", "自己紹介"]
+      "key_expressions": [
+        "面接",
+        "自己紹介"
+      ]
     },
     {
       "line_order": 2,
@@ -21,7 +24,10 @@
       "pronunciation_ko": "키무토 모-시마스. 칸코쿠카라 키테, 이마 니혼고갓코-니 카욧테이마스",
       "text_ko": "김이라고 합니다. 한국에서 왔고, 지금 일본어학교에 다니고 있어요.",
       "grammar_hint": "通っています(카욧테이마스)는 '다니고 있다'의 진행형입니다.",
-      "key_expressions": ["と申します", "通っています"]
+      "key_expressions": [
+        "と申します",
+        "通っています"
+      ]
     },
     {
       "line_order": 3,
@@ -32,7 +38,11 @@
       "pronunciation_ko": "슈-니 난니치쿠라이 하이레마스카. 도니치와 도-데스카",
       "text_ko": "주에 며칠 정도 들어올 수 있어요? 토일은 어때요?",
       "grammar_hint": "入れます(하이레마스)는 시프트에 '들어갈 수 있다'는 의미입니다.",
-      "key_expressions": ["週に", "入れます", "土日"]
+      "key_expressions": [
+        "週に",
+        "入れます",
+        "土日"
+      ]
     },
     {
       "line_order": 4,
@@ -43,7 +53,10 @@
       "pronunciation_ko": "슈-니 밋카와 하이레마스. 도요-비와 다이죠-부데스가, 니치요-비와 무즈카시-데스",
       "text_ko": "주 3일은 들어갈 수 있어요. 토요일은 괜찮지만, 일요일은 어려워요.",
       "grammar_hint": "難しいです(무즈카시-데스)는 '어렵습니다'로 거절할 때도 씁니다.",
-      "key_expressions": ["週に三日", "難しいです"]
+      "key_expressions": [
+        "週に三日",
+        "難しいです"
+      ]
     },
     {
       "line_order": 5,
@@ -54,7 +67,214 @@
       "pronunciation_ko": "와카리마시타. 데와, 라이슈-카라 코라레마스카. 지큐-와 큐-햐쿠고쥬-엔데스",
       "text_ko": "알겠습니다. 그럼, 다음 주부터 올 수 있어요? 시급은 950엔이에요.",
       "grammar_hint": "時給(지큐-)는 '시급'입니다. 来られます는 '올 수 있다'의 존경 표현.",
-      "key_expressions": ["来週から", "時給"]
+      "key_expressions": [
+        "来週から",
+        "時給"
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word_ja": "本日",
+      "reading_hiragana": "ほんじつ",
+      "reading_ko": "혼지츠",
+      "meaning_ko": "오늘",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "面接",
+      "reading_hiragana": "めんせつ",
+      "reading_ko": "멘세츠",
+      "meaning_ko": "면접",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "お越し",
+      "reading_hiragana": "おこし",
+      "reading_ko": "오코시",
+      "meaning_ko": "오심 (謙譲語)",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "自己紹介",
+      "reading_hiragana": "じこしょうかい",
+      "reading_ko": "지코쇼-카이",
+      "meaning_ko": "자기소개",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "お願い",
+      "reading_hiragana": "おねがい",
+      "reading_ko": "오네가이",
+      "meaning_ko": "부탁",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "申す",
+      "reading_hiragana": "もうす",
+      "reading_ko": "모-스",
+      "meaning_ko": "말하다 (謙譲語)",
+      "pos": "동사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "韓国",
+      "reading_hiragana": "かんこく",
+      "reading_ko": "칸코쿠",
+      "meaning_ko": "한국",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "通う",
+      "reading_hiragana": "かよう",
+      "reading_ko": "카요-",
+      "meaning_ko": "다니다",
+      "pos": "동사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "週",
+      "reading_hiragana": "しゅう",
+      "reading_ko": "슈-",
+      "meaning_ko": "주",
+      "pos": "명사",
+      "appears_in_lines": [
+        3,
+        4
+      ]
+    },
+    {
+      "word_ja": "何日",
+      "reading_hiragana": "なんにち",
+      "reading_ko": "난니치",
+      "meaning_ko": "며칠",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "入れる",
+      "reading_hiragana": "いれる",
+      "reading_ko": "이레루",
+      "meaning_ko": "넣다, (시간을) 내다",
+      "pos": "동사",
+      "appears_in_lines": [
+        3,
+        4
+      ]
+    },
+    {
+      "word_ja": "土日",
+      "reading_hiragana": "どにち",
+      "reading_ko": "도니치",
+      "meaning_ko": "주말",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "大丈夫",
+      "reading_hiragana": "だいじょうぶ",
+      "reading_ko": "다이죠-부",
+      "meaning_ko": "괜찮음",
+      "pos": "형용사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "難しい",
+      "reading_hiragana": "むずかしい",
+      "reading_ko": "무즈카시이",
+      "meaning_ko": "어렵다",
+      "pos": "형용사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "分かりました",
+      "reading_hiragana": "わかりました",
+      "reading_ko": "와카리마시타",
+      "meaning_ko": "알겠습니다",
+      "pos": "표현",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "来週",
+      "reading_hiragana": "らいしゅう",
+      "reading_ko": "라이슈-",
+      "meaning_ko": "다음 주",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "来られる",
+      "reading_hiragana": "こられる",
+      "reading_ko": "코라레루",
+      "meaning_ko": "오다 (가능형)",
+      "pos": "동사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "時給",
+      "reading_hiragana": "じきゅう",
+      "reading_ko": "지큐-",
+      "meaning_ko": "시급",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "九百五十円",
+      "reading_hiragana": "きゅうひゃくごじゅうえん",
+      "reading_ko": "큐-햐쿠 고쥬-엔",
+      "meaning_ko": "950엔",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "三日",
+      "reading_hiragana": "みっか",
+      "reading_ko": "밋카",
+      "meaning_ko": "3일",
+      "pos": "명사",
+      "appears_in_lines": [
+        4
+      ]
     }
   ]
 }

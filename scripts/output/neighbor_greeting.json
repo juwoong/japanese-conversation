@@ -10,7 +10,10 @@
       "pronunciation_ko": "콘니치와. 오토나리니 힉코시테키타 카타데스카",
       "text_ko": "안녕하세요. 옆집에 이사 오신 분이세요?",
       "grammar_hint": "引っ越してきた는 '이사해 온'이라는 뜻입니다.",
-      "key_expressions": ["お隣", "引っ越してきた"]
+      "key_expressions": [
+        "お隣",
+        "引っ越してきた"
+      ]
     },
     {
       "line_order": 2,
@@ -21,7 +24,10 @@
       "pronunciation_ko": "하이, 센슈- 힉코시테키마시타. 키무토 모-시마스. 요로시쿠 오네가이시마스",
       "text_ko": "네, 지난주에 이사 왔어요. 김이라고 합니다. 잘 부탁드려요.",
       "grammar_hint": "先週(센슈-)는 '지난주'입니다. 今週(콘슈-)는 '이번 주'.",
-      "key_expressions": ["先週", "と申します"]
+      "key_expressions": [
+        "先週",
+        "と申します"
+      ]
     },
     {
       "line_order": 3,
@@ -32,7 +38,10 @@
       "pronunciation_ko": "와타시와 사토-데스. 나니카 앗타라 이츠데모 코에오 카케테쿠다사이네",
       "text_ko": "저는 사토입니다. 뭐든 있으면 언제든 말씀해 주세요.",
       "grammar_hint": "声をかける는 '말을 걸다'라는 표현입니다.",
-      "key_expressions": ["何かあったら", "声をかけてください"]
+      "key_expressions": [
+        "何かあったら",
+        "声をかけてください"
+      ]
     },
     {
       "line_order": 4,
@@ -43,7 +52,10 @@
       "pronunciation_ko": "아리가토- 고자이마스. 코레, 츠마라나이 모노데스가",
       "text_ko": "감사합니다. 이거, 별거 아니지만요.",
       "grammar_hint": "つまらないものですが는 선물을 줄 때 겸손하게 말하는 표현입니다.",
-      "key_expressions": ["つまらないものですが", "これ"]
+      "key_expressions": [
+        "つまらないものですが",
+        "これ"
+      ]
     },
     {
       "line_order": 5,
@@ -54,7 +66,143 @@
       "pronunciation_ko": "와-, 아리가토- 고자이마스. 고미다시노 코토나도 와카라나케레바 키이테쿠다사이",
       "text_ko": "와, 감사합니다. 쓰레기 버리는 것 등 모르면 물어봐 주세요.",
       "grammar_hint": "ゴミ出し는 '쓰레기 버리기'입니다. 일본은 분리수거가 엄격합니다.",
-      "key_expressions": ["ゴミ出し", "分からなければ"]
+      "key_expressions": [
+        "ゴミ出し",
+        "分からなければ"
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word_ja": "お隣",
+      "reading_hiragana": "おとなり",
+      "reading_ko": "오토나리",
+      "meaning_ko": "이웃",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "引っ越す",
+      "reading_hiragana": "ひっこす",
+      "reading_ko": "힛코스",
+      "meaning_ko": "이사하다",
+      "pos": "동사",
+      "appears_in_lines": [
+        1,
+        2
+      ]
+    },
+    {
+      "word_ja": "方",
+      "reading_hiragana": "かた",
+      "reading_ko": "카타",
+      "meaning_ko": "분 (사람을 높여 부르는 말)",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "先週",
+      "reading_hiragana": "せんしゅう",
+      "reading_ko": "센슈-",
+      "meaning_ko": "지난주",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "申す",
+      "reading_hiragana": "もうす",
+      "reading_ko": "모-스",
+      "meaning_ko": "말씀드리다 (言います의 겸양어)",
+      "pos": "동사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "よろしく",
+      "reading_hiragana": "よろしく",
+      "reading_ko": "요로시쿠",
+      "meaning_ko": "잘",
+      "pos": "부사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "声",
+      "reading_hiragana": "こえ",
+      "reading_ko": "코에",
+      "meaning_ko": "소리, 목소리",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "かける",
+      "reading_hiragana": "かける",
+      "reading_ko": "카케루",
+      "meaning_ko": "(말을) 걸다",
+      "pos": "동사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "いつでも",
+      "reading_hiragana": "いつでも",
+      "reading_ko": "이쯔데모",
+      "meaning_ko": "언제든지",
+      "pos": "부사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "つまらない",
+      "reading_hiragana": "つまらない",
+      "reading_ko": "쯔마라나이",
+      "meaning_ko": "보잘것없는, 시시한",
+      "pos": "형용사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "ゴミ出し",
+      "reading_hiragana": "ごみだし",
+      "reading_ko": "고미다시",
+      "meaning_ko": "쓰레기 배출",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "分からなければ",
+      "reading_hiragana": "わからなければ",
+      "reading_ko": "와카라나케레바",
+      "meaning_ko": "모르면",
+      "pos": "표현",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "聞く",
+      "reading_hiragana": "きく",
+      "reading_ko": "키쿠",
+      "meaning_ko": "듣다, 묻다",
+      "pos": "동사",
+      "appears_in_lines": [
+        5
+      ]
     }
   ]
 }

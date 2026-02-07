@@ -10,7 +10,10 @@
       "pronunciation_ko": "고조-샤 아리가토- 고자이마스. 도치라마데?",
       "text_ko": "승차해 주셔서 감사합니다. 어디까지요?",
       "grammar_hint": "ご乗車(고조-샤)는 '탑승'의 존경 표현입니다.",
-      "key_expressions": ["ご乗車", "どちらまで"]
+      "key_expressions": [
+        "ご乗車",
+        "どちらまで"
+      ]
     },
     {
       "line_order": 2,
@@ -21,7 +24,10 @@
       "pronunciation_ko": "신쥬쿠에키 니시구치마데 오네가이시마스",
       "text_ko": "신주쿠역 서쪽 출구까지 부탁드립니다.",
       "grammar_hint": "西口(니시구치)는 '서쪽 출구', 東口(히가시구치)는 '동쪽 출구'입니다.",
-      "key_expressions": ["西口", "までお願いします"]
+      "key_expressions": [
+        "西口",
+        "までお願いします"
+      ]
     },
     {
       "line_order": 3,
@@ -32,7 +38,10 @@
       "pronunciation_ko": "카시코마리마시타. 슈토코-소쿠오 츠캇테모 요로시-데쇼-카",
       "text_ko": "알겠습니다. 수도고속도로를 이용해도 될까요?",
       "grammar_hint": "~てもよろしいでしょうか는 허락을 구하는 매우 정중한 표현입니다.",
-      "key_expressions": ["かしこまりました", "よろしいでしょうか"]
+      "key_expressions": [
+        "かしこまりました",
+        "よろしいでしょうか"
+      ]
     },
     {
       "line_order": 4,
@@ -43,7 +52,10 @@
       "pronunciation_ko": "하이, 오네가이시마스. 료-슈-쇼오 오네가이데키마스카",
       "text_ko": "네, 부탁드립니다. 영수증 받을 수 있을까요?",
       "grammar_hint": "領収書(료-슈-쇼)는 영수증입니다. 비즈니스 경비 처리에 필수입니다.",
-      "key_expressions": ["領収書", "お願いできますか"]
+      "key_expressions": [
+        "領収書",
+        "お願いできますか"
+      ]
     },
     {
       "line_order": 5,
@@ -54,7 +66,184 @@
       "pronunciation_ko": "모치론데 고자이마스. 오오리노 사이니 오와타시 이타시마스",
       "text_ko": "물론입니다. 하차하실 때 드리겠습니다.",
       "grammar_hint": "お渡しいたします는 '드리겠습니다'의 겸양 표현입니다.",
-      "key_expressions": ["もちろん", "お渡しいたします"]
+      "key_expressions": [
+        "もちろん",
+        "お渡しいたします"
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word_ja": "ご乗車",
+      "reading_hiragana": "ごじょうしゃ",
+      "reading_ko": "고죠-샤",
+      "meaning_ko": "승차",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "ありがとうございます",
+      "reading_hiragana": "ありがとうございます",
+      "reading_ko": "아리가토-고자이마스",
+      "meaning_ko": "감사합니다",
+      "pos": "표현",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "どちら",
+      "reading_hiragana": "どちら",
+      "reading_ko": "도치라",
+      "meaning_ko": "어느 쪽, 어디",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "まで",
+      "reading_hiragana": "まで",
+      "reading_ko": "마데",
+      "meaning_ko": "~까지",
+      "pos": "조사",
+      "appears_in_lines": [
+        1,
+        2
+      ]
+    },
+    {
+      "word_ja": "新宿駅",
+      "reading_hiragana": "しんじゅくえき",
+      "reading_ko": "신쥬쿠에키",
+      "meaning_ko": "신주쿠역",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "西口",
+      "reading_hiragana": "にしぐち",
+      "reading_ko": "니시구치",
+      "meaning_ko": "서쪽 출구",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "お願いします",
+      "reading_hiragana": "おねがいします",
+      "reading_ko": "오네가이시마스",
+      "meaning_ko": "부탁드립니다",
+      "pos": "표현",
+      "appears_in_lines": [
+        2,
+        4
+      ]
+    },
+    {
+      "word_ja": "かしこまりました",
+      "reading_hiragana": "かしこまりました",
+      "reading_ko": "카시코마리마시타",
+      "meaning_ko": "알겠습니다",
+      "pos": "표현",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "首都高速",
+      "reading_hiragana": "しゅとこうそく",
+      "reading_ko": "슈토코-소쿠",
+      "meaning_ko": "수도고속도로",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "使う",
+      "reading_hiragana": "つかう",
+      "reading_ko": "츠카우",
+      "meaning_ko": "쓰다, 사용하다",
+      "pos": "동사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "よろしい",
+      "reading_hiragana": "よろしい",
+      "reading_ko": "요로시이",
+      "meaning_ko": "좋다, 괜찮다",
+      "pos": "형용사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "領収書",
+      "reading_hiragana": "りょうしゅうしょ",
+      "reading_ko": "료-슈-쇼",
+      "meaning_ko": "영수증",
+      "pos": "명사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "もちろん",
+      "reading_hiragana": "もちろん",
+      "reading_ko": "모치론",
+      "meaning_ko": "물론",
+      "pos": "부사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "ございます",
+      "reading_hiragana": "ございます",
+      "reading_ko": "고자이마스",
+      "meaning_ko": "있습니다 (정중한 표현)",
+      "pos": "동사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "お降り",
+      "reading_hiragana": "おり",
+      "reading_ko": "오리",
+      "meaning_ko": "내림, 하차",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "際",
+      "reading_hiragana": "さい",
+      "reading_ko": "사이",
+      "meaning_ko": "때, 경우",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "渡す",
+      "reading_hiragana": "わたす",
+      "reading_ko": "와타스",
+      "meaning_ko": "건네주다, 넘겨주다",
+      "pos": "동사",
+      "appears_in_lines": [
+        5
+      ]
     }
   ]
 }

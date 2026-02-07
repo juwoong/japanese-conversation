@@ -10,7 +10,10 @@
       "pronunciation_ko": "시츠레-데스가, 키무상데 이랏샤이마스카",
       "text_ko": "실례지만, 김 씨이신가요?",
       "grammar_hint": "でいらっしゃいますか는 'ですか'의 가장 정중한 표현입니다.",
-      "key_expressions": ["失礼ですが", "でいらっしゃいますか"]
+      "key_expressions": [
+        "失礼ですが",
+        "でいらっしゃいますか"
+      ]
     },
     {
       "line_order": 2,
@@ -21,7 +24,10 @@
       "pronunciation_ko": "하이, 소-데스. 혼지츠와 요로시쿠 오네가이시마스",
       "text_ko": "네, 맞습니다. 오늘 잘 부탁드립니다.",
       "grammar_hint": "本日(혼지츠)는 '今日(오늘)'의 격식 표현입니다.",
-      "key_expressions": ["本日", "よろしくお願いします"]
+      "key_expressions": [
+        "本日",
+        "よろしくお願いします"
+      ]
     },
     {
       "line_order": 3,
@@ -32,7 +38,10 @@
       "pronunciation_ko": "오츠카레사마데시타. 후라이토와 이카가데시타카",
       "text_ko": "수고 많으셨습니다. 비행은 어떠셨어요?",
       "grammar_hint": "お疲れ様でした는 수고한 상대를 위로하는 인사입니다.",
-      "key_expressions": ["お疲れ様でした", "いかがでしたか"]
+      "key_expressions": [
+        "お疲れ様でした",
+        "いかがでしたか"
+      ]
     },
     {
       "line_order": 4,
@@ -43,7 +52,10 @@
       "pronunciation_ko": "오카게사마데, 카이테키데시타",
       "text_ko": "덕분에 편안했습니다.",
       "grammar_hint": "おかげさまで는 상대에게 감사를 표하며 대답할 때 씁니다.",
-      "key_expressions": ["おかげさまで", "快適"]
+      "key_expressions": [
+        "おかげさまで",
+        "快適"
+      ]
     },
     {
       "line_order": 5,
@@ -54,7 +66,132 @@
       "pronunciation_ko": "데와, 오쿠루마마데 고안나이 이타시마스",
       "text_ko": "그럼, 차량까지 안내해 드리겠습니다.",
       "grammar_hint": "いたします는 'します'의 겸양어로 자신을 낮추는 표현입니다.",
-      "key_expressions": ["ご案内いたします", "お車"]
+      "key_expressions": [
+        "ご案内いたします",
+        "お車"
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word_ja": "失礼",
+      "reading_hiragana": "しつれい",
+      "reading_ko": "시츠레-",
+      "meaning_ko": "실례",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "ございます",
+      "reading_hiragana": "ございます",
+      "reading_ko": "고자이마스",
+      "meaning_ko": "있습니다 (정중한 표현)",
+      "pos": "동사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "いらっしゃいます",
+      "reading_hiragana": "いらっしゃいます",
+      "reading_ko": "이랏샤이마스",
+      "meaning_ko": "계시다 (존경어)",
+      "pos": "동사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "本日",
+      "reading_hiragana": "ほんじつ",
+      "reading_ko": "혼지츠",
+      "meaning_ko": "오늘",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "よろしく",
+      "reading_hiragana": "よろしく",
+      "reading_ko": "요로시쿠",
+      "meaning_ko": "잘 부탁드립니다",
+      "pos": "표현",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "お疲れ様でした",
+      "reading_hiragana": "おつかれさまでした",
+      "reading_ko": "오츠카레사마데시타",
+      "meaning_ko": "수고하셨습니다",
+      "pos": "표현",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "フライト",
+      "reading_hiragana": "フライト",
+      "reading_ko": "후라이토",
+      "meaning_ko": "비행",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "いかが",
+      "reading_hiragana": "いかが",
+      "reading_ko": "이카가",
+      "meaning_ko": "어떻습니까",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "おかげさまで",
+      "reading_hiragana": "おかげさまで",
+      "reading_ko": "오카게사마데",
+      "meaning_ko": "덕분에",
+      "pos": "표현",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "快適",
+      "reading_hiragana": "かいてき",
+      "reading_ko": "카이테키",
+      "meaning_ko": "쾌적함",
+      "pos": "형용사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "ご案内",
+      "reading_hiragana": "ごあんない",
+      "reading_ko": "고안나이",
+      "meaning_ko": "안내",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "いたします",
+      "reading_hiragana": "いたします",
+      "reading_ko": "이타시마스",
+      "meaning_ko": "합니다 (겸양어)",
+      "pos": "동사",
+      "appears_in_lines": [
+        5
+      ]
     }
   ]
 }

@@ -2,20 +2,24 @@
  * 대사 자동 생성 스크립트
  *
  * 사용법:
- *   ANTHROPIC_API_KEY=your_key npx ts-node generate-lines.ts
+ *   GEMINI_API_KEY=your_key npx ts-node generate-lines.ts
  *
  * 옵션:
  *   --situation=cafe    특정 상황만 생성
  *   --dry-run          API 호출 없이 프롬프트만 출력
  */
 
-import Anthropic from "@anthropic-ai/sdk";
+import { GoogleGenerativeAI, type GenerativeModel } from "@google/generative-ai";
 import * as fs from "fs";
 import * as path from "path";
 import { fileURLToPath } from "url";
+import { config } from "dotenv";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// Load root .env
+config({ path: path.join(__dirname, "..", ".env") });
 
 // ============ Types ============
 
@@ -117,33 +121,19 @@ ${difficultyGuide[situation.difficulty]}
 // ============ API Call ============
 
 async function generateLines(
-  client: Anthropic,
+  model: GenerativeModel,
   situation: Situation
 ): Promise<GeneratedContent> {
   const prompt = buildPrompt(situation);
 
   console.log(`\n📝 Generating: ${situation.name_ko} (${situation.slug})`);
 
-  const response = await client.messages.create({
-    model: "claude-sonnet-4-20250514",
-    max_tokens: 2000,
-    messages: [
-      {
-        role: "user",
-        content: prompt,
-      },
-    ],
-  });
-
-  // Extract text from response
-  const textBlock = response.content.find((block) => block.type === "text");
-  if (!textBlock || textBlock.type !== "text") {
-    throw new Error("No text in response");
-  }
+  const response = await model.generateContent(prompt);
+  const text = response.response.text();
 
   // Parse JSON from response
-  const jsonMatch = textBlock.text.match(/```json\n?([\s\S]*?)\n?```/);
-  const jsonStr = jsonMatch ? jsonMatch[1] : textBlock.text;
+  const jsonMatch = text.match(/```json\n?([\s\S]*?)\n?```/);
+  const jsonStr = jsonMatch ? jsonMatch[1] : text;
 
   try {
     const parsed = JSON.parse(jsonStr) as GeneratedContent;
@@ -211,8 +201,15 @@ async function main() {
     return;
   }
 
-  // Initialize Anthropic client
-  const client = new Anthropic();
+  // Initialize Gemini client
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey) {
+    console.error("GEMINI_API_KEY is required");
+    process.exit(1);
+  }
+  const model = new GoogleGenerativeAI(apiKey).getGenerativeModel({
+    model: "gemini-2.0-flash",
+  });
 
   const outputDir = path.join(__dirname, "output");
   const results: { success: string[]; failed: string[] } = {
@@ -222,7 +219,7 @@ async function main() {
 
   for (const situation of situations) {
     try {
-      const content = await generateLines(client, situation);
+      const content = await generateLines(model, situation);
 
       // Validate
       const errors = validateContent(content);

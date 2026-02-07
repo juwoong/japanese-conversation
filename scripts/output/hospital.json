@@ -10,7 +10,10 @@
       "pronunciation_ko": "쿄-와 도-사레마시타카",
       "text_ko": "오늘 어떻게 오셨어요?",
       "grammar_hint": "どうされましたか는 병원에서 '어디가 아프세요?'라는 의미로 씁니다.",
-      "key_expressions": ["今日は", "どうされましたか"]
+      "key_expressions": [
+        "今日は",
+        "どうされましたか"
+      ]
     },
     {
       "line_order": 2,
@@ -21,7 +24,10 @@
       "pronunciation_ko": "키노-카라 아타마가 이타쿠테, 네츠모 아리마스",
       "text_ko": "어제부터 머리가 아프고, 열도 있어요.",
       "grammar_hint": "~くて는 형용사를 연결할 때 씁니다. 痛い→痛くて.",
-      "key_expressions": ["頭が痛い", "熱"]
+      "key_expressions": [
+        "頭が痛い",
+        "熱"
+      ]
     },
     {
       "line_order": 3,
@@ -32,7 +38,11 @@
       "pronunciation_ko": "노도와 이타이데스카. 세키와 데마스카",
       "text_ko": "목은 아프세요? 기침은 나오나요?",
       "grammar_hint": "のど(목), 咳(기침)는 병원에서 자주 쓰는 단어입니다.",
-      "key_expressions": ["のど", "咳", "出ます"]
+      "key_expressions": [
+        "のど",
+        "咳",
+        "出ます"
+      ]
     },
     {
       "line_order": 4,
@@ -43,7 +53,10 @@
       "pronunciation_ko": "스코시 이타이데스. 세키와 데마셍",
       "text_ko": "조금 아파요. 기침은 안 나와요.",
       "grammar_hint": "少し(조금), 出ません(안 나와요)은 증상 설명에 자주 씁니다.",
-      "key_expressions": ["少し", "出ません"]
+      "key_expressions": [
+        "少し",
+        "出ません"
+      ]
     },
     {
       "line_order": 5,
@@ -54,7 +67,187 @@
       "pronunciation_ko": "카제데스네. 쿠스리오 밋카분 다시테오키마스. 윳쿠리 야슨데쿠다사이",
       "text_ko": "감기네요. 약을 3일분 처방해 드릴게요. 푹 쉬세요.",
       "grammar_hint": "~日分(~니치분)은 '~일분'으로 약 처방 기간을 나타냅니다.",
-      "key_expressions": ["風邪", "薬", "日分"]
+      "key_expressions": [
+        "風邪",
+        "薬",
+        "日分"
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word_ja": "今日",
+      "reading_hiragana": "きょう",
+      "reading_ko": "쿄-",
+      "meaning_ko": "오늘",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "どう",
+      "reading_hiragana": "どう",
+      "reading_ko": "도-",
+      "meaning_ko": "어떻게",
+      "pos": "부사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "する",
+      "reading_hiragana": "する",
+      "reading_ko": "스루",
+      "meaning_ko": "하다",
+      "pos": "동사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "昨日",
+      "reading_hiragana": "きのう",
+      "reading_ko": "키노-",
+      "meaning_ko": "어제",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "頭",
+      "reading_hiragana": "あたま",
+      "reading_ko": "아타마",
+      "meaning_ko": "머리",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "痛い",
+      "reading_hiragana": "いたい",
+      "reading_ko": "이타이",
+      "meaning_ko": "아프다",
+      "pos": "형용사",
+      "appears_in_lines": [
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "word_ja": "熱",
+      "reading_hiragana": "ねつ",
+      "reading_ko": "네츠",
+      "meaning_ko": "열",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "のど",
+      "reading_hiragana": "のど",
+      "reading_ko": "노도",
+      "meaning_ko": "목",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "咳",
+      "reading_hiragana": "せき",
+      "reading_ko": "세키",
+      "meaning_ko": "기침",
+      "pos": "명사",
+      "appears_in_lines": [
+        3,
+        4
+      ]
+    },
+    {
+      "word_ja": "出る",
+      "reading_hiragana": "でる",
+      "reading_ko": "데루",
+      "meaning_ko": "나오다",
+      "pos": "동사",
+      "appears_in_lines": [
+        3,
+        4
+      ]
+    },
+    {
+      "word_ja": "少し",
+      "reading_hiragana": "すこし",
+      "reading_ko": "스코시",
+      "meaning_ko": "조금, 약간",
+      "pos": "부사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "風邪",
+      "reading_hiragana": "かぜ",
+      "reading_ko": "카제",
+      "meaning_ko": "감기",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "薬",
+      "reading_hiragana": "くすり",
+      "reading_ko": "쿠스리",
+      "meaning_ko": "약",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "三日分",
+      "reading_hiragana": "みっかぶん",
+      "reading_ko": "밋카분",
+      "meaning_ko": "3일 분",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "出す",
+      "reading_hiragana": "だす",
+      "reading_ko": "다스",
+      "meaning_ko": "내다, 처방하다",
+      "pos": "동사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "ゆっくり",
+      "reading_hiragana": "ゆっくり",
+      "reading_ko": "윳쿠리",
+      "meaning_ko": "천천히, 푹",
+      "pos": "부사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "休む",
+      "reading_hiragana": "やすむ",
+      "reading_ko": "야스무",
+      "meaning_ko": "쉬다",
+      "pos": "동사",
+      "appears_in_lines": [
+        5
+      ]
     }
   ]
 }

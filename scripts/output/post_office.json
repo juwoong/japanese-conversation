@@ -10,7 +10,10 @@
       "pronunciation_ko": "이랏샤이마세. 도노요-나 고요-켄데쇼-카",
       "text_ko": "어서 오세요. 어떤 용건이신가요?",
       "grammar_hint": "ご用件는 '용건'의 존경 표현입니다.",
-      "key_expressions": ["いらっしゃいませ", "ご用件"]
+      "key_expressions": [
+        "いらっしゃいませ",
+        "ご用件"
+      ]
     },
     {
       "line_order": 2,
@@ -21,7 +24,10 @@
       "pronunciation_ko": "칸코쿠니 니모츠오 오쿠리타인데스가",
       "text_ko": "한국에 짐을 보내고 싶은데요.",
       "grammar_hint": "~たいんですが는 '~하고 싶은데요'라는 희망 표현입니다.",
-      "key_expressions": ["荷物", "送りたい"]
+      "key_expressions": [
+        "荷物",
+        "送りたい"
+      ]
     },
     {
       "line_order": 3,
@@ -32,7 +38,11 @@
       "pronunciation_ko": "나카미와 난데스카. 코-쿠-빈토 후나빈가 아리마스가",
       "text_ko": "내용물은 뭔가요? 항공편과 배편이 있는데요.",
       "grammar_hint": "航空便(항공편)은 빠르고 비쌈, 船便(배편)은 느리고 쌈.",
-      "key_expressions": ["中身", "航空便", "船便"]
+      "key_expressions": [
+        "中身",
+        "航空便",
+        "船便"
+      ]
     },
     {
       "line_order": 4,
@@ -43,7 +53,11 @@
       "pronunciation_ko": "오카시토 혼데스. 코-쿠-빈데 오네가이시마스",
       "text_ko": "과자와 책이에요. 항공편으로 부탁드려요.",
       "grammar_hint": "と는 '~와/과'로 두 가지를 나열할 때 씁니다.",
-      "key_expressions": ["お菓子", "本", "でお願いします"]
+      "key_expressions": [
+        "お菓子",
+        "本",
+        "でお願いします"
+      ]
     },
     {
       "line_order": 5,
@@ -54,7 +68,193 @@
       "pronunciation_ko": "산젠고햐쿠엔데스. 잇슈-칸호도데 토도키마스",
       "text_ko": "3,500엔입니다. 일주일 정도면 도착합니다.",
       "grammar_hint": "ほど는 '정도'라는 뜻으로 대략적인 시간/양을 표현합니다.",
-      "key_expressions": ["週間ほど", "届きます"]
+      "key_expressions": [
+        "週間ほど",
+        "届きます"
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word_ja": "いらっしゃいませ",
+      "reading_hiragana": "いらっしゃいませ",
+      "reading_ko": "이랏샤이마세",
+      "meaning_ko": "어서 오세요",
+      "pos": "표현",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "どのような",
+      "reading_hiragana": "どのような",
+      "reading_ko": "도노요-나",
+      "meaning_ko": "어떤",
+      "pos": "표현",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "ご用件",
+      "reading_hiragana": "ごようけん",
+      "reading_ko": "고요-켄",
+      "meaning_ko": "용건",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "韓国",
+      "reading_hiragana": "かんこく",
+      "reading_ko": "칸코쿠",
+      "meaning_ko": "한국",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "荷物",
+      "reading_hiragana": "にもつ",
+      "reading_ko": "니모츠",
+      "meaning_ko": "짐",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "送る",
+      "reading_hiragana": "おくる",
+      "reading_ko": "오쿠루",
+      "meaning_ko": "보내다",
+      "pos": "동사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "中身",
+      "reading_hiragana": "なかみ",
+      "reading_ko": "나카미",
+      "meaning_ko": "내용물",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "何",
+      "reading_hiragana": "なに",
+      "reading_ko": "나니",
+      "meaning_ko": "무엇",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "航空便",
+      "reading_hiragana": "こうくうびん",
+      "reading_ko": "코-쿠-빈",
+      "meaning_ko": "항공편",
+      "pos": "명사",
+      "appears_in_lines": [
+        3,
+        4
+      ]
+    },
+    {
+      "word_ja": "船便",
+      "reading_hiragana": "ふなびん",
+      "reading_ko": "후나빈",
+      "meaning_ko": "배편",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "お菓子",
+      "reading_hiragana": "おかし",
+      "reading_ko": "오카시",
+      "meaning_ko": "과자",
+      "pos": "명사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "本",
+      "reading_hiragana": "ほん",
+      "reading_ko": "혼",
+      "meaning_ko": "책",
+      "pos": "명사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "おねがいします",
+      "reading_hiragana": "おねがいします",
+      "reading_ko": "오네가이시마스",
+      "meaning_ko": "부탁드립니다",
+      "pos": "표현",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "三千五百円",
+      "reading_hiragana": "さんぜんごひゃくえん",
+      "reading_ko": "산젠고햐쿠엔",
+      "meaning_ko": "3500엔",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "円",
+      "reading_hiragana": "えん",
+      "reading_ko": "엔",
+      "meaning_ko": "엔 (화폐 단위)",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "一週間",
+      "reading_hiragana": "いっしゅうかん",
+      "reading_ko": "잇슈-칸",
+      "meaning_ko": "일주일",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "届く",
+      "reading_hiragana": "とどく",
+      "reading_ko": "토도쿠",
+      "meaning_ko": "도착하다",
+      "pos": "동사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "ほど",
+      "reading_hiragana": "ほど",
+      "reading_ko": "호도",
+      "meaning_ko": "정도",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
     }
   ]
 }

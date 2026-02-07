@@ -9,8 +9,9 @@
     "generate:one": "npx ts-node generate-lines.ts --situation="
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.52.0",
-    "@supabase/supabase-js": "^2.93.3"
+    "@google/generative-ai": "^0.21.0",
+    "@supabase/supabase-js": "^2.93.3",
+    "dotenv": "^17.2.4"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",

@@ -10,7 +10,10 @@
       "pronunciation_ko": "하지메마시테. 카부시키가이샤 야마다노 타나카토 모-시마스",
       "text_ko": "처음 뵙겠습니다. 야마다 주식회사의 타나카라고 합니다.",
       "grammar_hint": "と申します는 자기소개 시 이름을 말하는 겸양 표현입니다.",
-      "key_expressions": ["はじめまして", "と申します"]
+      "key_expressions": [
+        "はじめまして",
+        "と申します"
+      ]
     },
     {
       "line_order": 2,
@@ -21,7 +24,10 @@
       "pronunciation_ko": "하지메마시테. 칸코쿠노 키무토 모-시마스. 메-시오 도-조",
       "text_ko": "처음 뵙겠습니다. 한국의 김이라고 합니다. 명함 받으세요.",
       "grammar_hint": "名刺(메-시)는 명함입니다. どうぞ는 '여기요/받으세요'.",
-      "key_expressions": ["名刺", "どうぞ"]
+      "key_expressions": [
+        "名刺",
+        "どうぞ"
+      ]
     },
     {
       "line_order": 3,
@@ -32,7 +38,10 @@
       "pronunciation_ko": "쵸-다이 이타시마스. 코치라코소, 도-조 요로시쿠 오네가이 이타시마스",
       "text_ko": "받겠습니다. 저야말로, 잘 부탁드립니다.",
       "grammar_hint": "頂戴いたします는 물건을 받을 때 쓰는 매우 정중한 표현입니다.",
-      "key_expressions": ["頂戴いたします", "こちらこそ"]
+      "key_expressions": [
+        "頂戴いたします",
+        "こちらこそ"
+      ]
     },
     {
       "line_order": 4,
@@ -43,7 +52,10 @@
       "pronunciation_ko": "콘고토모 요로시쿠 오네가이 이타시마스",
       "text_ko": "앞으로도 잘 부탁드립니다.",
       "grammar_hint": "今後とも는 '앞으로도'라는 뜻으로 관계 지속을 표현합니다.",
-      "key_expressions": ["今後とも", "よろしくお願いいたします"]
+      "key_expressions": [
+        "今後とも",
+        "よろしくお願いいたします"
+      ]
     },
     {
       "line_order": 5,
@@ -54,7 +66,197 @@
       "pronunciation_ko": "코치라코소. 혼지츠와 키쵸-나 오지칸오 이타다키, 아리가토- 고자이마스",
       "text_ko": "저야말로요. 오늘 귀중한 시간 내주셔서 감사합니다.",
       "grammar_hint": "いただき는 '받다'의 겸양어로 감사 표현에 자주 씁니다.",
-      "key_expressions": ["貴重な", "お時間をいただき"]
+      "key_expressions": [
+        "貴重な",
+        "お時間をいただき"
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word_ja": "はじめまして",
+      "reading_hiragana": "はじめまして",
+      "reading_ko": "하지메마시테",
+      "meaning_ko": "처음 뵙겠습니다",
+      "pos": "표현",
+      "appears_in_lines": [
+        1,
+        2
+      ]
+    },
+    {
+      "word_ja": "株式会社",
+      "reading_hiragana": "かぶしきがいしゃ",
+      "reading_ko": "카부시키가이샤",
+      "meaning_ko": "주식회사",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "山田",
+      "reading_hiragana": "やまだ",
+      "reading_ko": "야마다",
+      "meaning_ko": "야마다 (성씨)",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "田中",
+      "reading_hiragana": "たなか",
+      "reading_ko": "타나카",
+      "meaning_ko": "다나카 (성씨)",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "申します",
+      "reading_hiragana": "もうします",
+      "reading_ko": "모-시마스",
+      "meaning_ko": "~라고 합니다 (겸양어)",
+      "pos": "동사",
+      "appears_in_lines": [
+        1,
+        2
+      ]
+    },
+    {
+      "word_ja": "韓国",
+      "reading_hiragana": "かんこく",
+      "reading_ko": "칸코쿠",
+      "meaning_ko": "한국",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "キム",
+      "reading_hiragana": "キム",
+      "reading_ko": "키무",
+      "meaning_ko": "김 (성씨)",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "名刺",
+      "reading_hiragana": "めいし",
+      "reading_ko": "메-시",
+      "meaning_ko": "명함",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "どうぞ",
+      "reading_hiragana": "どうぞ",
+      "reading_ko": "도-조",
+      "meaning_ko": "どうぞ (권유, 부탁)",
+      "pos": "표현",
+      "appears_in_lines": [
+        2,
+        3
+      ]
+    },
+    {
+      "word_ja": "頂戴いたします",
+      "reading_hiragana": "ちょうだいいたします",
+      "reading_ko": "쵸-다이 이타시마스",
+      "meaning_ko": "받겠습니다 (겸양어)",
+      "pos": "표현",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "こちらこそ",
+      "reading_hiragana": "こちらこそ",
+      "reading_ko": "코치라코소",
+      "meaning_ko": "저야말로",
+      "pos": "표현",
+      "appears_in_lines": [
+        3,
+        5
+      ]
+    },
+    {
+      "word_ja": "よろしく",
+      "reading_hiragana": "よろしく",
+      "reading_ko": "요로시쿠",
+      "meaning_ko": "잘 부탁드립니다",
+      "pos": "표현",
+      "appears_in_lines": [
+        3,
+        4
+      ]
+    },
+    {
+      "word_ja": "今後とも",
+      "reading_hiragana": "こんごとも",
+      "reading_ko": "콘고토모",
+      "meaning_ko": "앞으로도",
+      "pos": "부사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "本日",
+      "reading_hiragana": "ほんじつ",
+      "reading_ko": "혼지츠",
+      "meaning_ko": "오늘",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "貴重",
+      "reading_hiragana": "きちょう",
+      "reading_ko": "키쵸-",
+      "meaning_ko": "귀중함",
+      "pos": "형용사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "時間",
+      "reading_hiragana": "じかん",
+      "reading_ko": "지칸",
+      "meaning_ko": "시간",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "いただく",
+      "reading_hiragana": "いただく",
+      "reading_ko": "이타다쿠",
+      "meaning_ko": "받다 (겸양어, 먹다/마시다/받다의 겸양어)",
+      "pos": "동사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "ありがとうございます",
+      "reading_hiragana": "ありがとうございます",
+      "reading_ko": "아리가토-고자이마스",
+      "meaning_ko": "감사합니다",
+      "pos": "표현",
+      "appears_in_lines": [
+        5
+      ]
     }
   ]
 }

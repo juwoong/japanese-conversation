@@ -10,7 +10,10 @@
       "pronunciation_ko": "이랏샤이마세. 신키케-야쿠데스카, 키슈헨코-데스카",
       "text_ko": "어서 오세요. 신규 계약이신가요, 기기 변경이신가요?",
       "grammar_hint": "新規契約(신규계약), 機種変更(기기변경)은 휴대폰 매장 필수 단어입니다.",
-      "key_expressions": ["新規契約", "機種変更"]
+      "key_expressions": [
+        "新規契約",
+        "機種変更"
+      ]
     },
     {
       "line_order": 2,
@@ -21,7 +24,11 @@
       "pronunciation_ko": "신키케-야쿠데스. 가이코쿠진데모 케-야쿠데키마스카",
       "text_ko": "신규 계약이요. 외국인도 계약할 수 있나요?",
       "grammar_hint": "~でも는 '~라도/~도'라는 의미입니다.",
-      "key_expressions": ["外国人", "でも", "できますか"]
+      "key_expressions": [
+        "外国人",
+        "でも",
+        "できますか"
+      ]
     },
     {
       "line_order": 3,
@@ -32,7 +39,10 @@
       "pronunciation_ko": "하이, 자이류- 카-도가 아레바 다이죠-부데스. 푸란와 도-사레마스카",
       "text_ko": "네, 재류카드가 있으면 됩니다. 요금제는 어떻게 하시겠어요?",
       "grammar_hint": "在留カード는 외국인등록증으로 장기 체류에 필수입니다.",
-      "key_expressions": ["在留カード", "プラン"]
+      "key_expressions": [
+        "在留カード",
+        "プラン"
+      ]
     },
     {
       "line_order": 4,
@@ -43,7 +53,10 @@
       "pronunciation_ko": "이치반 야스이 푸란데 오네가이시마스. 츠키즈키 이쿠라데스카",
       "text_ko": "제일 싼 요금제로 해주세요. 월 얼마인가요?",
       "grammar_hint": "月々(츠키즈키)는 '매월'이라는 뜻입니다.",
-      "key_expressions": ["一番安い", "月々"]
+      "key_expressions": [
+        "一番安い",
+        "月々"
+      ]
     },
     {
       "line_order": 5,
@@ -54,7 +67,195 @@
       "pronunciation_ko": "츠키즈키 니센엔데스. 데-타와 산기가마데 츠카에마스",
       "text_ko": "월 2,000엔입니다. 데이터는 3기가까지 쓸 수 있어요.",
       "grammar_hint": "ギガ(기가)는 GB를 일본어로 읽는 방식입니다.",
-      "key_expressions": ["円です", "まで使えます"]
+      "key_expressions": [
+        "円です",
+        "まで使えます"
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word_ja": "いらっしゃいませ",
+      "reading_hiragana": "いらっしゃいませ",
+      "reading_ko": "이랏샤이마세",
+      "meaning_ko": "어서 오세요",
+      "pos": "표현",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "新規契約",
+      "reading_hiragana": "しんきけいやく",
+      "reading_ko": "싱키케이야쿠",
+      "meaning_ko": "신규 계약",
+      "pos": "명사",
+      "appears_in_lines": [
+        1,
+        2
+      ]
+    },
+    {
+      "word_ja": "機種変更",
+      "reading_hiragana": "きしゅへんこう",
+      "reading_ko": "키슈헨코-",
+      "meaning_ko": "기종 변경",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "外国人",
+      "reading_hiragana": "がいこくじん",
+      "reading_ko": "가이코쿠진",
+      "meaning_ko": "외국인",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "契約",
+      "reading_hiragana": "けいやく",
+      "reading_ko": "케이야쿠",
+      "meaning_ko": "계약",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "できる",
+      "reading_hiragana": "できる",
+      "reading_ko": "데키루",
+      "meaning_ko": "할 수 있다",
+      "pos": "동사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "在留カード",
+      "reading_hiragana": "ざいりゅうカード",
+      "reading_ko": "자이류-카-도",
+      "meaning_ko": "재류 카드",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "大丈夫",
+      "reading_hiragana": "だいじょうぶ",
+      "reading_ko": "다이죠-부",
+      "meaning_ko": "괜찮다, 문제없다",
+      "pos": "형용사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "プラン",
+      "reading_hiragana": "プラン",
+      "reading_ko": "푸란",
+      "meaning_ko": "요금제, 플랜",
+      "pos": "명사",
+      "appears_in_lines": [
+        3,
+        4
+      ]
+    },
+    {
+      "word_ja": "どうされますか",
+      "reading_hiragana": "どうされますか",
+      "reading_ko": "도-사레마스카",
+      "meaning_ko": "어떻게 하시겠습니까?",
+      "pos": "표현",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "一番",
+      "reading_hiragana": "いちばん",
+      "reading_ko": "이치방",
+      "meaning_ko": "가장, 제일",
+      "pos": "부사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "安い",
+      "reading_hiragana": "やすい",
+      "reading_ko": "야스이",
+      "meaning_ko": "싸다",
+      "pos": "형용사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "月々",
+      "reading_hiragana": "つきづき",
+      "reading_ko": "츠키즈키",
+      "meaning_ko": "매달",
+      "pos": "명사",
+      "appears_in_lines": [
+        4,
+        5
+      ]
+    },
+    {
+      "word_ja": "いくら",
+      "reading_hiragana": "いくら",
+      "reading_ko": "이쿠라",
+      "meaning_ko": "얼마",
+      "pos": "명사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "二千円",
+      "reading_hiragana": "にせんえん",
+      "reading_ko": "니센엔",
+      "meaning_ko": "2000엔",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "データ",
+      "reading_hiragana": "データ",
+      "reading_ko": "데-타",
+      "meaning_ko": "데이터",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "使える",
+      "reading_hiragana": "つかえる",
+      "reading_ko": "츠카에루",
+      "meaning_ko": "사용할 수 있다",
+      "pos": "동사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "ギガ",
+      "reading_hiragana": "ギガ",
+      "reading_ko": "기가",
+      "meaning_ko": "기가바이트",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
     }
   ]
 }

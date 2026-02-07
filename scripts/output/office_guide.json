@@ -10,7 +10,10 @@
       "pronunciation_ko": "오마타세 이타시마시타. 카이기시츠니 고안나이 이타시마스",
       "text_ko": "기다리게 해드려 죄송합니다. 회의실로 안내해 드리겠습니다.",
       "grammar_hint": "お待たせいたしました는 상대를 기다리게 했을 때 사과하는 정중한 표현입니다.",
-      "key_expressions": ["お待たせいたしました", "会議室"]
+      "key_expressions": [
+        "お待たせいたしました",
+        "会議室"
+      ]
     },
     {
       "line_order": 2,
@@ -21,7 +24,10 @@
       "pronunciation_ko": "아리가토- 고자이마스. 오테스-오 오카케시마스",
       "text_ko": "감사합니다. 수고를 끼쳐드립니다.",
       "grammar_hint": "お手数をおかけします는 상대에게 폐를 끼칠 때 쓰는 정중한 표현입니다.",
-      "key_expressions": ["お手数をおかけします", "ありがとうございます"]
+      "key_expressions": [
+        "お手数をおかけします",
+        "ありがとうございます"
+      ]
     },
     {
       "line_order": 3,
@@ -32,7 +38,10 @@
       "pronunciation_ko": "도-조 코치라에. 아시모토니 오키오츠케쿠다사이",
       "text_ko": "이쪽으로 오세요. 발밑을 조심해 주세요.",
       "grammar_hint": "足元(아시모토)는 '발밑'입니다. 계단이나 단차가 있을 때 주의를 줍니다.",
-      "key_expressions": ["こちらへ", "お気をつけください"]
+      "key_expressions": [
+        "こちらへ",
+        "お気をつけください"
+      ]
     },
     {
       "line_order": 4,
@@ -43,7 +52,10 @@
       "pronunciation_ko": "아리가토- 고자이마스. 릿파나 오피스데스네",
       "text_ko": "감사합니다. 멋진 사무실이네요.",
       "grammar_hint": "立派(릿파)는 '훌륭한, 멋진'이라는 칭찬의 표현입니다.",
-      "key_expressions": ["立派な", "ですね"]
+      "key_expressions": [
+        "立派な",
+        "ですね"
+      ]
     },
     {
       "line_order": 5,
@@ -54,7 +66,153 @@
       "pronunciation_ko": "오소레이리마스. 코치라노 카이기시츠데 오마치쿠다사이",
       "text_ko": "감사합니다. 이쪽 회의실에서 기다려 주세요.",
       "grammar_hint": "恐れ入ります는 칭찬에 겸손하게 답할 때, 또는 부탁할 때 쓰는 표현입니다.",
-      "key_expressions": ["恐れ入ります", "お待ちください"]
+      "key_expressions": [
+        "恐れ入ります",
+        "お待ちください"
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word_ja": "お待たせいたしました",
+      "reading_hiragana": "おまたせいたしました",
+      "reading_ko": "오마타세 이타시마시타",
+      "meaning_ko": "기다리게 했습니다",
+      "pos": "표현",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "会議室",
+      "reading_hiragana": "かいぎしつ",
+      "reading_ko": "카이기시츠",
+      "meaning_ko": "회의실",
+      "pos": "명사",
+      "appears_in_lines": [
+        1,
+        5
+      ]
+    },
+    {
+      "word_ja": "ご案内",
+      "reading_hiragana": "ごあんない",
+      "reading_ko": "고안나이",
+      "meaning_ko": "안내",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "ご案内いたします",
+      "reading_hiragana": "ごあんないいたします",
+      "reading_ko": "고안나이 이타시마스",
+      "meaning_ko": "안내하겠습니다",
+      "pos": "표현",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "お手数",
+      "reading_hiragana": "おてすう",
+      "reading_ko": "오테스-",
+      "meaning_ko": "수고, 번거로움",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "おかけします",
+      "reading_hiragana": "おかけします",
+      "reading_ko": "오카케시마스",
+      "meaning_ko": "폐를 끼치다",
+      "pos": "표현",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "足元",
+      "reading_hiragana": "あしもと",
+      "reading_ko": "아시모토",
+      "meaning_ko": "발밑",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "気をつける",
+      "reading_hiragana": "きをつける",
+      "reading_ko": "키오 츠케루",
+      "meaning_ko": "조심하다, 주의하다",
+      "pos": "동사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "立派",
+      "reading_hiragana": "りっぱ",
+      "reading_ko": "릿파",
+      "meaning_ko": "훌륭함",
+      "pos": "형용사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "オフィス",
+      "reading_hiragana": "オフィス",
+      "reading_ko": "오피스",
+      "meaning_ko": "사무실",
+      "pos": "명사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "恐れ入ります",
+      "reading_hiragana": "おそれいります",
+      "reading_ko": "오소레이리마스",
+      "meaning_ko": "죄송합니다 / 감사합니다 (겸양)",
+      "pos": "표현",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "お待ちください",
+      "reading_hiragana": "おまちください",
+      "reading_ko": "오마치 쿠다사이",
+      "meaning_ko": "기다려 주세요",
+      "pos": "표현",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "どうぞ",
+      "reading_hiragana": "どうぞ",
+      "reading_ko": "도-조",
+      "meaning_ko": "어서, 자",
+      "pos": "부사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "こちら",
+      "reading_hiragana": "こちら",
+      "reading_ko": "코치라",
+      "meaning_ko": "이쪽",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
     }
   ]
 }

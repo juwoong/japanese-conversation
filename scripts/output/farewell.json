@@ -10,7 +10,10 @@
       "pronunciation_ko": "혼지츠와 오이소가시-나카, 오코시이타다키 아리가토- 고자이마시타",
       "text_ko": "오늘 바쁘신 중에 와 주셔서 감사했습니다.",
       "grammar_hint": "お越しいただき는 '와 주셔서'의 겸양 표현입니다.",
-      "key_expressions": ["お忙しい中", "お越しいただき"]
+      "key_expressions": [
+        "お忙しい中",
+        "お越しいただき"
+      ]
     },
     {
       "line_order": 2,
@@ -21,7 +24,10 @@
       "pronunciation_ko": "코치라코소, 타이헨 오세와니 나리마시타",
       "text_ko": "저야말로, 대단히 신세 많이 졌습니다.",
       "grammar_hint": "お世話になりました는 도움을 받은 것에 대한 감사 인사입니다.",
-      "key_expressions": ["こちらこそ", "お世話になりました"]
+      "key_expressions": [
+        "こちらこそ",
+        "お世話になりました"
+      ]
     },
     {
       "line_order": 3,
@@ -32,7 +38,10 @@
       "pronunciation_ko": "오키오츠케테 오카에리쿠다사이",
       "text_ko": "조심해서 돌아가세요.",
       "grammar_hint": "お気をつけて는 '조심해서'라는 배려 표현입니다.",
-      "key_expressions": ["お気をつけて", "お帰りください"]
+      "key_expressions": [
+        "お気をつけて",
+        "お帰りください"
+      ]
     },
     {
       "line_order": 4,
@@ -43,7 +52,10 @@
       "pronunciation_ko": "아리가토- 고자이마스. 마타 치카이우치니 오아이데키레바토 오모이마스",
       "text_ko": "감사합니다. 가까운 시일 내에 다시 뵐 수 있으면 좋겠습니다.",
       "grammar_hint": "~できればと思います는 희망을 정중하게 표현합니다.",
-      "key_expressions": ["近いうちに", "お会いできれば"]
+      "key_expressions": [
+        "近いうちに",
+        "お会いできれば"
+      ]
     },
     {
       "line_order": 5,
@@ -54,7 +66,215 @@
       "pronunciation_ko": "제히 마타 오마치시테오리마스. 시츠레- 이타시마스",
       "text_ko": "꼭 다시 기다리고 있겠습니다. 실례하겠습니다.",
       "grammar_hint": "お待ちしております는 '기다리고 있겠습니다'의 겸양 표현입니다.",
-      "key_expressions": ["お待ちしております", "失礼いたします"]
+      "key_expressions": [
+        "お待ちしております",
+        "失礼いたします"
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word_ja": "本日",
+      "reading_hiragana": "ほんじつ",
+      "reading_ko": "혼지츠",
+      "meaning_ko": "오늘 (정중한 표현)",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "お忙しい",
+      "reading_hiragana": "おいそがしい",
+      "reading_ko": "오이소가시이",
+      "meaning_ko": "바쁘신",
+      "pos": "형용사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "中",
+      "reading_hiragana": "なか",
+      "reading_ko": "나카",
+      "meaning_ko": "중",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "お越し",
+      "reading_hiragana": "おこし",
+      "reading_ko": "오코시",
+      "meaning_ko": "오심 (오다의 존경어)",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "いただき",
+      "reading_hiragana": "いただき",
+      "reading_ko": "이타다키",
+      "meaning_ko": "받아",
+      "pos": "동사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "ありがとう",
+      "reading_hiragana": "ありがとう",
+      "reading_ko": "아리가토-",
+      "meaning_ko": "감사합니다",
+      "pos": "감탄사",
+      "appears_in_lines": [
+        1,
+        4
+      ]
+    },
+    {
+      "word_ja": "ございました",
+      "reading_hiragana": "ございました",
+      "reading_ko": "고자이마시타",
+      "meaning_ko": "~였습니다 (존경어)",
+      "pos": "조동사",
+      "appears_in_lines": [
+        1,
+        2
+      ]
+    },
+    {
+      "word_ja": "こちらこそ",
+      "reading_hiragana": "こちらこそ",
+      "reading_ko": "코치라코소",
+      "meaning_ko": "저야말로",
+      "pos": "표현",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "大変",
+      "reading_hiragana": "たいへん",
+      "reading_ko": "타이헨",
+      "meaning_ko": "大変 (큰일, 매우)",
+      "pos": "형용동사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "お世話",
+      "reading_hiragana": "おせわ",
+      "reading_ko": "오세와",
+      "meaning_ko": "신세",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "気",
+      "reading_hiragana": "き",
+      "reading_ko": "키",
+      "meaning_ko": "마음, 정신",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "つける",
+      "reading_hiragana": "つける",
+      "reading_ko": "츠케루",
+      "meaning_ko": "붙이다, 주의하다",
+      "pos": "동사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "お帰り",
+      "reading_hiragana": "おかえり",
+      "reading_ko": "오카에리",
+      "meaning_ko": "돌아감 (돌아가다의 존경어)",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "また",
+      "reading_hiragana": "また",
+      "reading_ko": "마타",
+      "meaning_ko": "또, 다시",
+      "pos": "부사",
+      "appears_in_lines": [
+        4,
+        5
+      ]
+    },
+    {
+      "word_ja": "近いうち",
+      "reading_hiragana": "ちかいうち",
+      "reading_ko": "치카이우치",
+      "meaning_ko": "조만간",
+      "pos": "명사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "会う",
+      "reading_hiragana": "あう",
+      "reading_ko": "아우",
+      "meaning_ko": "만나다",
+      "pos": "동사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "できれば",
+      "reading_hiragana": "できれば",
+      "reading_ko": "데키레바",
+      "meaning_ko": "된다면, 가능하다면",
+      "pos": "표현",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "ぜひ",
+      "reading_hiragana": "ぜひ",
+      "reading_ko": "제히",
+      "meaning_ko": "꼭",
+      "pos": "부사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "お待ちしております",
+      "reading_hiragana": "おまちしております",
+      "reading_ko": "오마치시테오리마스",
+      "meaning_ko": "기다리고 있겠습니다 (존경어)",
+      "pos": "표현",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "失礼",
+      "reading_hiragana": "しつれい",
+      "reading_ko": "시츠레-",
+      "meaning_ko": "실례",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
     }
   ]
 }
