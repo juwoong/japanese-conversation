@@ -21,6 +21,21 @@ type Props = NativeStackScreenProps<RootStackParamList, "Auth">;
 
 type AuthMode = "login" | "signup";
 
+function ValidationItem({ label, met }: { label: string; met: boolean }) {
+  return (
+    <View style={styles.validationItem}>
+      <MaterialIcons
+        name={met ? "check-circle" : "radio-button-unchecked"}
+        size={14}
+        color={met ? colors.success : colors.textLight}
+      />
+      <Text style={[styles.validationText, met && styles.validationTextMet]}>
+        {label}
+      </Text>
+    </View>
+  );
+}
+
 export default function AuthScreen({ navigation }: Props) {
   const [mode, setMode] = useState<AuthMode>("login");
   const [email, setEmail] = useState("");
@@ -153,22 +168,46 @@ export default function AuthScreen({ navigation }: Props) {
           </View>
 
           {mode === "signup" && (
-            <View style={styles.passwordContainer}>
-              <TextInput
-                style={styles.passwordInput}
-                placeholder="비밀번호 확인"
-                placeholderTextColor={colors.textLight}
-                value={confirmPassword}
-                onChangeText={setConfirmPassword}
-                secureTextEntry={!showConfirmPassword}
-              />
-              <TouchableOpacity
-                style={styles.eyeButton}
-                onPress={() => setShowConfirmPassword(!showConfirmPassword)}
-              >
-                <MaterialIcons name={showConfirmPassword ? "visibility-off" : "visibility"} size={22} color={colors.textMuted} />
-              </TouchableOpacity>
-            </View>
+            <>
+              <View style={styles.validationList}>
+                <ValidationItem label="6자 이상" met={password.length >= 6} />
+                <ValidationItem label="영문 포함" met={/[a-zA-Z]/.test(password)} />
+                <ValidationItem label="숫자 포함" met={/[0-9]/.test(password)} />
+              </View>
+
+              <View style={styles.passwordContainer}>
+                <TextInput
+                  style={styles.passwordInput}
+                  placeholder="비밀번호 확인"
+                  placeholderTextColor={colors.textLight}
+                  value={confirmPassword}
+                  onChangeText={setConfirmPassword}
+                  secureTextEntry={!showConfirmPassword}
+                />
+                <TouchableOpacity
+                  style={styles.eyeButton}
+                  onPress={() => setShowConfirmPassword(!showConfirmPassword)}
+                >
+                  <MaterialIcons name={showConfirmPassword ? "visibility-off" : "visibility"} size={22} color={colors.textMuted} />
+                </TouchableOpacity>
+              </View>
+
+              {confirmPassword.length > 0 && (
+                <View style={styles.matchRow}>
+                  <MaterialIcons
+                    name={password === confirmPassword ? "check-circle" : "cancel"}
+                    size={16}
+                    color={password === confirmPassword ? colors.success : colors.danger}
+                  />
+                  <Text style={[
+                    styles.matchText,
+                    { color: password === confirmPassword ? colors.success : colors.danger },
+                  ]}>
+                    {password === confirmPassword ? "비밀번호가 일치합니다" : "비밀번호가 일치하지 않습니다"}
+                  </Text>
+                </View>
+              )}
+            </>
           )}
 
           <TouchableOpacity
@@ -258,6 +297,30 @@ const styles = StyleSheet.create({
   },
   eyeButton: {
     padding: 12,
+  },
+  validationList: {
+    flexDirection: "row",
+    gap: 12,
+  },
+  validationItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+  },
+  validationText: {
+    fontSize: 13,
+    color: colors.textLight,
+  },
+  validationTextMet: {
+    color: colors.success,
+  },
+  matchRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+  },
+  matchText: {
+    fontSize: 13,
   },
   button: {
     backgroundColor: colors.primary,
