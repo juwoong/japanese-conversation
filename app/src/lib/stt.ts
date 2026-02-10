@@ -2,7 +2,7 @@
  * Speech-to-Text via OpenAI Whisper API (direct call)
  */
 
-import * as FileSystem from "expo-file-system";
+import * as FileSystem from "expo-file-system/legacy";
 
 export interface STTResult {
   text: string;
