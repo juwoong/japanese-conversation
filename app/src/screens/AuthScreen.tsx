@@ -15,6 +15,7 @@ import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { supabase } from "../lib/supabase";
 import type { RootStackParamList } from "../types";
 import { colors } from "../constants/theme";
+import { MaterialIcons } from "@expo/vector-icons";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Auth">;
 
@@ -26,6 +27,8 @@ export default function AuthScreen({ navigation }: Props) {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleAuth = async () => {
     if (!email || !password) {
@@ -132,24 +135,40 @@ export default function AuthScreen({ navigation }: Props) {
             autoCorrect={false}
           />
 
-          <TextInput
-            style={styles.input}
-            placeholder="비밀번호"
-            placeholderTextColor={colors.textLight}
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry
-          />
+          <View style={styles.passwordContainer}>
+            <TextInput
+              style={styles.passwordInput}
+              placeholder="비밀번호"
+              placeholderTextColor={colors.textLight}
+              value={password}
+              onChangeText={setPassword}
+              secureTextEntry={!showPassword}
+            />
+            <TouchableOpacity
+              style={styles.eyeButton}
+              onPress={() => setShowPassword(!showPassword)}
+            >
+              <MaterialIcons name={showPassword ? "visibility-off" : "visibility"} size={22} color={colors.textMuted} />
+            </TouchableOpacity>
+          </View>
 
           {mode === "signup" && (
-            <TextInput
-              style={styles.input}
-              placeholder="비밀번호 확인"
-              placeholderTextColor={colors.textLight}
-              value={confirmPassword}
-              onChangeText={setConfirmPassword}
-              secureTextEntry
-            />
+            <View style={styles.passwordContainer}>
+              <TextInput
+                style={styles.passwordInput}
+                placeholder="비밀번호 확인"
+                placeholderTextColor={colors.textLight}
+                value={confirmPassword}
+                onChangeText={setConfirmPassword}
+                secureTextEntry={!showConfirmPassword}
+              />
+              <TouchableOpacity
+                style={styles.eyeButton}
+                onPress={() => setShowConfirmPassword(!showConfirmPassword)}
+              >
+                <MaterialIcons name={showConfirmPassword ? "visibility-off" : "visibility"} size={22} color={colors.textMuted} />
+              </TouchableOpacity>
+            </View>
           )}
 
           <TouchableOpacity
@@ -222,6 +241,23 @@ const styles = StyleSheet.create({
     color: colors.textDark,
     borderWidth: 1,
     borderColor: colors.border,
+  },
+  passwordContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: colors.surface,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+  passwordInput: {
+    flex: 1,
+    padding: 16,
+    fontSize: 16,
+    color: colors.textDark,
+  },
+  eyeButton: {
+    padding: 12,
   },
   button: {
     backgroundColor: colors.primary,
