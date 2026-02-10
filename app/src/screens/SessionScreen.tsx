@@ -60,7 +60,11 @@ export default function SessionScreen({ navigation, route }: Props) {
   const scrollRef = useRef<ScrollView>(null);
   const autoAdvanceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const recordingTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const silenceStartRef = useRef<number | null>(null);
+  const hasSpokenRef = useRef(false);
   const RECORDING_TIMEOUT_MS = 30000; // 30 seconds
+  const SILENCE_THRESHOLD = -45; // dBFS — below this = silence
+  const SILENCE_DURATION_MS = 1500; // 1.5s of silence after speech → auto stop
 
   // Recording & feedback state
   const [phase, setPhase] = useState<SessionPhase>("viewing");
@@ -119,6 +123,9 @@ export default function SessionScreen({ navigation, route }: Props) {
       );
       glowAnimation.start();
 
+      silenceStartRef.current = null;
+      hasSpokenRef.current = false;
+
       const interval = setInterval(async () => {
         const status = await getRecordingStatus();
         if (status) {
@@ -126,6 +133,19 @@ export default function SessionScreen({ navigation, route }: Props) {
           if (status.metering !== undefined) {
             const normalized = Math.max(0, Math.min(1, (status.metering + 60) / 60));
             setAudioLevel(normalized);
+
+            // Silence detection: auto-stop after speech + pause
+            const isSilent = status.metering < SILENCE_THRESHOLD;
+            if (!isSilent) {
+              hasSpokenRef.current = true;
+              silenceStartRef.current = null;
+            } else if (hasSpokenRef.current) {
+              if (!silenceStartRef.current) {
+                silenceStartRef.current = Date.now();
+              } else if (Date.now() - silenceStartRef.current >= SILENCE_DURATION_MS) {
+                handleStopRecording();
+              }
+            }
           }
         }
       }, 100);
