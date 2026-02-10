@@ -47,7 +47,12 @@ export default function App() {
 
   const checkAuth = async () => {
     try {
-      const { data: { session } } = await supabase.auth.getSession();
+      const timeoutPromise = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error("Auth timeout")), 5000)
+      );
+      const sessionPromise = supabase.auth.getSession();
+
+      const { data: { session } } = await Promise.race([sessionPromise, timeoutPromise]) as any;
 
       if (session?.user) {
         setIsLoggedIn(true);
@@ -57,6 +62,7 @@ export default function App() {
       }
     } catch (error) {
       console.error("Auth error:", error);
+      setIsLoggedIn(false);
     } finally {
       setIsLoading(false);
     }
