@@ -1,10 +1,8 @@
 /**
- * Speech-to-Text via Supabase Edge Function (proxies to Whisper API)
- * API key stays server-side, not exposed in client bundle.
+ * Speech-to-Text via OpenAI Whisper API (direct call)
  */
 
-import { supabase } from "./supabase";
-import { audioToBase64 } from "./audio";
+import * as FileSystem from "expo-file-system";
 
 export interface STTResult {
   text: string;
@@ -36,49 +34,60 @@ export class STTError extends Error {
   }
 }
 
+const OPENAI_API_KEY = process.env.EXPO_PUBLIC_OPENAI_API_KEY || "";
+
 /**
- * Transcribe audio to text using the Edge Function
+ * Transcribe audio to text using Whisper API directly
  */
 export async function transcribeAudio(audioUri: string): Promise<STTResult> {
-  let base64: string;
-  try {
-    base64 = await audioToBase64(audioUri);
-  } catch (err) {
-    throw new STTError("Failed to process audio file", "unknown");
+  if (!OPENAI_API_KEY) {
+    throw new STTError("OpenAI API key not configured", "server");
   }
 
-  let data: any;
-  let error: any;
   try {
-    const result = await supabase.functions.invoke("transcribe", {
-      body: { audio: base64, language: "ja" },
+    const fileInfo = await FileSystem.getInfoAsync(audioUri);
+    if (!fileInfo.exists) {
+      throw new STTError("Audio file not found", "unknown");
+    }
+
+    const formData = new FormData();
+    formData.append("file", {
+      uri: audioUri,
+      type: "audio/m4a",
+      name: "audio.m4a",
+    } as any);
+    formData.append("model", "whisper-1");
+    formData.append("language", "ja");
+    formData.append("response_format", "json");
+
+    const response = await fetch("https://api.openai.com/v1/audio/transcriptions", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${OPENAI_API_KEY}`,
+      },
+      body: formData,
     });
-    data = result.data;
-    error = result.error;
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error("Whisper API error:", response.status, errorText);
+      throw new STTError(`Whisper API error: ${response.status}`, "server");
+    }
+
+    const result = await response.json();
+    const text = result.text || "";
+
+    if (!text.trim()) {
+      throw new STTError("No speech detected", "no_speech");
+    }
+
+    return { text, language: "ja" };
   } catch (err: any) {
-    // Network error
-    if (err.message?.includes("fetch") || err.message?.includes("network")) {
+    if (err instanceof STTError) throw err;
+
+    if (err.message?.includes("fetch") || err.message?.includes("network") || err.message?.includes("Network")) {
       throw new STTError(err.message, "network");
     }
     throw new STTError(err.message || "Unknown error", "unknown");
   }
-
-  if (error) {
-    if (error.message?.includes("network") || error.message?.includes("fetch")) {
-      throw new STTError(error.message, "network");
-    }
-    throw new STTError(error.message, "server");
-  }
-
-  const text = data?.text || "";
-
-  // Empty result likely means no speech detected
-  if (!text.trim()) {
-    throw new STTError("No speech detected", "no_speech");
-  }
-
-  return {
-    text,
-    language: data?.language || "ja",
-  };
 }
