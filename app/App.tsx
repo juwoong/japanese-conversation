@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ActivityIndicator, View, Text, StyleSheet } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { supabase } from "./src/lib/supabase";
@@ -92,6 +93,7 @@ export default function App() {
   }
 
   return (
+    <SafeAreaProvider>
     <ErrorBoundary>
       <NavigationContainer>
         <Stack.Navigator
@@ -122,6 +124,7 @@ export default function App() {
         </Stack.Navigator>
       </NavigationContainer>
     </ErrorBoundary>
+    </SafeAreaProvider>
   );
 }
 
