@@ -4,7 +4,44 @@
 
 ## 다음 세션
 
-**어휘 데이터 개선 (Sprint 6)** 진행 예정.
+**Sprint 7 — JLPT 레벨 태깅 + 어휘 확장** 진행 예정.
+
+---
+
+## Sprint 7 — JLPT 레벨 태깅
+
+### 목표
+22개 상황 × 347개 어휘에 JLPT N5~N1 레벨 태깅 → 필터링/난이도 파악 가능하게.
+
+### 수정 파일
+
+| # | 파일 | 작업 | 설명 |
+|---|------|------|------|
+| 1 | `scripts/tag-jlpt-levels.ts` | 생성 | Gemini로 기존 어휘 JLPT 태깅 |
+| 2 | `scripts/generate-vocab-sql.ts` | 생성 | JSON→SQL 변환 (jlpt_level 포함) |
+| 3 | `scripts/generate-vocabulary.ts` | 수정 | VocabItem에 jlpt_level, 프롬프트 수정 |
+| 4 | `backend/supabase/migrations/003_add_jlpt_level.sql` | 생성 | ALTER TABLE + INDEX + 기존 데이터 UPDATE |
+| 5 | `scripts/output/vocabulary_insert.sql` | 재생성 | jlpt_level 컬럼 포함 INSERT문 |
+| 6 | `scripts/output/*.json` (22개) | 수정 | 태깅 스크립트 실행 결과 |
+| 7 | `app/src/types/index.ts` | 수정 | Vocabulary에 jlpt_level 추가 |
+| 8 | `app/src/screens/VocabularyScreen.tsx` | 수정 | JLPT 필터 + 배지 UI |
+
+### 데이터 흐름
+1. `tag-jlpt-levels.ts` 실행 → 22개 JSON에 jlpt_level 추가
+2. `generate-vocab-sql.ts` 실행 → `vocabulary_insert.sql` 재생성 (신규 배포용)
+3. `003_add_jlpt_level.sql`에 ALTER TABLE + UPDATE문 포함 (기존 DB 업데이트용)
+
+### 상태
+| # | 항목 | 상태 |
+|---|------|------|
+| 1 | tag-jlpt-levels.ts 생성 | [ ] |
+| 2 | 태깅 스크립트 실행 (22개 JSON 업데이트) | [ ] |
+| 3 | generate-vocab-sql.ts 생성 | [ ] |
+| 4 | vocabulary_insert.sql 재생성 | [ ] |
+| 5 | 003_add_jlpt_level.sql 마이그레이션 | [ ] |
+| 6 | generate-vocabulary.ts 수정 | [ ] |
+| 7 | app/src/types/index.ts 수정 | [ ] |
+| 8 | VocabularyScreen JLPT 필터+배지 | [ ] |
 
 ---
 
