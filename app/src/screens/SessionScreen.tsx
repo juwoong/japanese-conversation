@@ -286,16 +286,19 @@ export default function SessionScreen({ navigation, route }: Props) {
       setFeedbackData(newFeedback);
 
       if (attemptResult.accuracy >= 0.8) {
-        // Success: add user bubble to chat
-        setMessages((prev) => [
-          ...prev,
-          {
-            lineIndex: session.currentIndex,
-            line: currentLine,
-            displayText: getDisplayText(),
-            feedbackData: { accuracy: attemptResult.accuracy, userInput: sttResult.text },
-          },
-        ]);
+        // Success: add user bubble to chat (deduplicate by lineIndex)
+        setMessages((prev) => {
+          if (prev.some((m) => m.lineIndex === session.currentIndex && m.feedbackData)) return prev;
+          return [
+            ...prev,
+            {
+              lineIndex: session.currentIndex,
+              line: currentLine,
+              displayText: getDisplayText(),
+              feedbackData: { accuracy: attemptResult.accuracy, userInput: sttResult.text },
+            },
+          ];
+        });
         setPhase("success");
         // Auto-advance after 1.5s
         autoAdvanceRef.current = setTimeout(() => handleNext(), 1500);
@@ -321,16 +324,19 @@ export default function SessionScreen({ navigation, route }: Props) {
       autoAdvanceRef.current = null;
     }
 
-    // Add current NPC line to messages if it's an NPC turn
+    // Add current NPC line to messages if it's an NPC turn (deduplicate by lineIndex)
     if (currentLine?.speaker === "npc") {
-      setMessages((prev) => [
-        ...prev,
-        {
-          lineIndex: session.currentIndex,
-          line: currentLine,
-          displayText: getDisplayTextForLine(currentLine),
-        },
-      ]);
+      setMessages((prev) => {
+        if (prev.some((m) => m.lineIndex === session.currentIndex && !m.feedbackData)) return prev;
+        return [
+          ...prev,
+          {
+            lineIndex: session.currentIndex,
+            line: currentLine,
+            displayText: getDisplayTextForLine(currentLine),
+          },
+        ];
+      });
     }
 
     setFeedbackData(null);
