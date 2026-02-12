@@ -1,0 +1,245 @@
+{
+  "situation_slug": "cooking_v1",
+  "jlpt_target": "N5",
+  "theme": "요리하기",
+  "lines": [
+    {
+      "line_order": 1,
+      "speaker": "npc",
+      "text_ja": "今日は牛肉と豚肉、どちらで料理しますか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "쿄-와 규-니쿠토 부타니쿠, 도치라데 료-리시마스카",
+      "text_ko": "오늘은 소고기와 돼지고기, 어느 쪽으로 요리해요?",
+      "grammar_hint": "牛肉(소고기), 豚肉(돼지고기).",
+      "key_expressions": [
+        "牛肉",
+        "豚肉"
+      ]
+    },
+    {
+      "line_order": 2,
+      "speaker": "user",
+      "text_ja": "鶏肉がいいです。塩と砂糖はありますか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "토리니쿠가 이-데스. 시오토 사토-와 아리마스카",
+      "text_ko": "닭고기가 좋아요. 소금과 설탕은 있어요?",
+      "grammar_hint": "鶏肉(닭고기), 塩(소금), 砂糖(설탕).",
+      "key_expressions": [
+        "鶏肉",
+        "塩",
+        "砂糖"
+      ]
+    },
+    {
+      "line_order": 3,
+      "speaker": "npc",
+      "text_ja": "はい。暖かい料理を作りましょう。速く作れますよ。掃除は後でしましょう。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "하이. 아타타카이 료-리오 츠쿠리마쇼-. 하야쿠 츠쿠레마스요. 소-지와 아토데 시마쇼-",
+      "text_ko": "네. 따뜻한 요리를 만들어요. 빨리 만들 수 있어요. 청소는 나중에 해요.",
+      "grammar_hint": "暖かい(따뜻하다), 速い(빠르다), 掃除する(청소하다).",
+      "key_expressions": [
+        "暖かい",
+        "速い",
+        "掃除する"
+      ]
+    },
+    {
+      "line_order": 4,
+      "speaker": "user",
+      "text_ja": "早いですね！洗濯もしなきゃ。今日は寒いから、暗くなる前に終わらせたいです。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "하야이데스네! 센타쿠모 시나캬. 쿄-와 사무이카라, 쿠라쿠나루 마에니 오와라세타이데스",
+      "text_ko": "빠르네요! 빨래도 해야 해. 오늘은 추우니까, 어두워지기 전에 끝내고 싶어요.",
+      "grammar_hint": "早い(이르다/빠르다), 洗濯する(빨래하다), 寒い(춥다), 暗い(어둡다).",
+      "key_expressions": [
+        "早い",
+        "洗濯する",
+        "寒い",
+        "暗い"
+      ]
+    },
+    {
+      "line_order": 5,
+      "speaker": "npc",
+      "text_ja": "遅くならないうちに始めましょう。明るいうちに庭も見ましょう。上手に作れましたね。下手じゃないですよ。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "오소쿠 나라나이 우치니 하지메마쇼-. 아카루이 우치니 니와모 미마쇼-. 죠-즈니 츠쿠레마시타네. 헤타쟈나이데스요",
+      "text_ko": "늦지 않을 때 시작해요. 밝을 때 정원도 봐요. 잘 만들었네요. 서투르지 않아요.",
+      "grammar_hint": "遅い(늦다), 明るい(밝다), 上手(잘하다), 下手(서투르다).",
+      "key_expressions": [
+        "遅い",
+        "明るい",
+        "上手",
+        "下手"
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word_ja": "牛肉",
+      "reading_hiragana": "ぎゅうにく",
+      "reading_ko": "규-니쿠",
+      "meaning_ko": "소고기",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "豚肉",
+      "reading_hiragana": "ぶたにく",
+      "reading_ko": "부타니쿠",
+      "meaning_ko": "돼지고기",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "鶏肉",
+      "reading_hiragana": "とりにく",
+      "reading_ko": "토리니쿠",
+      "meaning_ko": "닭고기",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "塩",
+      "reading_hiragana": "しお",
+      "reading_ko": "시오",
+      "meaning_ko": "소금",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "砂糖",
+      "reading_hiragana": "さとう",
+      "reading_ko": "사토-",
+      "meaning_ko": "설탕",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "暖かい",
+      "reading_hiragana": "あたたかい",
+      "reading_ko": "아타타카이",
+      "meaning_ko": "따뜻하다",
+      "pos": "형용사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "速い",
+      "reading_hiragana": "はやい",
+      "reading_ko": "하야이",
+      "meaning_ko": "빠르다 (속도)",
+      "pos": "형용사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "掃除する",
+      "reading_hiragana": "そうじする",
+      "reading_ko": "소-지스루",
+      "meaning_ko": "청소하다",
+      "pos": "동사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "早い",
+      "reading_hiragana": "はやい",
+      "reading_ko": "하야이",
+      "meaning_ko": "이르다, 빠르다 (시간)",
+      "pos": "형용사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "洗濯する",
+      "reading_hiragana": "せんたくする",
+      "reading_ko": "센타쿠스루",
+      "meaning_ko": "빨래하다",
+      "pos": "동사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "寒い",
+      "reading_hiragana": "さむい",
+      "reading_ko": "사무이",
+      "meaning_ko": "춥다",
+      "pos": "형용사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "暗い",
+      "reading_hiragana": "くらい",
+      "reading_ko": "쿠라이",
+      "meaning_ko": "어둡다",
+      "pos": "형용사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "遅い",
+      "reading_hiragana": "おそい",
+      "reading_ko": "오소이",
+      "meaning_ko": "늦다, 느리다",
+      "pos": "형용사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "明るい",
+      "reading_hiragana": "あかるい",
+      "reading_ko": "아카루이",
+      "meaning_ko": "밝다",
+      "pos": "형용사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "上手",
+      "reading_hiragana": "じょうず",
+      "reading_ko": "죠-즈",
+      "meaning_ko": "잘하다, 능숙하다",
+      "pos": "형용사(な)",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "下手",
+      "reading_hiragana": "へた",
+      "reading_ko": "헤타",
+      "meaning_ko": "서투르다, 못하다",
+      "pos": "형용사(な)",
+      "appears_in_lines": [
+        5
+      ]
+    }
+  ]
+}

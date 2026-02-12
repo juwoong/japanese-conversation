@@ -1,0 +1,231 @@
+{
+  "situation_slug": "greetings_v1",
+  "jlpt_target": "N5",
+  "theme": "하루의 인사",
+  "lines": [
+    {
+      "line_order": 1,
+      "speaker": "user",
+      "text_ja": "おはようございます、先輩。今日も朝から元気ですね。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "오하요-고자이마스, 센파이. 쿄-모 아사카라 겐키데스네",
+      "text_ko": "안녕하세요, 선배. 오늘도 아침부터 건강하시네요.",
+      "grammar_hint": "おはようございます는 아침 인사. 元気(건강)ですね는 상태를 확인하는 표현.",
+      "key_expressions": [
+        "おはようございます",
+        "元気"
+      ]
+    },
+    {
+      "line_order": 2,
+      "speaker": "npc",
+      "text_ja": "おはよう！お元気ですか。昼ご飯、一緒にどう？",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "오하요-! 오겐키데스카. 히루고항, 잇쇼니 도-?",
+      "text_ko": "안녕! 잘 지내? 점심 같이 어때?",
+      "grammar_hint": "おはよう는 친한 사이의 아침 인사. お元気ですか는 안부 묻기.",
+      "key_expressions": [
+        "おはよう",
+        "お元気ですか"
+      ]
+    },
+    {
+      "line_order": 3,
+      "speaker": "user",
+      "text_ja": "いいですね！あ、ごめんなさい、今ちょっと忙しいです。昼に会いましょう。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "이-데스네! 아, 고멘나사이, 이마 쵸또 이소가시-데스. 히루니 아이마쇼-",
+      "text_ko": "좋네요! 아, 미안해요, 지금 좀 바빠요. 점심에 만나요.",
+      "grammar_hint": "ごめんなさい는 사과 표현. 今(지금), 昼(점심)에 만나자는 약속.",
+      "key_expressions": [
+        "ごめんなさい",
+        "今",
+        "昼"
+      ]
+    },
+    {
+      "line_order": 4,
+      "speaker": "npc",
+      "text_ja": "分かった。じゃあ、こんにちは、の時に会おうね。夜は予定ある？",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "와캇타. 쟈-, 콘니치와, 노 토키니 아오-네. 요루와 요테- 아루?",
+      "text_ko": "알겠어. 그럼 점심때 만나자. 저녁에는 일정 있어?",
+      "grammar_hint": "こんにちは는 낮 인사이자 '낮'이라는 의미로도 쓰임. 夜(밤/저녁).",
+      "key_expressions": [
+        "こんにちは",
+        "夜"
+      ]
+    },
+    {
+      "line_order": 5,
+      "speaker": "user",
+      "text_ja": "晩ご飯の後、暇です。明日もよろしく。こんばんは、の時にまた。さようなら！",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "반고항노 아토, 히마데스. 아시타모 요로시쿠. 콘반와, 노 토키니 마타. 사요-나라!",
+      "text_ko": "저녁 식사 후에 한가해요. 내일도 잘 부탁해요. 저녁때 또 봐요. 안녕히!",
+      "grammar_hint": "こんばんは는 저녁 인사. さようなら는 작별 인사. 明日(내일).",
+      "key_expressions": [
+        "こんばんは",
+        "さようなら",
+        "明日"
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word_ja": "おはよう",
+      "reading_hiragana": "おはよう",
+      "reading_ko": "오하요-",
+      "meaning_ko": "안녕 (아침, 반말)",
+      "pos": "표현",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "おはようございます",
+      "reading_hiragana": "おはようございます",
+      "reading_ko": "오하요-고자이마스",
+      "meaning_ko": "안녕하세요 (아침, 존댓말)",
+      "pos": "표현",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "こんにちは",
+      "reading_hiragana": "こんにちは",
+      "reading_ko": "콘니치와",
+      "meaning_ko": "안녕하세요 (낮)",
+      "pos": "표현",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "こんばんは",
+      "reading_hiragana": "こんばんは",
+      "reading_ko": "콘반와",
+      "meaning_ko": "안녕하세요 (저녁)",
+      "pos": "표현",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "さようなら",
+      "reading_hiragana": "さようなら",
+      "reading_ko": "사요-나라",
+      "meaning_ko": "안녕히 가세요/계세요",
+      "pos": "표현",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "ごめんなさい",
+      "reading_hiragana": "ごめんなさい",
+      "reading_ko": "고멘나사이",
+      "meaning_ko": "미안합니다",
+      "pos": "표현",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "ごちそうさま",
+      "reading_hiragana": "ごちそうさま",
+      "reading_ko": "고치소-사마",
+      "meaning_ko": "잘 먹었습니다",
+      "pos": "표현",
+      "appears_in_lines": []
+    },
+    {
+      "word_ja": "お元気ですか",
+      "reading_hiragana": "おげんきですか",
+      "reading_ko": "오겐키데스카",
+      "meaning_ko": "잘 지내세요?",
+      "pos": "표현",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "朝",
+      "reading_hiragana": "あさ",
+      "reading_ko": "아사",
+      "meaning_ko": "아침",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "昼",
+      "reading_hiragana": "ひる",
+      "reading_ko": "히루",
+      "meaning_ko": "낮, 점심",
+      "pos": "명사",
+      "appears_in_lines": [
+        2,
+        3
+      ]
+    },
+    {
+      "word_ja": "夜",
+      "reading_hiragana": "よる",
+      "reading_ko": "요루",
+      "meaning_ko": "밤, 저녁",
+      "pos": "명사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "晩",
+      "reading_hiragana": "ばん",
+      "reading_ko": "반",
+      "meaning_ko": "저녁, 밤",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "今",
+      "reading_hiragana": "いま",
+      "reading_ko": "이마",
+      "meaning_ko": "지금",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "明日",
+      "reading_hiragana": "あした",
+      "reading_ko": "아시타",
+      "meaning_ko": "내일",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "元気",
+      "reading_hiragana": "げんき",
+      "reading_ko": "겐키",
+      "meaning_ko": "건강, 기운",
+      "pos": "형용사(な)",
+      "appears_in_lines": [
+        1,
+        2
+      ]
+    }
+  ]
+}

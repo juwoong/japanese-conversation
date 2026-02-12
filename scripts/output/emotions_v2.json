@@ -1,0 +1,253 @@
+{
+  "situation_slug": "emotions_v2",
+  "jlpt_target": "N4",
+  "theme": "의견과 판단",
+  "lines": [
+    {
+      "line_order": 1,
+      "speaker": "npc",
+      "text_ja": "この道は安全ですか。危険じゃないですか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "코노 미치와 안젠데스카. 키켄쟈나이데스카",
+      "text_ko": "이 길은 안전해요? 위험하지 않아요?",
+      "grammar_hint": "安全(안전)↔危険(위험).",
+      "key_expressions": [
+        "安全",
+        "危険"
+      ]
+    },
+    {
+      "line_order": 2,
+      "speaker": "user",
+      "text_ja": "安心してください。簡単な道ですよ。複雑じゃありません。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "안신시테쿠다사이. 칸탄나 미치데스요. 후쿠자츠쟈아리마셍",
+      "text_ko": "안심하세요. 간단한 길이에요. 복잡하지 않아요.",
+      "grammar_hint": "安心(안심), 簡単(간단)↔複雑(복잡).",
+      "key_expressions": [
+        "安心",
+        "簡単",
+        "複雑"
+      ]
+    },
+    {
+      "line_order": 3,
+      "speaker": "npc",
+      "text_ja": "特別な場所ですか。普通の公園とは違いますか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "토쿠베츠나 바쇼데스카. 후츠-노 코-엔토와 치가이마스카",
+      "text_ko": "특별한 장소예요? 보통 공원과는 달라요?",
+      "grammar_hint": "特別(특별)↔普通(보통).",
+      "key_expressions": [
+        "特別",
+        "普通"
+      ]
+    },
+    {
+      "line_order": 4,
+      "speaker": "user",
+      "text_ja": "自由に散歩できますよ。お見舞いの帰りに歯医者にも寄れます。退院した友達と行きましょう。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "지유-니 산포데키마스요. 오미마이노 카에리니 하이샤니모 요레마스. 타이인시타 토모다치토 이키마쇼-",
+      "text_ko": "자유롭게 산책할 수 있어요. 문병 돌아오는 길에 치과에도 들를 수 있어요. 퇴원한 친구와 가요.",
+      "grammar_hint": "自由(자유), お見舞い(문병), 歯医者(치과), 退院(퇴원).",
+      "key_expressions": [
+        "自由",
+        "お見舞い",
+        "歯医者",
+        "退院"
+      ]
+    },
+    {
+      "line_order": 5,
+      "speaker": "npc",
+      "text_ja": "いいですね。ご主人もご存じですか。いらっしゃる時に、くださるものがあります。致します。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "이-데스네. 고슈진모 고존지데스카. 이랏샤루 토키니, 쿠다사루 모노가 아리마스. 이타시마스",
+      "text_ko": "좋네요. 남편분도 아세요? 오실 때, 주시는 게 있어요. 해드리겠습니다.",
+      "grammar_hint": "ご主人(남편분), ご存じ(아시다), いらっしゃる(오시다), くださる(주시다), 致す(하다/겸양어).",
+      "key_expressions": [
+        "ご主人",
+        "ご存じ",
+        "いらっしゃる",
+        "くださる",
+        "致す"
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word_ja": "安全",
+      "reading_hiragana": "あんぜん",
+      "reading_ko": "안젠",
+      "meaning_ko": "안전",
+      "pos": "형용사(な)",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "危険",
+      "reading_hiragana": "きけん",
+      "reading_ko": "키켄",
+      "meaning_ko": "위험",
+      "pos": "형용사(な)",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "安心",
+      "reading_hiragana": "あんしん",
+      "reading_ko": "안신",
+      "meaning_ko": "안심",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "簡単",
+      "reading_hiragana": "かんたん",
+      "reading_ko": "칸탄",
+      "meaning_ko": "간단하다",
+      "pos": "형용사(な)",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "複雑",
+      "reading_hiragana": "ふくざつ",
+      "reading_ko": "후쿠자츠",
+      "meaning_ko": "복잡하다",
+      "pos": "형용사(な)",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "特別",
+      "reading_hiragana": "とくべつ",
+      "reading_ko": "토쿠베츠",
+      "meaning_ko": "특별하다",
+      "pos": "형용사(な)",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "普通",
+      "reading_hiragana": "ふつう",
+      "reading_ko": "후츠-",
+      "meaning_ko": "보통, 일반적",
+      "pos": "형용사(な)",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "自由",
+      "reading_hiragana": "じゆう",
+      "reading_ko": "지유-",
+      "meaning_ko": "자유",
+      "pos": "형용사(な)",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "お見舞い",
+      "reading_hiragana": "おみまい",
+      "reading_ko": "오미마이",
+      "meaning_ko": "문병",
+      "pos": "명사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "歯医者",
+      "reading_hiragana": "はいしゃ",
+      "reading_ko": "하이샤",
+      "meaning_ko": "치과",
+      "pos": "명사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "退院",
+      "reading_hiragana": "たいいん",
+      "reading_ko": "타이인",
+      "meaning_ko": "퇴원",
+      "pos": "명사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "ご主人",
+      "reading_hiragana": "ごしゅじん",
+      "reading_ko": "고슈진",
+      "meaning_ko": "남편분 (존칭)",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "ご存じ",
+      "reading_hiragana": "ごぞんじ",
+      "reading_ko": "고존지",
+      "meaning_ko": "아시다 (존경)",
+      "pos": "표현",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "いらっしゃる",
+      "reading_hiragana": "いらっしゃる",
+      "reading_ko": "이랏샤루",
+      "meaning_ko": "계시다/오시다 (존경)",
+      "pos": "동사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "くださる",
+      "reading_hiragana": "くださる",
+      "reading_ko": "쿠다사루",
+      "meaning_ko": "주시다 (존경)",
+      "pos": "동사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "致す",
+      "reading_hiragana": "いたす",
+      "reading_ko": "이타스",
+      "meaning_ko": "하다 (겸양)",
+      "pos": "동사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "差し上がる",
+      "reading_hiragana": "さしあがる",
+      "reading_ko": "사시아가루",
+      "meaning_ko": "드리다 (겸양)",
+      "pos": "동사",
+      "appears_in_lines": []
+    }
+  ]
+}

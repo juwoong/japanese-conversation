@@ -1,0 +1,234 @@
+{
+  "situation_slug": "emotions_v1",
+  "jlpt_target": "N4",
+  "theme": "감정과 느낌",
+  "lines": [
+    {
+      "line_order": 1,
+      "speaker": "user",
+      "text_ja": "最近、悲しいことがありました。寂しい気持ちです。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "사이킨, 카나시- 코토가 아리마시타. 사비시- 키모치데스",
+      "text_ko": "최근, 슬픈 일이 있었어요. 외로운 기분이에요.",
+      "grammar_hint": "悲しい(슬프다), 寂しい(외롭다), 気持ち(기분).",
+      "key_expressions": [
+        "悲しい",
+        "寂しい",
+        "気持ち"
+      ]
+    },
+    {
+      "line_order": 2,
+      "speaker": "npc",
+      "text_ja": "恥ずかしいことじゃないですよ。怖い時は、優しい人に相談してください。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "하즈카시- 코토쟈나이데스요. 코와이 토키와, 야사시- 히토니 소-단시테쿠다사이",
+      "text_ko": "부끄러운 게 아니에요. 무서울 때는, 친절한 사람에게 상담하세요.",
+      "grammar_hint": "恥ずかしい(부끄럽다), 怖い(무섭다), 優しい(친절하다).",
+      "key_expressions": [
+        "恥ずかしい",
+        "怖い",
+        "優しい"
+      ]
+    },
+    {
+      "line_order": 3,
+      "speaker": "user",
+      "text_ja": "厳しいですが、珍しい経験でした。素晴らしい友達もできました。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "키비시-데스가, 메즈라시- 케-켄데시타. 스바라시- 토모다치모 데키마시타",
+      "text_ko": "힘들지만, 드문 경험이었어요. 훌륭한 친구도 생겼어요.",
+      "grammar_hint": "厳しい(엄격하다/힘들다), 珍しい(드물다), 素晴らしい(훌륭하다).",
+      "key_expressions": [
+        "厳しい",
+        "珍しい",
+        "素晴らしい"
+      ]
+    },
+    {
+      "line_order": 4,
+      "speaker": "npc",
+      "text_ja": "美しい心ですね。酷いことがあっても、正しい道を選んでください。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "우츠쿠시- 코코로데스네. 히도이 코토가 앗테모, 타다시- 미치오 에란데쿠다사이",
+      "text_ko": "아름다운 마음이네요. 심한 일이 있어도, 올바른 길을 선택하세요.",
+      "grammar_hint": "美しい(아름답다), 酷い(심하다/잔인하다), 正しい(올바르다).",
+      "key_expressions": [
+        "美しい",
+        "酷い",
+        "正しい"
+      ]
+    },
+    {
+      "line_order": 5,
+      "speaker": "user",
+      "text_ja": "ありがとうございます。趣味に興味を持って、意見を言えるようになりたいです。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "아리가토-고자이마스. 슈미니 쿄-미오 못테, 이켄오 이에루요-니 나리타이데스",
+      "text_ko": "감사합니다. 취미에 관심을 갖고, 의견을 말할 수 있게 되고 싶어요.",
+      "grammar_hint": "趣味(취미), 興味(관심/흥미), 意見(의견).",
+      "key_expressions": [
+        "趣味",
+        "興味",
+        "意見"
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word_ja": "悲しい",
+      "reading_hiragana": "かなしい",
+      "reading_ko": "카나시-",
+      "meaning_ko": "슬프다",
+      "pos": "형용사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "寂しい",
+      "reading_hiragana": "さびしい",
+      "reading_ko": "사비시-",
+      "meaning_ko": "외롭다, 쓸쓸하다",
+      "pos": "형용사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "気持ち",
+      "reading_hiragana": "きもち",
+      "reading_ko": "키모치",
+      "meaning_ko": "기분, 느낌",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "恥ずかしい",
+      "reading_hiragana": "はずかしい",
+      "reading_ko": "하즈카시-",
+      "meaning_ko": "부끄럽다",
+      "pos": "형용사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "怖い",
+      "reading_hiragana": "こわい",
+      "reading_ko": "코와이",
+      "meaning_ko": "무섭다",
+      "pos": "형용사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "優しい",
+      "reading_hiragana": "やさしい",
+      "reading_ko": "야사시-",
+      "meaning_ko": "친절하다, 상냥하다",
+      "pos": "형용사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "厳しい",
+      "reading_hiragana": "きびしい",
+      "reading_ko": "키비시-",
+      "meaning_ko": "엄격하다, 힘들다",
+      "pos": "형용사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "珍しい",
+      "reading_hiragana": "めずらしい",
+      "reading_ko": "메즈라시-",
+      "meaning_ko": "드물다, 진귀하다",
+      "pos": "형용사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "素晴らしい",
+      "reading_hiragana": "すばらしい",
+      "reading_ko": "스바라시-",
+      "meaning_ko": "훌륭하다",
+      "pos": "형용사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "美しい",
+      "reading_hiragana": "うつくしい",
+      "reading_ko": "우츠쿠시-",
+      "meaning_ko": "아름답다",
+      "pos": "형용사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "酷い",
+      "reading_hiragana": "ひどい",
+      "reading_ko": "히도이",
+      "meaning_ko": "심하다, 잔인하다",
+      "pos": "형용사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "正しい",
+      "reading_hiragana": "ただしい",
+      "reading_ko": "타다시-",
+      "meaning_ko": "올바르다",
+      "pos": "형용사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "趣味",
+      "reading_hiragana": "しゅみ",
+      "reading_ko": "슈미",
+      "meaning_ko": "취미",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "興味",
+      "reading_hiragana": "きょうみ",
+      "reading_ko": "쿄-미",
+      "meaning_ko": "관심, 흥미",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "意見",
+      "reading_hiragana": "いけん",
+      "reading_ko": "이켄",
+      "meaning_ko": "의견",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    }
+  ]
+}

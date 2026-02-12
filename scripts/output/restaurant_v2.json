@@ -1,0 +1,161 @@
+{
+  "situation_slug": "restaurant_v2",
+  "base_situation": "restaurant",
+  "jlpt_target": "N5",
+  "theme": "가족과 함께 식사 주문",
+  "lines": [
+    {
+      "line_order": 1,
+      "speaker": "npc",
+      "text_ja": "いらっしゃいませ。何名様ですか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "이랏샤이마세. 난메-사마데스카",
+      "text_ko": "어서 오세요. 몇 분이세요?",
+      "grammar_hint": "何名様(난메-사마)는 식당에서 인원수를 정중하게 묻는 표현입니다.",
+      "key_expressions": [
+        "何名様",
+        "ですか"
+      ]
+    },
+    {
+      "line_order": 2,
+      "speaker": "user",
+      "text_ja": "四人です。子供が一人います。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "요닌데스. 코도모가 히토리 이마스",
+      "text_ko": "네 명이에요. 아이가 한 명 있어요.",
+      "grammar_hint": "子供(아이)が一人います = 아이가 한 명 있습니다. います는 사람이 '있다'.",
+      "key_expressions": [
+        "子供",
+        "います"
+      ]
+    },
+    {
+      "line_order": 3,
+      "speaker": "npc",
+      "text_ja": "お子様用の椅子をご用意しますね。こちらへどうぞ。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "오코사마요-노 이스오 고요-이시마스네. 코치라에 도-조",
+      "text_ko": "어린이용 의자를 준비해 드릴게요. 이쪽으로 오세요.",
+      "grammar_hint": "椅子(의자)を用意する = 의자를 준비하다. こちらへどうぞ = 이쪽으로 오세요.",
+      "key_expressions": [
+        "椅子",
+        "どうぞ"
+      ]
+    },
+    {
+      "line_order": 4,
+      "speaker": "user",
+      "text_ja": "お父さん、何を食べる？私はご飯と魚がいいな。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "오토-상, 나니오 타베루? 와타시와 고항토 사카나가 이-나",
+      "text_ko": "아빠, 뭐 먹을 거야? 나는 밥이랑 생선이 좋겠다.",
+      "grammar_hint": "食べる(먹다)は基本動詞。ご飯(밥)と魚(생선)がいい = 밥이랑 생선이 좋다.",
+      "key_expressions": [
+        "お父さん",
+        "食べる",
+        "ご飯"
+      ]
+    },
+    {
+      "line_order": 5,
+      "speaker": "user",
+      "text_ja": "すみません、子供用のメニューはありますか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "스미마센, 코도모요-노 메뉴-와 아리마스카",
+      "text_ko": "저기요, 어린이용 메뉴는 있나요?",
+      "grammar_hint": "子供用(어린이용)のメニュー = 어린이 메뉴. ありますか = 있나요?",
+      "key_expressions": [
+        "子供用",
+        "ありますか"
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word_ja": "子供",
+      "reading_hiragana": "こども",
+      "reading_ko": "코도모",
+      "meaning_ko": "아이, 어린이",
+      "pos": "명사",
+      "appears_in_lines": [2, 5]
+    },
+    {
+      "word_ja": "人",
+      "reading_hiragana": "にん",
+      "reading_ko": "닌",
+      "meaning_ko": "명 (사람 세는 단위)",
+      "pos": "명사",
+      "appears_in_lines": [2]
+    },
+    {
+      "word_ja": "椅子",
+      "reading_hiragana": "いす",
+      "reading_ko": "이스",
+      "meaning_ko": "의자",
+      "pos": "명사",
+      "appears_in_lines": [3]
+    },
+    {
+      "word_ja": "お父さん",
+      "reading_hiragana": "おとうさん",
+      "reading_ko": "오토-상",
+      "meaning_ko": "아버지, 아빠",
+      "pos": "명사",
+      "appears_in_lines": [4]
+    },
+    {
+      "word_ja": "食べる",
+      "reading_hiragana": "たべる",
+      "reading_ko": "타베루",
+      "meaning_ko": "먹다",
+      "pos": "동사",
+      "appears_in_lines": [4]
+    },
+    {
+      "word_ja": "ご飯",
+      "reading_hiragana": "ごはん",
+      "reading_ko": "고항",
+      "meaning_ko": "밥, 식사",
+      "pos": "명사",
+      "appears_in_lines": [4]
+    },
+    {
+      "word_ja": "魚",
+      "reading_hiragana": "さかな",
+      "reading_ko": "사카나",
+      "meaning_ko": "생선",
+      "pos": "명사",
+      "appears_in_lines": [4]
+    },
+    {
+      "word_ja": "友達",
+      "reading_hiragana": "ともだち",
+      "reading_ko": "토모다치",
+      "meaning_ko": "친구",
+      "pos": "명사",
+      "appears_in_lines": []
+    },
+    {
+      "word_ja": "メニュー",
+      "reading_hiragana": "メニュー",
+      "reading_ko": "메뉴-",
+      "meaning_ko": "메뉴",
+      "pos": "명사",
+      "appears_in_lines": [5]
+    },
+    {
+      "word_ja": "用意",
+      "reading_hiragana": "ようい",
+      "reading_ko": "요-이",
+      "meaning_ko": "준비",
+      "pos": "명사",
+      "appears_in_lines": [3]
+    }
+  ]
+}

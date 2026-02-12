@@ -1,0 +1,234 @@
+{
+  "situation_slug": "taxi_v1",
+  "jlpt_target": "N5",
+  "theme": "택시 타기",
+  "lines": [
+    {
+      "line_order": 1,
+      "speaker": "user",
+      "text_ja": "すみません、この地図の場所まで行ってください。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "스미마센, 코노 치즈노 바쇼마데 잇테쿠다사이",
+      "text_ko": "실례합니다, 이 지도의 장소까지 가주세요.",
+      "grammar_hint": "地図(지도)の場所(장소)まで = 지도의 장소까지.",
+      "key_expressions": [
+        "地図"
+      ]
+    },
+    {
+      "line_order": 2,
+      "speaker": "npc",
+      "text_ja": "はい、分かりました。ここから遠いですか、近いですか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "하이, 와카리마시타. 코코카라 토-이데스카, 치카이데스카",
+      "text_ko": "네, 알겠습니다. 여기서 먼가요, 가까운가요?",
+      "grammar_hint": "遠い(멀다)↔近い(가깝다). ここから = 여기서부터.",
+      "key_expressions": [
+        "遠い",
+        "近い"
+      ]
+    },
+    {
+      "line_order": 3,
+      "speaker": "user",
+      "text_ja": "車で十分くらいです。橋を渡って、北に行ってください。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "쿠루마데 쥽분쿠라이데스. 하시오 와탓테, 키타니 잇테쿠다사이",
+      "text_ko": "차로 10분 정도예요. 다리를 건너서, 북쪽으로 가주세요.",
+      "grammar_hint": "車(차)で = 차로. 橋(다리)を渡って = 다리를 건너서. 北(북쪽).",
+      "key_expressions": [
+        "車",
+        "橋",
+        "北"
+      ]
+    },
+    {
+      "line_order": 4,
+      "speaker": "npc",
+      "text_ja": "この信号を真っ直ぐですか。あの交差点で南に曲がりますか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "코노 신고-오 맛스구데스카. 아노 코-사텐데 미나미니 마가리마스카",
+      "text_ko": "이 신호등에서 직진인가요? 저 교차로에서 남쪽으로 도나요?",
+      "grammar_hint": "信号(신호등), 交差点(교차로), 真っ直ぐ(직진), 南(남쪽).",
+      "key_expressions": [
+        "信号",
+        "交差点",
+        "真っ直ぐ",
+        "南"
+      ]
+    },
+    {
+      "line_order": 5,
+      "speaker": "user",
+      "text_ja": "いいえ、東に走って、西の出口で降ろしてください。タクシーで帰れて助かります。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "이-에, 히가시니 하싯테, 니시노 데구치데 오로시테쿠다사이. 타쿠시-데 카에레테 타스카리마스",
+      "text_ko": "아니요, 동쪽으로 달려서, 서쪽 출구에서 내려주세요. 택시로 돌아갈 수 있어서 다행이에요.",
+      "grammar_hint": "東(동), 西(서). 走る(달리다). 帰る(돌아가다). タクシー(택시).",
+      "key_expressions": [
+        "東",
+        "西",
+        "走る",
+        "帰る",
+        "タクシー"
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word_ja": "地図",
+      "reading_hiragana": "ちず",
+      "reading_ko": "치즈",
+      "meaning_ko": "지도",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "遠い",
+      "reading_hiragana": "とおい",
+      "reading_ko": "토-이",
+      "meaning_ko": "멀다",
+      "pos": "형용사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "近い",
+      "reading_hiragana": "ちかい",
+      "reading_ko": "치카이",
+      "meaning_ko": "가깝다",
+      "pos": "형용사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "車",
+      "reading_hiragana": "くるま",
+      "reading_ko": "쿠루마",
+      "meaning_ko": "차",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "橋",
+      "reading_hiragana": "はし",
+      "reading_ko": "하시",
+      "meaning_ko": "다리",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "北",
+      "reading_hiragana": "きた",
+      "reading_ko": "키타",
+      "meaning_ko": "북쪽",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "信号",
+      "reading_hiragana": "しんごう",
+      "reading_ko": "신고-",
+      "meaning_ko": "신호등",
+      "pos": "명사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "交差点",
+      "reading_hiragana": "こうさてん",
+      "reading_ko": "코-사텐",
+      "meaning_ko": "교차로",
+      "pos": "명사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "真っ直ぐ",
+      "reading_hiragana": "まっすぐ",
+      "reading_ko": "맛스구",
+      "meaning_ko": "똑바로, 직진",
+      "pos": "부사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "南",
+      "reading_hiragana": "みなみ",
+      "reading_ko": "미나미",
+      "meaning_ko": "남쪽",
+      "pos": "명사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "東",
+      "reading_hiragana": "ひがし",
+      "reading_ko": "히가시",
+      "meaning_ko": "동쪽",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "西",
+      "reading_hiragana": "にし",
+      "reading_ko": "니시",
+      "meaning_ko": "서쪽",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "走る",
+      "reading_hiragana": "はしる",
+      "reading_ko": "하시루",
+      "meaning_ko": "달리다",
+      "pos": "동사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "帰る",
+      "reading_hiragana": "かえる",
+      "reading_ko": "카에루",
+      "meaning_ko": "돌아가다",
+      "pos": "동사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "タクシー",
+      "reading_hiragana": "タクシー",
+      "reading_ko": "타쿠시-",
+      "meaning_ko": "택시",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    }
+  ]
+}

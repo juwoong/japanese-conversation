@@ -1,0 +1,249 @@
+{
+  "situation_slug": "family_intro",
+  "jlpt_target": "N5",
+  "theme": "가족 소개",
+  "lines": [
+    {
+      "line_order": 1,
+      "speaker": "npc",
+      "text_ja": "ご家族は何人ですか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "고카조쿠와 난닌데스카",
+      "text_ko": "가족은 몇 명이에요?",
+      "grammar_hint": "家族(가족). 何人(몇 명)ですか = 몇 명이에요?",
+      "key_expressions": [
+        "家族"
+      ]
+    },
+    {
+      "line_order": 2,
+      "speaker": "user",
+      "text_ja": "六人家族です。両親と兄と姉と弟がいます。父は会社員で、母は先生です。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "로쿠닌카조쿠데스. 료-신토 아니토 아네토 오토-토가 이마스. 치치와 카이샤인데, 하하와 센세-데스",
+      "text_ko": "6인 가족이에요. 부모님과 형과 누나와 남동생이 있어요. 아버지는 회사원이고, 어머니는 선생님이에요.",
+      "grammar_hint": "両親(부모님), 父(아버지/격식), 母(어머니/격식), 兄(형/오빠), 姉(누나/언니), 弟(남동생).",
+      "key_expressions": [
+        "両親",
+        "父",
+        "母",
+        "兄",
+        "姉",
+        "弟"
+      ]
+    },
+    {
+      "line_order": 3,
+      "speaker": "npc",
+      "text_ja": "お兄さんとお姉さんは結婚していますか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "오니-산토 오네-산와 켓콘시테이마스카",
+      "text_ko": "오빠와 언니는 결혼했어요?",
+      "grammar_hint": "お兄さん(오빠/형님), お姉さん(언니/누님)는 타인의 가족에 쓰는 존칭. 結婚する(결혼하다).",
+      "key_expressions": [
+        "お兄さん",
+        "お姉さん",
+        "結婚する"
+      ]
+    },
+    {
+      "line_order": 4,
+      "speaker": "user",
+      "text_ja": "兄は結婚しています。奥さんはとても優しい女の人です。妹はまだ学生です。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "아니와 켓콘시테이마스. 오쿠산와 토테모 야사시- 온나노 히토데스. 이모-토와 마다 가쿠세-데스",
+      "text_ko": "형은 결혼했어요. 형수님은 매우 상냥한 여자분이에요. 여동생은 아직 학생이에요.",
+      "grammar_hint": "奥さん(부인/아내). 女(여자)の人(사람). 妹(여동생).",
+      "key_expressions": [
+        "奥さん",
+        "女",
+        "妹"
+      ]
+    },
+    {
+      "line_order": 5,
+      "speaker": "npc",
+      "text_ja": "素敵な家族ですね。お父さんとお母さんは男のお子さんが多いですね。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "스테키나 카조쿠데스네. 오토-산토 오카-산와 오토코노 오코산가 오-이데스네",
+      "text_ko": "멋진 가족이네요. 아버님과 어머님은 아들이 많으시네요.",
+      "grammar_hint": "お父さん(아버님), お母さん(어머님)는 타인의 부모에 쓰는 존칭. 男(남자).",
+      "key_expressions": [
+        "お父さん",
+        "お母さん",
+        "男"
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word_ja": "家族",
+      "reading_hiragana": "かぞく",
+      "reading_ko": "카조쿠",
+      "meaning_ko": "가족",
+      "pos": "명사",
+      "appears_in_lines": [
+        1,
+        2,
+        5
+      ]
+    },
+    {
+      "word_ja": "両親",
+      "reading_hiragana": "りょうしん",
+      "reading_ko": "료-신",
+      "meaning_ko": "부모님",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "父",
+      "reading_hiragana": "ちち",
+      "reading_ko": "치치",
+      "meaning_ko": "아버지 (자기 가족)",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "母",
+      "reading_hiragana": "はは",
+      "reading_ko": "하하",
+      "meaning_ko": "어머니 (자기 가족)",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "兄",
+      "reading_hiragana": "あに",
+      "reading_ko": "아니",
+      "meaning_ko": "형/오빠 (자기 가족)",
+      "pos": "명사",
+      "appears_in_lines": [
+        2,
+        4
+      ]
+    },
+    {
+      "word_ja": "姉",
+      "reading_hiragana": "あね",
+      "reading_ko": "아네",
+      "meaning_ko": "누나/언니 (자기 가족)",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "弟",
+      "reading_hiragana": "おとうと",
+      "reading_ko": "오토-토",
+      "meaning_ko": "남동생",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "お兄さん",
+      "reading_hiragana": "おにいさん",
+      "reading_ko": "오니-산",
+      "meaning_ko": "오빠/형님 (타인)",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "お姉さん",
+      "reading_hiragana": "おねえさん",
+      "reading_ko": "오네-산",
+      "meaning_ko": "언니/누님 (타인)",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "結婚する",
+      "reading_hiragana": "けっこんする",
+      "reading_ko": "켓콘스루",
+      "meaning_ko": "결혼하다",
+      "pos": "동사",
+      "appears_in_lines": [
+        3,
+        4
+      ]
+    },
+    {
+      "word_ja": "奥さん",
+      "reading_hiragana": "おくさん",
+      "reading_ko": "오쿠산",
+      "meaning_ko": "부인, 아내 (타인)",
+      "pos": "명사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "女",
+      "reading_hiragana": "おんな",
+      "reading_ko": "온나",
+      "meaning_ko": "여자",
+      "pos": "명사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "妹",
+      "reading_hiragana": "いもうと",
+      "reading_ko": "이모-토",
+      "meaning_ko": "여동생",
+      "pos": "명사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "お父さん",
+      "reading_hiragana": "おとうさん",
+      "reading_ko": "오토-산",
+      "meaning_ko": "아버지 (타인/존칭)",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "お母さん",
+      "reading_hiragana": "おかあさん",
+      "reading_ko": "오카-산",
+      "meaning_ko": "어머니 (타인/존칭)",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "男",
+      "reading_hiragana": "おとこ",
+      "reading_ko": "오토코",
+      "meaning_ko": "남자",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    }
+  ]
+}

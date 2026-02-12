@@ -1,0 +1,224 @@
+{
+  "situation_slug": "travel_plan",
+  "jlpt_target": "N5",
+  "theme": "여행 계획",
+  "lines": [
+    {
+      "line_order": 1,
+      "speaker": "user",
+      "text_ja": "来月の夏休みに旅行したいです。飛行機で行きますか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "라이게츠노 나츠야스미니 료코-시타이데스. 히코-키데 이키마스카",
+      "text_ko": "다음 달 여름방학에 여행 가고 싶어요. 비행기로 가나요?",
+      "grammar_hint": "来月(다음 달), 夏休み(여름방학), 飛行機(비행기)で行く = 비행기로 가다.",
+      "key_expressions": [
+        "来月",
+        "夏休み",
+        "飛行機"
+      ]
+    },
+    {
+      "line_order": 2,
+      "speaker": "npc",
+      "text_ja": "いいですね。今月は忙しいですが、来月は休みが多いですよ。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "이-데스네. 콘게츠와 이소가시-데스가, 라이게츠와 야스미가 오-이데스요",
+      "text_ko": "좋네요. 이번 달은 바쁘지만, 다음 달은 휴일이 많아요.",
+      "grammar_hint": "今月(이번 달), 休み(휴일/쉬는 날).",
+      "key_expressions": [
+        "今月",
+        "休み"
+      ]
+    },
+    {
+      "line_order": 3,
+      "speaker": "user",
+      "text_ja": "先月は春で気持ちよかったですね。夏は暑いから海がいいかな。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "센게츠와 하루데 키모치요캇타데스네. 나츠와 아츠이카라 우미가 이-카나",
+      "text_ko": "지난달은 봄이라 기분 좋았죠. 여름은 더우니까 바다가 좋을까.",
+      "grammar_hint": "先月(지난달), 春(봄), 夏(여름).",
+      "key_expressions": [
+        "先月",
+        "春",
+        "夏"
+      ]
+    },
+    {
+      "line_order": 4,
+      "speaker": "npc",
+      "text_ja": "秋もいいですよ。今週はまだ予定がないので、一緒に計画しましょう。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "아키모 이-데스요. 콘슈-와 마다 요테-가 나이노데, 잇쇼니 케-카쿠시마쇼-",
+      "text_ko": "가을도 좋아요. 이번 주는 아직 예정이 없으니까, 같이 계획해요.",
+      "grammar_hint": "秋(가을), 今週(이번 주).",
+      "key_expressions": [
+        "秋",
+        "今週"
+      ]
+    },
+    {
+      "line_order": 5,
+      "speaker": "user",
+      "text_ja": "冬は寒いからやめましょう。午前中に出発して、午後に着きたいです。自転車も持っていきたいな。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "후유와 사무이카라 야메마쇼-. 고젠츄-니 슛파츠시테, 고고니 츠키타이데스. 지텐샤모 못테이키타이나",
+      "text_ko": "겨울은 추우니까 그만두죠. 오전에 출발해서, 오후에 도착하고 싶어요. 자전거도 가져가고 싶다.",
+      "grammar_hint": "冬(겨울), 午前(오전), 午後(오후), 自転車(자전거).",
+      "key_expressions": [
+        "冬",
+        "午前",
+        "午後",
+        "自転車"
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word_ja": "飛行機",
+      "reading_hiragana": "ひこうき",
+      "reading_ko": "히코-키",
+      "meaning_ko": "비행기",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "夏休み",
+      "reading_hiragana": "なつやすみ",
+      "reading_ko": "나츠야스미",
+      "meaning_ko": "여름방학",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "来月",
+      "reading_hiragana": "らいげつ",
+      "reading_ko": "라이게츠",
+      "meaning_ko": "다음 달",
+      "pos": "명사",
+      "appears_in_lines": [
+        1,
+        2
+      ]
+    },
+    {
+      "word_ja": "今月",
+      "reading_hiragana": "こんげつ",
+      "reading_ko": "콘게츠",
+      "meaning_ko": "이번 달",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "休み",
+      "reading_hiragana": "やすみ",
+      "reading_ko": "야스미",
+      "meaning_ko": "휴일, 쉬는 날",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "先月",
+      "reading_hiragana": "せんげつ",
+      "reading_ko": "센게츠",
+      "meaning_ko": "지난달",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "春",
+      "reading_hiragana": "はる",
+      "reading_ko": "하루",
+      "meaning_ko": "봄",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "夏",
+      "reading_hiragana": "なつ",
+      "reading_ko": "나츠",
+      "meaning_ko": "여름",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "秋",
+      "reading_hiragana": "あき",
+      "reading_ko": "아키",
+      "meaning_ko": "가을",
+      "pos": "명사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "今週",
+      "reading_hiragana": "こんしゅう",
+      "reading_ko": "콘슈-",
+      "meaning_ko": "이번 주",
+      "pos": "명사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "冬",
+      "reading_hiragana": "ふゆ",
+      "reading_ko": "후유",
+      "meaning_ko": "겨울",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "午前",
+      "reading_hiragana": "ごぜん",
+      "reading_ko": "고젠",
+      "meaning_ko": "오전",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "午後",
+      "reading_hiragana": "ごご",
+      "reading_ko": "고고",
+      "meaning_ko": "오후",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "自転車",
+      "reading_hiragana": "じてんしゃ",
+      "reading_ko": "지텐샤",
+      "meaning_ko": "자전거",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    }
+  ]
+}

@@ -1,0 +1,162 @@
+{
+  "situation_slug": "meeting_response_v2",
+  "base_situation": "meeting_response",
+  "jlpt_target": "N4",
+  "theme": "프레젠 후 질의응답",
+  "lines": [
+    {
+      "line_order": 1,
+      "speaker": "npc",
+      "text_ja": "ご説明ありがとうございました。資料を拝見しましたが、一つ伺ってもよろしいでしょうか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "고세츠메- 아리가토-고자이마시타. 시료-오 하이켄시마시타가, 히토츠 우카갓테모 요로시-데쇼-카",
+      "text_ko": "설명 감사했습니다. 자료를 봤는데요, 하나 여쭤봐도 될까요?",
+      "grammar_hint": "拝見する(봐이켄스루)는 '보다'의 겸양어. 伺う(우카가우)는 '묻다/찾아뵙다'의 겸양어.",
+      "key_expressions": [
+        "拝見する",
+        "伺う"
+      ]
+    },
+    {
+      "line_order": 2,
+      "speaker": "user",
+      "text_ja": "はい、どうぞ。ご質問をお願いいたします。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "하이, 도-조. 고시츠몬오 오네가이 이타시마스",
+      "text_ko": "네, 말씀하세요. 질문 부탁드립니다.",
+      "grammar_hint": "お願いいたします는 お願いします보다 더 격식있는 표현입니다.",
+      "key_expressions": [
+        "ご質問",
+        "お願いいたします"
+      ]
+    },
+    {
+      "line_order": 3,
+      "speaker": "npc",
+      "text_ja": "部長がおっしゃった予算について、もう少し詳しくご説明いただけますか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "부쵸-가 옷샤앗타 요산니츠이테, 모-스코시 쿠와시쿠 고세츠메- 이타다케마스카",
+      "text_ko": "부장님이 말씀하신 예산에 대해, 좀 더 자세히 설명해 주실 수 있나요?",
+      "grammar_hint": "おっしゃる는 '말하다(言う)'의 존경어. 部長(부장)がおっしゃった = 부장님이 말씀하신.",
+      "key_expressions": [
+        "おっしゃる",
+        "部長",
+        "説明"
+      ]
+    },
+    {
+      "line_order": 4,
+      "speaker": "user",
+      "text_ja": "かしこまりました。では、こちらの資料をご覧ください。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "카시코마리마시타. 데와, 코치라노 시료-오 고란쿠다사이",
+      "text_ko": "알겠습니다. 그러면, 이 자료를 봐주세요.",
+      "grammar_hint": "ご覧になる(고란니나루)는 '보다'의 존경어. ご覧ください = 봐주세요.",
+      "key_expressions": [
+        "ご覧ください",
+        "かしこまりました"
+      ]
+    },
+    {
+      "line_order": 5,
+      "speaker": "npc",
+      "text_ja": "よく分かりました。会議の準備、ありがとうございました。それでは、参りましょう。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "요쿠 와카리마시타. 카이기노 쥰비, 아리가토-고자이마시타. 소레데와, 마이리마쇼-",
+      "text_ko": "잘 알겠습니다. 회의 준비 감사했습니다. 그럼, 가시죠.",
+      "grammar_hint": "参る(마이루)는 '가다(行く)'의 겸양어. 参りましょう = 가시죠/갑시다.",
+      "key_expressions": [
+        "会議",
+        "準備",
+        "参る"
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word_ja": "拝見する",
+      "reading_hiragana": "はいけんする",
+      "reading_ko": "하이켄스루",
+      "meaning_ko": "보다 (겸양어)",
+      "pos": "동사",
+      "appears_in_lines": [1]
+    },
+    {
+      "word_ja": "伺う",
+      "reading_hiragana": "うかがう",
+      "reading_ko": "우카가우",
+      "meaning_ko": "묻다, 찾아뵙다 (겸양어)",
+      "pos": "동사",
+      "appears_in_lines": [1]
+    },
+    {
+      "word_ja": "おっしゃる",
+      "reading_hiragana": "おっしゃる",
+      "reading_ko": "옷샤루",
+      "meaning_ko": "말씀하시다 (존경어)",
+      "pos": "동사",
+      "appears_in_lines": [3]
+    },
+    {
+      "word_ja": "部長",
+      "reading_hiragana": "ぶちょう",
+      "reading_ko": "부쵸-",
+      "meaning_ko": "부장",
+      "pos": "명사",
+      "appears_in_lines": [3]
+    },
+    {
+      "word_ja": "説明",
+      "reading_hiragana": "せつめい",
+      "reading_ko": "세츠메-",
+      "meaning_ko": "설명",
+      "pos": "명사",
+      "appears_in_lines": [1, 3]
+    },
+    {
+      "word_ja": "ご覧になる",
+      "reading_hiragana": "ごらんになる",
+      "reading_ko": "고란니나루",
+      "meaning_ko": "보시다 (존경어)",
+      "pos": "동사",
+      "appears_in_lines": [4]
+    },
+    {
+      "word_ja": "会議",
+      "reading_hiragana": "かいぎ",
+      "reading_ko": "카이기",
+      "meaning_ko": "회의",
+      "pos": "명사",
+      "appears_in_lines": [5]
+    },
+    {
+      "word_ja": "準備",
+      "reading_hiragana": "じゅんび",
+      "reading_ko": "쥰비",
+      "meaning_ko": "준비",
+      "pos": "명사",
+      "appears_in_lines": [5]
+    },
+    {
+      "word_ja": "参る",
+      "reading_hiragana": "まいる",
+      "reading_ko": "마이루",
+      "meaning_ko": "가다 (겸양어)",
+      "pos": "동사",
+      "appears_in_lines": [5]
+    },
+    {
+      "word_ja": "質問",
+      "reading_hiragana": "しつもん",
+      "reading_ko": "시츠몬",
+      "meaning_ko": "질문",
+      "pos": "명사",
+      "appears_in_lines": [2]
+    }
+  ]
+}

@@ -1,0 +1,205 @@
+{
+  "situation_slug": "shopping_market",
+  "jlpt_target": "N5",
+  "theme": "시장에서 쇼핑",
+  "lines": [
+    {
+      "line_order": 1,
+      "speaker": "user",
+      "text_ja": "この店で買い物したいです。果物はありますか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "코노 미세데 카이모노시타이데스. 쿠다모노와 아리마스카",
+      "text_ko": "이 가게에서 쇼핑하고 싶어요. 과일은 있나요?",
+      "grammar_hint": "店(가게)で買い物(쇼핑)したい = 쇼핑하고 싶다. 果物(과일).",
+      "key_expressions": [
+        "店",
+        "買い物",
+        "果物"
+      ]
+    },
+    {
+      "line_order": 2,
+      "speaker": "npc",
+      "text_ja": "はい、果物はたくさんあります。このりんごは大きいですよ。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "하이, 쿠다모노와 타쿠산 아리마스. 코노 링고와 오-키-데스요",
+      "text_ko": "네, 과일은 많이 있어요. 이 사과는 크네요.",
+      "grammar_hint": "大きい(크다)는 크기를 나타내는 い형용사입니다.",
+      "key_expressions": [
+        "大きい"
+      ]
+    },
+    {
+      "line_order": 3,
+      "speaker": "user",
+      "text_ja": "高いですね。もう少し安いのはありますか。お金が少ないです。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "타카이데스네. 모-스코시 야스이노와 아리마스카. 오카네가 스쿠나이데스",
+      "text_ko": "비싸네요. 좀 더 싼 건 있나요? 돈이 적어요.",
+      "grammar_hint": "高い(비싸다)↔安い(싸다). お金(돈)が少ない(적다).",
+      "key_expressions": [
+        "高い",
+        "お金",
+        "少ない"
+      ]
+    },
+    {
+      "line_order": 4,
+      "speaker": "npc",
+      "text_ja": "こちらのパンはどうですか。あと、このお酒も売っていますよ。辛いのと甘いのがあります。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "코치라노 판와 도-데스카. 아토, 코노 오사케모 웃테이마스요. 카라이노토 아마이노가 아리마스",
+      "text_ko": "이 빵은 어때요? 그리고 이 술도 팔고 있어요. 매운 것과 단 것이 있어요.",
+      "grammar_hint": "売る(팔다)→売っています(팔고 있다). 辛い(맵다), お酒(술).",
+      "key_expressions": [
+        "売る",
+        "お酒",
+        "辛い"
+      ]
+    },
+    {
+      "line_order": 5,
+      "speaker": "user",
+      "text_ja": "パンをください。あのお酒は不味いと聞きましたから、果物だけにします。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "판오 쿠다사이. 아노 오사케와 마즈이토 키키마시타카라, 쿠다모노다케니 시마스",
+      "text_ko": "빵 주세요. 저 술은 맛없다고 들었으니까, 과일만 할게요.",
+      "grammar_hint": "不味い(맛없다)は味の否定表현. ~と聞きました = ~라고 들었습니다.",
+      "key_expressions": [
+        "パン",
+        "不味い"
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word_ja": "店",
+      "reading_hiragana": "みせ",
+      "reading_ko": "미세",
+      "meaning_ko": "가게",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "買い物",
+      "reading_hiragana": "かいもの",
+      "reading_ko": "카이모노",
+      "meaning_ko": "쇼핑, 장보기",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "果物",
+      "reading_hiragana": "くだもの",
+      "reading_ko": "쿠다모노",
+      "meaning_ko": "과일",
+      "pos": "명사",
+      "appears_in_lines": [
+        1,
+        2,
+        5
+      ]
+    },
+    {
+      "word_ja": "大きい",
+      "reading_hiragana": "おおきい",
+      "reading_ko": "오-키-",
+      "meaning_ko": "크다",
+      "pos": "형용사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "高い",
+      "reading_hiragana": "たかい",
+      "reading_ko": "타카이",
+      "meaning_ko": "비싸다, 높다",
+      "pos": "형용사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "お金",
+      "reading_hiragana": "おかね",
+      "reading_ko": "오카네",
+      "meaning_ko": "돈",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "少ない",
+      "reading_hiragana": "すくない",
+      "reading_ko": "스쿠나이",
+      "meaning_ko": "적다",
+      "pos": "형용사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "パン",
+      "reading_hiragana": "パン",
+      "reading_ko": "판",
+      "meaning_ko": "빵",
+      "pos": "명사",
+      "appears_in_lines": [
+        4,
+        5
+      ]
+    },
+    {
+      "word_ja": "お酒",
+      "reading_hiragana": "おさけ",
+      "reading_ko": "오사케",
+      "meaning_ko": "술",
+      "pos": "명사",
+      "appears_in_lines": [
+        4,
+        5
+      ]
+    },
+    {
+      "word_ja": "売る",
+      "reading_hiragana": "うる",
+      "reading_ko": "우루",
+      "meaning_ko": "팔다",
+      "pos": "동사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "辛い",
+      "reading_hiragana": "からい",
+      "reading_ko": "카라이",
+      "meaning_ko": "맵다",
+      "pos": "형용사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "不味い",
+      "reading_hiragana": "まずい",
+      "reading_ko": "마즈이",
+      "meaning_ko": "맛없다",
+      "pos": "형용사",
+      "appears_in_lines": [
+        5
+      ]
+    }
+  ]
+}

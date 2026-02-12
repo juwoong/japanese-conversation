@@ -356,6 +356,34 @@
 
 ---
 
+### 2026-02-12 JLPT N5/N4 어휘 커버리지 100% 달성
+
+**완료 항목:**
+- JLPT 공식 샘플 PDF/MP3 다운로드 스크립트 작성
+- jlptsensei.com에서 N5(644개), N4(571개) 어휘 수집
+- 갭 분석 스크립트 작성 (기존 386개 어휘 vs JLPT 필수 어휘)
+- 29개 변형 시나리오 JSON 생성 (N5 20개 + N4 9개)
+- 최종 검증: N5 100%, N4 100% 달성
+
+**결과:**
+- 기존: 22개 시나리오, 386 어휘, N5 14.4%, N4 8.0%
+- 최종: 51개 시나리오, 653 어휘, N5 100%, N4 100%
+- 생성된 파일: 29개 JSON (`scripts/output/`)
+- 보조 파일: `data/download_jlpt_v2.py`, `scripts/analyze-jlpt-gap.py`, `data/gap_analysis.json`
+
+**시나리오 목록 (신규 29개):**
+- N5 v2: convenience_store_v2, cafe_v2, ask_directions_v2, restaurant_v2
+- N5 신규: greetings_v1, shopping_market, taxi_v1, travel_plan, school_v1, family_intro, morning_routine, room_actions, town_guide, home_tour, weekend_plans, library_v1, clothing_shop, cooking_v1, nature_hike, question_practice
+- N4 v2: hospital_v2, real_estate_v2, meeting_response_v2
+- N4 신규: business_v2, daily_advanced_v1, daily_advanced_v2, emotions_v1, emotions_v2, transport_advanced
+
+**다음 작업:**
+- 새 시나리오를 Supabase DB에 import
+- 기존 앱에서 변형 시나리오 UI 지원 (base_situation 필드 활용)
+- N3 레벨 확장 검토
+
+---
+
 ## 다음 단계
 
 1. ~~Supabase 마이그레이션 실행~~ ✅

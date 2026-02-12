@@ -1,0 +1,161 @@
+{
+  "situation_slug": "convenience_store_v2",
+  "base_situation": "convenience_store",
+  "jlpt_target": "N5",
+  "theme": "도시락·음식 고르기",
+  "lines": [
+    {
+      "line_order": 1,
+      "speaker": "user",
+      "text_ja": "すみません、お弁当はどこですか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "스미마센, 오벤토-와 도코데스카",
+      "text_ko": "실례합니다, 도시락은 어디에요?",
+      "grammar_hint": "お弁当(도시락)은 편의점에서 가장 많이 사는 식품 중 하나입니다.",
+      "key_expressions": [
+        "お弁当",
+        "どこですか"
+      ]
+    },
+    {
+      "line_order": 2,
+      "speaker": "npc",
+      "text_ja": "お弁当はあちらです。肉と魚のお弁当がありますよ。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "오벤토-와 아치라데스. 니쿠토 사카나노 오벤토-가 아리마스요",
+      "text_ko": "도시락은 저쪽이에요. 고기와 생선 도시락이 있어요.",
+      "grammar_hint": "肉(고기)と魚(생선)のように、と는 '~와/과'로 항목을 나열합니다.",
+      "key_expressions": [
+        "肉",
+        "魚",
+        "あちら"
+      ]
+    },
+    {
+      "line_order": 3,
+      "speaker": "user",
+      "text_ja": "この卵のお弁当は美味しいですか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "코노 타마고노 오벤토-와 오이시-데스카",
+      "text_ko": "이 달걀 도시락은 맛있어요?",
+      "grammar_hint": "美味しい(맛있다)는 음식 맛을 표현하는 가장 기본적인 형용사입니다.",
+      "key_expressions": [
+        "卵",
+        "美味しい"
+      ]
+    },
+    {
+      "line_order": 4,
+      "speaker": "npc",
+      "text_ja": "はい、人気ですよ。野菜も多くて、甘い味付けです。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "하이, 닌키데스요. 야사이모 오-쿠테, 아마이 아지츠케데스",
+      "text_ko": "네, 인기 있어요. 채소도 많고, 달콤한 맛이에요.",
+      "grammar_hint": "甘い(달다)는 맛 표현. 반대는 辛い(맵다)입니다.",
+      "key_expressions": [
+        "野菜",
+        "甘い"
+      ]
+    },
+    {
+      "line_order": 5,
+      "speaker": "user",
+      "text_ja": "じゃあ、これとお茶をください。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "쟈-, 코레토 오챠오 쿠다사이",
+      "text_ko": "그럼 이것과 차를 주세요.",
+      "grammar_hint": "お茶(차)는 일본의 대표 음료입니다. と는 항목을 연결합니다.",
+      "key_expressions": [
+        "お茶",
+        "じゃあ"
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word_ja": "お弁当",
+      "reading_hiragana": "おべんとう",
+      "reading_ko": "오벤토-",
+      "meaning_ko": "도시락",
+      "pos": "명사",
+      "appears_in_lines": [1, 2, 3]
+    },
+    {
+      "word_ja": "肉",
+      "reading_hiragana": "にく",
+      "reading_ko": "니쿠",
+      "meaning_ko": "고기",
+      "pos": "명사",
+      "appears_in_lines": [2]
+    },
+    {
+      "word_ja": "魚",
+      "reading_hiragana": "さかな",
+      "reading_ko": "사카나",
+      "meaning_ko": "생선",
+      "pos": "명사",
+      "appears_in_lines": [2]
+    },
+    {
+      "word_ja": "卵",
+      "reading_hiragana": "たまご",
+      "reading_ko": "타마고",
+      "meaning_ko": "달걀",
+      "pos": "명사",
+      "appears_in_lines": [3]
+    },
+    {
+      "word_ja": "美味しい",
+      "reading_hiragana": "おいしい",
+      "reading_ko": "오이시-",
+      "meaning_ko": "맛있다",
+      "pos": "형용사",
+      "appears_in_lines": [3]
+    },
+    {
+      "word_ja": "野菜",
+      "reading_hiragana": "やさい",
+      "reading_ko": "야사이",
+      "meaning_ko": "채소",
+      "pos": "명사",
+      "appears_in_lines": [4]
+    },
+    {
+      "word_ja": "甘い",
+      "reading_hiragana": "あまい",
+      "reading_ko": "아마이",
+      "meaning_ko": "달다",
+      "pos": "형용사",
+      "appears_in_lines": [4]
+    },
+    {
+      "word_ja": "多い",
+      "reading_hiragana": "おおい",
+      "reading_ko": "오-이",
+      "meaning_ko": "많다",
+      "pos": "형용사",
+      "appears_in_lines": [4]
+    },
+    {
+      "word_ja": "お茶",
+      "reading_hiragana": "おちゃ",
+      "reading_ko": "오챠",
+      "meaning_ko": "차",
+      "pos": "명사",
+      "appears_in_lines": [5]
+    },
+    {
+      "word_ja": "あちら",
+      "reading_hiragana": "あちら",
+      "reading_ko": "아치라",
+      "meaning_ko": "저쪽",
+      "pos": "명사",
+      "appears_in_lines": [2]
+    }
+  ]
+}

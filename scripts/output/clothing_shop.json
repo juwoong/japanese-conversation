@@ -1,0 +1,203 @@
+{
+  "situation_slug": "clothing_shop",
+  "jlpt_target": "N5",
+  "theme": "옷가게에서",
+  "lines": [
+    {
+      "line_order": 1,
+      "speaker": "npc",
+      "text_ja": "いらっしゃいませ。靴やシャツをお探しですか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "이랏샤이마세. 쿠츠야 샤츠오 오사가시데스카",
+      "text_ko": "어서 오세요. 신발이나 셔츠를 찾으세요?",
+      "grammar_hint": "靴(신발), シャツ(셔츠). や는 열거.",
+      "key_expressions": [
+        "靴",
+        "シャツ"
+      ]
+    },
+    {
+      "line_order": 2,
+      "speaker": "user",
+      "text_ja": "帽子と服を見たいです。傘もありますか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "보-시토 후쿠오 미타이데스. 카사모 아리마스카",
+      "text_ko": "모자와 옷을 보고 싶어요. 우산도 있나요?",
+      "grammar_hint": "帽子(모자), 服(옷), 傘(우산).",
+      "key_expressions": [
+        "帽子",
+        "服",
+        "傘"
+      ]
+    },
+    {
+      "line_order": 3,
+      "speaker": "npc",
+      "text_ja": "こちらのネクタイは太い柄と細い柄があります。どれがいいですか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "코치라노 네쿠타이와 후토이 가라토 호소이 가라가 아리마스. 도레가 이-데스카",
+      "text_ko": "이쪽 넥타이는 굵은 무늬와 가는 무늬가 있어요. 어느 것이 좋으세요?",
+      "grammar_hint": "ネクタイ(넥타이), 太い(굵다)↔細い(가늘다).",
+      "key_expressions": [
+        "ネクタイ",
+        "太い",
+        "細い"
+      ]
+    },
+    {
+      "line_order": 4,
+      "speaker": "user",
+      "text_ja": "細い方がいいです。この服は軽いですね。電話番号を教えてもらえますか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "호소이 호-가 이-데스. 코노 후쿠와 카루이데스네. 덴와반고-오 오시에테모라에마스카",
+      "text_ko": "가는 쪽이 좋아요. 이 옷은 가볍네요. 전화번호를 알려주실 수 있나요?",
+      "grammar_hint": "軽い(가볍다)↔重い(무겁다). 電話(전화)番号.",
+      "key_expressions": [
+        "軽い",
+        "電話"
+      ]
+    },
+    {
+      "line_order": 5,
+      "speaker": "npc",
+      "text_ja": "はい、こちらです。丈夫な素材で、大切に使ってくださいね。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "하이, 코치라데스. 죠-부나 소자이데, 타이세츠니 츠캇테쿠다사이네",
+      "text_ko": "네, 여기요. 튼튼한 소재이니, 소중히 써주세요.",
+      "grammar_hint": "丈夫(튼튼하다), 大切(소중하다)に使う = 소중히 쓰다.",
+      "key_expressions": [
+        "丈夫",
+        "大切"
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word_ja": "靴",
+      "reading_hiragana": "くつ",
+      "reading_ko": "쿠츠",
+      "meaning_ko": "신발",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "シャツ",
+      "reading_hiragana": "シャツ",
+      "reading_ko": "샤츠",
+      "meaning_ko": "셔츠",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "帽子",
+      "reading_hiragana": "ぼうし",
+      "reading_ko": "보-시",
+      "meaning_ko": "모자",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "服",
+      "reading_hiragana": "ふく",
+      "reading_ko": "후쿠",
+      "meaning_ko": "옷",
+      "pos": "명사",
+      "appears_in_lines": [
+        2,
+        4
+      ]
+    },
+    {
+      "word_ja": "傘",
+      "reading_hiragana": "かさ",
+      "reading_ko": "카사",
+      "meaning_ko": "우산",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "ネクタイ",
+      "reading_hiragana": "ネクタイ",
+      "reading_ko": "네쿠타이",
+      "meaning_ko": "넥타이",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "太い",
+      "reading_hiragana": "ふとい",
+      "reading_ko": "후토이",
+      "meaning_ko": "굵다, 뚱뚱하다",
+      "pos": "형용사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "細い",
+      "reading_hiragana": "ほそい",
+      "reading_ko": "호소이",
+      "meaning_ko": "가늘다, 날씬하다",
+      "pos": "형용사",
+      "appears_in_lines": [
+        3,
+        4
+      ]
+    },
+    {
+      "word_ja": "軽い",
+      "reading_hiragana": "かるい",
+      "reading_ko": "카루이",
+      "meaning_ko": "가볍다",
+      "pos": "형용사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "電話",
+      "reading_hiragana": "でんわ",
+      "reading_ko": "덴와",
+      "meaning_ko": "전화",
+      "pos": "명사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "丈夫",
+      "reading_hiragana": "じょうぶ",
+      "reading_ko": "죠-부",
+      "meaning_ko": "튼튼하다",
+      "pos": "형용사(な)",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "大切",
+      "reading_hiragana": "たいせつ",
+      "reading_ko": "타이세츠",
+      "meaning_ko": "소중하다, 중요하다",
+      "pos": "형용사(な)",
+      "appears_in_lines": [
+        5
+      ]
+    }
+  ]
+}

@@ -1,0 +1,246 @@
+{
+  "situation_slug": "town_guide",
+  "jlpt_target": "N5",
+  "theme": "동네 안내",
+  "lines": [
+    {
+      "line_order": 1,
+      "speaker": "user",
+      "text_ja": "この町は便利ですか。病院や銀行は近くにありますか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "코노 마치와 벤리데스카. 뵤-인야 긴코-와 치카쿠니 아리마스카",
+      "text_ko": "이 동네는 편리해요? 병원이나 은행은 가까이 있어요?",
+      "grammar_hint": "便利(편리), 病院(병원), 銀行(은행). や는 '~이나'로 열거할 때.",
+      "key_expressions": [
+        "便利",
+        "病院",
+        "銀行"
+      ]
+    },
+    {
+      "line_order": 2,
+      "speaker": "npc",
+      "text_ja": "はい、とても便利ですよ。駅の隣に郵便局と交番があります。公園も広いです。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "하이, 토테모 벤리데스요. 에키노 토나리니 유-빈쿄쿠토 코-반가 아리마스. 코-엔모 히로이데스",
+      "text_ko": "네, 매우 편리해요. 역 옆에 우체국과 파출소가 있어요. 공원도 넓어요.",
+      "grammar_hint": "郵便局(우체국), 交番(파출소), 公園(공원), 広い(넓다).",
+      "key_expressions": [
+        "郵便局",
+        "交番",
+        "公園",
+        "広い"
+      ]
+    },
+    {
+      "line_order": 3,
+      "speaker": "user",
+      "text_ja": "図書館はありますか。静かな場所で勉強したいです。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "토쇼칸와 아리마스카. 시즈카나 바쇼데 벤쿄-시타이데스",
+      "text_ko": "도서관은 있어요? 조용한 곳에서 공부하고 싶어요.",
+      "grammar_hint": "図書館(도서관), 静か(조용하다)な場所 = 조용한 장소.",
+      "key_expressions": [
+        "図書館",
+        "静か"
+      ]
+    },
+    {
+      "line_order": 4,
+      "speaker": "npc",
+      "text_ja": "はい。映画館もスーパーもありますよ。デパートは少し遠いですが、レストランは賑やかな通りにたくさんあります。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "하이. 에-가칸모 스-파-모 아리마스요. 데파-토와 스코시 토-이데스가, 레스토란와 니기야카나 토-리니 타쿠산 아리마스",
+      "text_ko": "네. 영화관도 슈퍼도 있어요. 백화점은 좀 멀지만, 레스토랑은 번화한 거리에 많이 있어요.",
+      "grammar_hint": "映画館(영화관), スーパー(슈퍼), デパート(백화점), レストラン(레스토랑), 賑やか(번화한).",
+      "key_expressions": [
+        "映画館",
+        "スーパー",
+        "デパート",
+        "レストラン",
+        "賑やか"
+      ]
+    },
+    {
+      "line_order": 5,
+      "speaker": "user",
+      "text_ja": "不便じゃないですね。狭い町ですが、全部揃っていますね。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "후벤쟈나이데스네. 세마이 마치데스가, 젠부 소롯테이마스네",
+      "text_ko": "불편하지 않네요. 좁은 동네지만, 전부 갖춰져 있네요.",
+      "grammar_hint": "不便(불편), 狭い(좁다)↔広い(넓다).",
+      "key_expressions": [
+        "不便",
+        "狭い"
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word_ja": "便利",
+      "reading_hiragana": "べんり",
+      "reading_ko": "벤리",
+      "meaning_ko": "편리하다",
+      "pos": "형용사(な)",
+      "appears_in_lines": [
+        1,
+        2
+      ]
+    },
+    {
+      "word_ja": "病院",
+      "reading_hiragana": "びょういん",
+      "reading_ko": "뵤-인",
+      "meaning_ko": "병원",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "銀行",
+      "reading_hiragana": "ぎんこう",
+      "reading_ko": "긴코-",
+      "meaning_ko": "은행",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "郵便局",
+      "reading_hiragana": "ゆうびんきょく",
+      "reading_ko": "유-빈쿄쿠",
+      "meaning_ko": "우체국",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "交番",
+      "reading_hiragana": "こうばん",
+      "reading_ko": "코-반",
+      "meaning_ko": "파출소",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "公園",
+      "reading_hiragana": "こうえん",
+      "reading_ko": "코-엔",
+      "meaning_ko": "공원",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "広い",
+      "reading_hiragana": "ひろい",
+      "reading_ko": "히로이",
+      "meaning_ko": "넓다",
+      "pos": "형용사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "図書館",
+      "reading_hiragana": "としょかん",
+      "reading_ko": "토쇼칸",
+      "meaning_ko": "도서관",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "静か",
+      "reading_hiragana": "しずか",
+      "reading_ko": "시즈카",
+      "meaning_ko": "조용하다",
+      "pos": "형용사(な)",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "映画館",
+      "reading_hiragana": "えいがかん",
+      "reading_ko": "에-가칸",
+      "meaning_ko": "영화관",
+      "pos": "명사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "スーパー",
+      "reading_hiragana": "スーパー",
+      "reading_ko": "스-파-",
+      "meaning_ko": "슈퍼마켓",
+      "pos": "명사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "デパート",
+      "reading_hiragana": "デパート",
+      "reading_ko": "데파-토",
+      "meaning_ko": "백화점",
+      "pos": "명사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "レストラン",
+      "reading_hiragana": "レストラン",
+      "reading_ko": "레스토란",
+      "meaning_ko": "레스토랑",
+      "pos": "명사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "賑やか",
+      "reading_hiragana": "にぎやか",
+      "reading_ko": "니기야카",
+      "meaning_ko": "번화하다, 활기찬",
+      "pos": "형용사(な)",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "不便",
+      "reading_hiragana": "ふべん",
+      "reading_ko": "후벤",
+      "meaning_ko": "불편하다",
+      "pos": "형용사(な)",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "狭い",
+      "reading_hiragana": "せまい",
+      "reading_ko": "세마이",
+      "meaning_ko": "좁다",
+      "pos": "형용사",
+      "appears_in_lines": [
+        5
+      ]
+    }
+  ]
+}

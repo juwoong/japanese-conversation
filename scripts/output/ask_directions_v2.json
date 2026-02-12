@@ -1,0 +1,161 @@
+{
+  "situation_slug": "ask_directions_v2",
+  "base_situation": "ask_directions",
+  "jlpt_target": "N5",
+  "theme": "전철 환승 물어보기",
+  "lines": [
+    {
+      "line_order": 1,
+      "speaker": "user",
+      "text_ja": "すみません、この電車は渋谷に行きますか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "스미마센, 코노 덴샤와 시부야니 이키마스카",
+      "text_ko": "실례합니다, 이 전철은 시부야에 가나요?",
+      "grammar_hint": "電車(전철)は~に行きますか = '이 전철은 ~에 가나요?'",
+      "key_expressions": [
+        "電車",
+        "行きますか"
+      ]
+    },
+    {
+      "line_order": 2,
+      "speaker": "npc",
+      "text_ja": "いいえ、渋谷には行きません。次の駅で降りて、乗り換えてください。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "이-에, 시부야니와 이키마셍. 츠기노 에키데 오리테, 노리카에테쿠다사이",
+      "text_ko": "아니요, 시부야에는 안 가요. 다음 역에서 내려서 갈아타세요.",
+      "grammar_hint": "降りる(내리다)→降りて, 乗り換える(갈아타다)→乗り換えて. て형으로 동작을 연결합니다.",
+      "key_expressions": [
+        "降りて",
+        "乗り換えて"
+      ]
+    },
+    {
+      "line_order": 3,
+      "speaker": "user",
+      "text_ja": "地下鉄に乗り換えるんですか。切符はどこで買いますか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "치카테츠니 노리카에룬데스카. 킵푸와 도코데 카이마스카",
+      "text_ko": "지하철로 갈아타는 건가요? 표는 어디서 사요?",
+      "grammar_hint": "地下鉄(지하철)に乗り換える = 지하철로 갈아타다. 切符(표)は = 표는.",
+      "key_expressions": [
+        "地下鉄",
+        "切符",
+        "買う"
+      ]
+    },
+    {
+      "line_order": 4,
+      "speaker": "npc",
+      "text_ja": "はい、地下鉄です。あの階段を降りて、左に行くと券売機がありますよ。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "하이, 치카테츠데스. 아노 카이단오 오리테, 히다리니 이쿠토 켄바이키가 아리마스요",
+      "text_ko": "네, 지하철이에요. 저 계단을 내려가서 왼쪽으로 가면 매표기가 있어요.",
+      "grammar_hint": "左(왼쪽)に行くと = 왼쪽으로 가면. ~と는 '~하면' 조건을 나타냅니다.",
+      "key_expressions": [
+        "左",
+        "階段"
+      ]
+    },
+    {
+      "line_order": 5,
+      "speaker": "user",
+      "text_ja": "ありがとうございます。バスでも行けますか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "아리가토-고자이마스. 바스데모 이케마스카",
+      "text_ko": "감사합니다. 버스로도 갈 수 있어요?",
+      "grammar_hint": "バス(버스)でも = 버스로도. でも는 '~로도'라는 뜻입니다.",
+      "key_expressions": [
+        "バス",
+        "でも"
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word_ja": "電車",
+      "reading_hiragana": "でんしゃ",
+      "reading_ko": "덴샤",
+      "meaning_ko": "전철",
+      "pos": "명사",
+      "appears_in_lines": [1]
+    },
+    {
+      "word_ja": "降りる",
+      "reading_hiragana": "おりる",
+      "reading_ko": "오리루",
+      "meaning_ko": "내리다",
+      "pos": "동사",
+      "appears_in_lines": [2, 4]
+    },
+    {
+      "word_ja": "乗り換える",
+      "reading_hiragana": "のりかえる",
+      "reading_ko": "노리카에루",
+      "meaning_ko": "갈아타다",
+      "pos": "동사",
+      "appears_in_lines": [2, 3]
+    },
+    {
+      "word_ja": "地下鉄",
+      "reading_hiragana": "ちかてつ",
+      "reading_ko": "치카테츠",
+      "meaning_ko": "지하철",
+      "pos": "명사",
+      "appears_in_lines": [3, 4]
+    },
+    {
+      "word_ja": "切符",
+      "reading_hiragana": "きっぷ",
+      "reading_ko": "킵푸",
+      "meaning_ko": "표, 승차권",
+      "pos": "명사",
+      "appears_in_lines": [3]
+    },
+    {
+      "word_ja": "買う",
+      "reading_hiragana": "かう",
+      "reading_ko": "카우",
+      "meaning_ko": "사다",
+      "pos": "동사",
+      "appears_in_lines": [3]
+    },
+    {
+      "word_ja": "左",
+      "reading_hiragana": "ひだり",
+      "reading_ko": "히다리",
+      "meaning_ko": "왼쪽",
+      "pos": "명사",
+      "appears_in_lines": [4]
+    },
+    {
+      "word_ja": "階段",
+      "reading_hiragana": "かいだん",
+      "reading_ko": "카이단",
+      "meaning_ko": "계단",
+      "pos": "명사",
+      "appears_in_lines": [4]
+    },
+    {
+      "word_ja": "バス",
+      "reading_hiragana": "バス",
+      "reading_ko": "바스",
+      "meaning_ko": "버스",
+      "pos": "명사",
+      "appears_in_lines": [5]
+    },
+    {
+      "word_ja": "乗る",
+      "reading_hiragana": "のる",
+      "reading_ko": "노루",
+      "meaning_ko": "타다",
+      "pos": "동사",
+      "appears_in_lines": [2, 3]
+    }
+  ]
+}

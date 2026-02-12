@@ -1,0 +1,160 @@
+{
+  "situation_slug": "hospital_v2",
+  "base_situation": "hospital",
+  "jlpt_target": "N4",
+  "theme": "치과/부상 설명",
+  "lines": [
+    {
+      "line_order": 1,
+      "speaker": "npc",
+      "text_ja": "今日はどうされましたか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "쿄-와 도-사레마시타카",
+      "text_ko": "오늘 어떻게 오셨어요?",
+      "grammar_hint": "どうされましたか는 병원에서 증상을 묻는 기본 표현입니다.",
+      "key_expressions": [
+        "どうされましたか"
+      ]
+    },
+    {
+      "line_order": 2,
+      "speaker": "user",
+      "text_ja": "昨日、怪我をしました。階段で転んで、足から血が出ました。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "키노-, 케가오 시마시타. 카이단데 코론데, 아시카라 치가 데마시타",
+      "text_ko": "어제 다쳤어요. 계단에서 넘어져서, 발에서 피가 났어요.",
+      "grammar_hint": "怪我をする(다치다). 血(피)が出る(나다). 転ぶ(넘어지다)→転んで(넘어져서).",
+      "key_expressions": [
+        "怪我",
+        "血",
+        "転ぶ"
+      ]
+    },
+    {
+      "line_order": 3,
+      "speaker": "npc",
+      "text_ja": "見せてください。注射は必要ないですが、消毒しますね。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "미세테쿠다사이. 츄-샤와 히츠요-나이데스가, 쇼-도쿠시마스네",
+      "text_ko": "보여주세요. 주사는 필요 없지만, 소독할게요.",
+      "grammar_hint": "注射(주사)は必要ない = 주사는 필요 없다. 消毒する = 소독하다.",
+      "key_expressions": [
+        "注射",
+        "必要ない"
+      ]
+    },
+    {
+      "line_order": 4,
+      "speaker": "user",
+      "text_ja": "入院しなくてもいいですか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "뉴-인시나쿠테모 이-데스카",
+      "text_ko": "입원 안 해도 되나요?",
+      "grammar_hint": "入院(입원)しなくてもいい = 입원 안 해도 된다. ~なくてもいい는 '안 해도 괜찮다'.",
+      "key_expressions": [
+        "入院",
+        "しなくてもいい"
+      ]
+    },
+    {
+      "line_order": 5,
+      "speaker": "npc",
+      "text_ja": "大丈夫ですよ。一週間後にまた来てください。お大事に。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "다이죠-부데스요. 잇슈-칸고니 마타 키테쿠다사이. 오다이지니",
+      "text_ko": "괜찮아요. 일주일 후에 다시 와주세요. 몸 조심하세요.",
+      "grammar_hint": "お大事に(몸 조심하세요)는 병원에서 환자에게 하는 인사입니다.",
+      "key_expressions": [
+        "お大事に",
+        "来て"
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word_ja": "怪我",
+      "reading_hiragana": "けが",
+      "reading_ko": "케가",
+      "meaning_ko": "부상, 다침",
+      "pos": "명사",
+      "appears_in_lines": [2]
+    },
+    {
+      "word_ja": "血",
+      "reading_hiragana": "ち",
+      "reading_ko": "치",
+      "meaning_ko": "피",
+      "pos": "명사",
+      "appears_in_lines": [2]
+    },
+    {
+      "word_ja": "転ぶ",
+      "reading_hiragana": "ころぶ",
+      "reading_ko": "코로부",
+      "meaning_ko": "넘어지다",
+      "pos": "동사",
+      "appears_in_lines": [2]
+    },
+    {
+      "word_ja": "階段",
+      "reading_hiragana": "かいだん",
+      "reading_ko": "카이단",
+      "meaning_ko": "계단",
+      "pos": "명사",
+      "appears_in_lines": [2]
+    },
+    {
+      "word_ja": "注射",
+      "reading_hiragana": "ちゅうしゃ",
+      "reading_ko": "츄-샤",
+      "meaning_ko": "주사",
+      "pos": "명사",
+      "appears_in_lines": [3]
+    },
+    {
+      "word_ja": "必要",
+      "reading_hiragana": "ひつよう",
+      "reading_ko": "히츠요-",
+      "meaning_ko": "필요",
+      "pos": "형용사(な)",
+      "appears_in_lines": [3]
+    },
+    {
+      "word_ja": "入院",
+      "reading_hiragana": "にゅういん",
+      "reading_ko": "뉴-인",
+      "meaning_ko": "입원",
+      "pos": "명사",
+      "appears_in_lines": [4]
+    },
+    {
+      "word_ja": "来る",
+      "reading_hiragana": "くる",
+      "reading_ko": "쿠루",
+      "meaning_ko": "오다",
+      "pos": "동사",
+      "appears_in_lines": [5]
+    },
+    {
+      "word_ja": "お大事に",
+      "reading_hiragana": "おだいじに",
+      "reading_ko": "오다이지니",
+      "meaning_ko": "몸 조심하세요",
+      "pos": "표현",
+      "appears_in_lines": [5]
+    },
+    {
+      "word_ja": "消毒",
+      "reading_hiragana": "しょうどく",
+      "reading_ko": "쇼-도쿠",
+      "meaning_ko": "소독",
+      "pos": "명사",
+      "appears_in_lines": [3]
+    }
+  ]
+}

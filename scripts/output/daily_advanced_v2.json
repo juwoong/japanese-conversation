@@ -1,0 +1,212 @@
+{
+  "situation_slug": "daily_advanced_v2",
+  "jlpt_target": "N4",
+  "theme": "일상생활 확장 - 변화와 유지",
+  "lines": [
+    {
+      "line_order": 1,
+      "speaker": "npc",
+      "text_ja": "このパソコン、壊れましたか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "코노 파소콘, 코와레마시타카",
+      "text_ko": "이 컴퓨터, 고장났어요?",
+      "grammar_hint": "壊れる(고장나다/부서지다)は自動詞.",
+      "key_expressions": [
+        "壊れる"
+      ]
+    },
+    {
+      "line_order": 2,
+      "speaker": "user",
+      "text_ja": "はい、壊してしまいました。新しいのを運んでもらえますか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "하이, 코와시테시마이마시타. 아타라시-노오 하콘데모라에마스카",
+      "text_ko": "네, 부숴버렸어요. 새것을 운반해 줄 수 있어요?",
+      "grammar_hint": "壊す(부수다)は他動詞. 運ぶ(운반하다).",
+      "key_expressions": [
+        "壊す",
+        "運ぶ"
+      ]
+    },
+    {
+      "line_order": 3,
+      "speaker": "npc",
+      "text_ja": "集まって決めましょう。仕事を続けるには必要ですから。生活が変わりますね。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "아츠맛테 키메마쇼-. 시고토오 츠즈케루니와 히츠요-데스카라. 세-카츠가 카와리마스네",
+      "text_ko": "모여서 정합시다. 일을 계속하려면 필요하니까. 생활이 바뀌겠네요.",
+      "grammar_hint": "集まる(모이다), 決める(정하다), 続ける(계속하다), 変わる(바뀌다).",
+      "key_expressions": [
+        "集まる",
+        "決める",
+        "続ける",
+        "変わる"
+      ]
+    },
+    {
+      "line_order": 4,
+      "speaker": "user",
+      "text_ja": "環境を変えるのもいいですね。この仕事は続くと思います。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "칸쿄-오 카에루노모 이-데스네. 코노 시고토와 츠즈쿠토 오모이마스",
+      "text_ko": "환경을 바꾸는 것도 좋네요. 이 일은 계속될 것 같아요.",
+      "grammar_hint": "変える(바꾸다), 続く(계속되다).",
+      "key_expressions": [
+        "変える",
+        "続く"
+      ]
+    },
+    {
+      "line_order": 5,
+      "speaker": "npc",
+      "text_ja": "そうですね。子供を育てながら、生きる力をつけましょう。亡くなった先輩のためにも。壁を乗り越えましょう。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "소-데스네. 코도모오 소다테나가라, 이키루 치카라오 츠케마쇼-. 나쿠낫타 센파이노 타메니모. 카베오 노리코에마쇼-",
+      "text_ko": "그러네요. 아이를 키우면서, 사는 힘을 기르죠. 돌아가신 선배를 위해서라도. 벽을 넘어요.",
+      "grammar_hint": "育てる(기르다), 生きる(살다), 亡くなる(돌아가시다), 壁(벽).",
+      "key_expressions": [
+        "育てる",
+        "生きる",
+        "亡くなる",
+        "壁"
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word_ja": "壊れる",
+      "reading_hiragana": "こわれる",
+      "reading_ko": "코와레루",
+      "meaning_ko": "고장나다, 부서지다",
+      "pos": "동사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "壊す",
+      "reading_hiragana": "こわす",
+      "reading_ko": "코와스",
+      "meaning_ko": "부수다, 고장내다",
+      "pos": "동사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "運ぶ",
+      "reading_hiragana": "はこぶ",
+      "reading_ko": "하코부",
+      "meaning_ko": "운반하다, 나르다",
+      "pos": "동사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "集まる",
+      "reading_hiragana": "あつまる",
+      "reading_ko": "아츠마루",
+      "meaning_ko": "모이다",
+      "pos": "동사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "決める",
+      "reading_hiragana": "きめる",
+      "reading_ko": "키메루",
+      "meaning_ko": "정하다, 결정하다",
+      "pos": "동사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "続ける",
+      "reading_hiragana": "つづける",
+      "reading_ko": "츠즈케루",
+      "meaning_ko": "계속하다",
+      "pos": "동사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "変わる",
+      "reading_hiragana": "かわる",
+      "reading_ko": "카와루",
+      "meaning_ko": "바뀌다",
+      "pos": "동사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "変える",
+      "reading_hiragana": "かえる",
+      "reading_ko": "카에루",
+      "meaning_ko": "바꾸다",
+      "pos": "동사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "続く",
+      "reading_hiragana": "つづく",
+      "reading_ko": "츠즈쿠",
+      "meaning_ko": "계속되다",
+      "pos": "동사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "育てる",
+      "reading_hiragana": "そだてる",
+      "reading_ko": "소다테루",
+      "meaning_ko": "기르다, 키우다",
+      "pos": "동사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "生きる",
+      "reading_hiragana": "いきる",
+      "reading_ko": "이키루",
+      "meaning_ko": "살다",
+      "pos": "동사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "亡くなる",
+      "reading_hiragana": "なくなる",
+      "reading_ko": "나쿠나루",
+      "meaning_ko": "돌아가시다",
+      "pos": "동사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "壁",
+      "reading_hiragana": "かべ",
+      "reading_ko": "카베",
+      "meaning_ko": "벽",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    }
+  ]
+}
