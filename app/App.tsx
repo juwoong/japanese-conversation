@@ -16,6 +16,7 @@ import {
   HistoryScreen,
   VocabularyScreen,
   FlashcardScreen,
+  PitchTestScreen,
 } from "./src/screens";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -121,6 +122,7 @@ export default function App() {
           <Stack.Screen name="History" component={HistoryScreen} />
           <Stack.Screen name="Vocabulary" component={VocabularyScreen} />
           <Stack.Screen name="Flashcard" component={FlashcardScreen} />
+          <Stack.Screen name="PitchTest" component={PitchTestScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </ErrorBoundary>
