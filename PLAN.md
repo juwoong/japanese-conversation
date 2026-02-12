@@ -1,10 +1,18 @@
-# UX Improvement Plan
-
-6개 서브에이전트 감사 결과를 종합한 사용자 관점 개선 계획입니다.
+# Project Plan
 
 ## 다음 세션
 
-**Sprint 7 — JLPT 레벨 태깅 + 어휘 확장** 진행 예정.
+**Phase 4 남은 운영 작업**:
+1. furigana 생성 스크립트 실행: `GEMINI_API_KEY=... npx tsx scripts/add-furigana.ts`
+2. Supabase migration 적용: `003_furigana.sql`
+3. Supabase import 재실행 (furigana 포함)
+**Sprint 7 — JLPT 레벨 태깅** 진행 예정.
+**Phase 1-4 디바이스 테스트** — 실기기에서 전체 파이프라인 검증.
+
+### 재개에 필요한 맥락
+- Phase 4 코드 **전부 완료**: 타입, 컴포넌트, NpcBubble/SessionScreen 연동, 스크립트, migration, import 스크립트 수정
+- **설계 결정**: kuromoji.js runtime 삭제 (5명 전원 합의), 빌드타임 pre-computed furigana 채택
+- **설계 결정**: mora timing/rhythm feedback 전부 defer (Devil's Advocate 논리 수용)
 
 ---
 
@@ -26,11 +34,6 @@
 | 7 | `app/src/types/index.ts` | 수정 | Vocabulary에 jlpt_level 추가 |
 | 8 | `app/src/screens/VocabularyScreen.tsx` | 수정 | JLPT 필터 + 배지 UI |
 
-### 데이터 흐름
-1. `tag-jlpt-levels.ts` 실행 → 22개 JSON에 jlpt_level 추가
-2. `generate-vocab-sql.ts` 실행 → `vocabulary_insert.sql` 재생성 (신규 배포용)
-3. `003_add_jlpt_level.sql`에 ALTER TABLE + UPDATE문 포함 (기존 DB 업데이트용)
-
 ### 상태
 | # | 항목 | 상태 |
 |---|------|------|
@@ -42,6 +45,88 @@
 | 6 | generate-vocabulary.ts 수정 | [ ] |
 | 7 | app/src/types/index.ts 수정 | [ ] |
 | 8 | VocabularyScreen JLPT 필터+배지 | [ ] |
+
+---
+
+## 발음 피드백 시스템 (Phase 1-4)
+
+### Phase 1: 오디오 캡처 + 실시간 피치 시각화 [x] 코드 완료, [ ] 디바이스 테스트
+
+| ID | 항목 | 상태 |
+|----|------|------|
+| P1.0 | expo-dev-client + 패키지 설치 | [x] |
+| P1.1 | pitchConfig.ts (파라미터 시트) | [x] |
+| P1.2 | useAudioStream.ts (AudioRecorder 기반) | [x] |
+| P1.3 | usePitchDetection.ts (pitchy + ring buffer) | [x] |
+| P1.4 | useRMSEnergy.ts (노이즈 게이트) | [x] |
+| P1.5 | pitchVizTokens.ts (디자인 토큰) | [x] |
+| P1.6 | PitchCanvas.tsx (Skia 시각화) | [x] |
+| P1.7 | PitchTestScreen.tsx + 라우트 | [x] |
+| P1.8 | npx expo prebuild + 디바이스 테스트 | [ ] |
+
+### Phase 2: 기준 데이터 + 억양 비교 피드백 [x] 코드 완료, [ ] 디바이스 테스트
+
+**설계 변경**: DTW 전체 윤곽 → H/L 이진 패턴 매칭 (V1)
+
+| ID | 항목 | 상태 |
+|----|------|------|
+| P2.1 | types/pitch.ts (타입 정의) | [x] |
+| P2.2 | pitchMath.ts (공유 유틸 추출) | [x] |
+| P2.3 | moraSegmenter.ts (모라 분할) | [x] |
+| P2.4 | pitchCompare.ts (H/L 패턴 비교) | [x] |
+| P2.5 | referencePitch.ts (정적 레퍼런스 데이터) | [x] |
+| P2.6 | ComparisonCanvas.tsx (비교 결과 시각화) | [x] |
+| P2.7 | PitchTestScreen 비교 모드 UI | [x] |
+| P2.8 | analysis/dtw.ts (V2용 DTW, 에이전트 작성) | [x] |
+| P2.9 | 디바이스 테스트 | [ ] |
+
+### Phase 3: STT 정확도 + 텍스트 diff + 하이라이트 [x] 코드 완료, [ ] 디바이스 테스트
+
+**설계 변경**: STTEngine 추상화 삭제 (YAGNI), PlatformSTTEngine 삭제, whisper.rn 삭제
+
+| ID | 항목 | 상태 |
+|----|------|------|
+| P3.A | japaneseNormalize.ts (일본어 텍스트 정규화) | [x] |
+| P3.B | textDiff.ts 개선 (japaneseNormalize 통합) | [x] |
+| P3.C | stt.ts — Whisper prompt 파라미터 추가 | [x] |
+| P3.D | useSession.ts — Levenshtein→Myers diff 교체 | [x] |
+| P3.E | UserBubble.tsx — 인라인 diff 하이라이트 | [x] |
+| P3.F | SessionScreen.tsx — expectedText/diffSegments 연동 | [x] |
+| P3.G | 디바이스 테스트 | [ ] |
+
+### Phase 4: 후리가나 표시 시스템 [x] 코드 완료, [ ] 운영 실행, [ ] 디바이스 테스트
+
+**설계 변경**: kuromoji.js runtime 삭제 (5명 합의), 빌드타임 pre-computed furigana 채택, mora timing defer
+
+| ID | 항목 | 상태 |
+|----|------|------|
+| P4.A | FuriganaSegment 타입 + Line.furigana 필드 | [x] |
+| P4.B | FuriganaText.tsx 컴포넌트 | [x] |
+| P4.C | add-furigana.ts 스크립트 (Gemini API) | [x] 작성, [ ] 실행 |
+| P4.D | DB migration 003_furigana.sql | [x] 작성, [ ] 적용 |
+| P4.E | NpcBubble FuriganaText 연동 | [x] |
+| P4.F | SessionScreen footer FuriganaText 연동 | [x] |
+| P4.G | import-to-supabase.ts furigana 필드 추가 | [x] |
+| P4.H | 디바이스 테스트 | [ ] |
+
+### 기술 스택 결정사항
+
+| 영역 | 선택 | 변경 이력 |
+|------|------|-----------|
+| 오디오 입력 | `react-native-audio-api` (AudioRecorder) | live-audio-stream → audio-api (DA 리뷰) |
+| 피치 감지 | `pitchy` (JS, McLeod Pitch Method) | 원안 유지 |
+| 시각화 | `@shopify/react-native-skia` | 원안 유지 (DA: SVG 대안 기각) |
+| 애니메이션 | `react-native-reanimated` v4 | 원안 유지 |
+| 개발 환경 | `expo-dev-client` | 추가 (DA: Phase 0 필수) |
+| STT | Whisper API (직접 호출) + `prompt` 바이어싱 | P3: 네이티브 STT 삭제 (DA: 비원어민 정확도 낮음) |
+| 텍스트 비교 | Myers diff (문자 단위) + 일본어 정규화 | P3: Levenshtein → Myers diff 교체 |
+| 후리가나 | 빌드타임 pre-computed (Gemini API) | P4: kuromoji.js runtime 삭제 (5명 합의) |
+
+---
+
+## (보류) Sprint 6 — 어휘 데이터 개선
+
+6개 서브에이전트 감사 결과를 종합한 사용자 관점 개선 계획입니다.
 
 ---
 

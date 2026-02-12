@@ -28,6 +28,7 @@ interface Line {
   pronunciation_ko: string;
   text_ko: string;
   grammar_hint?: string | null;
+  furigana?: { text: string; reading?: string }[] | null;
   key_expressions: string[];
 }
 
@@ -117,6 +118,7 @@ async function insertLine(
         pronunciation_ko: line.pronunciation_ko,
         text_ko: line.text_ko,
         grammar_hint: line.grammar_hint || null,
+        furigana: line.furigana || null,
       },
       { onConflict: "situation_id,line_order" }
     )

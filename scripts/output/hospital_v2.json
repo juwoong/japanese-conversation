@@ -15,6 +15,15 @@
       "grammar_hint": "どうされましたか는 병원에서 증상을 묻는 기본 표현입니다.",
       "key_expressions": [
         "どうされましたか"
+      ],
+      "furigana": [
+        {
+          "text": "今日",
+          "reading": "きょう"
+        },
+        {
+          "text": "はどうされましたか。"
+        }
       ]
     },
     {
@@ -30,6 +39,50 @@
         "怪我",
         "血",
         "転ぶ"
+      ],
+      "furigana": [
+        {
+          "text": "昨日",
+          "reading": "きのう"
+        },
+        {
+          "text": "、"
+        },
+        {
+          "text": "怪我",
+          "reading": "けが"
+        },
+        {
+          "text": "をしました。"
+        },
+        {
+          "text": "階段",
+          "reading": "かいだん"
+        },
+        {
+          "text": "で"
+        },
+        {
+          "text": "転",
+          "reading": "ころ"
+        },
+        {
+          "text": "んで、"
+        },
+        {
+          "text": "足",
+          "reading": "あし"
+        },
+        {
+          "text": "から"
+        },
+        {
+          "text": "血",
+          "reading": "ち"
+        },
+        {
+          "text": "が出ました。"
+        }
       ]
     },
     {
@@ -44,6 +97,36 @@
       "key_expressions": [
         "注射",
         "必要ない"
+      ],
+      "furigana": [
+        {
+          "text": "見",
+          "reading": "み"
+        },
+        {
+          "text": "せてください。"
+        },
+        {
+          "text": "注射",
+          "reading": "ちゅうしゃ"
+        },
+        {
+          "text": "は"
+        },
+        {
+          "text": "必要",
+          "reading": "ひつよう"
+        },
+        {
+          "text": "ないですが、"
+        },
+        {
+          "text": "消毒",
+          "reading": "しょうどく"
+        },
+        {
+          "text": "しますね。"
+        }
       ]
     },
     {
@@ -58,6 +141,15 @@
       "key_expressions": [
         "入院",
         "しなくてもいい"
+      ],
+      "furigana": [
+        {
+          "text": "入院",
+          "reading": "にゅういん"
+        },
+        {
+          "text": "しなくてもいいですか。"
+        }
       ]
     },
     {
@@ -72,6 +164,43 @@
       "key_expressions": [
         "お大事に",
         "来て"
+      ],
+      "furigana": [
+        {
+          "text": "大丈夫",
+          "reading": "だいじょうぶ"
+        },
+        {
+          "text": "ですよ。"
+        },
+        {
+          "text": "一週間",
+          "reading": "いっしゅうかん"
+        },
+        {
+          "text": "後",
+          "reading": "ご"
+        },
+        {
+          "text": "にまた"
+        },
+        {
+          "text": "来",
+          "reading": "き"
+        },
+        {
+          "text": "てください。"
+        },
+        {
+          "text": "お"
+        },
+        {
+          "text": "大事",
+          "reading": "だいじ"
+        },
+        {
+          "text": "に。"
+        }
       ]
     }
   ],
@@ -82,7 +211,9 @@
       "reading_ko": "케가",
       "meaning_ko": "부상, 다침",
       "pos": "명사",
-      "appears_in_lines": [2]
+      "appears_in_lines": [
+        2
+      ]
     },
     {
       "word_ja": "血",
@@ -90,7 +221,9 @@
       "reading_ko": "치",
       "meaning_ko": "피",
       "pos": "명사",
-      "appears_in_lines": [2]
+      "appears_in_lines": [
+        2
+      ]
     },
     {
       "word_ja": "転ぶ",
@@ -98,7 +231,9 @@
       "reading_ko": "코로부",
       "meaning_ko": "넘어지다",
       "pos": "동사",
-      "appears_in_lines": [2]
+      "appears_in_lines": [
+        2
+      ]
     },
     {
       "word_ja": "階段",
@@ -106,7 +241,9 @@
       "reading_ko": "카이단",
       "meaning_ko": "계단",
       "pos": "명사",
-      "appears_in_lines": [2]
+      "appears_in_lines": [
+        2
+      ]
     },
     {
       "word_ja": "注射",
@@ -114,7 +251,9 @@
       "reading_ko": "츄-샤",
       "meaning_ko": "주사",
       "pos": "명사",
-      "appears_in_lines": [3]
+      "appears_in_lines": [
+        3
+      ]
     },
     {
       "word_ja": "必要",
@@ -122,7 +261,9 @@
       "reading_ko": "히츠요-",
       "meaning_ko": "필요",
       "pos": "형용사(な)",
-      "appears_in_lines": [3]
+      "appears_in_lines": [
+        3
+      ]
     },
     {
       "word_ja": "入院",
@@ -130,7 +271,9 @@
       "reading_ko": "뉴-인",
       "meaning_ko": "입원",
       "pos": "명사",
-      "appears_in_lines": [4]
+      "appears_in_lines": [
+        4
+      ]
     },
     {
       "word_ja": "来る",
@@ -138,7 +281,9 @@
       "reading_ko": "쿠루",
       "meaning_ko": "오다",
       "pos": "동사",
-      "appears_in_lines": [5]
+      "appears_in_lines": [
+        5
+      ]
     },
     {
       "word_ja": "お大事に",
@@ -146,7 +291,9 @@
       "reading_ko": "오다이지니",
       "meaning_ko": "몸 조심하세요",
       "pos": "표현",
-      "appears_in_lines": [5]
+      "appears_in_lines": [
+        5
+      ]
     },
     {
       "word_ja": "消毒",
@@ -154,7 +301,9 @@
       "reading_ko": "쇼-도쿠",
       "meaning_ko": "소독",
       "pos": "명사",
-      "appears_in_lines": [3]
+      "appears_in_lines": [
+        3
+      ]
     }
   ]
 }

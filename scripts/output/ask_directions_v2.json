@@ -16,6 +16,32 @@
       "key_expressions": [
         "電車",
         "行きますか"
+      ],
+      "furigana": [
+        {
+          "text": "すみません、この"
+        },
+        {
+          "text": "電車",
+          "reading": "でんしゃ"
+        },
+        {
+          "text": "は"
+        },
+        {
+          "text": "渋谷",
+          "reading": "しぶや"
+        },
+        {
+          "text": "に"
+        },
+        {
+          "text": "行",
+          "reading": "い"
+        },
+        {
+          "text": "きますか。"
+        }
       ]
     },
     {
@@ -30,6 +56,60 @@
       "key_expressions": [
         "降りて",
         "乗り換えて"
+      ],
+      "furigana": [
+        {
+          "text": "いいえ、"
+        },
+        {
+          "text": "渋谷",
+          "reading": "しぶや"
+        },
+        {
+          "text": "には"
+        },
+        {
+          "text": "行",
+          "reading": "い"
+        },
+        {
+          "text": "きません。"
+        },
+        {
+          "text": "次",
+          "reading": "つぎ"
+        },
+        {
+          "text": "の"
+        },
+        {
+          "text": "駅",
+          "reading": "えき"
+        },
+        {
+          "text": "で"
+        },
+        {
+          "text": "降",
+          "reading": "お"
+        },
+        {
+          "text": "りて、"
+        },
+        {
+          "text": "乗",
+          "reading": "の"
+        },
+        {
+          "text": "り"
+        },
+        {
+          "text": "換",
+          "reading": "か"
+        },
+        {
+          "text": "えてください。"
+        }
       ]
     },
     {
@@ -45,6 +125,43 @@
         "地下鉄",
         "切符",
         "買う"
+      ],
+      "furigana": [
+        {
+          "text": "地下鉄",
+          "reading": "ちかてつ"
+        },
+        {
+          "text": "に"
+        },
+        {
+          "text": "乗",
+          "reading": "の"
+        },
+        {
+          "text": "り"
+        },
+        {
+          "text": "換",
+          "reading": "か"
+        },
+        {
+          "text": "えるんですか。"
+        },
+        {
+          "text": "切符",
+          "reading": "きっぷ"
+        },
+        {
+          "text": "はどこで"
+        },
+        {
+          "text": "買",
+          "reading": "か"
+        },
+        {
+          "text": "いますか。"
+        }
       ]
     },
     {
@@ -59,6 +176,53 @@
       "key_expressions": [
         "左",
         "階段"
+      ],
+      "furigana": [
+        {
+          "text": "はい、"
+        },
+        {
+          "text": "地下鉄",
+          "reading": "ちかてつ"
+        },
+        {
+          "text": "です。あの"
+        },
+        {
+          "text": "階段",
+          "reading": "かいだん"
+        },
+        {
+          "text": "を"
+        },
+        {
+          "text": "降",
+          "reading": "お"
+        },
+        {
+          "text": "りて、"
+        },
+        {
+          "text": "左",
+          "reading": "ひだり"
+        },
+        {
+          "text": "に"
+        },
+        {
+          "text": "行",
+          "reading": "い"
+        },
+        {
+          "text": "くと"
+        },
+        {
+          "text": "券売機",
+          "reading": "けんばいき"
+        },
+        {
+          "text": "がありますよ。"
+        }
       ]
     },
     {
@@ -73,6 +237,18 @@
       "key_expressions": [
         "バス",
         "でも"
+      ],
+      "furigana": [
+        {
+          "text": "ありがとうございます。バスでも"
+        },
+        {
+          "text": "行",
+          "reading": "い"
+        },
+        {
+          "text": "けますか。"
+        }
       ]
     }
   ],
@@ -83,7 +259,9 @@
       "reading_ko": "덴샤",
       "meaning_ko": "전철",
       "pos": "명사",
-      "appears_in_lines": [1]
+      "appears_in_lines": [
+        1
+      ]
     },
     {
       "word_ja": "降りる",
@@ -91,7 +269,10 @@
       "reading_ko": "오리루",
       "meaning_ko": "내리다",
       "pos": "동사",
-      "appears_in_lines": [2, 4]
+      "appears_in_lines": [
+        2,
+        4
+      ]
     },
     {
       "word_ja": "乗り換える",
@@ -99,7 +280,10 @@
       "reading_ko": "노리카에루",
       "meaning_ko": "갈아타다",
       "pos": "동사",
-      "appears_in_lines": [2, 3]
+      "appears_in_lines": [
+        2,
+        3
+      ]
     },
     {
       "word_ja": "地下鉄",
@@ -107,7 +291,10 @@
       "reading_ko": "치카테츠",
       "meaning_ko": "지하철",
       "pos": "명사",
-      "appears_in_lines": [3, 4]
+      "appears_in_lines": [
+        3,
+        4
+      ]
     },
     {
       "word_ja": "切符",
@@ -115,7 +302,9 @@
       "reading_ko": "킵푸",
       "meaning_ko": "표, 승차권",
       "pos": "명사",
-      "appears_in_lines": [3]
+      "appears_in_lines": [
+        3
+      ]
     },
     {
       "word_ja": "買う",
@@ -123,7 +312,9 @@
       "reading_ko": "카우",
       "meaning_ko": "사다",
       "pos": "동사",
-      "appears_in_lines": [3]
+      "appears_in_lines": [
+        3
+      ]
     },
     {
       "word_ja": "左",
@@ -131,7 +322,9 @@
       "reading_ko": "히다리",
       "meaning_ko": "왼쪽",
       "pos": "명사",
-      "appears_in_lines": [4]
+      "appears_in_lines": [
+        4
+      ]
     },
     {
       "word_ja": "階段",
@@ -139,7 +332,9 @@
       "reading_ko": "카이단",
       "meaning_ko": "계단",
       "pos": "명사",
-      "appears_in_lines": [4]
+      "appears_in_lines": [
+        4
+      ]
     },
     {
       "word_ja": "バス",
@@ -147,7 +342,9 @@
       "reading_ko": "바스",
       "meaning_ko": "버스",
       "pos": "명사",
-      "appears_in_lines": [5]
+      "appears_in_lines": [
+        5
+      ]
     },
     {
       "word_ja": "乗る",
@@ -155,7 +352,10 @@
       "reading_ko": "노루",
       "meaning_ko": "타다",
       "pos": "동사",
-      "appears_in_lines": [2, 3]
+      "appears_in_lines": [
+        2,
+        3
+      ]
     }
   ]
 }

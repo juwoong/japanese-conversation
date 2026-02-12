@@ -16,6 +16,21 @@
       "key_expressions": [
         "お弁当",
         "どこですか"
+      ],
+      "furigana": [
+        {
+          "text": "すみません、"
+        },
+        {
+          "text": "お"
+        },
+        {
+          "text": "弁当",
+          "reading": "べんとう"
+        },
+        {
+          "text": "はどこですか。"
+        }
       ]
     },
     {
@@ -31,6 +46,42 @@
         "肉",
         "魚",
         "あちら"
+      ],
+      "furigana": [
+        {
+          "text": "お"
+        },
+        {
+          "text": "弁当",
+          "reading": "べんとう"
+        },
+        {
+          "text": "はあちらです。"
+        },
+        {
+          "text": "肉",
+          "reading": "にく"
+        },
+        {
+          "text": "と"
+        },
+        {
+          "text": "魚",
+          "reading": "さかな"
+        },
+        {
+          "text": "の"
+        },
+        {
+          "text": "お"
+        },
+        {
+          "text": "弁当",
+          "reading": "べんとう"
+        },
+        {
+          "text": "がありますよ。"
+        }
       ]
     },
     {
@@ -45,6 +96,35 @@
       "key_expressions": [
         "卵",
         "美味しい"
+      ],
+      "furigana": [
+        {
+          "text": "この"
+        },
+        {
+          "text": "卵",
+          "reading": "たまご"
+        },
+        {
+          "text": "の"
+        },
+        {
+          "text": "お"
+        },
+        {
+          "text": "弁当",
+          "reading": "べんとう"
+        },
+        {
+          "text": "は"
+        },
+        {
+          "text": "美味",
+          "reading": "おい"
+        },
+        {
+          "text": "しいですか。"
+        }
       ]
     },
     {
@@ -59,6 +139,50 @@
       "key_expressions": [
         "野菜",
         "甘い"
+      ],
+      "furigana": [
+        {
+          "text": "はい、"
+        },
+        {
+          "text": "人気",
+          "reading": "にんき"
+        },
+        {
+          "text": "ですよ。"
+        },
+        {
+          "text": "野菜",
+          "reading": "やさい"
+        },
+        {
+          "text": "も"
+        },
+        {
+          "text": "多",
+          "reading": "おお"
+        },
+        {
+          "text": "くて、"
+        },
+        {
+          "text": "甘",
+          "reading": "あま"
+        },
+        {
+          "text": "い"
+        },
+        {
+          "text": "味",
+          "reading": "あじ"
+        },
+        {
+          "text": "付",
+          "reading": "つ"
+        },
+        {
+          "text": "けです。"
+        }
       ]
     },
     {
@@ -73,6 +197,22 @@
       "key_expressions": [
         "お茶",
         "じゃあ"
+      ],
+      "furigana": [
+        {
+          "text": "じゃあ、これと"
+        },
+        {
+          "text": "お",
+          "reading": "お"
+        },
+        {
+          "text": "茶",
+          "reading": "ちゃ"
+        },
+        {
+          "text": "をください。"
+        }
       ]
     }
   ],
@@ -83,7 +223,11 @@
       "reading_ko": "오벤토-",
       "meaning_ko": "도시락",
       "pos": "명사",
-      "appears_in_lines": [1, 2, 3]
+      "appears_in_lines": [
+        1,
+        2,
+        3
+      ]
     },
     {
       "word_ja": "肉",
@@ -91,7 +235,9 @@
       "reading_ko": "니쿠",
       "meaning_ko": "고기",
       "pos": "명사",
-      "appears_in_lines": [2]
+      "appears_in_lines": [
+        2
+      ]
     },
     {
       "word_ja": "魚",
@@ -99,7 +245,9 @@
       "reading_ko": "사카나",
       "meaning_ko": "생선",
       "pos": "명사",
-      "appears_in_lines": [2]
+      "appears_in_lines": [
+        2
+      ]
     },
     {
       "word_ja": "卵",
@@ -107,7 +255,9 @@
       "reading_ko": "타마고",
       "meaning_ko": "달걀",
       "pos": "명사",
-      "appears_in_lines": [3]
+      "appears_in_lines": [
+        3
+      ]
     },
     {
       "word_ja": "美味しい",
@@ -115,7 +265,9 @@
       "reading_ko": "오이시-",
       "meaning_ko": "맛있다",
       "pos": "형용사",
-      "appears_in_lines": [3]
+      "appears_in_lines": [
+        3
+      ]
     },
     {
       "word_ja": "野菜",
@@ -123,7 +275,9 @@
       "reading_ko": "야사이",
       "meaning_ko": "채소",
       "pos": "명사",
-      "appears_in_lines": [4]
+      "appears_in_lines": [
+        4
+      ]
     },
     {
       "word_ja": "甘い",
@@ -131,7 +285,9 @@
       "reading_ko": "아마이",
       "meaning_ko": "달다",
       "pos": "형용사",
-      "appears_in_lines": [4]
+      "appears_in_lines": [
+        4
+      ]
     },
     {
       "word_ja": "多い",
@@ -139,7 +295,9 @@
       "reading_ko": "오-이",
       "meaning_ko": "많다",
       "pos": "형용사",
-      "appears_in_lines": [4]
+      "appears_in_lines": [
+        4
+      ]
     },
     {
       "word_ja": "お茶",
@@ -147,7 +305,9 @@
       "reading_ko": "오챠",
       "meaning_ko": "차",
       "pos": "명사",
-      "appears_in_lines": [5]
+      "appears_in_lines": [
+        5
+      ]
     },
     {
       "word_ja": "あちら",
@@ -155,7 +315,9 @@
       "reading_ko": "아치라",
       "meaning_ko": "저쪽",
       "pos": "명사",
-      "appears_in_lines": [2]
+      "appears_in_lines": [
+        2
+      ]
     }
   ]
 }

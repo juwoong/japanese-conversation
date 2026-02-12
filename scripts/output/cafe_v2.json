@@ -16,6 +16,25 @@
       "key_expressions": [
         "暑い",
         "ですね"
+      ],
+      "furigana": [
+        {
+          "text": "いらっしゃいませ。"
+        },
+        {
+          "text": "今日",
+          "reading": "きょう"
+        },
+        {
+          "text": "は"
+        },
+        {
+          "text": "暑",
+          "reading": "あつ"
+        },
+        {
+          "text": "いですね。"
+        }
       ]
     },
     {
@@ -30,6 +49,38 @@
       "key_expressions": [
         "天気",
         "雨"
+      ],
+      "furigana": [
+        {
+          "text": "そうですね。"
+        },
+        {
+          "text": "昨日",
+          "reading": "きのう"
+        },
+        {
+          "text": "は"
+        },
+        {
+          "text": "雨"
+        },
+        {
+          "text": "でしたが、"
+        },
+        {
+          "text": "今日",
+          "reading": "きょう"
+        },
+        {
+          "text": "は"
+        },
+        {
+          "text": "天気",
+          "reading": "てんき"
+        },
+        {
+          "text": "がいいですね。"
+        }
       ]
     },
     {
@@ -44,6 +95,32 @@
       "key_expressions": [
         "涼しい",
         "飲み物"
+      ],
+      "furigana": [
+        {
+          "text": "涼",
+          "reading": "すず"
+        },
+        {
+          "text": "しい"
+        },
+        {
+          "text": "お"
+        },
+        {
+          "text": "飲",
+          "reading": "の"
+        },
+        {
+          "text": "み"
+        },
+        {
+          "text": "物",
+          "reading": "もの"
+        },
+        {
+          "text": "はいかがですか。"
+        }
       ]
     },
     {
@@ -59,6 +136,41 @@
         "コーヒー",
         "花",
         "綺麗"
+      ],
+      "furigana": [
+        {
+          "text": "コーヒー"
+        },
+        {
+          "text": "をお"
+        },
+        {
+          "text": "願",
+          "reading": "ねが"
+        },
+        {
+          "text": "いします。"
+        },
+        {
+          "text": "外",
+          "reading": "そと"
+        },
+        {
+          "text": "の"
+        },
+        {
+          "text": "花"
+        },
+        {
+          "text": "が"
+        },
+        {
+          "text": "綺麗",
+          "reading": "きれい"
+        },
+        {
+          "text": "ですね。"
+        }
       ]
     },
     {
@@ -73,6 +185,46 @@
       "key_expressions": [
         "風",
         "気持ちいい"
+      ],
+      "furigana": [
+        {
+          "text": "ありがとうございます。"
+        },
+        {
+          "text": "風",
+          "reading": "かぜ"
+        },
+        {
+          "text": "が"
+        },
+        {
+          "text": "気持",
+          "reading": "きも"
+        },
+        {
+          "text": "ちいい"
+        },
+        {
+          "text": "季節",
+          "reading": "きせつ"
+        },
+        {
+          "text": "ですね。"
+        },
+        {
+          "text": "少々",
+          "reading": "しょうしょう"
+        },
+        {
+          "text": "お"
+        },
+        {
+          "text": "待",
+          "reading": "ま"
+        },
+        {
+          "text": "ちください。"
+        }
       ]
     }
   ],
@@ -83,7 +235,9 @@
       "reading_ko": "아츠이",
       "meaning_ko": "덥다",
       "pos": "형용사",
-      "appears_in_lines": [1]
+      "appears_in_lines": [
+        1
+      ]
     },
     {
       "word_ja": "雨",
@@ -91,7 +245,9 @@
       "reading_ko": "아메",
       "meaning_ko": "비",
       "pos": "명사",
-      "appears_in_lines": [2]
+      "appears_in_lines": [
+        2
+      ]
     },
     {
       "word_ja": "天気",
@@ -99,7 +255,9 @@
       "reading_ko": "텐키",
       "meaning_ko": "날씨",
       "pos": "명사",
-      "appears_in_lines": [2]
+      "appears_in_lines": [
+        2
+      ]
     },
     {
       "word_ja": "涼しい",
@@ -107,7 +265,9 @@
       "reading_ko": "스즈시-",
       "meaning_ko": "시원하다, 선선하다",
       "pos": "형용사",
-      "appears_in_lines": [3]
+      "appears_in_lines": [
+        3
+      ]
     },
     {
       "word_ja": "飲み物",
@@ -115,7 +275,9 @@
       "reading_ko": "노미모노",
       "meaning_ko": "음료",
       "pos": "명사",
-      "appears_in_lines": [3]
+      "appears_in_lines": [
+        3
+      ]
     },
     {
       "word_ja": "コーヒー",
@@ -123,7 +285,9 @@
       "reading_ko": "코-히-",
       "meaning_ko": "커피",
       "pos": "명사",
-      "appears_in_lines": [4]
+      "appears_in_lines": [
+        4
+      ]
     },
     {
       "word_ja": "花",
@@ -131,7 +295,9 @@
       "reading_ko": "하나",
       "meaning_ko": "꽃",
       "pos": "명사",
-      "appears_in_lines": [4]
+      "appears_in_lines": [
+        4
+      ]
     },
     {
       "word_ja": "綺麗",
@@ -139,7 +305,9 @@
       "reading_ko": "키레-",
       "meaning_ko": "예쁘다, 깨끗하다",
       "pos": "형용사(な)",
-      "appears_in_lines": [4]
+      "appears_in_lines": [
+        4
+      ]
     },
     {
       "word_ja": "風",
@@ -147,7 +315,9 @@
       "reading_ko": "카제",
       "meaning_ko": "바람",
       "pos": "명사",
-      "appears_in_lines": [5]
+      "appears_in_lines": [
+        5
+      ]
     },
     {
       "word_ja": "気持ちいい",
@@ -155,7 +325,9 @@
       "reading_ko": "키모치이-",
       "meaning_ko": "기분 좋다",
       "pos": "형용사",
-      "appears_in_lines": [5]
+      "appears_in_lines": [
+        5
+      ]
     }
   ]
 }
