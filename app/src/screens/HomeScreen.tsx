@@ -9,11 +9,12 @@ import {
   Animated,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { MaterialIcons } from "@expo/vector-icons";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useFocusEffect } from "@react-navigation/native";
 import { supabase } from "../lib/supabase";
 import type { RootStackParamList, Persona, SituationWithProgress } from "../types";
-import { colors, shadows } from "../constants/theme";
+import { colors } from "../constants/theme";
 import LoadingScreen from "../components/LoadingScreen";
 import OfflineBanner from "../components/OfflineBanner";
 import { useNetworkStatus } from "../hooks/useNetworkStatus";
@@ -47,7 +48,7 @@ function SkeletonHomeScreen() {
     <Animated.View
       style={[
         {
-          backgroundColor: colors.border,
+          backgroundColor: colors.borderLight,
           borderRadius: 8,
           opacity: pulseAnim,
         },
@@ -268,7 +269,7 @@ export default function HomeScreen({ navigation }: Props) {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.errorContainer}>
-          <Text style={styles.errorIcon}>⚠️</Text>
+          <MaterialIcons name="error-outline" size={48} color={colors.textLight} />
           <Text style={styles.errorText}>{error}</Text>
           <TouchableOpacity
             style={styles.retryButton}
@@ -313,7 +314,7 @@ export default function HomeScreen({ navigation }: Props) {
               style={styles.settingsButton}
               onPress={() => navigation.navigate("Settings")}
             >
-              <Text style={styles.settingsIcon}>⚙️</Text>
+              <MaterialIcons name="settings" size={24} color={colors.textMuted} />
             </TouchableOpacity>
           </View>
         </View>
@@ -321,7 +322,7 @@ export default function HomeScreen({ navigation }: Props) {
         {/* Review Nudge */}
         {reviewSituations.length > 0 && (
           <View style={styles.reviewNudge}>
-            <Text style={styles.reviewNudgeIcon}>📖</Text>
+            <MaterialIcons name="menu-book" size={20} color={colors.secondary} />
             <Text style={styles.reviewNudgeText}>
               복습할 상황이 {reviewSituations.length}개 있어요!
             </Text>
@@ -360,7 +361,7 @@ export default function HomeScreen({ navigation }: Props) {
                     {situation.location_ko}
                   </Text>
                 </View>
-                <Text style={styles.reviewArrow}>→</Text>
+                <MaterialIcons name="chevron-right" size={22} color={colors.warning} />
               </TouchableOpacity>
             ))}
           </View>
@@ -416,11 +417,11 @@ export default function HomeScreen({ navigation }: Props) {
               </View>
               <View style={styles.statusBadge}>
                 {situation.progress?.status === "completed" ? (
-                  <Text style={styles.checkmark}>✓</Text>
+                  <MaterialIcons name="check-circle" size={22} color={colors.success} />
                 ) : situation.progress?.status === "locked" || !situation.progress ? (
-                  <Text style={styles.lock}>🔒</Text>
+                  <MaterialIcons name="lock" size={20} color={colors.textLight} />
                 ) : (
-                  <Text style={styles.arrow}>→</Text>
+                  <MaterialIcons name="chevron-right" size={22} color={colors.primary} />
                 )}
               </View>
             </TouchableOpacity>
@@ -433,28 +434,28 @@ export default function HomeScreen({ navigation }: Props) {
             style={styles.quickAction}
             onPress={() => navigation.navigate("Flashcard")}
           >
-            <Text style={styles.quickActionIcon}>🃏</Text>
+            <MaterialIcons name="style" size={24} color={colors.primary} />
             <Text style={styles.quickActionLabel}>플래시카드</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.quickAction}
             onPress={() => navigation.navigate("Vocabulary")}
           >
-            <Text style={styles.quickActionIcon}>📝</Text>
+            <MaterialIcons name="book" size={24} color={colors.primary} />
             <Text style={styles.quickActionLabel}>단어장</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.quickAction}
             onPress={() => navigation.navigate("History")}
           >
-            <Text style={styles.quickActionIcon}>📊</Text>
+            <MaterialIcons name="bar-chart" size={24} color={colors.primary} />
             <Text style={styles.quickActionLabel}>학습 기록</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.quickAction}
             onPress={() => navigation.navigate("SituationList")}
           >
-            <Text style={styles.quickActionIcon}>📚</Text>
+            <MaterialIcons name="library-books" size={24} color={colors.primary} />
             <Text style={styles.quickActionLabel}>전체 상황</Text>
           </TouchableOpacity>
         </View>
@@ -480,8 +481,9 @@ const styles = StyleSheet.create({
   },
   greeting: {
     fontSize: 24,
-    fontWeight: "bold",
+    fontWeight: "700",
     color: colors.textDark,
+    letterSpacing: -0.3,
   },
   personaLabel: {
     fontSize: 16,
@@ -491,15 +493,13 @@ const styles = StyleSheet.create({
   settingsButton: {
     padding: 8,
   },
-  settingsIcon: {
-    fontSize: 24,
-  },
   progressCard: {
     backgroundColor: colors.surface,
     marginHorizontal: 20,
     borderRadius: 16,
     padding: 20,
-    ...shadows.md,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
   progressTitle: {
     fontSize: 14,
@@ -509,7 +509,7 @@ const styles = StyleSheet.create({
   },
   progressBar: {
     height: 8,
-    backgroundColor: colors.border,
+    backgroundColor: colors.borderLight,
     borderRadius: 4,
     overflow: "hidden",
   },
@@ -530,27 +530,25 @@ const styles = StyleSheet.create({
   },
   reviewTitle: {
     fontSize: 16,
-    fontWeight: "bold",
+    fontWeight: "600",
     color: colors.textDark,
     marginBottom: 12,
   },
   reviewCard: {
-    backgroundColor: "#fef3c7",
+    backgroundColor: colors.warningLight,
     borderRadius: 12,
     padding: 16,
     marginBottom: 10,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+    borderWidth: 1,
+    borderColor: colors.border,
   },
   reviewName: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#92400e",
-  },
-  reviewArrow: {
-    fontSize: 20,
-    color: "#92400e",
+    color: colors.textDark,
   },
   startButton: {
     backgroundColor: colors.primary,
@@ -559,15 +557,20 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     padding: 20,
     alignItems: "center",
+    shadowColor: colors.primary,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 4,
   },
   startButtonText: {
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: "700",
     color: colors.surface,
   },
   startButtonSubtext: {
     fontSize: 14,
-    color: "#c7d2fe",
+    color: "rgba(255,255,255,0.7)",
     marginTop: 4,
   },
   section: {
@@ -582,7 +585,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: "600",
     color: colors.textDark,
   },
   seeAll: {
@@ -598,10 +601,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    ...shadows.sm,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
   completedCard: {
-    backgroundColor: "#f0fdf4",
+    backgroundColor: colors.successLight,
+    borderColor: colors.success + "30",
   },
   lockedCard: {
     opacity: 0.5,
@@ -625,17 +630,6 @@ const styles = StyleSheet.create({
   statusBadge: {
     marginLeft: 12,
   },
-  checkmark: {
-    fontSize: 20,
-    color: colors.success,
-  },
-  lock: {
-    fontSize: 18,
-  },
-  arrow: {
-    fontSize: 20,
-    color: colors.primary,
-  },
   quickActions: {
     flexDirection: "row",
     paddingHorizontal: 20,
@@ -648,14 +642,12 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 16,
     alignItems: "center",
-    ...shadows.sm,
-  },
-  quickActionIcon: {
-    fontSize: 24,
-    marginBottom: 8,
+    gap: 8,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
   quickActionLabel: {
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: "500",
     color: colors.textMuted,
   },
@@ -665,49 +657,46 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   streakBadge: {
-    backgroundColor: "#fef3c7",
+    backgroundColor: colors.warningLight,
     paddingHorizontal: 10,
     paddingVertical: 4,
     borderRadius: 12,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
   streakText: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#92400e",
+    color: colors.warning,
   },
   reviewNudge: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#eff6ff",
+    backgroundColor: colors.secondaryLight,
     marginHorizontal: 20,
     marginBottom: 12,
     padding: 12,
     borderRadius: 12,
     gap: 8,
-  },
-  reviewNudgeIcon: {
-    fontSize: 20,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
   reviewNudgeText: {
     fontSize: 14,
     fontWeight: "500",
-    color: "#1e40af",
+    color: colors.secondary,
   },
   errorContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
     padding: 40,
-  },
-  errorIcon: {
-    fontSize: 48,
-    marginBottom: 16,
+    gap: 16,
   },
   errorText: {
     fontSize: 16,
     color: colors.textMuted,
     textAlign: "center",
-    marginBottom: 20,
   },
   retryButton: {
     backgroundColor: colors.primary,
@@ -717,7 +706,7 @@ const styles = StyleSheet.create({
   },
   retryButtonText: {
     fontSize: 16,
-    fontWeight: "bold",
+    fontWeight: "600",
     color: colors.surface,
   },
 });

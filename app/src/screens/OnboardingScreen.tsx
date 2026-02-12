@@ -11,7 +11,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { supabase } from "../lib/supabase";
 import type { RootStackParamList, Persona } from "../types";
-import { colors, shadows } from "../constants/theme";
+import { colors } from "../constants/theme";
 import LoadingScreen from "../components/LoadingScreen";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Onboarding">;
@@ -234,7 +234,8 @@ const styles = StyleSheet.create({
     padding: 20,
     flexDirection: "row",
     alignItems: "center",
-    ...shadows.md,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
   optionIcon: {
     fontSize: 32,
@@ -251,7 +252,8 @@ const styles = StyleSheet.create({
     padding: 20,
     flexDirection: "row",
     alignItems: "flex-start",
-    ...shadows.md,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
   personaInfo: {
     flex: 1,

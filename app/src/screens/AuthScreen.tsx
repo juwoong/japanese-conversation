@@ -130,7 +130,9 @@ export default function AuthScreen({ navigation }: Props) {
       >
         {/* Header */}
         <View style={styles.header}>
-          <Text style={styles.logo}>🇯🇵</Text>
+          <View style={styles.logoCircle}>
+            <Text style={styles.logoText}>話</Text>
+          </View>
           <Text style={styles.title}>일본어 회화</Text>
           <Text style={styles.subtitle}>
             {mode === "login" ? "다시 만나서 반가워요!" : "함께 일본어를 배워봐요"}
@@ -255,15 +257,26 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 40,
   },
-  logo: {
-    fontSize: 64,
+  logoCircle: {
+    width: 72,
+    height: 72,
+    borderRadius: 36,
+    backgroundColor: colors.primary,
+    alignItems: "center",
+    justifyContent: "center",
     marginBottom: 16,
   },
+  logoText: {
+    fontSize: 32,
+    fontWeight: "700",
+    color: colors.surface,
+  },
   title: {
-    fontSize: 28,
-    fontWeight: "bold",
+    fontSize: 32,
+    fontWeight: "700",
     color: colors.textDark,
     marginBottom: 8,
+    letterSpacing: -0.5,
   },
   subtitle: {
     fontSize: 16,
@@ -273,7 +286,7 @@ const styles = StyleSheet.create({
     gap: 16,
   },
   input: {
-    backgroundColor: colors.surface,
+    backgroundColor: colors.background,
     borderRadius: 12,
     padding: 16,
     fontSize: 16,
@@ -284,7 +297,7 @@ const styles = StyleSheet.create({
   passwordContainer: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: colors.surface,
+    backgroundColor: colors.background,
     borderRadius: 12,
     borderWidth: 1,
     borderColor: colors.border,
@@ -328,13 +341,18 @@ const styles = StyleSheet.create({
     padding: 16,
     alignItems: "center",
     marginTop: 8,
+    shadowColor: colors.primary,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 4,
   },
   buttonDisabled: {
     opacity: 0.7,
   },
   buttonText: {
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: "700",
     color: colors.surface,
   },
   footer: {

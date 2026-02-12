@@ -10,7 +10,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { supabase } from "../lib/supabase";
 import type { RootStackParamList } from "../types";
-import { colors, shadows } from "../constants/theme";
+import { colors } from "../constants/theme";
 import LoadingScreen from "../components/LoadingScreen";
 import BackHeader from "../components/BackHeader";
 
@@ -200,12 +200,12 @@ const styles = StyleSheet.create({
   },
   summaryLabel: {
     fontSize: 12,
-    color: "#c7d2fe",
+    color: "rgba(255,255,255,0.7)",
     marginTop: 4,
   },
   summaryDivider: {
     width: 1,
-    backgroundColor: "#818cf8",
+    backgroundColor: "rgba(255,255,255,0.2)",
   },
   section: {
     paddingHorizontal: 16,
@@ -241,7 +241,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    ...shadows.sm,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
   dayInfo: {
     flex: 1,
@@ -257,7 +258,7 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   accuracyBadge: {
-    backgroundColor: "#f0fdf4",
+    backgroundColor: colors.successLight,
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 8,
