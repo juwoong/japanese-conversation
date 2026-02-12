@@ -459,6 +459,15 @@ export default function HomeScreen({ navigation }: Props) {
             <Text style={styles.quickActionLabel}>전체 상황</Text>
           </TouchableOpacity>
         </View>
+
+        {/* Dev: Pitch Test */}
+        <TouchableOpacity
+          style={[styles.quickAction, { marginHorizontal: 20, marginBottom: 24 }]}
+          onPress={() => navigation.navigate("PitchTest")}
+        >
+          <Text style={styles.quickActionIcon}>🎤</Text>
+          <Text style={styles.quickActionLabel}>피치 테스트 (Dev)</Text>
+        </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
   );

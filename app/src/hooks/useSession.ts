@@ -5,6 +5,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { supabase } from "../lib/supabase";
 import { schedule, createCard, getRatingFromAccuracy, type Rating } from "../lib/fsrs";
+import { compareText, type DiffSegment } from "../lib/textDiff";
 import type { Line, Situation, SRSCard } from "../types";
 
 interface SessionState {
@@ -22,6 +23,7 @@ interface UseSessionReturn extends SessionState {
     accuracy: number;
     rating: Rating;
     feedback: string;
+    diffSegments: DiffSegment[];
   }>;
   reset: () => void;
 }
@@ -93,14 +95,16 @@ export function useSession(situationId: number): UseSessionReturn {
     async (
       userInput: string,
       expectedText: string
-    ): Promise<{ accuracy: number; rating: Rating; feedback: string }> => {
+    ): Promise<{ accuracy: number; rating: Rating; feedback: string; diffSegments: DiffSegment[] }> => {
       const currentLine = state.lines[state.currentIndex];
       if (!currentLine) {
         throw new Error("No current line");
       }
 
-      // Calculate accuracy using simple similarity
-      const accuracy = calculateSimilarity(userInput, expectedText);
+      // Calculate accuracy using Myers diff with Japanese normalization
+      const diffResult = compareText(expectedText, userInput);
+      const accuracy = diffResult.score / 100;
+      const diffSegments = diffResult.segments;
       const rating = getRatingFromAccuracy(accuracy);
 
       // Get user
@@ -177,7 +181,7 @@ export function useSession(situationId: number): UseSessionReturn {
         feedback = "다시 시도해보세요.";
       }
 
-      return { accuracy, rating, feedback };
+      return { accuracy, rating, feedback, diffSegments };
     },
     [state.lines, state.currentIndex]
   );
@@ -194,42 +198,3 @@ export function useSession(situationId: number): UseSessionReturn {
   };
 }
 
-/**
- * Calculate text similarity using Levenshtein distance
- */
-function calculateSimilarity(a: string, b: string): number {
-  const normalize = (s: string) =>
-    s.replace(/\s/g, "").replace(/[　]/g, "").toLowerCase();
-
-  const s1 = normalize(a);
-  const s2 = normalize(b);
-
-  if (s1 === s2) return 1;
-  if (s1.length === 0 || s2.length === 0) return 0;
-
-  const len1 = s1.length;
-  const len2 = s2.length;
-  const matrix: number[][] = [];
-
-  for (let i = 0; i <= len1; i++) {
-    matrix[i] = [i];
-  }
-  for (let j = 0; j <= len2; j++) {
-    matrix[0][j] = j;
-  }
-
-  for (let i = 1; i <= len1; i++) {
-    for (let j = 1; j <= len2; j++) {
-      const cost = s1[i - 1] === s2[j - 1] ? 0 : 1;
-      matrix[i][j] = Math.min(
-        matrix[i - 1][j] + 1,
-        matrix[i][j - 1] + 1,
-        matrix[i - 1][j - 1] + cost
-      );
-    }
-  }
-
-  const distance = matrix[len1][len2];
-  const maxLen = Math.max(len1, len2);
-  return 1 - distance / maxLen;
-}

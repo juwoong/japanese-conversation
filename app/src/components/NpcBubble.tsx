@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Animated } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-import type { Line } from "../types";
+import type { Line, FuriganaSegment } from "../types";
 import { colors } from "../constants/theme";
+import FuriganaText from "./FuriganaText";
 
 interface Props {
   displayText: string;
@@ -62,7 +63,17 @@ export default function NpcBubble({
           <Text style={styles.pronunciation}>{line.pronunciation_ko}</Text>
         )}
         <View style={styles.japaneseRow}>
-          <Text style={styles.japanese}>{displayText}</Text>
+          <View style={styles.japaneseContent}>
+            {line.furigana && line.furigana.length > 0 ? (
+              <FuriganaText
+                segments={line.furigana}
+                fontSize={18}
+                color={colors.textDark}
+              />
+            ) : (
+              <Text style={styles.japanese}>{displayText}</Text>
+            )}
+          </View>
           <TouchableOpacity onPress={() => onSpeak(displayText)}>
             <MaterialIcons
               name="volume-up"
@@ -129,6 +140,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
+  },
+  japaneseContent: {
+    flex: 1,
   },
   japanese: {
     fontSize: 18,
