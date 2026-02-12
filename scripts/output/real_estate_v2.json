@@ -16,6 +16,32 @@
       "key_expressions": [
         "入居",
         "案内"
+      ],
+      "furigana": [
+        {
+          "text": "入居",
+          "reading": "にゅうきょ"
+        },
+        {
+          "text": "おめでとうございます。"
+        },
+        {
+          "text": "生活",
+          "reading": "せいかつ"
+        },
+        {
+          "text": "の"
+        },
+        {
+          "text": "ご"
+        },
+        {
+          "text": "案内",
+          "reading": "あんない"
+        },
+        {
+          "text": "をしますね。"
+        }
       ]
     },
     {
@@ -31,6 +57,25 @@
         "ガス",
         "水道",
         "使える"
+      ],
+      "furigana": [
+        {
+          "text": "ありがとうございます。ガスと"
+        },
+        {
+          "text": "水道",
+          "reading": "すいどう"
+        },
+        {
+          "text": "はもう"
+        },
+        {
+          "text": "使",
+          "reading": "つか"
+        },
+        {
+          "text": "えますか。"
+        }
       ]
     },
     {
@@ -45,6 +90,32 @@
       "key_expressions": [
         "暖房",
         "冷房"
+      ],
+      "furigana": [
+        {
+          "text": "はい、"
+        },
+        {
+          "text": "使",
+          "reading": "つか"
+        },
+        {
+          "text": "えます。"
+        },
+        {
+          "text": "暖房",
+          "reading": "だんぼう"
+        },
+        {
+          "text": "と"
+        },
+        {
+          "text": "冷房",
+          "reading": "れいぼう"
+        },
+        {
+          "text": "のリモコンはこちらです。"
+        }
       ]
     },
     {
@@ -59,6 +130,36 @@
       "key_expressions": [
         "布団",
         "畳"
+      ],
+      "furigana": [
+        {
+          "text": "布団",
+          "reading": "ふとん"
+        },
+        {
+          "text": "はどこに"
+        },
+        {
+          "text": "敷",
+          "reading": "し"
+        },
+        {
+          "text": "きますか。"
+        },
+        {
+          "text": "畳",
+          "reading": "たたみ"
+        },
+        {
+          "text": "の"
+        },
+        {
+          "text": "部屋",
+          "reading": "へや"
+        },
+        {
+          "text": "がありますか。"
+        }
       ]
     },
     {
@@ -73,6 +174,43 @@
       "key_expressions": [
         "ゴミ",
         "出して"
+      ],
+      "furigana": [
+        {
+          "text": "畳",
+          "reading": "たたみ"
+        },
+        {
+          "text": "の"
+        },
+        {
+          "text": "部屋",
+          "reading": "へや"
+        },
+        {
+          "text": "はこちらです。あと、ゴミは"
+        },
+        {
+          "text": "月曜日",
+          "reading": "げつようび"
+        },
+        {
+          "text": "と"
+        },
+        {
+          "text": "木曜日",
+          "reading": "もくようび"
+        },
+        {
+          "text": "に"
+        },
+        {
+          "text": "出",
+          "reading": "だ"
+        },
+        {
+          "text": "してください。"
+        }
       ]
     }
   ],
@@ -83,7 +221,9 @@
       "reading_ko": "가스",
       "meaning_ko": "가스",
       "pos": "명사",
-      "appears_in_lines": [2]
+      "appears_in_lines": [
+        2
+      ]
     },
     {
       "word_ja": "水道",
@@ -91,7 +231,9 @@
       "reading_ko": "스이도-",
       "meaning_ko": "수도",
       "pos": "명사",
-      "appears_in_lines": [2]
+      "appears_in_lines": [
+        2
+      ]
     },
     {
       "word_ja": "暖房",
@@ -99,7 +241,9 @@
       "reading_ko": "단보-",
       "meaning_ko": "난방",
       "pos": "명사",
-      "appears_in_lines": [3]
+      "appears_in_lines": [
+        3
+      ]
     },
     {
       "word_ja": "冷房",
@@ -107,7 +251,9 @@
       "reading_ko": "레-보-",
       "meaning_ko": "냉방",
       "pos": "명사",
-      "appears_in_lines": [3]
+      "appears_in_lines": [
+        3
+      ]
     },
     {
       "word_ja": "布団",
@@ -115,7 +261,9 @@
       "reading_ko": "후톤",
       "meaning_ko": "이불, 요",
       "pos": "명사",
-      "appears_in_lines": [4]
+      "appears_in_lines": [
+        4
+      ]
     },
     {
       "word_ja": "畳",
@@ -123,7 +271,10 @@
       "reading_ko": "타타미",
       "meaning_ko": "다다미 (일본 전통 바닥)",
       "pos": "명사",
-      "appears_in_lines": [4, 5]
+      "appears_in_lines": [
+        4,
+        5
+      ]
     },
     {
       "word_ja": "ゴミ",
@@ -131,7 +282,9 @@
       "reading_ko": "고미",
       "meaning_ko": "쓰레기",
       "pos": "명사",
-      "appears_in_lines": [5]
+      "appears_in_lines": [
+        5
+      ]
     },
     {
       "word_ja": "案内",
@@ -139,7 +292,9 @@
       "reading_ko": "안나이",
       "meaning_ko": "안내",
       "pos": "명사",
-      "appears_in_lines": [1]
+      "appears_in_lines": [
+        1
+      ]
     },
     {
       "word_ja": "月曜日",
@@ -147,7 +302,9 @@
       "reading_ko": "게츠요-비",
       "meaning_ko": "월요일",
       "pos": "명사",
-      "appears_in_lines": [5]
+      "appears_in_lines": [
+        5
+      ]
     },
     {
       "word_ja": "木曜日",
@@ -155,7 +312,9 @@
       "reading_ko": "모쿠요-비",
       "meaning_ko": "목요일",
       "pos": "명사",
-      "appears_in_lines": [5]
+      "appears_in_lines": [
+        5
+      ]
     }
   ]
 }
