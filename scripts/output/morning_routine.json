@@ -1,0 +1,233 @@
+{
+  "situation_slug": "morning_routine",
+  "jlpt_target": "N5",
+  "theme": "아침 일과",
+  "lines": [
+    {
+      "line_order": 1,
+      "speaker": "npc",
+      "text_ja": "朝ご飯はもう食べましたか。新聞を読みますか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "아사고항와 모- 타베마시타카. 신분오 요미마스카",
+      "text_ko": "아침밥은 벌써 먹었어요? 신문 읽을래요?",
+      "grammar_hint": "朝ご飯(아침밥), 新聞(신문), 読む(읽다).",
+      "key_expressions": [
+        "朝ご飯",
+        "新聞",
+        "読む"
+      ]
+    },
+    {
+      "line_order": 2,
+      "speaker": "user",
+      "text_ja": "まだです。六時に起きて、顔を洗って、牛乳を飲みました。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "마다데스. 로쿠지니 오키테, 카오오 아랏테, 규-뉴-오 노미마시타",
+      "text_ko": "아직이에요. 6시에 일어나서, 얼굴을 씻고, 우유를 마셨어요.",
+      "grammar_hint": "起きる(일어나다), 洗う(씻다), 飲む(마시다). て형으로 동작 연결.",
+      "key_expressions": [
+        "起きる",
+        "洗う",
+        "飲む"
+      ]
+    },
+    {
+      "line_order": 3,
+      "speaker": "npc",
+      "text_ja": "昼ご飯は何を食べますか。私は書く仕事があるので、ここで食べます。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "히루고항와 나니오 타베마스카. 와타시와 카쿠 시고토가 아루노데, 코코데 타베마스",
+      "text_ko": "점심은 뭐 먹어요? 저는 쓸 일이 있어서, 여기서 먹어요.",
+      "grammar_hint": "昼ご飯(점심), 書く(쓰다). 書く仕事 = 쓸 일.",
+      "key_expressions": [
+        "昼ご飯",
+        "書く"
+      ]
+    },
+    {
+      "line_order": 4,
+      "speaker": "user",
+      "text_ja": "時計を見てください。もう十時ですよ！眼鏡はどこですか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "토케-오 미테쿠다사이. 모- 쥬-지데스요! 메가네와 도코데스카",
+      "text_ko": "시계를 봐주세요. 벌써 10시예요! 안경은 어디예요?",
+      "grammar_hint": "時計(시계), 見る(보다), 眼鏡(안경).",
+      "key_expressions": [
+        "時計",
+        "見る",
+        "眼鏡"
+      ]
+    },
+    {
+      "line_order": 5,
+      "speaker": "npc",
+      "text_ja": "あ、もうこんな時間！晩ご飯は外で食べましょう。日本語で話す練習もしましょうね。夜は早く寝てくださいね。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "아, 모- 콘나 지칸! 반고항와 소토데 타베마쇼-. 니홍고데 하나스 렌슈-모 시마쇼-네. 요루와 하야쿠 네테쿠다사이네",
+      "text_ko": "아, 벌써 이런 시간! 저녁밥은 밖에서 먹어요. 일본어로 말하는 연습도 해요. 밤에는 일찍 자세요.",
+      "grammar_hint": "晩ご飯(저녁밥), 話す(말하다), 寝る(자다).",
+      "key_expressions": [
+        "晩ご飯",
+        "話す",
+        "寝る"
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word_ja": "朝ご飯",
+      "reading_hiragana": "あさごはん",
+      "reading_ko": "아사고항",
+      "meaning_ko": "아침밥",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "新聞",
+      "reading_hiragana": "しんぶん",
+      "reading_ko": "신분",
+      "meaning_ko": "신문",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "読む",
+      "reading_hiragana": "よむ",
+      "reading_ko": "요무",
+      "meaning_ko": "읽다",
+      "pos": "동사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "起きる",
+      "reading_hiragana": "おきる",
+      "reading_ko": "오키루",
+      "meaning_ko": "일어나다",
+      "pos": "동사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "洗う",
+      "reading_hiragana": "あらう",
+      "reading_ko": "아라우",
+      "meaning_ko": "씻다",
+      "pos": "동사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "飲む",
+      "reading_hiragana": "のむ",
+      "reading_ko": "노무",
+      "meaning_ko": "마시다",
+      "pos": "동사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "牛乳",
+      "reading_hiragana": "ぎゅうにゅう",
+      "reading_ko": "규-뉴-",
+      "meaning_ko": "우유",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "昼ご飯",
+      "reading_hiragana": "ひるごはん",
+      "reading_ko": "히루고항",
+      "meaning_ko": "점심밥",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "書く",
+      "reading_hiragana": "かく",
+      "reading_ko": "카쿠",
+      "meaning_ko": "쓰다",
+      "pos": "동사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "時計",
+      "reading_hiragana": "とけい",
+      "reading_ko": "토케-",
+      "meaning_ko": "시계",
+      "pos": "명사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "見る",
+      "reading_hiragana": "みる",
+      "reading_ko": "미루",
+      "meaning_ko": "보다",
+      "pos": "동사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "眼鏡",
+      "reading_hiragana": "めがね",
+      "reading_ko": "메가네",
+      "meaning_ko": "안경",
+      "pos": "명사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "晩ご飯",
+      "reading_hiragana": "ばんごはん",
+      "reading_ko": "반고항",
+      "meaning_ko": "저녁밥",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "話す",
+      "reading_hiragana": "はなす",
+      "reading_ko": "하나스",
+      "meaning_ko": "말하다",
+      "pos": "동사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "寝る",
+      "reading_hiragana": "ねる",
+      "reading_ko": "네루",
+      "meaning_ko": "자다",
+      "pos": "동사",
+      "appears_in_lines": [
+        5
+      ]
+    }
+  ]
+}

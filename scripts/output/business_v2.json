@@ -1,0 +1,212 @@
+{
+  "situation_slug": "business_v2",
+  "jlpt_target": "N4",
+  "theme": "직장 생활",
+  "lines": [
+    {
+      "line_order": 1,
+      "speaker": "npc",
+      "text_ja": "会社へようこそ。社長と課長に挨拶してください。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "카이샤에 요-코소. 샤쵸-토 카쵸-니 아이사츠시테쿠다사이",
+      "text_ko": "회사에 오신 걸 환영합니다. 사장님과 과장님에게 인사해 주세요.",
+      "grammar_hint": "会社(회사), 社長(사장), 課長(과장), 挨拶する(인사하다).",
+      "key_expressions": [
+        "会社",
+        "社長",
+        "課長",
+        "挨拶"
+      ]
+    },
+    {
+      "line_order": 2,
+      "speaker": "user",
+      "text_ja": "はい。アルバイトの経験しかありませんが、仕事を頑張ります。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "하이. 아루바이토노 케-켄시카 아리마셍가, 시고토오 간바리마스",
+      "text_ko": "네. 아르바이트 경험밖에 없지만, 일을 열심히 하겠습니다.",
+      "grammar_hint": "アルバイト(아르바이트), 経験(경험), 仕事(일/직업).",
+      "key_expressions": [
+        "アルバイト",
+        "経験",
+        "仕事"
+      ]
+    },
+    {
+      "line_order": 3,
+      "speaker": "npc",
+      "text_ja": "先輩を紹介しますね。何か相談があれば、いつでもどうぞ。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "센파이오 쇼-카이시마스네. 나니카 소-단가 아레바, 이츠데모 도-조",
+      "text_ko": "선배를 소개해 드릴게요. 상담할 게 있으면, 언제든지요.",
+      "grammar_hint": "紹介する(소개하다), 相談(상담). ~があれば = ~이 있으면.",
+      "key_expressions": [
+        "紹介",
+        "相談"
+      ]
+    },
+    {
+      "line_order": 4,
+      "speaker": "user",
+      "text_ja": "ありがとうございます。明日の予定を教えてください。予約の確認もしたいです。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "아리가토-고자이마스. 아시타노 요테-오 오시에테쿠다사이. 요야쿠노 카쿠닌모 시타이데스",
+      "text_ko": "감사합니다. 내일 예정을 알려주세요. 예약 확인도 하고 싶어요.",
+      "grammar_hint": "予定(예정), 予約(예약). ~を教える = ~을 알려주다.",
+      "key_expressions": [
+        "予定",
+        "予約"
+      ]
+    },
+    {
+      "line_order": 5,
+      "speaker": "npc",
+      "text_ja": "約束がありますから、関係書類を見てください。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "야쿠소쿠가 아리마스카라, 칸케- 쇼루이오 미테쿠다사이",
+      "text_ko": "약속이 있으니까, 관련 서류를 봐주세요.",
+      "grammar_hint": "約束(약속), 関係(관계/관련).",
+      "key_expressions": [
+        "約束",
+        "関係"
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word_ja": "会社",
+      "reading_hiragana": "かいしゃ",
+      "reading_ko": "카이샤",
+      "meaning_ko": "회사",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "社長",
+      "reading_hiragana": "しゃちょう",
+      "reading_ko": "샤쵸-",
+      "meaning_ko": "사장",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "課長",
+      "reading_hiragana": "かちょう",
+      "reading_ko": "카쵸-",
+      "meaning_ko": "과장",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "挨拶",
+      "reading_hiragana": "あいさつ",
+      "reading_ko": "아이사츠",
+      "meaning_ko": "인사",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "アルバイト",
+      "reading_hiragana": "アルバイト",
+      "reading_ko": "아루바이토",
+      "meaning_ko": "아르바이트",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "経験",
+      "reading_hiragana": "けいけん",
+      "reading_ko": "케-켄",
+      "meaning_ko": "경험",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "仕事",
+      "reading_hiragana": "しごと",
+      "reading_ko": "시고토",
+      "meaning_ko": "일, 직업",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "紹介",
+      "reading_hiragana": "しょうかい",
+      "reading_ko": "쇼-카이",
+      "meaning_ko": "소개",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "相談",
+      "reading_hiragana": "そうだん",
+      "reading_ko": "소-단",
+      "meaning_ko": "상담",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "予定",
+      "reading_hiragana": "よてい",
+      "reading_ko": "요테-",
+      "meaning_ko": "예정",
+      "pos": "명사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "予約",
+      "reading_hiragana": "よやく",
+      "reading_ko": "요야쿠",
+      "meaning_ko": "예약",
+      "pos": "명사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "約束",
+      "reading_hiragana": "やくそく",
+      "reading_ko": "야쿠소쿠",
+      "meaning_ko": "약속",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "関係",
+      "reading_hiragana": "かんけい",
+      "reading_ko": "칸케-",
+      "meaning_ko": "관계, 관련",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    }
+  ]
+}

@@ -1,0 +1,237 @@
+{
+  "situation_slug": "home_tour",
+  "jlpt_target": "N5",
+  "theme": "집 구경",
+  "lines": [
+    {
+      "line_order": 1,
+      "speaker": "npc",
+      "text_ja": "ここが私の家です。玄関から入ってください。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "코코가 와타시노 이에데스. 겐칸카라 하잇테쿠다사이",
+      "text_ko": "여기가 제 집이에요. 현관으로 들어오세요.",
+      "grammar_hint": "家(집), 玄関(현관). ～から入る = ~로 들어오다.",
+      "key_expressions": [
+        "家",
+        "玄関"
+      ]
+    },
+    {
+      "line_order": 2,
+      "speaker": "user",
+      "text_ja": "新しくてきれいなアパートですね。台所はどちらですか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "아타라시쿠테 키레-나 아파-토데스네. 다이도코로와 도치라데스카",
+      "text_ko": "새롭고 깨끗한 아파트네요. 부엌은 어디예요?",
+      "grammar_hint": "新しい(새롭다)→新しくて. アパート(아파트), 台所(부엌).",
+      "key_expressions": [
+        "新しい",
+        "アパート",
+        "台所"
+      ]
+    },
+    {
+      "line_order": 3,
+      "speaker": "npc",
+      "text_ja": "台所はここです。冷蔵庫とエアコンは新しいですよ。洗濯機はお風呂の隣です。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "다이도코로와 코코데스. 레-조-코토 에아콘와 아타라시-데스요. 센타쿠키와 오후로노 토나리데스",
+      "text_ko": "부엌은 여기예요. 냉장고와 에어컨은 새거예요. 세탁기는 욕실 옆이에요.",
+      "grammar_hint": "冷蔵庫(냉장고), エアコン(에어컨), 洗濯機(세탁기), お風呂(욕실).",
+      "key_expressions": [
+        "冷蔵庫",
+        "エアコン",
+        "洗濯機",
+        "お風呂"
+      ]
+    },
+    {
+      "line_order": 4,
+      "speaker": "user",
+      "text_ja": "トイレはきれいですね。庭もありますか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "토이레와 키레-데스네. 니와모 아리마스카",
+      "text_ko": "화장실은 깨끗하네요. 정원도 있어요?",
+      "grammar_hint": "トイレ(화장실), 庭(정원).",
+      "key_expressions": [
+        "トイレ",
+        "庭"
+      ]
+    },
+    {
+      "line_order": 5,
+      "speaker": "npc",
+      "text_ja": "小さい庭があります。近くに喫茶店やホテルもありますよ。プールは少し古いですが使えます。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "치-사이 니와가 아리마스. 치카쿠니 킷사텐야 호테루모 아리마스요. 푸-루와 스코시 후루이데스가 츠카에마스",
+      "text_ko": "작은 정원이 있어요. 가까이에 카페나 호텔도 있어요. 수영장은 좀 오래됐지만 쓸 수 있어요.",
+      "grammar_hint": "喫茶店(카페/찻집), ホテル(호텔), プール(수영장), 古い(오래되다).",
+      "key_expressions": [
+        "喫茶店",
+        "ホテル",
+        "プール",
+        "古い"
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word_ja": "家",
+      "reading_hiragana": "いえ",
+      "reading_ko": "이에",
+      "meaning_ko": "집",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "玄関",
+      "reading_hiragana": "げんかん",
+      "reading_ko": "겐칸",
+      "meaning_ko": "현관",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "新しい",
+      "reading_hiragana": "あたらしい",
+      "reading_ko": "아타라시-",
+      "meaning_ko": "새롭다",
+      "pos": "형용사",
+      "appears_in_lines": [
+        2,
+        3
+      ]
+    },
+    {
+      "word_ja": "アパート",
+      "reading_hiragana": "アパート",
+      "reading_ko": "아파-토",
+      "meaning_ko": "아파트",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "台所",
+      "reading_hiragana": "だいどころ",
+      "reading_ko": "다이도코로",
+      "meaning_ko": "부엌",
+      "pos": "명사",
+      "appears_in_lines": [
+        2,
+        3
+      ]
+    },
+    {
+      "word_ja": "冷蔵庫",
+      "reading_hiragana": "れいぞうこ",
+      "reading_ko": "레-조-코",
+      "meaning_ko": "냉장고",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "エアコン",
+      "reading_hiragana": "エアコン",
+      "reading_ko": "에아콘",
+      "meaning_ko": "에어컨",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "洗濯機",
+      "reading_hiragana": "せんたくき",
+      "reading_ko": "센타쿠키",
+      "meaning_ko": "세탁기",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "お風呂",
+      "reading_hiragana": "おふろ",
+      "reading_ko": "오후로",
+      "meaning_ko": "욕실, 목욕",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "トイレ",
+      "reading_hiragana": "トイレ",
+      "reading_ko": "토이레",
+      "meaning_ko": "화장실",
+      "pos": "명사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "庭",
+      "reading_hiragana": "にわ",
+      "reading_ko": "니와",
+      "meaning_ko": "정원, 마당",
+      "pos": "명사",
+      "appears_in_lines": [
+        4,
+        5
+      ]
+    },
+    {
+      "word_ja": "喫茶店",
+      "reading_hiragana": "きっさてん",
+      "reading_ko": "킷사텐",
+      "meaning_ko": "카페, 찻집",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "ホテル",
+      "reading_hiragana": "ホテル",
+      "reading_ko": "호테루",
+      "meaning_ko": "호텔",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "プール",
+      "reading_hiragana": "プール",
+      "reading_ko": "푸-루",
+      "meaning_ko": "수영장",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "古い",
+      "reading_hiragana": "ふるい",
+      "reading_ko": "후루이",
+      "meaning_ko": "오래되다, 낡다",
+      "pos": "형용사",
+      "appears_in_lines": [
+        5
+      ]
+    }
+  ]
+}

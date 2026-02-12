@@ -1,0 +1,161 @@
+{
+  "situation_slug": "cafe_v2",
+  "base_situation": "cafe",
+  "jlpt_target": "N5",
+  "theme": "날씨 이야기하면서 주문",
+  "lines": [
+    {
+      "line_order": 1,
+      "speaker": "npc",
+      "text_ja": "いらっしゃいませ。今日は暑いですね。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "이랏샤이마세. 쿄-와 아츠이데스네",
+      "text_ko": "어서 오세요. 오늘 덥죠.",
+      "grammar_hint": "暑い(덥다)는 기온이 높을 때 쓰는 형용사입니다. 寒い(춥다)가 반대말.",
+      "key_expressions": [
+        "暑い",
+        "ですね"
+      ]
+    },
+    {
+      "line_order": 2,
+      "speaker": "user",
+      "text_ja": "そうですね。昨日は雨でしたが、今日は天気がいいですね。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "소-데스네. 키노-와 아메데시타가, 쿄-와 텐키가 이-데스네",
+      "text_ko": "그러네요. 어제는 비가 왔는데, 오늘은 날씨가 좋네요.",
+      "grammar_hint": "天気(날씨)がいい는 '날씨가 좋다'. 雨(비)でした는 '비였다'.",
+      "key_expressions": [
+        "天気",
+        "雨"
+      ]
+    },
+    {
+      "line_order": 3,
+      "speaker": "npc",
+      "text_ja": "涼しいお飲み物はいかがですか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "스즈시- 오노미모노와 이카가데스카",
+      "text_ko": "시원한 음료는 어떠세요?",
+      "grammar_hint": "涼しい(시원하다)는 선선할 때. 飲み物(음료)는 飲む(마시다)+物(것).",
+      "key_expressions": [
+        "涼しい",
+        "飲み物"
+      ]
+    },
+    {
+      "line_order": 4,
+      "speaker": "user",
+      "text_ja": "コーヒーをお願いします。外の花が綺麗ですね。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "코-히-오 오네가이시마스. 소토노 하나가 키레-데스네",
+      "text_ko": "커피 부탁드려요. 밖의 꽃이 예쁘네요.",
+      "grammar_hint": "綺麗(예쁘다/깨끗하다)는 な형용사. 花(꽃)가 綺麗 = 꽃이 예쁘다.",
+      "key_expressions": [
+        "コーヒー",
+        "花",
+        "綺麗"
+      ]
+    },
+    {
+      "line_order": 5,
+      "speaker": "npc",
+      "text_ja": "ありがとうございます。風が気持ちいい季節ですね。少々お待ちください。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "아리가토-고자이마스. 카제가 키모치이- 키세츠데스네. 쇼-쇼- 오마치쿠다사이",
+      "text_ko": "감사합니다. 바람이 기분 좋은 계절이네요. 잠시만 기다려주세요.",
+      "grammar_hint": "風(바람)が気持ちいい = 바람이 기분 좋다. 季節(계절).",
+      "key_expressions": [
+        "風",
+        "気持ちいい"
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word_ja": "暑い",
+      "reading_hiragana": "あつい",
+      "reading_ko": "아츠이",
+      "meaning_ko": "덥다",
+      "pos": "형용사",
+      "appears_in_lines": [1]
+    },
+    {
+      "word_ja": "雨",
+      "reading_hiragana": "あめ",
+      "reading_ko": "아메",
+      "meaning_ko": "비",
+      "pos": "명사",
+      "appears_in_lines": [2]
+    },
+    {
+      "word_ja": "天気",
+      "reading_hiragana": "てんき",
+      "reading_ko": "텐키",
+      "meaning_ko": "날씨",
+      "pos": "명사",
+      "appears_in_lines": [2]
+    },
+    {
+      "word_ja": "涼しい",
+      "reading_hiragana": "すずしい",
+      "reading_ko": "스즈시-",
+      "meaning_ko": "시원하다, 선선하다",
+      "pos": "형용사",
+      "appears_in_lines": [3]
+    },
+    {
+      "word_ja": "飲み物",
+      "reading_hiragana": "のみもの",
+      "reading_ko": "노미모노",
+      "meaning_ko": "음료",
+      "pos": "명사",
+      "appears_in_lines": [3]
+    },
+    {
+      "word_ja": "コーヒー",
+      "reading_hiragana": "コーヒー",
+      "reading_ko": "코-히-",
+      "meaning_ko": "커피",
+      "pos": "명사",
+      "appears_in_lines": [4]
+    },
+    {
+      "word_ja": "花",
+      "reading_hiragana": "はな",
+      "reading_ko": "하나",
+      "meaning_ko": "꽃",
+      "pos": "명사",
+      "appears_in_lines": [4]
+    },
+    {
+      "word_ja": "綺麗",
+      "reading_hiragana": "きれい",
+      "reading_ko": "키레-",
+      "meaning_ko": "예쁘다, 깨끗하다",
+      "pos": "형용사(な)",
+      "appears_in_lines": [4]
+    },
+    {
+      "word_ja": "風",
+      "reading_hiragana": "かぜ",
+      "reading_ko": "카제",
+      "meaning_ko": "바람",
+      "pos": "명사",
+      "appears_in_lines": [5]
+    },
+    {
+      "word_ja": "気持ちいい",
+      "reading_hiragana": "きもちいい",
+      "reading_ko": "키모치이-",
+      "meaning_ko": "기분 좋다",
+      "pos": "형용사",
+      "appears_in_lines": [5]
+    }
+  ]
+}

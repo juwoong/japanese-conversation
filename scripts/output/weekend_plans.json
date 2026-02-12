@@ -1,0 +1,238 @@
+{
+  "situation_slug": "weekend_plans",
+  "jlpt_target": "N5",
+  "theme": "주말 계획 대화",
+  "lines": [
+    {
+      "line_order": 1,
+      "speaker": "npc",
+      "text_ja": "週末は暇ですか。何が好きですか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "슈-마츠와 히마데스카. 나니가 스키데스카",
+      "text_ko": "주말에 한가해요? 뭘 좋아해요?",
+      "grammar_hint": "暇(한가하다). 好き(좋아하다). 何が好き = 뭘 좋아해요?",
+      "key_expressions": [
+        "暇",
+        "好き"
+      ]
+    },
+    {
+      "line_order": 2,
+      "speaker": "user",
+      "text_ja": "泳ぐのが大好きです！プールで遊びたいと思います。散歩も楽しいですね。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "오요구노가 다이스키데스! 푸-루데 아소비타이토 오모이마스. 산포모 타노시-데스네",
+      "text_ko": "수영을 정말 좋아해요! 수영장에서 놀고 싶다고 생각해요. 산책도 재밌죠.",
+      "grammar_hint": "泳ぐ(수영하다), 大好き(정말 좋아하다), 遊ぶ(놀다), 思う(생각하다), 散歩(산책), 楽しい(즐겁다).",
+      "key_expressions": [
+        "泳ぐ",
+        "大好き",
+        "遊ぶ",
+        "思う",
+        "散歩する",
+        "楽しい"
+      ]
+    },
+    {
+      "line_order": 3,
+      "speaker": "npc",
+      "text_ja": "いいですね。私は映画が嫌いじゃないけど、面白い本を読むのが好きです。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "이-데스네. 와타시와 에-가가 키라이쟈나이케도, 오모시로이 혼오 요무노가 스키데스",
+      "text_ko": "좋네요. 저는 영화가 싫진 않지만, 재미있는 책을 읽는 게 좋아요.",
+      "grammar_hint": "嫌い(싫어하다)じゃない = 싫지 않다. 面白い(재미있다).",
+      "key_expressions": [
+        "嫌い",
+        "面白い"
+      ]
+    },
+    {
+      "line_order": 4,
+      "speaker": "user",
+      "text_ja": "友達に電話して、一緒に行こうと言いましょう。分かりますか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "토모다치니 덴와시테, 잇쇼니 이코-토 이이마쇼-. 와카리마스카",
+      "text_ko": "친구에게 전화해서, 같이 가자고 말해요. 알겠어요?",
+      "grammar_hint": "電話する(전화하다), 言う(말하다), 分かる(알다/이해하다).",
+      "key_expressions": [
+        "電話する",
+        "言う",
+        "分かる"
+      ]
+    },
+    {
+      "line_order": 5,
+      "speaker": "npc",
+      "text_ja": "はい、分かりました！友達を呼んで、みんなで遊びましょう。答えを待っていますね。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "하이, 와카리마시타! 토모다치오 욘데, 민나데 아소비마쇼-. 코타에오 맛테이마스네",
+      "text_ko": "네, 알겠어요! 친구를 불러서, 다 같이 놀아요. 대답을 기다릴게요.",
+      "grammar_hint": "呼ぶ(부르다), 答える(대답하다)→答え(대답).",
+      "key_expressions": [
+        "呼ぶ",
+        "答える"
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word_ja": "暇",
+      "reading_hiragana": "ひま",
+      "reading_ko": "히마",
+      "meaning_ko": "한가하다",
+      "pos": "형용사(な)",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "好き",
+      "reading_hiragana": "すき",
+      "reading_ko": "스키",
+      "meaning_ko": "좋아하다",
+      "pos": "형용사(な)",
+      "appears_in_lines": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "word_ja": "泳ぐ",
+      "reading_hiragana": "およぐ",
+      "reading_ko": "오요구",
+      "meaning_ko": "수영하다",
+      "pos": "동사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "大好き",
+      "reading_hiragana": "だいすき",
+      "reading_ko": "다이스키",
+      "meaning_ko": "매우 좋아하다",
+      "pos": "형용사(な)",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "遊ぶ",
+      "reading_hiragana": "あそぶ",
+      "reading_ko": "아소부",
+      "meaning_ko": "놀다",
+      "pos": "동사",
+      "appears_in_lines": [
+        2,
+        5
+      ]
+    },
+    {
+      "word_ja": "思う",
+      "reading_hiragana": "おもう",
+      "reading_ko": "오모우",
+      "meaning_ko": "생각하다",
+      "pos": "동사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "散歩する",
+      "reading_hiragana": "さんぽする",
+      "reading_ko": "산포스루",
+      "meaning_ko": "산책하다",
+      "pos": "동사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "楽しい",
+      "reading_hiragana": "たのしい",
+      "reading_ko": "타노시-",
+      "meaning_ko": "즐겁다",
+      "pos": "형용사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "嫌い",
+      "reading_hiragana": "きらい",
+      "reading_ko": "키라이",
+      "meaning_ko": "싫어하다",
+      "pos": "형용사(な)",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "面白い",
+      "reading_hiragana": "おもしろい",
+      "reading_ko": "오모시로이",
+      "meaning_ko": "재미있다",
+      "pos": "형용사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "電話する",
+      "reading_hiragana": "でんわする",
+      "reading_ko": "덴와스루",
+      "meaning_ko": "전화하다",
+      "pos": "동사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "言う",
+      "reading_hiragana": "いう",
+      "reading_ko": "이우",
+      "meaning_ko": "말하다",
+      "pos": "동사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "分かる",
+      "reading_hiragana": "わかる",
+      "reading_ko": "와카루",
+      "meaning_ko": "알다, 이해하다",
+      "pos": "동사",
+      "appears_in_lines": [
+        4,
+        5
+      ]
+    },
+    {
+      "word_ja": "呼ぶ",
+      "reading_hiragana": "よぶ",
+      "reading_ko": "요부",
+      "meaning_ko": "부르다",
+      "pos": "동사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "答える",
+      "reading_hiragana": "こたえる",
+      "reading_ko": "코타에루",
+      "meaning_ko": "대답하다",
+      "pos": "동사",
+      "appears_in_lines": [
+        5
+      ]
+    }
+  ]
+}

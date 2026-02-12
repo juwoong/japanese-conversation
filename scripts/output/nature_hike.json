@@ -1,0 +1,212 @@
+{
+  "situation_slug": "nature_hike",
+  "jlpt_target": "N5",
+  "theme": "자연 산책",
+  "lines": [
+    {
+      "line_order": 1,
+      "speaker": "npc",
+      "text_ja": "今日は晴れですね。空がきれいです。山に行きましょうか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "쿄-와 하레데스네. 소라가 키레-데스. 야마니 이키마쇼-카",
+      "text_ko": "오늘은 맑음이네요. 하늘이 예뻐요. 산에 갈까요?",
+      "grammar_hint": "晴れ(맑음), 空(하늘), 山(산).",
+      "key_expressions": [
+        "晴れ",
+        "空",
+        "山"
+      ]
+    },
+    {
+      "line_order": 2,
+      "speaker": "user",
+      "text_ja": "いいですね。川の近くを歩きたいです。木がたくさんありますか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "이-데스네. 카와노 치카쿠오 아루키타이데스. 키가 타쿠산 아리마스카",
+      "text_ko": "좋네요. 강 근처를 걷고 싶어요. 나무가 많이 있어요?",
+      "grammar_hint": "川(강), 木(나무). ~の近く = ~의 근처.",
+      "key_expressions": [
+        "川",
+        "木"
+      ]
+    },
+    {
+      "line_order": 3,
+      "speaker": "npc",
+      "text_ja": "はい、たくさんありますよ。海も見えます。曇りになる前に行きましょう。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "하이, 타쿠산 아리마스요. 우미모 미에마스. 쿠모리니 나루 마에니 이키마쇼-",
+      "text_ko": "네, 많이 있어요. 바다도 보여요. 흐려지기 전에 가요.",
+      "grammar_hint": "海(바다), 曇り(흐림). ~になる前に = ~되기 전에.",
+      "key_expressions": [
+        "海",
+        "曇り"
+      ]
+    },
+    {
+      "line_order": 4,
+      "speaker": "user",
+      "text_ja": "雪が降りそうですか。本当にきれいな場所ですね。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "유키가 후리소-데스카. 혼토-니 키레-나 바쇼데스네",
+      "text_ko": "눈이 올 것 같아요? 정말 예쁜 곳이네요.",
+      "grammar_hint": "雪(눈), 本当(정말)に. ~そう = ~일 것 같다.",
+      "key_expressions": [
+        "雪",
+        "本当"
+      ]
+    },
+    {
+      "line_order": 5,
+      "speaker": "npc",
+      "text_ja": "多分大丈夫ですよ。いつも時々ここに来ます。よく知っていますから。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "타분 다이죠-부데스요. 이츠모 토키도키 코코니 키마스. 요쿠 싯테이마스카라",
+      "text_ko": "아마 괜찮을 거예요. 항상 가끔 여기에 와요. 잘 알고 있으니까.",
+      "grammar_hint": "多分(아마), いつも(항상), 時々(가끔), よく(잘).",
+      "key_expressions": [
+        "多分",
+        "いつも",
+        "時々",
+        "よく"
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word_ja": "晴れ",
+      "reading_hiragana": "はれ",
+      "reading_ko": "하레",
+      "meaning_ko": "맑음",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "空",
+      "reading_hiragana": "そら",
+      "reading_ko": "소라",
+      "meaning_ko": "하늘",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "山",
+      "reading_hiragana": "やま",
+      "reading_ko": "야마",
+      "meaning_ko": "산",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "川",
+      "reading_hiragana": "かわ",
+      "reading_ko": "카와",
+      "meaning_ko": "강",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "木",
+      "reading_hiragana": "き",
+      "reading_ko": "키",
+      "meaning_ko": "나무",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "海",
+      "reading_hiragana": "うみ",
+      "reading_ko": "우미",
+      "meaning_ko": "바다",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "曇り",
+      "reading_hiragana": "くもり",
+      "reading_ko": "쿠모리",
+      "meaning_ko": "흐림",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "雪",
+      "reading_hiragana": "ゆき",
+      "reading_ko": "유키",
+      "meaning_ko": "눈",
+      "pos": "명사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "本当",
+      "reading_hiragana": "ほんとう",
+      "reading_ko": "혼토-",
+      "meaning_ko": "정말, 본당",
+      "pos": "명사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "多分",
+      "reading_hiragana": "たぶん",
+      "reading_ko": "타분",
+      "meaning_ko": "아마",
+      "pos": "부사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "いつも",
+      "reading_hiragana": "いつも",
+      "reading_ko": "이츠모",
+      "meaning_ko": "항상",
+      "pos": "부사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "時々",
+      "reading_hiragana": "ときどき",
+      "reading_ko": "토키도키",
+      "meaning_ko": "가끔",
+      "pos": "부사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "よく",
+      "reading_hiragana": "よく",
+      "reading_ko": "요쿠",
+      "meaning_ko": "잘, 자주",
+      "pos": "부사",
+      "appears_in_lines": [
+        5
+      ]
+    }
+  ]
+}

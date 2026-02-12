@@ -1,0 +1,201 @@
+{
+  "situation_slug": "daily_advanced_v1",
+  "jlpt_target": "N4",
+  "theme": "일상생활 확장 - 돈과 물건",
+  "lines": [
+    {
+      "line_order": 1,
+      "speaker": "user",
+      "text_ja": "家賃を払いましたか。お金が足りないかもしれません。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "야칭오 하라이마시타카. 오카네가 타리나이카모시레마셍",
+      "text_ko": "집세를 냈어요? 돈이 부족할 수도 있어요.",
+      "grammar_hint": "払う(내다/지불하다), 足りる(충분하다/족하다).",
+      "key_expressions": [
+        "払う",
+        "足りる"
+      ]
+    },
+    {
+      "line_order": 2,
+      "speaker": "npc",
+      "text_ja": "まだです。出費が増えて、貯金が減りました。もう少し足さないと。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "마다데스. 슛피가 후에테, 쵸킨가 헤리마시타. 모-스코시 타사나이토",
+      "text_ko": "아직이에요. 지출이 늘어서, 저금이 줄었어요. 좀 더 보태야 해요.",
+      "grammar_hint": "増える(늘다), 減る(줄다), 足す(더하다/보태다).",
+      "key_expressions": [
+        "増える",
+        "減る",
+        "足す"
+      ]
+    },
+    {
+      "line_order": 3,
+      "speaker": "user",
+      "text_ja": "古いものを捨てましょう。いいものを拾ったら使えますよ。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "후루이 모노오 스테마쇼-. 이-모노오 히롯타라 츠카에마스요",
+      "text_ko": "오래된 걸 버려요. 좋은 걸 주우면 쓸 수 있어요.",
+      "grammar_hint": "捨てる(버리다), 拾う(줍다). ~たら = ~하면.",
+      "key_expressions": [
+        "捨てる",
+        "拾う"
+      ]
+    },
+    {
+      "line_order": 4,
+      "speaker": "npc",
+      "text_ja": "片付けてから、届け出を書きましょう。荷物も届けないと。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "카타즈케테카라, 토도케데오 카키마쇼-. 니모츠모 토도케나이토",
+      "text_ko": "정리한 다음, 신고서를 쓰죠. 짐도 전달해야 해요.",
+      "grammar_hint": "片付ける(정리하다), 届け出(신고서), 届ける(전달하다/배달하다).",
+      "key_expressions": [
+        "片付ける",
+        "届け出",
+        "届ける"
+      ]
+    },
+    {
+      "line_order": 5,
+      "speaker": "user",
+      "text_ja": "分かりました。洗濯物も集めておきます。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "와카리마시타. 센타쿠모노모 아츠메테오키마스",
+      "text_ko": "알겠어요. 빨래도 모아둘게요.",
+      "grammar_hint": "洗濯物(빨래), 集める(모으다). ~ておく = ~해 두다.",
+      "key_expressions": [
+        "洗濯物",
+        "集める"
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word_ja": "払う",
+      "reading_hiragana": "はらう",
+      "reading_ko": "하라우",
+      "meaning_ko": "지불하다",
+      "pos": "동사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "足りる",
+      "reading_hiragana": "たりる",
+      "reading_ko": "타리루",
+      "meaning_ko": "충분하다, 족하다",
+      "pos": "동사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "増える",
+      "reading_hiragana": "ふえる",
+      "reading_ko": "후에루",
+      "meaning_ko": "늘다, 증가하다",
+      "pos": "동사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "減る",
+      "reading_hiragana": "へる",
+      "reading_ko": "헤루",
+      "meaning_ko": "줄다, 감소하다",
+      "pos": "동사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "足す",
+      "reading_hiragana": "たす",
+      "reading_ko": "타스",
+      "meaning_ko": "더하다, 보태다",
+      "pos": "동사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "捨てる",
+      "reading_hiragana": "すてる",
+      "reading_ko": "스테루",
+      "meaning_ko": "버리다",
+      "pos": "동사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "拾う",
+      "reading_hiragana": "ひろう",
+      "reading_ko": "히로우",
+      "meaning_ko": "줍다",
+      "pos": "동사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "片付ける",
+      "reading_hiragana": "かたづける",
+      "reading_ko": "카타즈케루",
+      "meaning_ko": "정리하다",
+      "pos": "동사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "届け出",
+      "reading_hiragana": "とどけで",
+      "reading_ko": "토도케데",
+      "meaning_ko": "신고서",
+      "pos": "명사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "届ける",
+      "reading_hiragana": "とどける",
+      "reading_ko": "토도케루",
+      "meaning_ko": "전달하다, 배달하다",
+      "pos": "동사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "洗濯物",
+      "reading_hiragana": "せんたくもの",
+      "reading_ko": "센타쿠모노",
+      "meaning_ko": "빨래, 세탁물",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "集める",
+      "reading_hiragana": "あつめる",
+      "reading_ko": "아츠메루",
+      "meaning_ko": "모으다",
+      "pos": "동사",
+      "appears_in_lines": [
+        5
+      ]
+    }
+  ]
+}

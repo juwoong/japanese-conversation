@@ -1,0 +1,234 @@
+{
+  "situation_slug": "question_practice",
+  "jlpt_target": "N5",
+  "theme": "의문사 연습",
+  "lines": [
+    {
+      "line_order": 1,
+      "speaker": "npc",
+      "text_ja": "誰が来ますか。いつ始まりますか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "다레가 키마스카. 이츠 하지마리마스카",
+      "text_ko": "누가 와요? 언제 시작해요?",
+      "grammar_hint": "誰(누구), いつ(언제). 疑問詞+が/は+動詞.",
+      "key_expressions": [
+        "誰",
+        "いつ"
+      ]
+    },
+    {
+      "line_order": 2,
+      "speaker": "user",
+      "text_ja": "どの本ですか。どれが正しいか分かりません。ちょっと待ってください。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "도노 혼데스카. 도레가 타다시이카 와카리마셍. 쵸또 맛테쿠다사이",
+      "text_ko": "어느 책이에요? 어느 것이 맞는지 모르겠어요. 잠깐만요.",
+      "grammar_hint": "どの(어느/관형), どれ(어느 것/대명사), ちょっと(잠깐, 좀).",
+      "key_expressions": [
+        "どの",
+        "どれ",
+        "ちょっと"
+      ]
+    },
+    {
+      "line_order": 3,
+      "speaker": "npc",
+      "text_ja": "りんごはいくつ買いましたか。なぜそんなにたくさん買ったんですか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "링고와 이쿠츠 카이마시타카. 나제 손나니 타쿠산 캇탄데스카",
+      "text_ko": "사과는 몇 개 샀어요? 왜 그렇게 많이 샀어요?",
+      "grammar_hint": "いくつ(몇 개), なぜ(왜), たくさん(많이).",
+      "key_expressions": [
+        "いくつ",
+        "なぜ",
+        "たくさん"
+      ]
+    },
+    {
+      "line_order": 4,
+      "speaker": "user",
+      "text_ja": "どうして聞くんですか。全部で十個です。だから安かったんです。そして友達にもあげます。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "도-시테 키쿤데스카. 젠부데 쥬-코데스. 다카라 야스캇탄데스. 소시테 토모다치니모 아게마스",
+      "text_ko": "왜 물어봐요? 전부 10개예요. 그래서 싸게 샀어요. 그리고 친구에게도 줄 거예요.",
+      "grammar_hint": "どうして(왜), 全部(전부), だから(그래서), そして(그리고).",
+      "key_expressions": [
+        "どうして",
+        "全部",
+        "だから",
+        "そして"
+      ]
+    },
+    {
+      "line_order": 5,
+      "speaker": "npc",
+      "text_ja": "そうですか。それからまだ何か買いますか。もう帰りましょうか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "소-데스카. 소레카라 마다 나니카 카이마스카. 모- 카에리마쇼-카",
+      "text_ko": "그래요? 그다음에 아직 뭔가 사요? 이제 돌아갈까요?",
+      "grammar_hint": "それから(그리고 나서), まだ(아직), もう(이제/벌써).",
+      "key_expressions": [
+        "それから",
+        "まだ",
+        "もう"
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word_ja": "誰",
+      "reading_hiragana": "だれ",
+      "reading_ko": "다레",
+      "meaning_ko": "누구",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "いつ",
+      "reading_hiragana": "いつ",
+      "reading_ko": "이츠",
+      "meaning_ko": "언제",
+      "pos": "부사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "どの",
+      "reading_hiragana": "どの",
+      "reading_ko": "도노",
+      "meaning_ko": "어느 (관형사)",
+      "pos": "연체사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "どれ",
+      "reading_hiragana": "どれ",
+      "reading_ko": "도레",
+      "meaning_ko": "어느 것",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "ちょっと",
+      "reading_hiragana": "ちょっと",
+      "reading_ko": "쵸또",
+      "meaning_ko": "잠깐, 좀",
+      "pos": "부사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "いくつ",
+      "reading_hiragana": "いくつ",
+      "reading_ko": "이쿠츠",
+      "meaning_ko": "몇 개, 몇 살",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "なぜ",
+      "reading_hiragana": "なぜ",
+      "reading_ko": "나제",
+      "meaning_ko": "왜",
+      "pos": "부사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "たくさん",
+      "reading_hiragana": "たくさん",
+      "reading_ko": "타쿠산",
+      "meaning_ko": "많이",
+      "pos": "부사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "どうして",
+      "reading_hiragana": "どうして",
+      "reading_ko": "도-시테",
+      "meaning_ko": "왜",
+      "pos": "부사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "全部",
+      "reading_hiragana": "ぜんぶ",
+      "reading_ko": "젠부",
+      "meaning_ko": "전부",
+      "pos": "명사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "だから",
+      "reading_hiragana": "だから",
+      "reading_ko": "다카라",
+      "meaning_ko": "그래서",
+      "pos": "접속사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "そして",
+      "reading_hiragana": "そして",
+      "reading_ko": "소시테",
+      "meaning_ko": "그리고",
+      "pos": "접속사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "それから",
+      "reading_hiragana": "それから",
+      "reading_ko": "소레카라",
+      "meaning_ko": "그리고 나서",
+      "pos": "접속사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "まだ",
+      "reading_hiragana": "まだ",
+      "reading_ko": "마다",
+      "meaning_ko": "아직",
+      "pos": "부사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "もう",
+      "reading_hiragana": "もう",
+      "reading_ko": "모-",
+      "meaning_ko": "이제, 벌써",
+      "pos": "부사",
+      "appears_in_lines": [
+        5
+      ]
+    }
+  ]
+}

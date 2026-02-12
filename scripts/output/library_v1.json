@@ -1,0 +1,223 @@
+{
+  "situation_slug": "library_v1",
+  "jlpt_target": "N5",
+  "theme": "도서관에서 빌리기",
+  "lines": [
+    {
+      "line_order": 1,
+      "speaker": "user",
+      "text_ja": "すみません、辞書を借りたいです。雑誌も借りられますか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "스미마센, 지쇼오 카리타이데스. 잣시모 카리라레마스카",
+      "text_ko": "실례합니다, 사전을 빌리고 싶어요. 잡지도 빌릴 수 있나요?",
+      "grammar_hint": "辞書(사전)を借りる(빌리다). 雑誌(잡지)も借りられる = 빌릴 수 있다.",
+      "key_expressions": [
+        "辞書",
+        "借りる",
+        "雑誌"
+      ]
+    },
+    {
+      "line_order": 2,
+      "speaker": "npc",
+      "text_ja": "はい、二週間貸しますよ。忘れないで返してくださいね。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "하이, 니슈-칸 카시마스요. 와스레나이데 카에시테쿠다사이네",
+      "text_ko": "네, 2주간 빌려드려요. 잊지 말고 돌려주세요.",
+      "grammar_hint": "貸す(빌려주다), 忘れる(잊다)→忘れないで, 返す(돌려주다).",
+      "key_expressions": [
+        "貸す",
+        "忘れる",
+        "返す"
+      ]
+    },
+    {
+      "line_order": 3,
+      "speaker": "user",
+      "text_ja": "分かりました。この本は易しいですか、難しいですか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "와카리마시타. 코노 혼와 야사시-데스카, 무즈카시-데스카",
+      "text_ko": "알겠어요. 이 책은 쉬워요, 어려워요?",
+      "grammar_hint": "易しい(쉽다)↔難しい(어렵다).",
+      "key_expressions": [
+        "易しい"
+      ]
+    },
+    {
+      "line_order": 4,
+      "speaker": "npc",
+      "text_ja": "短い物語ですから、覚えやすいですよ。かばんに入りますか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "미지카이 모노가타리데스카라, 오보에야스이데스요. 카반니 하이리마스카",
+      "text_ko": "짧은 이야기니까, 외우기 쉬워요. 가방에 들어가요?",
+      "grammar_hint": "短い(짧다), 覚える(외우다/기억하다), かばん(가방).",
+      "key_expressions": [
+        "短い",
+        "覚える",
+        "かばん"
+      ]
+    },
+    {
+      "line_order": 5,
+      "speaker": "user",
+      "text_ja": "入ります。長い本は重いですから、カメラと一緒に持てません。知りませんでした。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "하이리마스. 나가이 혼와 오모이데스카라, 카메라토 잇쇼니 모테마셍. 시리마셍데시타",
+      "text_ko": "들어가요. 긴 책은 무거우니까, 카메라와 함께 못 들어요. 몰랐어요.",
+      "grammar_hint": "長い(길다), 重い(무겁다), カメラ(카메라), 知る(알다).",
+      "key_expressions": [
+        "長い",
+        "重い",
+        "カメラ",
+        "知る"
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word_ja": "辞書",
+      "reading_hiragana": "じしょ",
+      "reading_ko": "지쇼",
+      "meaning_ko": "사전",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "借りる",
+      "reading_hiragana": "かりる",
+      "reading_ko": "카리루",
+      "meaning_ko": "빌리다",
+      "pos": "동사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "雑誌",
+      "reading_hiragana": "ざっし",
+      "reading_ko": "잣시",
+      "meaning_ko": "잡지",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "貸す",
+      "reading_hiragana": "かす",
+      "reading_ko": "카스",
+      "meaning_ko": "빌려주다",
+      "pos": "동사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "忘れる",
+      "reading_hiragana": "わすれる",
+      "reading_ko": "와스레루",
+      "meaning_ko": "잊다",
+      "pos": "동사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "返す",
+      "reading_hiragana": "かえす",
+      "reading_ko": "카에스",
+      "meaning_ko": "돌려주다",
+      "pos": "동사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "易しい",
+      "reading_hiragana": "やさしい",
+      "reading_ko": "야사시-",
+      "meaning_ko": "쉽다",
+      "pos": "형용사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "短い",
+      "reading_hiragana": "みじかい",
+      "reading_ko": "미지카이",
+      "meaning_ko": "짧다",
+      "pos": "형용사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "覚える",
+      "reading_hiragana": "おぼえる",
+      "reading_ko": "오보에루",
+      "meaning_ko": "외우다, 기억하다",
+      "pos": "동사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "かばん",
+      "reading_hiragana": "かばん",
+      "reading_ko": "카반",
+      "meaning_ko": "가방",
+      "pos": "명사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "長い",
+      "reading_hiragana": "ながい",
+      "reading_ko": "나가이",
+      "meaning_ko": "길다",
+      "pos": "형용사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "重い",
+      "reading_hiragana": "おもい",
+      "reading_ko": "오모이",
+      "meaning_ko": "무겁다",
+      "pos": "형용사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "カメラ",
+      "reading_hiragana": "カメラ",
+      "reading_ko": "카메라",
+      "meaning_ko": "카메라",
+      "pos": "명사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "知る",
+      "reading_hiragana": "しる",
+      "reading_ko": "시루",
+      "meaning_ko": "알다",
+      "pos": "동사",
+      "appears_in_lines": [
+        5
+      ]
+    }
+  ]
+}

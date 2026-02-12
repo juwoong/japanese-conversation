@@ -1,0 +1,192 @@
+{
+  "situation_slug": "transport_advanced",
+  "jlpt_target": "N4",
+  "theme": "확장 이동 표현",
+  "lines": [
+    {
+      "line_order": 1,
+      "speaker": "user",
+      "text_ja": "空港までどう行きますか。急行と特急、どちらが速いですか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "쿠-코-마데 도- 이키마스카. 큐-코-토 톳큐-, 도치라가 하야이데스카",
+      "text_ko": "공항까지 어떻게 가요? 급행과 특급, 어느 쪽이 빨라요?",
+      "grammar_hint": "空港(공항), 急行(급행), 特急(특급).",
+      "key_expressions": [
+        "空港",
+        "急行",
+        "特急"
+      ]
+    },
+    {
+      "line_order": 2,
+      "speaker": "npc",
+      "text_ja": "特急が速いですよ。飛行場は島の近くにあります。港からも行けます。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "톳큐-가 하야이데스요. 히코-죠-와 시마노 치카쿠니 아리마스. 미나토카라모 이케마스",
+      "text_ko": "특급이 빨라요. 비행장은 섬 가까이에 있어요. 항구에서도 갈 수 있어요.",
+      "grammar_hint": "飛行場(비행장), 島(섬), 港(항구).",
+      "key_expressions": [
+        "飛行場",
+        "島",
+        "港"
+      ]
+    },
+    {
+      "line_order": 3,
+      "speaker": "user",
+      "text_ja": "乗り換えはありますか。坂が多いですか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "노리카에와 아리마스카. 사카가 오-이데스카",
+      "text_ko": "환승이 있어요? 언덕이 많아요?",
+      "grammar_hint": "乗り換え(환승), 坂(언덕/비탈).",
+      "key_expressions": [
+        "乗り換え",
+        "坂"
+      ]
+    },
+    {
+      "line_order": 4,
+      "speaker": "npc",
+      "text_ja": "一回乗り換えます。この道を通って、先に進んでください。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "잇카이 노리카에마스. 코노 미치오 토-테, 사키니 스스운데쿠다사이",
+      "text_ko": "한 번 환승해요. 이 길을 지나서, 앞으로 나아가세요.",
+      "grammar_hint": "通る(지나가다), 進む(나아가다).",
+      "key_expressions": [
+        "通る",
+        "進む"
+      ]
+    },
+    {
+      "line_order": 5,
+      "speaker": "user",
+      "text_ja": "分かりました。間違えたら戻りますね。ありがとうございます。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "와카리마시타. 마치가에타라 모도리마스네. 아리가토-고자이마스",
+      "text_ko": "알겠어요. 틀리면 돌아올게요. 감사합니다.",
+      "grammar_hint": "戻る(돌아가다). ~たら = ~하면.",
+      "key_expressions": [
+        "戻る"
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word_ja": "空港",
+      "reading_hiragana": "くうこう",
+      "reading_ko": "쿠-코-",
+      "meaning_ko": "공항",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "急行",
+      "reading_hiragana": "きゅうこう",
+      "reading_ko": "큐-코-",
+      "meaning_ko": "급행",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "特急",
+      "reading_hiragana": "とっきゅう",
+      "reading_ko": "톳큐-",
+      "meaning_ko": "특급",
+      "pos": "명사",
+      "appears_in_lines": [
+        1,
+        2
+      ]
+    },
+    {
+      "word_ja": "飛行場",
+      "reading_hiragana": "ひこうじょう",
+      "reading_ko": "히코-죠-",
+      "meaning_ko": "비행장",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "島",
+      "reading_hiragana": "しま",
+      "reading_ko": "시마",
+      "meaning_ko": "섬",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "港",
+      "reading_hiragana": "みなと",
+      "reading_ko": "미나토",
+      "meaning_ko": "항구",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "乗り換え",
+      "reading_hiragana": "のりかえ",
+      "reading_ko": "노리카에",
+      "meaning_ko": "환승",
+      "pos": "명사",
+      "appears_in_lines": [
+        3,
+        4
+      ]
+    },
+    {
+      "word_ja": "坂",
+      "reading_hiragana": "さか",
+      "reading_ko": "사카",
+      "meaning_ko": "언덕, 비탈",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "通る",
+      "reading_hiragana": "とおる",
+      "reading_ko": "토-루",
+      "meaning_ko": "지나가다",
+      "pos": "동사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "進む",
+      "reading_hiragana": "すすむ",
+      "reading_ko": "스스무",
+      "meaning_ko": "나아가다",
+      "pos": "동사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "戻る",
+      "reading_hiragana": "もどる",
+      "reading_ko": "모도루",
+      "meaning_ko": "돌아가다, 되돌아가다",
+      "pos": "동사",
+      "appears_in_lines": [
+        5
+      ]
+    }
+  ]
+}

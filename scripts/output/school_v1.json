@@ -1,0 +1,245 @@
+{
+  "situation_slug": "school_v1",
+  "jlpt_target": "N5",
+  "theme": "학교 요일별 수업",
+  "lines": [
+    {
+      "line_order": 1,
+      "speaker": "npc",
+      "text_ja": "学校へようこそ。私は先生の田中です。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "각코-에 요-코소. 와타시와 센세-노 타나카데스",
+      "text_ko": "학교에 오신 것을 환영합니다. 저는 선생님 타나카입니다.",
+      "grammar_hint": "学校(학교)へようこそ = 학교에 오신 걸 환영합니다. 先生(선생님).",
+      "key_expressions": [
+        "学校",
+        "先生"
+      ]
+    },
+    {
+      "line_order": 2,
+      "speaker": "user",
+      "text_ja": "学生の金です。火曜日と水曜日に日本語を勉強します。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "가쿠세-노 키무데스. 카요-비토 스이요-비니 니홍고오 벤쿄-시마스",
+      "text_ko": "학생 김입니다. 화요일과 수요일에 일본어를 공부해요.",
+      "grammar_hint": "学生(학생). 火曜日(화요일), 水曜日(수요일). 勉強する(공부하다).",
+      "key_expressions": [
+        "学生",
+        "火曜日",
+        "水曜日",
+        "勉強する"
+      ]
+    },
+    {
+      "line_order": 3,
+      "speaker": "npc",
+      "text_ja": "金曜日は漢字を教えます。ノートと鉛筆を持ってきてください。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "킨요-비와 칸지오 오시에마스. 노-토토 엔피츠오 못테키테쿠다사이",
+      "text_ko": "금요일에는 한자를 가르칩니다. 노트와 연필을 가져와 주세요.",
+      "grammar_hint": "教える(가르치다). ノート(노트), 鉛筆(연필)を持ってくる = 가져오다.",
+      "key_expressions": [
+        "金曜日",
+        "教える",
+        "ノート",
+        "鉛筆"
+      ]
+    },
+    {
+      "line_order": 4,
+      "speaker": "user",
+      "text_ja": "土曜日と日曜日は休みですか。ペンで書いてもいいですか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "도요-비토 니치요-비와 야스미데스카. 펜데 카이테모 이-데스카",
+      "text_ko": "토요일과 일요일은 쉬나요? 펜으로 써도 되나요?",
+      "grammar_hint": "土曜日(토요일), 日曜日(일요일). ペン(펜)で書く(쓰다) = 펜으로 쓰다.",
+      "key_expressions": [
+        "土曜日",
+        "日曜日",
+        "ペン"
+      ]
+    },
+    {
+      "line_order": 5,
+      "speaker": "npc",
+      "text_ja": "はい、週末は休みです。分からないことは質問してくださいね。習うことがたくさんありますよ。練習も大切です。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "하이, 슈-마츠와 야스미데스. 와카라나이코토와 시츠몬시테쿠다사이네. 나라우코토가 타쿠산 아리마스요. 렌슈-모 타이세츠데스",
+      "text_ko": "네, 주말은 쉽니다. 모르는 건 질문해 주세요. 배울 것이 많아요. 연습도 중요해요.",
+      "grammar_hint": "質問する(질문하다), 習う(배우다), 練習(연습)も大切(중요).",
+      "key_expressions": [
+        "質問する",
+        "習う",
+        "練習する"
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word_ja": "学校",
+      "reading_hiragana": "がっこう",
+      "reading_ko": "각코-",
+      "meaning_ko": "학교",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "先生",
+      "reading_hiragana": "せんせい",
+      "reading_ko": "센세-",
+      "meaning_ko": "선생님",
+      "pos": "명사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "学生",
+      "reading_hiragana": "がくせい",
+      "reading_ko": "가쿠세-",
+      "meaning_ko": "학생",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "火曜日",
+      "reading_hiragana": "かようび",
+      "reading_ko": "카요-비",
+      "meaning_ko": "화요일",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "水曜日",
+      "reading_hiragana": "すいようび",
+      "reading_ko": "스이요-비",
+      "meaning_ko": "수요일",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "勉強する",
+      "reading_hiragana": "べんきょうする",
+      "reading_ko": "벤쿄-스루",
+      "meaning_ko": "공부하다",
+      "pos": "동사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "金曜日",
+      "reading_hiragana": "きんようび",
+      "reading_ko": "킨요-비",
+      "meaning_ko": "금요일",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "教える",
+      "reading_hiragana": "おしえる",
+      "reading_ko": "오시에루",
+      "meaning_ko": "가르치다",
+      "pos": "동사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "ノート",
+      "reading_hiragana": "ノート",
+      "reading_ko": "노-토",
+      "meaning_ko": "노트",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "鉛筆",
+      "reading_hiragana": "えんぴつ",
+      "reading_ko": "엔피츠",
+      "meaning_ko": "연필",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "土曜日",
+      "reading_hiragana": "どようび",
+      "reading_ko": "도요-비",
+      "meaning_ko": "토요일",
+      "pos": "명사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "日曜日",
+      "reading_hiragana": "にちようび",
+      "reading_ko": "니치요-비",
+      "meaning_ko": "일요일",
+      "pos": "명사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "ペン",
+      "reading_hiragana": "ペン",
+      "reading_ko": "펜",
+      "meaning_ko": "펜",
+      "pos": "명사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "質問する",
+      "reading_hiragana": "しつもんする",
+      "reading_ko": "시츠몬스루",
+      "meaning_ko": "질문하다",
+      "pos": "동사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "習う",
+      "reading_hiragana": "ならう",
+      "reading_ko": "나라우",
+      "meaning_ko": "배우다",
+      "pos": "동사",
+      "appears_in_lines": [
+        5
+      ]
+    },
+    {
+      "word_ja": "練習する",
+      "reading_hiragana": "れんしゅうする",
+      "reading_ko": "렌슈-스루",
+      "meaning_ko": "연습하다",
+      "pos": "동사",
+      "appears_in_lines": [
+        5
+      ]
+    }
+  ]
+}

@@ -1,0 +1,227 @@
+{
+  "situation_slug": "room_actions",
+  "jlpt_target": "N5",
+  "theme": "방 안 동작",
+  "lines": [
+    {
+      "line_order": 1,
+      "speaker": "npc",
+      "text_ja": "入ってください。ドアを開けて、中に座ってください。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "하잇테쿠다사이. 도아오 아케테, 나카니 스왓테쿠다사이",
+      "text_ko": "들어오세요. 문을 열고, 안에 앉아주세요.",
+      "grammar_hint": "入る(들어가다), ドア(문)を開ける(열다), 座る(앉다).",
+      "key_expressions": [
+        "入る",
+        "ドア",
+        "開ける",
+        "座る"
+      ]
+    },
+    {
+      "line_order": 2,
+      "speaker": "user",
+      "text_ja": "テレビを付けてもいいですか。机の上に本を置きます。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "테레비오 츠케테모 이-데스카. 츠쿠에노 우에니 혼오 오키마스",
+      "text_ko": "TV 켜도 되나요? 책상 위에 책을 놓을게요.",
+      "grammar_hint": "テレビ(TV)を付ける(켜다). 机(책상)の上に = 책상 위에.",
+      "key_expressions": [
+        "テレビ",
+        "付ける",
+        "机"
+      ]
+    },
+    {
+      "line_order": 3,
+      "speaker": "npc",
+      "text_ja": "どうぞ。暗いから窓を開けましょう。ベッドの上に立たないでくださいね。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "도-조. 쿠라이카라 마도오 아케마쇼-. 벳도노 우에니 타타나이데쿠다사이네",
+      "text_ko": "그러세요. 어두우니까 창문을 열어요. 침대 위에 서지 마세요.",
+      "grammar_hint": "窓(창문), ベッド(침대), 立つ(서다). 立たないで = 서지 마세요.",
+      "key_expressions": [
+        "窓",
+        "ベッド",
+        "立つ"
+      ]
+    },
+    {
+      "line_order": 4,
+      "speaker": "user",
+      "text_ja": "はい。テーブルの上も片付けますね。出かける前にテレビを消しますか。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "하이. 테-부루노 우에모 카타즈케마스네. 데카케루 마에니 테레비오 케시마스카",
+      "text_ko": "네. 테이블 위도 정리할게요. 나가기 전에 TV 끌까요?",
+      "grammar_hint": "テーブル(테이블), 出かける(나가다), 消す(끄다).",
+      "key_expressions": [
+        "テーブル",
+        "出かける",
+        "消す"
+      ]
+    },
+    {
+      "line_order": 5,
+      "speaker": "npc",
+      "text_ja": "はい、消してください。ドアも閉めてくださいね。",
+      "text_ja_male": null,
+      "text_ja_female": null,
+      "pronunciation_ko": "하이, 케시테쿠다사이. 도아모 시메테쿠다사이네",
+      "text_ko": "네, 꺼주세요. 문도 닫아주세요.",
+      "grammar_hint": "閉める(닫다)→閉めて. 消す(끄다)→消して.",
+      "key_expressions": [
+        "閉める"
+      ]
+    }
+  ],
+  "vocabulary": [
+    {
+      "word_ja": "入る",
+      "reading_hiragana": "はいる",
+      "reading_ko": "하이루",
+      "meaning_ko": "들어가다",
+      "pos": "동사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "ドア",
+      "reading_hiragana": "ドア",
+      "reading_ko": "도아",
+      "meaning_ko": "문",
+      "pos": "명사",
+      "appears_in_lines": [
+        1,
+        5
+      ]
+    },
+    {
+      "word_ja": "開ける",
+      "reading_hiragana": "あける",
+      "reading_ko": "아케루",
+      "meaning_ko": "열다",
+      "pos": "동사",
+      "appears_in_lines": [
+        1,
+        3
+      ]
+    },
+    {
+      "word_ja": "座る",
+      "reading_hiragana": "すわる",
+      "reading_ko": "스와루",
+      "meaning_ko": "앉다",
+      "pos": "동사",
+      "appears_in_lines": [
+        1
+      ]
+    },
+    {
+      "word_ja": "テレビ",
+      "reading_hiragana": "テレビ",
+      "reading_ko": "테레비",
+      "meaning_ko": "텔레비전",
+      "pos": "명사",
+      "appears_in_lines": [
+        2,
+        4
+      ]
+    },
+    {
+      "word_ja": "付ける",
+      "reading_hiragana": "つける",
+      "reading_ko": "츠케루",
+      "meaning_ko": "켜다, 붙이다",
+      "pos": "동사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "机",
+      "reading_hiragana": "つくえ",
+      "reading_ko": "츠쿠에",
+      "meaning_ko": "책상",
+      "pos": "명사",
+      "appears_in_lines": [
+        2
+      ]
+    },
+    {
+      "word_ja": "窓",
+      "reading_hiragana": "まど",
+      "reading_ko": "마도",
+      "meaning_ko": "창문",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "ベッド",
+      "reading_hiragana": "ベッド",
+      "reading_ko": "벳도",
+      "meaning_ko": "침대",
+      "pos": "명사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "立つ",
+      "reading_hiragana": "たつ",
+      "reading_ko": "타츠",
+      "meaning_ko": "서다",
+      "pos": "동사",
+      "appears_in_lines": [
+        3
+      ]
+    },
+    {
+      "word_ja": "テーブル",
+      "reading_hiragana": "テーブル",
+      "reading_ko": "테-부루",
+      "meaning_ko": "테이블",
+      "pos": "명사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "出かける",
+      "reading_hiragana": "でかける",
+      "reading_ko": "데카케루",
+      "meaning_ko": "외출하다",
+      "pos": "동사",
+      "appears_in_lines": [
+        4
+      ]
+    },
+    {
+      "word_ja": "消す",
+      "reading_hiragana": "けす",
+      "reading_ko": "케스",
+      "meaning_ko": "끄다",
+      "pos": "동사",
+      "appears_in_lines": [
+        4,
+        5
+      ]
+    },
+    {
+      "word_ja": "閉める",
+      "reading_hiragana": "しめる",
+      "reading_ko": "시메루",
+      "meaning_ko": "닫다",
+      "pos": "동사",
+      "appears_in_lines": [
+        5
+      ]
+    }
+  ]
+}
