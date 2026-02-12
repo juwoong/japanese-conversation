@@ -12,7 +12,8 @@ import * as Speech from "expo-speech";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { supabase } from "../lib/supabase";
 import type { RootStackParamList } from "../types";
-import { colors, shadows } from "../constants/theme";
+import { colors } from "../constants/theme";
+import { MaterialIcons } from "@expo/vector-icons";
 import LoadingScreen from "../components/LoadingScreen";
 import BackHeader from "../components/BackHeader";
 
@@ -29,17 +30,17 @@ interface VocabWord {
 }
 
 const POS_COLORS: Record<string, string> = {
-  "명사": "#6366f1",
-  "동사": "#10b981",
-  "형용사": "#f59e0b",
-  "부사": "#ec4899",
-  "조사": "#8b5cf6",
-  "접속사": "#06b6d4",
-  "감탄사": "#f97316",
-  "조동사": "#14b8a6",
+  "명사": colors.primary,
+  "동사": colors.success,
+  "형용사": colors.warning,
+  "부사": "#C76B8A",
+  "조사": colors.secondary,
+  "접속사": "#5A9EBF",
+  "감탄사": "#D98A5B",
+  "조동사": "#6BAA8A",
 };
 
-const POS_DEFAULT_COLOR = "#64748b";
+const POS_DEFAULT_COLOR = colors.textMuted;
 
 export default function VocabularyScreen({ navigation }: Props) {
   const [words, setWords] = useState<VocabWord[]>([]);
@@ -142,9 +143,11 @@ export default function VocabularyScreen({ navigation }: Props) {
           <View style={[styles.posBadge, { backgroundColor: getPosColor(item.pos) + "18" }]}>
             <Text style={[styles.posText, { color: getPosColor(item.pos) }]}>{item.pos}</Text>
           </View>
-          <Text style={styles.speakerIcon}>
-            {speakingId === item.id ? "🔊" : "🔈"}
-          </Text>
+          <MaterialIcons
+            name="volume-up"
+            size={22}
+            color={speakingId === item.id ? colors.primary : colors.textLight}
+          />
         </View>
       </View>
 
@@ -218,7 +221,7 @@ export default function VocabularyScreen({ navigation }: Props) {
       {/* Word List */}
       {filteredWords.length === 0 ? (
         <View style={styles.emptyContainer}>
-          <Text style={styles.emptyIcon}>📚</Text>
+          <MaterialIcons name="library-books" size={64} color={colors.textLight} style={{ marginBottom: 16 }} />
           <Text style={styles.emptyText}>
             {searchQuery.trim()
               ? "검색 결과가 없습니다."
@@ -249,12 +252,14 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface,
   },
   searchInput: {
-    backgroundColor: colors.borderLight,
+    backgroundColor: colors.backgroundAlt,
     borderRadius: 10,
     paddingHorizontal: 14,
     paddingVertical: 10,
     fontSize: 15,
     color: colors.textDark,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
   statsBar: {
     paddingHorizontal: 20,
@@ -279,7 +284,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 20,
-    backgroundColor: colors.border,
+    backgroundColor: colors.backgroundAlt,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
   filterTabActive: {
     backgroundColor: colors.primary,
@@ -300,7 +307,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface,
     borderRadius: 16,
     padding: 16,
-    ...shadows.md,
+    borderWidth: 1,
+    borderColor: colors.border,
     marginBottom: 12,
   },
   cardTop: {
@@ -334,9 +342,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: "600",
   },
-  speakerIcon: {
-    fontSize: 20,
-  },
   cardBottom: {
     marginTop: 12,
     paddingTop: 12,
@@ -363,10 +368,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 40,
-  },
-  emptyIcon: {
-    fontSize: 64,
-    marginBottom: 16,
   },
   emptyText: {
     fontSize: 16,

@@ -10,7 +10,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { supabase } from "../lib/supabase";
 import type { RootStackParamList, Persona, SituationWithProgress, UserSituationProgress } from "../types";
-import { colors, shadows } from "../constants/theme";
+import { colors } from "../constants/theme";
+import { MaterialIcons } from "@expo/vector-icons";
 import LoadingScreen from "../components/LoadingScreen";
 import BackHeader from "../components/BackHeader";
 
@@ -124,9 +125,11 @@ export default function SituationListScreen({ navigation }: Props) {
                 {persona.situations.filter((s) => s.progress?.status === "completed").length}
                 /{persona.situations.length}
               </Text>
-              <Text style={styles.expandIcon}>
-                {expandedPersona === persona.id ? "▼" : "▶"}
-              </Text>
+              <MaterialIcons
+                name={expandedPersona === persona.id ? "expand-more" : "chevron-right"}
+                size={22}
+                color={colors.textLight}
+              />
             </TouchableOpacity>
 
             {expandedPersona === persona.id && (
@@ -173,11 +176,11 @@ export default function SituationListScreen({ navigation }: Props) {
                     </View>
                     {situation.progress?.status === "completed" ? (
                       <View style={styles.completedBadge}>
-                        <Text style={styles.checkmark}>✓</Text>
+                        <MaterialIcons name="check-circle" size={20} color={colors.success} />
                         <Text style={styles.retryHint}>재도전</Text>
                       </View>
                     ) : !situation.progress || situation.progress.status === "locked" ? (
-                      <Text style={styles.lock}>🔒</Text>
+                      <MaterialIcons name="lock" size={18} color={colors.textLight} />
                     ) : null}
                   </TouchableOpacity>
                 ))}
@@ -204,7 +207,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface,
     borderRadius: 16,
     overflow: "hidden",
-    ...shadows.md,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
   personaHeader: {
     flexDirection: "row",
@@ -226,10 +230,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: colors.textMuted,
     marginRight: 8,
-  },
-  expandIcon: {
-    fontSize: 12,
-    color: colors.textLight,
   },
   situationsList: {
     borderTopWidth: 1,
@@ -264,10 +264,6 @@ const styles = StyleSheet.create({
     color: colors.textLight,
     marginTop: 2,
   },
-  checkmark: {
-    fontSize: 18,
-    color: colors.success,
-  },
   completedBadge: {
     alignItems: "center",
   },
@@ -290,8 +286,5 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: colors.primary,
     marginTop: 2,
-  },
-  lock: {
-    fontSize: 16,
   },
 });

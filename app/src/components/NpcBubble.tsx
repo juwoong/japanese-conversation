@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Animated } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
 import type { Line } from "../types";
 import { colors } from "../constants/theme";
 
@@ -63,7 +64,11 @@ export default function NpcBubble({
         <View style={styles.japaneseRow}>
           <Text style={styles.japanese}>{displayText}</Text>
           <TouchableOpacity onPress={() => onSpeak(displayText)}>
-            <Text style={styles.speaker}>{isSpeaking ? "🔊" : "🔈"}</Text>
+            <MaterialIcons
+              name="volume-up"
+              size={22}
+              color={isSpeaking ? colors.primary : colors.textLight}
+            />
           </TouchableOpacity>
         </View>
 
@@ -86,7 +91,10 @@ export default function NpcBubble({
             onPress={() => onToggleGrammar(lineIndex)}
             style={styles.grammarToggle}
           >
-            <Text style={styles.grammarToggleText}>💡 문법 팁</Text>
+            <View style={styles.grammarToggleRow}>
+              <MaterialIcons name="lightbulb-outline" size={16} color={colors.warning} />
+              <Text style={styles.grammarToggleText}>문법 팁</Text>
+            </View>
             {isGrammarOpen && (
               <Text style={styles.grammarContent}>{line.grammar_hint}</Text>
             )}
@@ -105,15 +113,12 @@ const styles = StyleSheet.create({
   bubble: {
     minWidth: "60%",
     maxWidth: "80%",
-    backgroundColor: colors.surface,
+    backgroundColor: colors.npcBubble,
     borderRadius: 16,
     borderTopLeftRadius: 4,
     padding: 14,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.04,
-    shadowRadius: 3,
-    elevation: 1,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
   pronunciation: {
     fontSize: 13,
@@ -131,9 +136,6 @@ const styles = StyleSheet.create({
     color: colors.textDark,
     flex: 1,
     lineHeight: 26,
-  },
-  speaker: {
-    fontSize: 18,
   },
   translationArea: {
     marginTop: 10,
@@ -160,17 +162,22 @@ const styles = StyleSheet.create({
   grammarToggle: {
     marginTop: 8,
   },
+  grammarToggleRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+  },
   grammarToggleText: {
     fontSize: 13,
-    color: "#92400e",
+    color: colors.warning,
     fontWeight: "500",
   },
   grammarContent: {
     fontSize: 13,
-    color: "#78350f",
+    color: colors.textMedium,
     lineHeight: 18,
     marginTop: 4,
-    backgroundColor: "#fef3c7",
+    backgroundColor: colors.warningLight,
     borderRadius: 8,
     padding: 10,
   },
