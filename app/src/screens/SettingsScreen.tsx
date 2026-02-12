@@ -12,7 +12,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { supabase } from "../lib/supabase";
 import type { RootStackParamList, Persona, Profile } from "../types";
-import { colors, shadows, type ColorScheme, setColorScheme, getColorScheme } from "../constants/theme";
+import { colors, type ColorScheme, setColorScheme, getColorScheme } from "../constants/theme";
+import { MaterialIcons } from "@expo/vector-icons";
 import BackHeader from "../components/BackHeader";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Settings">;
@@ -265,7 +266,7 @@ export default function SettingsScreen({ navigation }: Props) {
                   <Text style={styles.personaDesc}>{persona.description}</Text>
                 </View>
                 {currentPersona?.id === persona.id && (
-                  <Text style={styles.checkmark}>✓</Text>
+                  <MaterialIcons name="check-circle" size={22} color={colors.primary} />
                 )}
               </TouchableOpacity>
             ))}
@@ -328,17 +329,20 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   sectionTitle: {
-    fontSize: 14,
+    fontSize: 11,
     fontWeight: "600",
     color: colors.textMuted,
     marginBottom: 12,
     marginLeft: 4,
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
   },
   card: {
     backgroundColor: colors.surface,
     borderRadius: 16,
     overflow: "hidden",
-    ...shadows.md,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
   row: {
     flexDirection: "row",
@@ -387,7 +391,7 @@ const styles = StyleSheet.create({
     borderBottomColor: colors.borderLight,
   },
   personaRowActive: {
-    backgroundColor: "#f0f9ff",
+    backgroundColor: colors.primaryLight,
   },
   personaIcon: {
     fontSize: 28,
@@ -406,16 +410,13 @@ const styles = StyleSheet.create({
     color: colors.textMuted,
     marginTop: 2,
   },
-  checkmark: {
-    fontSize: 20,
-    color: colors.primary,
-  },
   signOutButton: {
     backgroundColor: colors.surface,
     borderRadius: 16,
     padding: 16,
     alignItems: "center",
-    ...shadows.md,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
   signOutText: {
     fontSize: 16,

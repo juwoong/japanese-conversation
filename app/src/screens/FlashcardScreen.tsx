@@ -15,6 +15,7 @@ import { gradeFlashcard } from "../lib/flashcardGrading";
 import type { RootStackParamList } from "../types";
 import type { Rating } from "../lib/fsrs";
 import { colors } from "../constants/theme";
+import { MaterialIcons } from "@expo/vector-icons";
 import LoadingScreen from "../components/LoadingScreen";
 import BackHeader from "../components/BackHeader";
 
@@ -185,7 +186,7 @@ export default function FlashcardScreen({ navigation }: Props) {
       <SafeAreaView style={styles.container}>
         <BackHeader title="플래시카드" onBack={() => navigation.goBack()} />
         <View style={styles.emptyContainer}>
-          <Text style={styles.emptyIcon}>🎉</Text>
+          <MaterialIcons name="check-circle" size={64} color={colors.success} style={{ marginBottom: 16 }} />
           <Text style={styles.emptyText}>
             약한 표현이 없습니다!{"\n"}잘하고 계세요.
           </Text>
@@ -247,9 +248,12 @@ export default function FlashcardScreen({ navigation }: Props) {
               style={styles.speakButton}
               onPress={() => speakText(card.text_ja)}
             >
-              <Text style={styles.speakButtonText}>
-                {isSpeaking ? "🔊 재생 중..." : "🔈 발음 듣기"}
-              </Text>
+              <View style={styles.speakButtonInner}>
+                <MaterialIcons name="volume-up" size={18} color={colors.primary} />
+                <Text style={styles.speakButtonText}>
+                  {isSpeaking ? "재생 중..." : "발음 듣기"}
+                </Text>
+              </View>
             </TouchableOpacity>
 
             {/* Self-grading buttons */}
@@ -357,11 +361,8 @@ const styles = StyleSheet.create({
     padding: 32,
     justifyContent: "center",
     alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.08,
-    shadowRadius: 12,
-    elevation: 4,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
   cardKorean: {
     fontSize: 22,
@@ -395,10 +396,15 @@ const styles = StyleSheet.create({
   },
   speakButton: {
     marginTop: 24,
-    backgroundColor: colors.primary + "15",
+    backgroundColor: colors.primaryLight,
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 12,
+  },
+  speakButtonInner: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
   },
   speakButtonText: {
     fontSize: 15,
@@ -422,16 +428,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   gradeAgain: {
-    backgroundColor: colors.danger + "20",
+    backgroundColor: colors.dangerLight,
   },
   gradeHard: {
-    backgroundColor: colors.warning + "20",
+    backgroundColor: colors.warningLight,
   },
   gradeGood: {
-    backgroundColor: colors.success + "20",
+    backgroundColor: colors.successLight,
   },
   gradeEasy: {
-    backgroundColor: colors.primary + "20",
+    backgroundColor: colors.primaryLight,
   },
   gradeButtonText: {
     fontSize: 13,
@@ -484,10 +490,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 40,
-  },
-  emptyIcon: {
-    fontSize: 64,
-    marginBottom: 16,
   },
   emptyText: {
     fontSize: 16,
