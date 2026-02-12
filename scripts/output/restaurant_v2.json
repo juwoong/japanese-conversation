@@ -16,6 +16,18 @@
       "key_expressions": [
         "何名様",
         "ですか"
+      ],
+      "furigana": [
+        {
+          "text": "いらっしゃいませ。"
+        },
+        {
+          "text": "何名様",
+          "reading": "なんめいさま"
+        },
+        {
+          "text": "ですか。"
+        }
       ]
     },
     {
@@ -30,6 +42,29 @@
       "key_expressions": [
         "子供",
         "います"
+      ],
+      "furigana": [
+        {
+          "text": "四人",
+          "reading": "よにん"
+        },
+        {
+          "text": "です。"
+        },
+        {
+          "text": "子供",
+          "reading": "こども"
+        },
+        {
+          "text": "が"
+        },
+        {
+          "text": "一人",
+          "reading": "ひとり"
+        },
+        {
+          "text": "います。"
+        }
       ]
     },
     {
@@ -44,6 +79,38 @@
       "key_expressions": [
         "椅子",
         "どうぞ"
+      ],
+      "furigana": [
+        {
+          "text": "お"
+        },
+        {
+          "text": "子様",
+          "reading": "こさま"
+        },
+        {
+          "text": "用の"
+        },
+        {
+          "text": "椅子",
+          "reading": "いす"
+        },
+        {
+          "text": "を"
+        },
+        {
+          "text": "ご"
+        },
+        {
+          "text": "用意",
+          "reading": "ようい"
+        },
+        {
+          "text": "しますね。"
+        },
+        {
+          "text": "こちらへどうぞ。"
+        }
       ]
     },
     {
@@ -59,6 +126,53 @@
         "お父さん",
         "食べる",
         "ご飯"
+      ],
+      "furigana": [
+        {
+          "text": "お"
+        },
+        {
+          "text": "父",
+          "reading": "とう"
+        },
+        {
+          "text": "さん、"
+        },
+        {
+          "text": "何",
+          "reading": "なに"
+        },
+        {
+          "text": "を"
+        },
+        {
+          "text": "食",
+          "reading": "た"
+        },
+        {
+          "text": "べる？"
+        },
+        {
+          "text": "私",
+          "reading": "わたし"
+        },
+        {
+          "text": "は"
+        },
+        {
+          "text": "ご飯",
+          "reading": "ごはん"
+        },
+        {
+          "text": "と"
+        },
+        {
+          "text": "魚",
+          "reading": "さかな"
+        },
+        {
+          "text": "がいいな。"
+        }
       ]
     },
     {
@@ -73,6 +187,21 @@
       "key_expressions": [
         "子供用",
         "ありますか"
+      ],
+      "furigana": [
+        {
+          "text": "すみません、"
+        },
+        {
+          "text": "子供",
+          "reading": "こども"
+        },
+        {
+          "text": "用の"
+        },
+        {
+          "text": "メニューはありますか。"
+        }
       ]
     }
   ],
@@ -83,7 +212,10 @@
       "reading_ko": "코도모",
       "meaning_ko": "아이, 어린이",
       "pos": "명사",
-      "appears_in_lines": [2, 5]
+      "appears_in_lines": [
+        2,
+        5
+      ]
     },
     {
       "word_ja": "人",
@@ -91,7 +223,9 @@
       "reading_ko": "닌",
       "meaning_ko": "명 (사람 세는 단위)",
       "pos": "명사",
-      "appears_in_lines": [2]
+      "appears_in_lines": [
+        2
+      ]
     },
     {
       "word_ja": "椅子",
@@ -99,7 +233,9 @@
       "reading_ko": "이스",
       "meaning_ko": "의자",
       "pos": "명사",
-      "appears_in_lines": [3]
+      "appears_in_lines": [
+        3
+      ]
     },
     {
       "word_ja": "お父さん",
@@ -107,7 +243,9 @@
       "reading_ko": "오토-상",
       "meaning_ko": "아버지, 아빠",
       "pos": "명사",
-      "appears_in_lines": [4]
+      "appears_in_lines": [
+        4
+      ]
     },
     {
       "word_ja": "食べる",
@@ -115,7 +253,9 @@
       "reading_ko": "타베루",
       "meaning_ko": "먹다",
       "pos": "동사",
-      "appears_in_lines": [4]
+      "appears_in_lines": [
+        4
+      ]
     },
     {
       "word_ja": "ご飯",
@@ -123,7 +263,9 @@
       "reading_ko": "고항",
       "meaning_ko": "밥, 식사",
       "pos": "명사",
-      "appears_in_lines": [4]
+      "appears_in_lines": [
+        4
+      ]
     },
     {
       "word_ja": "魚",
@@ -131,7 +273,9 @@
       "reading_ko": "사카나",
       "meaning_ko": "생선",
       "pos": "명사",
-      "appears_in_lines": [4]
+      "appears_in_lines": [
+        4
+      ]
     },
     {
       "word_ja": "友達",
@@ -147,7 +291,9 @@
       "reading_ko": "메뉴-",
       "meaning_ko": "메뉴",
       "pos": "명사",
-      "appears_in_lines": [5]
+      "appears_in_lines": [
+        5
+      ]
     },
     {
       "word_ja": "用意",
@@ -155,7 +301,9 @@
       "reading_ko": "요-이",
       "meaning_ko": "준비",
       "pos": "명사",
-      "appears_in_lines": [3]
+      "appears_in_lines": [
+        3
+      ]
     }
   ]
 }

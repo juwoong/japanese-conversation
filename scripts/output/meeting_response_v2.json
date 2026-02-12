@@ -16,6 +16,43 @@
       "key_expressions": [
         "拝見する",
         "伺う"
+      ],
+      "furigana": [
+        {
+          "text": "ご"
+        },
+        {
+          "text": "説明",
+          "reading": "せつめい"
+        },
+        {
+          "text": "ありがとうございました。"
+        },
+        {
+          "text": "資料",
+          "reading": "しりょう"
+        },
+        {
+          "text": "を"
+        },
+        {
+          "text": "拝見",
+          "reading": "はいけん"
+        },
+        {
+          "text": "しましたが、"
+        },
+        {
+          "text": "一つ",
+          "reading": "ひとつ"
+        },
+        {
+          "text": "伺",
+          "reading": "うかが"
+        },
+        {
+          "text": "ってもよろしいでしょうか。"
+        }
       ]
     },
     {
@@ -30,6 +67,28 @@
       "key_expressions": [
         "ご質問",
         "お願いいたします"
+      ],
+      "furigana": [
+        {
+          "text": "はい、どうぞ。"
+        },
+        {
+          "text": "ご"
+        },
+        {
+          "text": "質問",
+          "reading": "しつもん"
+        },
+        {
+          "text": "をお"
+        },
+        {
+          "text": "願",
+          "reading": "ねが"
+        },
+        {
+          "text": "いいたします。"
+        }
       ]
     },
     {
@@ -45,6 +104,39 @@
         "おっしゃる",
         "部長",
         "説明"
+      ],
+      "furigana": [
+        {
+          "text": "部長",
+          "reading": "ぶちょう"
+        },
+        {
+          "text": "がおっしゃった"
+        },
+        {
+          "text": "予算",
+          "reading": "よさん"
+        },
+        {
+          "text": "について、"
+        },
+        {
+          "text": "もう少し"
+        },
+        {
+          "text": "詳",
+          "reading": "くわ"
+        },
+        {
+          "text": "しくご"
+        },
+        {
+          "text": "説明",
+          "reading": "せつめい"
+        },
+        {
+          "text": "いただけますか。"
+        }
       ]
     },
     {
@@ -59,6 +151,25 @@
       "key_expressions": [
         "ご覧ください",
         "かしこまりました"
+      ],
+      "furigana": [
+        {
+          "text": "かしこまりました。では、こちらの"
+        },
+        {
+          "text": "資料",
+          "reading": "しりょう"
+        },
+        {
+          "text": "をご"
+        },
+        {
+          "text": "覧",
+          "reading": "らん"
+        },
+        {
+          "text": "ください。"
+        }
       ]
     },
     {
@@ -74,6 +185,39 @@
         "会議",
         "準備",
         "参る"
+      ],
+      "furigana": [
+        {
+          "text": "よく"
+        },
+        {
+          "text": "分",
+          "reading": "わ"
+        },
+        {
+          "text": "かりました。"
+        },
+        {
+          "text": "会議",
+          "reading": "かいぎ"
+        },
+        {
+          "text": "の"
+        },
+        {
+          "text": "準備",
+          "reading": "じゅんび"
+        },
+        {
+          "text": "、ありがとうございました。それでは、"
+        },
+        {
+          "text": "参",
+          "reading": "まい"
+        },
+        {
+          "text": "りましょう。"
+        }
       ]
     }
   ],
@@ -84,7 +228,9 @@
       "reading_ko": "하이켄스루",
       "meaning_ko": "보다 (겸양어)",
       "pos": "동사",
-      "appears_in_lines": [1]
+      "appears_in_lines": [
+        1
+      ]
     },
     {
       "word_ja": "伺う",
@@ -92,7 +238,9 @@
       "reading_ko": "우카가우",
       "meaning_ko": "묻다, 찾아뵙다 (겸양어)",
       "pos": "동사",
-      "appears_in_lines": [1]
+      "appears_in_lines": [
+        1
+      ]
     },
     {
       "word_ja": "おっしゃる",
@@ -100,7 +248,9 @@
       "reading_ko": "옷샤루",
       "meaning_ko": "말씀하시다 (존경어)",
       "pos": "동사",
-      "appears_in_lines": [3]
+      "appears_in_lines": [
+        3
+      ]
     },
     {
       "word_ja": "部長",
@@ -108,7 +258,9 @@
       "reading_ko": "부쵸-",
       "meaning_ko": "부장",
       "pos": "명사",
-      "appears_in_lines": [3]
+      "appears_in_lines": [
+        3
+      ]
     },
     {
       "word_ja": "説明",
@@ -116,7 +268,10 @@
       "reading_ko": "세츠메-",
       "meaning_ko": "설명",
       "pos": "명사",
-      "appears_in_lines": [1, 3]
+      "appears_in_lines": [
+        1,
+        3
+      ]
     },
     {
       "word_ja": "ご覧になる",
@@ -124,7 +279,9 @@
       "reading_ko": "고란니나루",
       "meaning_ko": "보시다 (존경어)",
       "pos": "동사",
-      "appears_in_lines": [4]
+      "appears_in_lines": [
+        4
+      ]
     },
     {
       "word_ja": "会議",
@@ -132,7 +289,9 @@
       "reading_ko": "카이기",
       "meaning_ko": "회의",
       "pos": "명사",
-      "appears_in_lines": [5]
+      "appears_in_lines": [
+        5
+      ]
     },
     {
       "word_ja": "準備",
@@ -140,7 +299,9 @@
       "reading_ko": "쥰비",
       "meaning_ko": "준비",
       "pos": "명사",
-      "appears_in_lines": [5]
+      "appears_in_lines": [
+        5
+      ]
     },
     {
       "word_ja": "参る",
@@ -148,7 +309,9 @@
       "reading_ko": "마이루",
       "meaning_ko": "가다 (겸양어)",
       "pos": "동사",
-      "appears_in_lines": [5]
+      "appears_in_lines": [
+        5
+      ]
     },
     {
       "word_ja": "質問",
@@ -156,7 +319,9 @@
       "reading_ko": "시츠몬",
       "meaning_ko": "질문",
       "pos": "명사",
-      "appears_in_lines": [2]
+      "appears_in_lines": [
+        2
+      ]
     }
   ]
 }
