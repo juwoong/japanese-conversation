@@ -37,9 +37,17 @@ export class STTError extends Error {
 const OPENAI_API_KEY = process.env.EXPO_PUBLIC_OPENAI_API_KEY || "";
 
 /**
- * Transcribe audio to text using Whisper API directly
+ * Transcribe audio to text using Whisper API directly.
+ *
+ * @param audioUri - File URI of the recorded audio
+ * @param expectedText - Optional expected text. Passed as Whisper `prompt`
+ *   parameter to bias script choice (kanji vs kana) and improve accuracy
+ *   for scripted practice scenarios.
  */
-export async function transcribeAudio(audioUri: string): Promise<STTResult> {
+export async function transcribeAudio(
+  audioUri: string,
+  expectedText?: string,
+): Promise<STTResult> {
   if (!OPENAI_API_KEY) {
     throw new STTError("OpenAI API key not configured", "server");
   }
@@ -59,6 +67,9 @@ export async function transcribeAudio(audioUri: string): Promise<STTResult> {
     formData.append("model", "whisper-1");
     formData.append("language", "ja");
     formData.append("response_format", "json");
+    if (expectedText) {
+      formData.append("prompt", expectedText);
+    }
 
     const response = await fetch("https://api.openai.com/v1/audio/transcriptions", {
       method: "POST",

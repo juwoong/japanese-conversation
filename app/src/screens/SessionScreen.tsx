@@ -21,11 +21,13 @@ import { transcribeAudio, STTError } from "../lib/stt";
 import { useSession } from "../hooks/useSession";
 import { saveSessionProgress } from "../lib/sessionProgress";
 import type { RootStackParamList, Line } from "../types";
+import type { DiffSegment } from "../lib/textDiff";
 import { colors } from "../constants/theme";
 import { MaterialIcons } from "@expo/vector-icons";
 import LoadingScreen from "../components/LoadingScreen";
 import NpcBubble from "../components/NpcBubble";
 import UserBubble from "../components/UserBubble";
+import FuriganaText from "../components/FuriganaText";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Session">;
 
@@ -36,13 +38,14 @@ interface FeedbackData {
   userInput: string;
   expectedText: string;
   feedback: string;
+  diffSegments: DiffSegment[];
 }
 
 interface ChatMessage {
   lineIndex: number;
   line: Line;
   displayText: string;
-  feedbackData?: { accuracy: number; userInput: string };
+  feedbackData?: { accuracy: number; userInput: string; diffSegments?: DiffSegment[] };
 }
 
 export default function SessionScreen({ navigation, route }: Props) {
@@ -274,8 +277,14 @@ export default function SessionScreen({ navigation, route }: Props) {
         return;
       }
 
-      const sttResult = await transcribeAudio(result.uri);
+      // Whisper requires minimum 0.1s audio
+      if (result.duration < 200) {
+        setPhase("viewing");
+        return;
+      }
+
       const expectedText = getDisplayText();
+      const sttResult = await transcribeAudio(result.uri, expectedText);
       const attemptResult = await session.submitAttempt(sttResult.text, expectedText);
 
       const newFeedback: FeedbackData = {
@@ -283,6 +292,7 @@ export default function SessionScreen({ navigation, route }: Props) {
         userInput: sttResult.text,
         expectedText,
         feedback: attemptResult.feedback,
+        diffSegments: attemptResult.diffSegments,
       };
       setFeedbackData(newFeedback);
 
@@ -296,7 +306,11 @@ export default function SessionScreen({ navigation, route }: Props) {
               lineIndex: session.currentIndex,
               line: currentLine,
               displayText: getDisplayText(),
-              feedbackData: { accuracy: attemptResult.accuracy, userInput: sttResult.text },
+              feedbackData: {
+                accuracy: attemptResult.accuracy,
+                userInput: sttResult.text,
+                diffSegments: attemptResult.diffSegments,
+              },
             },
           ];
         });
@@ -505,6 +519,7 @@ export default function SessionScreen({ navigation, route }: Props) {
         key={`msg-${msg.lineIndex}`}
         userInput={msg.feedbackData.userInput}
         accuracy={msg.feedbackData.accuracy}
+        diffSegments={msg.feedbackData.diffSegments}
       />
     );
   };
@@ -602,7 +617,15 @@ export default function SessionScreen({ navigation, route }: Props) {
       // Default: show target text + mic
       return (
         <View style={styles.footerUserTurn}>
-          <Text style={styles.targetJapanese}>{getDisplayText()}</Text>
+          {currentLine.furigana && currentLine.furigana.length > 0 ? (
+            <FuriganaText
+              segments={currentLine.furigana}
+              fontSize={20}
+              color={colors.textDark}
+            />
+          ) : (
+            <Text style={styles.targetJapanese}>{getDisplayText()}</Text>
+          )}
           {showPronunciation && currentLine.pronunciation_ko && (
             <Text style={styles.targetPronunciation}>{currentLine.pronunciation_ko}</Text>
           )}

@@ -31,6 +31,13 @@ export interface Situation {
   sort_order: number;
 }
 
+export interface FuriganaSegment {
+  /** Display text (kanji, kana, punctuation) */
+  text: string;
+  /** Hiragana reading — present only when text contains kanji */
+  reading?: string;
+}
+
 export interface Line {
   id: number;
   situation_id: number;
@@ -42,6 +49,7 @@ export interface Line {
   pronunciation_ko: string | null;
   text_ko: string;
   grammar_hint: string | null;
+  furigana?: FuriganaSegment[];
 }
 
 export interface SRSCard {
@@ -80,6 +88,7 @@ export type RootStackParamList = {
   History: undefined;
   Vocabulary: undefined;
   Flashcard: undefined;
+  PitchTest: undefined;
 };
 
 export interface SituationWithProgress extends Situation {
