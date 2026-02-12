@@ -22,6 +22,7 @@ import { useSession } from "../hooks/useSession";
 import { saveSessionProgress } from "../lib/sessionProgress";
 import type { RootStackParamList, Line } from "../types";
 import { colors } from "../constants/theme";
+import { MaterialIcons } from "@expo/vector-icons";
 import LoadingScreen from "../components/LoadingScreen";
 import NpcBubble from "../components/NpcBubble";
 import UserBubble from "../components/UserBubble";
@@ -612,7 +613,7 @@ export default function SessionScreen({ navigation, route }: Props) {
             activeOpacity={0.8}
           >
             <View style={styles.micIconContainer}>
-              <Text style={styles.micIcon}>🎤</Text>
+              <MaterialIcons name="mic" size={28} color={colors.surface} />
             </View>
             <Text style={styles.micText}>탭하여 말하기</Text>
           </TouchableOpacity>
@@ -636,9 +637,9 @@ export default function SessionScreen({ navigation, route }: Props) {
             transform: [{ scale: completionScaleAnim }],
           }}
         >
-          <Animated.Text
+          <Animated.View
             style={[
-              styles.completionEmoji,
+              styles.completionIconContainer,
               {
                 transform: [
                   {
@@ -651,8 +652,12 @@ export default function SessionScreen({ navigation, route }: Props) {
               },
             ]}
           >
-            {pct >= 80 ? "🎉" : pct >= 50 ? "👍" : "💪"}
-          </Animated.Text>
+            <MaterialIcons
+              name={pct >= 80 ? "celebration" : pct >= 50 ? "thumb-up" : "fitness-center"}
+              size={48}
+              color={colors.primary}
+            />
+          </Animated.View>
           <Text style={styles.completionTitle}>
             {isReview ? "복습 완료!" : "학습 완료!"}
           </Text>
@@ -712,7 +717,7 @@ export default function SessionScreen({ navigation, route }: Props) {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.errorContainer}>
-          <Text style={styles.errorIcon}>⚠️</Text>
+          <MaterialIcons name="error-outline" size={48} color={colors.textLight} />
           <Text style={styles.errorText}>{session.error}</Text>
           <TouchableOpacity style={styles.errorButton} onPress={() => navigation.goBack()}>
             <Text style={styles.errorButtonText}>돌아가기</Text>
@@ -726,7 +731,7 @@ export default function SessionScreen({ navigation, route }: Props) {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.errorContainer}>
-          <Text style={styles.errorIcon}>📭</Text>
+          <MaterialIcons name="inbox" size={48} color={colors.textLight} />
           <Text style={styles.errorText}>이 상황에 대사가 없습니다.</Text>
           <TouchableOpacity style={styles.errorButton} onPress={() => navigation.goBack()}>
             <Text style={styles.errorButtonText}>돌아가기</Text>
@@ -753,7 +758,7 @@ export default function SessionScreen({ navigation, route }: Props) {
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={handleExit} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
-          <Text style={styles.closeButton}>✕</Text>
+          <MaterialIcons name="close" size={24} color={colors.textMuted} />
         </TouchableOpacity>
         <Text style={styles.situationTitle} numberOfLines={1}>
           {session.situation?.name_ko}
@@ -830,8 +835,6 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   closeButton: {
-    fontSize: 22,
-    color: colors.textMuted,
     width: 32,
   },
   situationTitle: {
@@ -881,13 +884,13 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
   },
   ttsErrorBanner: {
-    backgroundColor: colors.warning,
+    backgroundColor: colors.warningLight,
     paddingVertical: 6,
     paddingHorizontal: 16,
     alignItems: "center",
   },
   ttsErrorText: {
-    color: "#fff",
+    color: colors.warning,
     fontSize: 12,
     fontWeight: "500",
   },
@@ -970,9 +973,9 @@ const styles = StyleSheet.create({
   },
   micIconContainer: {
     backgroundColor: colors.primary,
-    width: 60,
-    height: 60,
-    borderRadius: 30,
+    width: 64,
+    height: 64,
+    borderRadius: 32,
     alignItems: "center",
     justifyContent: "center",
     shadowColor: colors.primary,
@@ -980,9 +983,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 6,
     elevation: 5,
-  },
-  micIcon: {
-    fontSize: 28,
   },
   micText: {
     fontSize: 13,
@@ -1141,8 +1141,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 32,
   },
-  completionEmoji: {
-    fontSize: 64,
+  completionIconContainer: {
     marginBottom: 16,
   },
   completionTitle: {
@@ -1163,11 +1162,8 @@ const styles = StyleSheet.create({
     padding: 20,
     width: "100%",
     marginBottom: 24,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 4,
-    elevation: 2,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
   completionStat: {
     flex: 1,
@@ -1193,6 +1189,8 @@ const styles = StyleSheet.create({
     padding: 20,
     width: "100%",
     marginBottom: 32,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
   completionExpTitle: {
     fontSize: 14,
@@ -1223,10 +1221,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 40,
-  },
-  errorIcon: {
-    fontSize: 48,
-    marginBottom: 16,
   },
   errorText: {
     fontSize: 16,

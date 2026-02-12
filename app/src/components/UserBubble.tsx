@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     marginTop: 6,
     paddingHorizontal: 8,
     paddingVertical: 3,
-    borderRadius: 10,
+    borderRadius: 12,
   },
   badgeText: {
     fontSize: 12,
