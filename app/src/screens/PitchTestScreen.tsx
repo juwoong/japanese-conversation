@@ -11,6 +11,7 @@ import {
   StyleSheet,
   ScrollView,
   useColorScheme,
+  Alert,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAudioStream } from "../audio/useAudioStream";
@@ -41,14 +42,30 @@ export default function PitchTestScreen({ navigation }: any) {
     resetRMS();
     startFlushing();
 
-    await startStream({
-      onAudioData: (float32: Float32Array) => {
-        processAudio(float32);
-        processRMS(float32);
-      },
-    });
-    setIsRecording(true);
-  }, [startStream, init, processAudio, processRMS, startFlushing, resetRMS]);
+    try {
+      await startStream({
+        onAudioData: (float32: Float32Array) => {
+          processAudio(float32);
+          processRMS(float32);
+        },
+      });
+      setIsRecording(true);
+    } catch (error) {
+      stopFlushing();
+      stopStream();
+      const message = error instanceof Error ? error.message : "알 수 없는 오류가 발생했습니다.";
+      Alert.alert("마이크를 시작할 수 없어요", message);
+    }
+  }, [
+    startStream,
+    init,
+    processAudio,
+    processRMS,
+    startFlushing,
+    resetRMS,
+    stopFlushing,
+    stopStream,
+  ]);
 
   const handleStop = useCallback(() => {
     stopStream();
