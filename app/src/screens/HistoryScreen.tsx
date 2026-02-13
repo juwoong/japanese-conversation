@@ -9,6 +9,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { supabase } from "../lib/supabase";
+import { getLocalDateString } from "../lib/sessionProgress";
 import type { RootStackParamList } from "../types";
 import { colors } from "../constants/theme";
 import LoadingScreen from "../components/LoadingScreen";
@@ -58,7 +59,7 @@ export default function HistoryScreen({ navigation }: Props) {
 
       progress?.forEach((p) => {
         if (p.completed_at) {
-          const date = p.completed_at.split("T")[0];
+          const date = getLocalDateString(new Date(p.completed_at));
           const existing = dailyMap.get(date) || { count: 0, accuracy: [] };
           existing.count++;
           if (p.best_accuracy) {

@@ -144,7 +144,7 @@ export function useSession(situationId: number): UseSessionReturn {
       const { card: newCard } = schedule(card, rating);
 
       // Upsert SRS card
-      await supabase.from("srs_cards").upsert({
+      const { error: srsError } = await supabase.from("srs_cards").upsert({
         id: existingCard?.id,
         user_id: user.id,
         line_id: currentLine.id,
@@ -157,10 +157,14 @@ export function useSession(situationId: number): UseSessionReturn {
         state: newCard.state,
         due_date: newCard.due.toISOString().split("T")[0],
         last_review: newCard.lastReview?.toISOString() || null,
-      });
+      }, { onConflict: 'user_id,line_id' });
+
+      if (srsError) {
+        console.error("SRS card upsert failed:", srsError);
+      }
 
       // Record attempt
-      await supabase.from("user_attempts").insert({
+      const { error: attemptError } = await supabase.from("user_attempts").insert({
         user_id: user.id,
         line_id: currentLine.id,
         user_input: userInput,
@@ -168,6 +172,10 @@ export function useSession(situationId: number): UseSessionReturn {
         accuracy,
         rating,
       });
+
+      if (attemptError) {
+        console.error("Attempt insert failed:", attemptError);
+      }
 
       // Generate feedback
       let feedback = "";

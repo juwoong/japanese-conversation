@@ -13,6 +13,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useFocusEffect } from "@react-navigation/native";
 import { supabase } from "../lib/supabase";
+import { getLocalDateString } from "../lib/sessionProgress";
 import type { RootStackParamList, Persona, SituationWithProgress } from "../types";
 import { colors } from "../constants/theme";
 import LoadingScreen from "../components/LoadingScreen";
@@ -170,30 +171,31 @@ export default function HomeScreen({ navigation }: Props) {
 
           setSituations(withProgress);
 
-          // Count completed today
-          const today = new Date().toISOString().split("T")[0];
+          // Count completed today (use local timezone)
+          const today = getLocalDateString();
+          const toLocalDate = (iso: string) => getLocalDateString(new Date(iso));
           const todayCompleted = progressData?.filter(
-            (p) => p.completed_at?.startsWith(today)
+            (p) => p.completed_at && toLocalDate(p.completed_at) === today
           ).length || 0;
           setCompletedToday(todayCompleted);
 
-          // Calculate streak
+          // Calculate streak (use local dates)
           const completedDates = new Set(
             progressData
               ?.filter((p) => p.completed_at)
-              .map((p) => p.completed_at!.split("T")[0]) || []
+              .map((p) => toLocalDate(p.completed_at!)) || []
           );
           let streak = 0;
           const d = new Date();
           // Check today first
-          const todayStr = d.toISOString().split("T")[0];
+          const todayStr = getLocalDateString(d);
           if (completedDates.has(todayStr)) {
             streak = 1;
             d.setDate(d.getDate() - 1);
           }
           // Count consecutive past days
           while (true) {
-            const dateStr = d.toISOString().split("T")[0];
+            const dateStr = getLocalDateString(d);
             if (completedDates.has(dateStr)) {
               streak++;
               d.setDate(d.getDate() - 1);
