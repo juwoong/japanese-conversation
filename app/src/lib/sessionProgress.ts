@@ -47,7 +47,7 @@ export async function saveSessionProgress(
       completed_at: new Date().toISOString(),
       attempt_count: newAttemptCount,
       best_accuracy: newBest,
-    });
+    }, { onConflict: 'user_id,situation_id' });
 
     // Unlock next situation
     const { data: nextSituation } = await supabase
@@ -64,7 +64,7 @@ export async function saveSessionProgress(
         user_id: userId,
         situation_id: nextSituation.id,
         status: "available",
-      });
+      }, { onConflict: 'user_id,situation_id' });
     }
 
     // Update level based on completed count
