@@ -243,11 +243,9 @@ export default function SessionScreen({ navigation, route }: Props) {
       setPhase("recording");
       await startRecording();
 
-      // Set recording timeout
+      // Set recording timeout (no stale closure check — ref-based phase handles it)
       recordingTimeoutRef.current = setTimeout(() => {
-        if (isRecording) {
-          handleStopRecording();
-        }
+        handleStopRecording();
       }, RECORDING_TIMEOUT_MS);
     } catch (error) {
       console.error("Recording error:", error);
