@@ -20,7 +20,7 @@ import { startRecording, stopRecording, getRecordingStatus } from "../lib/audio"
 import { transcribeAudio, STTError } from "../lib/stt";
 import { useSession } from "../hooks/useSession";
 import { saveSessionProgress } from "../lib/sessionProgress";
-import type { RootStackParamList, Line } from "../types";
+import type { RootStackParamList, Line, SessionMode } from "../types";
 import type { DiffSegment } from "../lib/textDiff";
 import { colors } from "../constants/theme";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -28,6 +28,7 @@ import LoadingScreen from "../components/LoadingScreen";
 import NpcBubble from "../components/NpcBubble";
 import UserBubble from "../components/UserBubble";
 import FuriganaText from "../components/FuriganaText";
+import SessionModeSelector from "../components/SessionModeSelector";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Session">;
 
@@ -52,6 +53,8 @@ export default function SessionScreen({ navigation, route }: Props) {
   const { situationId, isReview } = route.params;
   const session = useSession(situationId);
 
+  const [showModeSelector, setShowModeSelector] = useState(true);
+  const [sessionMode, setSessionMode] = useState<SessionMode>("voice");
   const [showPronunciation, setShowPronunciation] = useState(true);
   const [userGender, setUserGender] = useState<string>("neutral");
   const [isSpeaking, setIsSpeaking] = useState(false);
@@ -837,6 +840,14 @@ export default function SessionScreen({ navigation, route }: Props) {
 
       {/* Footer */}
       <View style={styles.footer}>{renderFooter()}</View>
+
+      <SessionModeSelector
+        visible={showModeSelector}
+        onSelect={(mode) => {
+          setSessionMode(mode);
+          setShowModeSelector(false);
+        }}
+      />
     </SafeAreaView>
   );
 }

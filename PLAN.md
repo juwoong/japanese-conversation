@@ -2,17 +2,84 @@
 
 ## 다음 세션
 
+**v1 리디자인 진행 중** — Phase A (01 온보딩 + 02 여행지도) 병렬 실행.
+
+---
+
+# v1 리디자인 실행 계획
+
+> 시작일: 2026-02-17
+> 현재 Phase: A
+
+## 의존 관계
+
+```
+Phase A (병렬):  01-onboarding ──┐
+                 02-travel-map ──┼──→ Phase B: 03-four-phase
+                                 │
+Phase C (병렬):  04-ai-npc ──────┤
+                 05-l1-safety ───┼──→ Phase D: 07-persistence
+                 06-repetition ──┘
+```
+
+## Phase A: 독립 실행 (병렬)
+
+### 01 - 온보딩 리디자인: 공항 도착 체험
+
+- [ ] Step 1: 현재 OnboardingScreen 분석 + 3단계 플로우 설계
+- [ ] Step 2: OnboardingScreen.tsx 리디자인 (3단계 state machine)
+- [ ] Step 3: SessionModeSelector.tsx 구현 (매 세션 음성/묵음 분기)
+- [ ] Step 4: 통합 테스트 + 시뮬레이터 검증
+
+### 02 - 메인 화면: 여행 동선 지도
+
+- [ ] Step 1: 현재 HomeScreen 분석 + 지도 데이터 모델 설계
+- [ ] Step 2: TravelMap.tsx 컴포넌트 구현
+- [ ] Step 3: AbilityStatement.tsx + "오늘의 추천" 구현
+- [ ] Step 4: HomeScreen 통합 + SituationListScreen 역할 정리
+- [ ] Step 5: 통합 테스트
+
+## Phase B: Phase A 완료 후
+
+### 03 - 4 Phase 학습 엔진
+
+- [ ] Step 1: 세션 state machine 설계 + 데이터 모델
+- [ ] Step 2: Phase 1 관찰(Watch) 구현
+- [ ] Step 3: Phase 2 포착(Catch) 구현
+- [ ] Step 4: Phase 3 참여(Engage) 구현
+- [ ] Step 5: Phase 4 정리(Review) 구현
+- [ ] Step 6: 식당 상황 전체 플로우 통합 테스트
+
+## Phase C: Phase B 완료 후 (병렬)
+
+### 04 - AI NPC & 피드백 계층화
+- [ ] NPC 프롬프트 + feedbackLayer + Edge Function + 통합 테스트
+
+### 05 - L1 안전망 & 문자 체계
+- [ ] SafetyNetTooltip + exposureTracker + 앰비언트 노출 + 통합
+
+### 06 - 반복 학습 변주
+- [ ] 변주 시나리오 + 교차 반복 + 도구 세트 + FSRS 연동
+
+## Phase D: 전체 마무리
+
+### 07 - 지속성 & 비주얼
+- [ ] 알림 + 세션 복귀 + D-Day + 테마 + Anti-Pattern 전수 검증
+
+## 불변 규칙
+
+- 한국어 발음 표기 금지 / "틀렸습니다" 금지 / 레벨·XP·점수 금지 / 스트릭 끊김 경고 금지 / L1 상시 표시 금지
+
+---
+
+# 이전 계획 (참고용)
+
+## 이전 다음 세션 (보류)
+
 **Phase 4 남은 운영 작업**:
 1. furigana 생성 스크립트 실행: `GEMINI_API_KEY=... npx tsx scripts/add-furigana.ts`
 2. Supabase migration 적용: `003_furigana.sql`
 3. Supabase import 재실행 (furigana 포함)
-**Sprint 7 — JLPT 레벨 태깅** 진행 예정.
-**Phase 1-4 디바이스 테스트** — 실기기에서 전체 파이프라인 검증.
-
-### 재개에 필요한 맥락
-- Phase 4 코드 **전부 완료**: 타입, 컴포넌트, NpcBubble/SessionScreen 연동, 스크립트, migration, import 스크립트 수정
-- **설계 결정**: kuromoji.js runtime 삭제 (5명 전원 합의), 빌드타임 pre-computed furigana 채택
-- **설계 결정**: mora timing/rhythm feedback 전부 defer (Devil's Advocate 논리 수용)
 
 ---
 
