@@ -118,6 +118,7 @@ export default function SessionScreen({ navigation, route }: Props) {
             keyExpressions={fourPhase.keyExpressions}
             inputMode={fourPhase.inputMode}
             visitCount={fourPhase.visitCount}
+            situationEmoji="🍽"
             onComplete={handlePhaseTransition}
           />
         );
@@ -138,8 +139,8 @@ export default function SessionScreen({ navigation, route }: Props) {
         return (
           <ReviewPhase
             keyExpressions={fourPhase.keyExpressions}
-            performance={engagePerformance ?? { totalTurns: 0, userTurns: 0, correctCount: 0, incorrectCount: 0 }}
-            situationName={fourPhase.situation?.name_ko ?? ""}
+            performance={engagePerformance ?? undefined}
+            situationName={fourPhase.situation?.name_ko}
             inputMode={fourPhase.inputMode}
             onComplete={handleComplete}
           />
