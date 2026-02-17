@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   View,
   Text,
@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   FlatList,
   TextInput,
+  Animated,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Speech from "expo-speech";
@@ -16,6 +17,7 @@ import { colors } from "../constants/theme";
 import { MaterialIcons } from "@expo/vector-icons";
 import LoadingScreen from "../components/LoadingScreen";
 import BackHeader from "../components/BackHeader";
+
 
 type Props = NativeStackScreenProps<RootStackParamList, "Vocabulary">;
 
@@ -48,6 +50,9 @@ export default function VocabularyScreen({ navigation }: Props) {
   const [speakingId, setSpeakingId] = useState<number | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedPos, setSelectedPos] = useState<string | null>(null);
+  const [revealedId, setRevealedId] = useState<number | null>(null);
+  const revealTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const revealFadeAnim = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
     loadVocabulary();
@@ -128,12 +133,27 @@ export default function VocabularyScreen({ navigation }: Props) {
 
   const getPosColor = (pos: string): string => POS_COLORS[pos] ?? POS_DEFAULT_COLOR;
 
+  const handleRevealMeaning = (id: number) => {
+    if (revealTimerRef.current) clearTimeout(revealTimerRef.current);
+    setRevealedId(id);
+    revealFadeAnim.setValue(1);
+    revealTimerRef.current = setTimeout(() => {
+      Animated.timing(revealFadeAnim, {
+        toValue: 0,
+        duration: 500,
+        useNativeDriver: true,
+      }).start(() => setRevealedId(null));
+    }, 3000);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (revealTimerRef.current) clearTimeout(revealTimerRef.current);
+    };
+  }, []);
+
   const renderItem = ({ item }: { item: VocabWord }) => (
-    <TouchableOpacity
-      style={styles.wordCard}
-      onPress={() => speakWord(item.word_ja, item.id)}
-      activeOpacity={0.7}
-    >
+    <View style={styles.wordCard}>
       <View style={styles.cardTop}>
         <View style={styles.wordSection}>
           <Text style={styles.wordJa}>{item.word_ja}</Text>
@@ -143,21 +163,30 @@ export default function VocabularyScreen({ navigation }: Props) {
           <View style={[styles.posBadge, { backgroundColor: getPosColor(item.pos) + "18" }]}>
             <Text style={[styles.posText, { color: getPosColor(item.pos) }]}>{item.pos}</Text>
           </View>
-          <MaterialIcons
-            name="volume-up"
-            size={22}
-            color={speakingId === item.id ? colors.primary : colors.textLight}
-          />
+          <TouchableOpacity onPress={() => speakWord(item.word_ja, item.id)} hitSlop={8}>
+            <MaterialIcons
+              name="volume-up"
+              size={22}
+              color={speakingId === item.id ? colors.primary : colors.textLight}
+            />
+          </TouchableOpacity>
         </View>
       </View>
 
       <View style={styles.cardBottom}>
-        <Text style={styles.readingKo}>{item.reading_ko}</Text>
-        <Text style={styles.meaningKo}>{item.meaning_ko}</Text>
+        {revealedId === item.id ? (
+          <Animated.Text style={[styles.meaningKo, { opacity: revealFadeAnim }]}>
+            {item.meaning_ko}
+          </Animated.Text>
+        ) : (
+          <TouchableOpacity onPress={() => handleRevealMeaning(item.id)} style={styles.meaningHintButton}>
+            <Text style={styles.meaningHintText}>[?] 뜻 보기</Text>
+          </TouchableOpacity>
+        )}
       </View>
 
       <Text style={styles.situationLabel}>{item.situation_name}</Text>
-    </TouchableOpacity>
+    </View>
   );
 
   if (loading) {
@@ -166,7 +195,7 @@ export default function VocabularyScreen({ navigation }: Props) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <BackHeader title="단어장" onBack={() => navigation.goBack()} />
+      <BackHeader title="표현 모음" onBack={() => navigation.goBack()} />
 
       {/* Search Bar */}
       <View style={styles.searchBar}>
@@ -235,6 +264,7 @@ export default function VocabularyScreen({ navigation }: Props) {
           keyExtractor={(item) => item.id.toString()}
           contentContainerStyle={styles.listContent}
           showsVerticalScrollIndicator={false}
+          extraData={revealedId}
         />
       )}
     </SafeAreaView>
@@ -348,15 +378,18 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: colors.borderLight,
   },
-  readingKo: {
-    fontSize: 16,
-    fontWeight: "600",
-    color: colors.textDark,
-    marginBottom: 4,
-  },
   meaningKo: {
     fontSize: 15,
     color: colors.textMuted,
+  },
+  meaningHintButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 8,
+  },
+  meaningHintText: {
+    fontSize: 14,
+    color: colors.textLight,
+    fontWeight: "500",
   },
   situationLabel: {
     fontSize: 12,

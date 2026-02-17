@@ -95,6 +95,37 @@ export interface SituationWithProgress extends Situation {
   progress?: UserSituationProgress;
 }
 
+export type SessionMode = 'voice' | 'silent';
+
+// Four-Phase Learning Engine Types
+export type SessionPhase = 'watch' | 'catch' | 'engage' | 'review';
+
+export interface ModelLine {
+  lineIndex: number;
+  speaker: 'npc' | 'user';
+  textJa: string;
+  textKo: string;
+  furigana?: FuriganaSegment[];
+  isKeyExpression?: boolean;
+  audioPlayed?: boolean;
+}
+
+export interface KeyExpression {
+  textJa: string;
+  textKo: string;
+  emoji?: string;
+  furigana?: FuriganaSegment[];
+}
+
+export interface EngagePerformance {
+  totalTurns: number;
+  userTurns: number;
+  correctCount: number;
+  incorrectCount: number;
+}
+
+export type UserLevel = 'intermediate' | 'beginner' | 'conservative_beginner';
+
 // Session Types
 export interface SessionLine extends Line {
   situation: Situation;

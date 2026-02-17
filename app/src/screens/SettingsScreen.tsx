@@ -19,10 +19,18 @@ import BackHeader from "../components/BackHeader";
 type Props = NativeStackScreenProps<RootStackParamList, "Settings">;
 
 const TTS_SPEED_KEY = "@tts_speed";
+const DEPARTURE_DATE_KEY = "@departure_date";
+
 const TTS_SPEEDS = [
   { value: 0.5, label: "0.5x (느림)" },
   { value: 0.8, label: "0.8x (보통)" },
   { value: 1.0, label: "1.0x (빠름)" },
+];
+
+const DAILY_GOALS = [
+  { value: 1, label: "한 곳" },
+  { value: 3, label: "세 곳" },
+  { value: 5, label: "다섯 곳" },
 ];
 
 export default function SettingsScreen({ navigation }: Props) {
@@ -31,10 +39,16 @@ export default function SettingsScreen({ navigation }: Props) {
   const [allPersonas, setAllPersonas] = useState<Persona[]>([]);
   const [ttsSpeed, setTtsSpeed] = useState(0.8);
   const [colorScheme, setColorSchemeState] = useState<ColorScheme>(getColorScheme());
+  const [departureDate, setDepartureDate] = useState<string | null>(null);
+  const [showDateInput, setShowDateInput] = useState(false);
+  const [dateInputYear, setDateInputYear] = useState("");
+  const [dateInputMonth, setDateInputMonth] = useState("");
+  const [dateInputDay, setDateInputDay] = useState("");
 
   useEffect(() => {
     loadSettings();
     loadTtsSpeed();
+    loadDepartureDate();
     AsyncStorage.getItem("@color_scheme").then((v) => {
       if (v) {
         const scheme = v as ColorScheme;
@@ -49,6 +63,11 @@ export default function SettingsScreen({ navigation }: Props) {
     if (saved) setTtsSpeed(parseFloat(saved));
   };
 
+  const loadDepartureDate = async () => {
+    const saved = await AsyncStorage.getItem(DEPARTURE_DATE_KEY);
+    if (saved) setDepartureDate(saved);
+  };
+
   const handleTtsSpeedChange = async (speed: number) => {
     setTtsSpeed(speed);
     await AsyncStorage.setItem(TTS_SPEED_KEY, speed.toString());
@@ -58,6 +77,50 @@ export default function SettingsScreen({ navigation }: Props) {
     setColorSchemeState(scheme);
     setColorScheme(scheme);
     await AsyncStorage.setItem("@color_scheme", scheme);
+  };
+
+  const handleSetDepartureDate = async () => {
+    const y = parseInt(dateInputYear, 10);
+    const m = parseInt(dateInputMonth, 10);
+    const d = parseInt(dateInputDay, 10);
+
+    if (!y || !m || !d || m < 1 || m > 12 || d < 1 || d > 31) {
+      Alert.alert("날짜 확인", "올바른 날짜를 입력해주세요.");
+      return;
+    }
+
+    const date = new Date(y, m - 1, d);
+    // Validate the date is real (e.g. Feb 30 would roll over)
+    if (date.getFullYear() !== y || date.getMonth() !== m - 1 || date.getDate() !== d) {
+      Alert.alert("날짜 확인", "존재하지 않는 날짜입니다.");
+      return;
+    }
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    if (date < today) {
+      Alert.alert("날짜 확인", "오늘 이후의 날짜를 선택해주세요.");
+      return;
+    }
+
+    const isoDate = date.toISOString().split("T")[0]; // YYYY-MM-DD
+    setDepartureDate(isoDate);
+    await AsyncStorage.setItem(DEPARTURE_DATE_KEY, isoDate);
+    setShowDateInput(false);
+  };
+
+  const handleClearDepartureDate = async () => {
+    Alert.alert("출발일 초기화", "설정된 출발일을 지울까요?", [
+      { text: "취소", style: "cancel" },
+      {
+        text: "지우기",
+        style: "destructive",
+        onPress: async () => {
+          setDepartureDate(null);
+          await AsyncStorage.removeItem(DEPARTURE_DATE_KEY);
+        },
+      },
+    ]);
   };
 
   const loadSettings = async () => {
@@ -153,10 +216,7 @@ export default function SettingsScreen({ navigation }: Props) {
           style: "destructive",
           onPress: async () => {
             await supabase.auth.signOut();
-            navigation.reset({
-              index: 0,
-              routes: [{ name: "Auth" }],
-            });
+            // onAuthStateChange가 화면 전환을 처리합니다
           },
         },
       ]
@@ -169,12 +229,25 @@ export default function SettingsScreen({ navigation }: Props) {
     neutral: "상관없음",
   };
 
+  const formatDepartureDate = (iso: string): string => {
+    const [y, m, d] = iso.split("-");
+    return `${y}년 ${parseInt(m, 10)}월 ${parseInt(d, 10)}일`;
+  };
+
+  const getDaysUntilDeparture = (iso: string): number => {
+    const now = new Date();
+    const todayMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const dep = new Date(iso);
+    const depMidnight = new Date(dep.getFullYear(), dep.getMonth(), dep.getDate());
+    return Math.round((depMidnight.getTime() - todayMidnight.getTime()) / (1000 * 60 * 60 * 24));
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <BackHeader title="설정" onBack={() => navigation.goBack()} />
 
       <ScrollView style={styles.scrollView}>
-        {/* Profile Section */}
+        {/* Profile Section — "현재 레벨" removed (no levels in this app) */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>프로필</Text>
           <View style={styles.card}>
@@ -184,34 +257,147 @@ export default function SettingsScreen({ navigation }: Props) {
                 {profile?.gender ? genderLabel[profile.gender as keyof typeof genderLabel] : "-"}
               </Text>
             </View>
-            <View style={styles.row}>
-              <Text style={styles.label}>현재 레벨</Text>
-              <Text style={styles.value}>Lv.{profile?.current_level || 1}</Text>
-            </View>
           </View>
         </View>
 
-        {/* Daily Goal Section */}
+        {/* Departure Date Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>일일 목표</Text>
+          <Text style={styles.sectionTitle}>여행 출발일</Text>
+          <View style={styles.card}>
+            {departureDate ? (
+              <>
+                <View style={styles.departureDateRow}>
+                  <View style={styles.departureDateInfo}>
+                    <Text style={styles.departureDateText}>
+                      {formatDepartureDate(departureDate)}
+                    </Text>
+                    <Text style={styles.departureDaysLeft}>
+                      D-{getDaysUntilDeparture(departureDate)}
+                    </Text>
+                  </View>
+                  <TouchableOpacity onPress={handleClearDepartureDate}>
+                    <MaterialIcons name="close" size={20} color={colors.textLight} />
+                  </TouchableOpacity>
+                </View>
+              </>
+            ) : !showDateInput ? (
+              <TouchableOpacity
+                style={styles.setDateButton}
+                onPress={() => {
+                  const now = new Date();
+                  setDateInputYear(String(now.getFullYear()));
+                  setDateInputMonth("");
+                  setDateInputDay("");
+                  setShowDateInput(true);
+                }}
+              >
+                <MaterialIcons name="flight-takeoff" size={20} color={colors.primary} />
+                <Text style={styles.setDateButtonText}>출발일 설정하기</Text>
+              </TouchableOpacity>
+            ) : null}
+
+            {showDateInput && (
+              <View style={styles.dateInputContainer}>
+                <Text style={styles.dateInputLabel}>출발 날짜를 입력하세요</Text>
+                <View style={styles.dateInputRow}>
+                  <View style={styles.dateField}>
+                    <Text style={styles.dateFieldLabel}>년</Text>
+                    <TouchableOpacity
+                      style={styles.dateFieldInput}
+                      onPress={() => {
+                        const currentYear = new Date().getFullYear();
+                        const years = Array.from({ length: 3 }, (_, i) => currentYear + i);
+                        Alert.alert("연도 선택", "", years.map((y) => ({
+                          text: `${y}년`,
+                          onPress: () => setDateInputYear(String(y)),
+                        })).concat([{ text: "취소", onPress: () => {}, style: "cancel" } as any]));
+                      }}
+                    >
+                      <Text style={[styles.dateFieldValue, !dateInputYear && styles.dateFieldPlaceholder]}>
+                        {dateInputYear ? `${dateInputYear}년` : "년"}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                  <View style={styles.dateField}>
+                    <Text style={styles.dateFieldLabel}>월</Text>
+                    <TouchableOpacity
+                      style={styles.dateFieldInput}
+                      onPress={() => {
+                        const months = Array.from({ length: 12 }, (_, i) => `${i + 1}월`);
+                        Alert.alert("월 선택", "", months.map((label, i) => ({
+                          text: label,
+                          onPress: () => setDateInputMonth(String(i + 1)),
+                        })).concat([{ text: "취소", onPress: () => {}, style: "cancel" } as any]));
+                      }}
+                    >
+                      <Text style={[styles.dateFieldValue, !dateInputMonth && styles.dateFieldPlaceholder]}>
+                        {dateInputMonth ? `${dateInputMonth}월` : "월"}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                  <View style={styles.dateField}>
+                    <Text style={styles.dateFieldLabel}>일</Text>
+                    <TouchableOpacity
+                      style={styles.dateFieldInput}
+                      onPress={() => {
+                        const days = Array.from({ length: 31 }, (_, i) => `${i + 1}일`);
+                        // Show in pages of 10 for usability
+                        Alert.alert("일 선택", "", days.map((label, i) => ({
+                          text: label,
+                          onPress: () => setDateInputDay(String(i + 1)),
+                        })).concat([{ text: "취소", onPress: () => {}, style: "cancel" } as any]));
+                      }}
+                    >
+                      <Text style={[styles.dateFieldValue, !dateInputDay && styles.dateFieldPlaceholder]}>
+                        {dateInputDay ? `${dateInputDay}일` : "일"}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+                <View style={styles.dateActions}>
+                  <TouchableOpacity
+                    style={styles.dateCancelButton}
+                    onPress={() => setShowDateInput(false)}
+                  >
+                    <Text style={styles.dateCancelText}>취소</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={[
+                      styles.dateConfirmButton,
+                      (!dateInputYear || !dateInputMonth || !dateInputDay) && styles.dateConfirmButtonDisabled,
+                    ]}
+                    onPress={handleSetDepartureDate}
+                    disabled={!dateInputYear || !dateInputMonth || !dateInputDay}
+                  >
+                    <Text style={styles.dateConfirmText}>설정</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            )}
+          </View>
+        </View>
+
+        {/* Daily Goal Section — reframed as travel destinations */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>하루에 얼마나 여행할까요?</Text>
           <View style={styles.card}>
             <View style={styles.goalButtons}>
-              {[1, 3, 5].map((goal) => (
+              {DAILY_GOALS.map(({ value, label }) => (
                 <TouchableOpacity
-                  key={goal}
+                  key={value}
                   style={[
                     styles.goalButton,
-                    profile?.daily_goal === goal && styles.goalButtonActive,
+                    profile?.daily_goal === value && styles.goalButtonActive,
                   ]}
-                  onPress={() => handleDailyGoalChange(goal)}
+                  onPress={() => handleDailyGoalChange(value)}
                 >
                   <Text
                     style={[
                       styles.goalButtonText,
-                      profile?.daily_goal === goal && styles.goalButtonTextActive,
+                      profile?.daily_goal === value && styles.goalButtonTextActive,
                     ]}
                   >
-                    {goal}개
+                    {label}
                   </Text>
                 </TouchableOpacity>
               ))}
@@ -422,5 +608,105 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
     color: colors.danger,
+  },
+  // Departure date styles
+  departureDateRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: 16,
+  },
+  departureDateInfo: {
+    flex: 1,
+  },
+  departureDateText: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: colors.textDark,
+  },
+  departureDaysLeft: {
+    fontSize: 13,
+    color: colors.primary,
+    marginTop: 4,
+    fontWeight: "500",
+  },
+  setDateButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 16,
+    gap: 8,
+  },
+  setDateButtonText: {
+    fontSize: 16,
+    fontWeight: "500",
+    color: colors.primary,
+  },
+  dateInputContainer: {
+    padding: 16,
+  },
+  dateInputLabel: {
+    fontSize: 14,
+    color: colors.textMedium,
+    marginBottom: 12,
+  },
+  dateInputRow: {
+    flexDirection: "row",
+    gap: 12,
+  },
+  dateField: {
+    flex: 1,
+  },
+  dateFieldLabel: {
+    fontSize: 11,
+    fontWeight: "600",
+    color: colors.textLight,
+    marginBottom: 6,
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+  },
+  dateFieldInput: {
+    backgroundColor: colors.borderLight,
+    borderRadius: 10,
+    padding: 12,
+    alignItems: "center",
+  },
+  dateFieldValue: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: colors.textDark,
+  },
+  dateFieldPlaceholder: {
+    color: colors.textLight,
+  },
+  dateActions: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    gap: 12,
+    marginTop: 16,
+  },
+  dateCancelButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+  },
+  dateCancelText: {
+    fontSize: 15,
+    fontWeight: "500",
+    color: colors.textMuted,
+  },
+  dateConfirmButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 24,
+    borderRadius: 10,
+    backgroundColor: colors.primary,
+  },
+  dateConfirmButtonDisabled: {
+    opacity: 0.4,
+  },
+  dateConfirmText: {
+    fontSize: 15,
+    fontWeight: "600",
+    color: "#FFFFFF",
   },
 });

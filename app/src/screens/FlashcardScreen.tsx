@@ -212,8 +212,8 @@ export default function FlashcardScreen({ navigation }: Props) {
         <Text style={styles.progressText}>
           {currentIndex + 1} / {cards.length}
         </Text>
-        <Text style={styles.accuracyLabel}>
-          정확도: {Math.round(card.accuracy * 100)}%
+        <Text style={styles.progressHint}>
+          터치하여 확인
         </Text>
       </View>
 
@@ -240,9 +240,6 @@ export default function FlashcardScreen({ navigation }: Props) {
         ) : (
           <>
             <Text style={styles.cardJapanese}>{card.text_ja}</Text>
-            {card.pronunciation_ko && (
-              <Text style={styles.cardPronunciation}>{card.pronunciation_ko}</Text>
-            )}
             <Text style={styles.cardKoreanSmall}>{card.text_ko}</Text>
             <TouchableOpacity
               style={styles.speakButton}
@@ -257,7 +254,7 @@ export default function FlashcardScreen({ navigation }: Props) {
             </TouchableOpacity>
 
             {/* Self-grading buttons */}
-            <Text style={styles.gradeLabel}>얼마나 잘 기억했나요?</Text>
+            <Text style={styles.gradeLabel}>이 표현이 얼마나 익숙한가요?</Text>
             <View style={styles.gradeButtons}>
               <TouchableOpacity
                 style={[styles.gradeButton, styles.gradeAgain]}
@@ -347,9 +344,9 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: colors.textMuted,
   },
-  accuracyLabel: {
+  progressHint: {
     fontSize: 14,
-    color: colors.danger,
+    color: colors.textMuted,
     fontWeight: "500",
   },
   card: {
@@ -382,11 +379,6 @@ const styles = StyleSheet.create({
     color: colors.textDark,
     textAlign: "center",
     lineHeight: 40,
-  },
-  cardPronunciation: {
-    fontSize: 16,
-    color: colors.primary,
-    marginTop: 8,
   },
   cardKoreanSmall: {
     fontSize: 16,

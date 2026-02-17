@@ -9,7 +9,6 @@ interface Props {
   displayText: string;
   line: Line;
   lineIndex: number;
-  showPronunciation: boolean;
   isSpeaking: boolean;
   isRevealed: boolean;
   isGrammarOpen: boolean;
@@ -22,7 +21,6 @@ export default function NpcBubble({
   displayText,
   line,
   lineIndex,
-  showPronunciation,
   isSpeaking,
   isRevealed,
   isGrammarOpen,
@@ -59,9 +57,6 @@ export default function NpcBubble({
       ]}
     >
       <View style={styles.bubble}>
-        {showPronunciation && line.pronunciation_ko && (
-          <Text style={styles.pronunciation}>{line.pronunciation_ko}</Text>
-        )}
         <View style={styles.japaneseRow}>
           <View style={styles.japaneseContent}>
             {line.furigana && line.furigana.length > 0 ? (
@@ -104,7 +99,7 @@ export default function NpcBubble({
           >
             <View style={styles.grammarToggleRow}>
               <MaterialIcons name="lightbulb-outline" size={16} color={colors.warning} />
-              <Text style={styles.grammarToggleText}>문법 팁</Text>
+              <Text style={styles.grammarToggleText}>왜 이렇게 말할까?</Text>
             </View>
             {isGrammarOpen && (
               <Text style={styles.grammarContent}>{line.grammar_hint}</Text>
@@ -130,11 +125,6 @@ const styles = StyleSheet.create({
     padding: 14,
     borderWidth: 1,
     borderColor: colors.border,
-  },
-  pronunciation: {
-    fontSize: 13,
-    color: colors.primary,
-    marginBottom: 4,
   },
   japaneseRow: {
     flexDirection: "row",

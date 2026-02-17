@@ -2,17 +2,101 @@
 
 ## 다음 세션
 
+**v1 리디자인 완료** — 모든 7개 프롬프트 구현 + 안티패턴 전면 감사/수정 완료.
+
+**남은 작업:**
+- 디바이스 테스트 (Phase 1-4 발음 시스템 + v1 UI 전체)
+- furigana 생성 스크립트 실행 + DB migration 적용
+- Sprint 7 (JLPT 레벨 태깅) — 보류 중
+
+---
+
+# v1 리디자인 실행 계획
+
+> 시작일: 2026-02-17
+> 완료일: 2026-02-17
+
+## 의존 관계
+
+```
+Phase A (병렬):  01-onboarding ──┐
+                 02-travel-map ──┼──→ Phase B: 03-four-phase
+                                 │
+Phase C (병렬):  04-ai-npc ──────┤
+                 05-l1-safety ───┼──→ Phase D: 07-persistence
+                 06-repetition ──┘
+```
+
+## Phase A: 완료 ✅
+
+### 01 - 온보딩 리디자인: 공항 도착 체험
+- [x] OnboardingScreen.tsx 리디자인 (3단계 공항 도착 체험)
+- [x] SessionModeSelector.tsx 구현 (음성/묵음 분기)
+
+### 02 - 메인 화면: 여행 동선 지도
+- [x] TravelMap.tsx (SVG 연결선 + pulse 애니메이션)
+- [x] AbilityStatement.tsx + "오늘의 추천" 로직
+- [x] HomeScreen 통합
+
+## Phase B: 완료 ✅
+
+### 03 - 4 Phase 학습 엔진
+- [x] useFourPhaseSession.ts state machine
+- [x] WatchPhase.tsx (모델 대화 자동 재생 + L1 안전망)
+- [x] CatchPhase.tsx (5개 활동 순차 통합 + visitCount 변주)
+- [x] EngagePhase.tsx (3단계 입력: 선택지→빈칸→자유)
+- [x] ReviewPhase.tsx (핵심 표현 + "왜 이렇게 말할까?" + 능력 서술)
+- [x] SessionScreen.tsx 4Phase 완전 연결
+- [x] 상호 리뷰: 불변 규칙 위반 수정 (accuracy%, 빨간 오답 등)
+
+## Phase C: 완료 ✅
+
+### 04 - AI NPC & 피드백 계층화
+- [x] npcPrompts.ts (Claude 시스템 프롬프트)
+- [x] feedbackLayer.ts (리캐스트/명확화/메타힌트)
+- [x] npcEngine.ts (MVP 모의 응답)
+- [x] EngagePhase NPC 연동
+- [x] 상호 리뷰 → safety-engineer 코드 체크
+
+### 05 - L1 안전망 & 문자 체계
+- [x] exposureTracker.ts (노출 횟수 추적)
+- [x] SafetyNetTooltip.tsx ([?] 점진적 후퇴)
+- [x] KanaDisplay.tsx (한국어 발음 없는 표시)
+- [x] ReviewPhase 통합
+- [x] 상호 리뷰 → npc-engineer 코드 체크
+
+### 06 - 반복 학습 변주
+- [x] variationEngine.ts (변주 시나리오)
+- [x] crossSituationTracker.ts (교차 반복)
+- [x] ToolkitView.tsx (도구 세트)
+- [x] HomeScreen 변주 배지
+- [x] 상호 리뷰 → safety-engineer 코드 체크
+
+## Phase D: 완료 ✅
+
+### 07 - 지속성 & 비주얼
+- [x] notifications.ts (여행 서사 알림)
+- [x] sessionResume.ts (세션 중단 복구)
+- [x] situationThemes.ts (상황별 컬러 테마)
+- [x] DDayBanner.tsx (D-Day 카운트다운)
+- [x] SettingsScreen 리디자인 (레벨 제거, 출발일 추가)
+- [x] Anti-Pattern 전수 감사 (77파일, 18위반 → 0위반)
+- [x] 안티패턴 수정: %, 발음, 점수, 문법용어 전면 제거
+
+## 불변 규칙
+
+- 한국어 발음 표기 금지 / "틀렸습니다" 금지 / 레벨·XP·점수 금지 / 스트릭 끊김 경고 금지 / L1 상시 표시 금지
+
+---
+
+# 이전 계획 (참고용)
+
+## 이전 다음 세션 (보류)
+
 **Phase 4 남은 운영 작업**:
 1. furigana 생성 스크립트 실행: `GEMINI_API_KEY=... npx tsx scripts/add-furigana.ts`
 2. Supabase migration 적용: `003_furigana.sql`
 3. Supabase import 재실행 (furigana 포함)
-**Sprint 7 — JLPT 레벨 태깅** 진행 예정.
-**Phase 1-4 디바이스 테스트** — 실기기에서 전체 파이프라인 검증.
-
-### 재개에 필요한 맥락
-- Phase 4 코드 **전부 완료**: 타입, 컴포넌트, NpcBubble/SessionScreen 연동, 스크립트, migration, import 스크립트 수정
-- **설계 결정**: kuromoji.js runtime 삭제 (5명 전원 합의), 빌드타임 pre-computed furigana 채택
-- **설계 결정**: mora timing/rhythm feedback 전부 defer (Devil's Advocate 논리 수용)
 
 ---
 

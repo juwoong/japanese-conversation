@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import {
   View,
   Text,
@@ -8,196 +8,217 @@ import {
   Alert,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import * as Speech from "expo-speech";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { supabase } from "../lib/supabase";
-import type { RootStackParamList, Persona } from "../types";
+import { startRecording, stopRecording } from "../lib/audio";
+import { transcribeAudio } from "../lib/stt";
+import { accuracyScore } from "../lib/textDiff";
+import type { RootStackParamList, UserLevel } from "../types";
 import { colors } from "../constants/theme";
-import LoadingScreen from "../components/LoadingScreen";
+import { AuthContext } from "../../App";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Onboarding">;
 
-type Gender = "male" | "female" | "neutral";
+type Step = 1 | 2 | 3;
 
-const GENDER_OPTIONS: { value: Gender; label: string; icon: string }[] = [
-  { value: "male", label: "남성", icon: "👨" },
-  { value: "female", label: "여성", icon: "👩" },
-  { value: "neutral", label: "상관없음", icon: "🧑" },
-];
+const EXPECTED_TEXT = "いらっしゃいませ";
+
+function classifyLevel(score: number): UserLevel {
+  if (score >= 80) return "intermediate";
+  if (score >= 40) return "beginner";
+  return "conservative_beginner";
+}
 
 export default function OnboardingScreen({ navigation }: Props) {
-  const [step, setStep] = useState<"gender" | "persona">("gender");
-  const [gender, setGender] = useState<Gender | null>(null);
-  const [personas, setPersonas] = useState<Persona[]>([]);
-  const [loading, setLoading] = useState(false);
+  const { onOnboardingComplete } = useContext(AuthContext);
+  const [step, setStep] = useState<Step>(1);
+  const [isRecording, setIsRecording] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
   const [saving, setSaving] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [userLevel, setUserLevel] = useState<UserLevel>("conservative_beginner");
 
-  useEffect(() => {
-    loadPersonas();
-  }, []);
+  // --- Step 2: TTS ---
+  const playGreeting = () => {
+    Speech.speak(EXPECTED_TEXT, { language: "ja" });
+  };
 
-  const loadPersonas = async () => {
-    setLoading(true);
-    setError(null);
-    const { data, error: fetchError } = await supabase
-      .from("personas")
-      .select("*")
-      .order("sort_order");
+  const goToStep2 = () => {
+    setStep(2);
+    // Auto-play TTS after a brief delay for the transition
+    setTimeout(playGreeting, 500);
+  };
 
-    if (fetchError || !data) {
-      setError("페르소나를 불러오지 못했습니다");
+  // --- Step 2: Recording ---
+  const handleRecord = async () => {
+    if (isRecording) {
+      // Stop recording
+      setIsRecording(false);
+      setIsProcessing(true);
+      try {
+        const result = await stopRecording();
+        if (result) {
+          const sttResult = await transcribeAudio(result.uri, EXPECTED_TEXT);
+          const score = accuracyScore(EXPECTED_TEXT, sttResult.text);
+          setUserLevel(classifyLevel(score));
+        }
+      } catch {
+        // If recording/STT fails, default to conservative beginner
+        setUserLevel("conservative_beginner");
+      } finally {
+        setIsProcessing(false);
+        setStep(3);
+      }
     } else {
-      setPersonas(data);
+      // Start recording
+      try {
+        await startRecording();
+        setIsRecording(true);
+      } catch {
+        Alert.alert("마이크 권한이 필요합니다", "설정에서 마이크 권한을 허용해주세요.");
+      }
     }
-    setLoading(false);
   };
 
-  const handleSignOut = async () => {
-    await supabase.auth.signOut();
+  const handleSkip = () => {
+    setUserLevel("conservative_beginner");
+    setStep(3);
   };
 
-  const handleGenderSelect = (selectedGender: Gender) => {
-    setGender(selectedGender);
-    setStep("persona");
-  };
-
-  const handlePersonaSelect = async (persona: Persona) => {
+  // --- Step 3: Save & Navigate ---
+  const handleComplete = async () => {
     setSaving(true);
-
     try {
-      // Get current user
       const {
         data: { user },
       } = await supabase.auth.getUser();
 
       if (user) {
-        // Update profile with gender
+        // Save profile with level (default persona: tourist)
         await supabase.from("profiles").upsert({
           id: user.id,
-          gender,
+          onboarding_completed: true,
         });
 
-        // Set primary persona
-        await supabase.from("user_personas").upsert({
-          user_id: user.id,
-          persona_id: persona.id,
-          is_primary: true,
-        });
-
-        // Unlock first situation of this persona
-        const { data: situations } = await supabase
-          .from("situations")
+        // Set default persona (tourist, id=1)
+        const { data: touristPersona } = await supabase
+          .from("personas")
           .select("id")
-          .eq("persona_id", persona.id)
-          .order("sort_order")
-          .limit(1);
+          .eq("slug", "tourist")
+          .limit(1)
+          .single();
 
-        if (situations && situations.length > 0) {
-          await supabase.from("user_situation_progress").upsert({
+        if (touristPersona) {
+          await supabase.from("user_personas").upsert({
             user_id: user.id,
-            situation_id: situations[0].id,
-            status: "available",
+            persona_id: touristPersona.id,
+            is_primary: true,
           });
+
+          // Unlock first situation of tourist persona
+          const { data: situations } = await supabase
+            .from("situations")
+            .select("id")
+            .eq("persona_id", touristPersona.id)
+            .order("sort_order")
+            .limit(1);
+
+          if (situations && situations.length > 0) {
+            await supabase.from("user_situation_progress").upsert({
+              user_id: user.id,
+              situation_id: situations[0].id,
+              status: "available",
+            });
+          }
         }
       }
 
-      navigation.replace("Home");
-    } catch (err) {
+      onOnboardingComplete();
+    } catch {
       Alert.alert("오류", "저장 중 문제가 발생했습니다. 다시 시도해주세요.");
     } finally {
       setSaving(false);
     }
   };
 
-  if (loading) {
-    return <LoadingScreen />;
-  }
+  // --- Render ---
 
-  if (error) {
+  if (step === 1) {
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={[styles.container, { backgroundColor: "#87CEEB" }]}>
         <View style={styles.content}>
-          <Text style={styles.title}>{error}</Text>
-          <TouchableOpacity
-            style={[styles.option, { justifyContent: "center" }]}
-            onPress={loadPersonas}
-          >
-            <Text style={styles.optionLabel}>다시 시도</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.backButton}
-            onPress={handleSignOut}
-          >
-            <Text style={styles.backButtonText}>로그아웃</Text>
+          <Text style={styles.emoji}>✈️</Text>
+          <Text style={styles.title}>도쿄에 도착했습니다.</Text>
+          <TouchableOpacity style={styles.primaryButton} onPress={goToStep2}>
+            <Text style={styles.primaryButtonText}>시작하기</Text>
           </TouchableOpacity>
         </View>
       </SafeAreaView>
     );
   }
 
+  if (step === 2) {
+    return (
+      <SafeAreaView style={[styles.container, { backgroundColor: "#F5F0E8" }]}>
+        <View style={styles.content}>
+          <Text style={styles.emoji}>🏢</Text>
+          <Text style={styles.title}>따라 말해보세요</Text>
+
+          <TouchableOpacity style={styles.listenButton} onPress={playGreeting}>
+            <Text style={styles.listenButtonText}>🔊 다시 듣기</Text>
+          </TouchableOpacity>
+
+          <View style={styles.buttonGroup}>
+            <TouchableOpacity
+              style={[
+                styles.primaryButton,
+                isRecording && styles.recordingButton,
+              ]}
+              onPress={handleRecord}
+              disabled={isProcessing}
+            >
+              {isProcessing ? (
+                <ActivityIndicator color="#fff" />
+              ) : (
+                <Text style={styles.primaryButtonText}>
+                  {isRecording ? "⏹ 녹음 중지" : "🎤 녹음"}
+                </Text>
+              )}
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.secondaryButton}
+              onPress={handleSkip}
+              disabled={isProcessing || isRecording}
+            >
+              <Text style={styles.secondaryButtonText}>듣기만 할게요</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </SafeAreaView>
+    );
+  }
+
+  // Step 3
   return (
-    <SafeAreaView style={styles.container}>
-      {step === "gender" ? (
-        <View style={styles.content}>
-          <Text style={styles.title}>성별을 선택해주세요</Text>
-          <Text style={styles.subtitle}>
-            대화문에서 적절한 표현을 사용하기 위해 필요해요
-          </Text>
+    <SafeAreaView style={[styles.container, { backgroundColor: "#E8F5E9" }]}>
+      <View style={styles.content}>
+        <Text style={styles.emoji}>🚪</Text>
+        <Text style={styles.title}>첫 번째 일본어를 들었습니다!</Text>
+        <Text style={styles.subtitle}>출구가 저쪽이래요.</Text>
 
-          <View style={styles.optionsContainer}>
-            {GENDER_OPTIONS.map((option) => (
-              <TouchableOpacity
-                key={option.value}
-                style={styles.option}
-                onPress={() => handleGenderSelect(option.value)}
-              >
-                <Text style={styles.optionIcon}>{option.icon}</Text>
-                <Text style={styles.optionLabel}>{option.label}</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-
-          <TouchableOpacity
-            style={styles.backButton}
-            onPress={handleSignOut}
-          >
-            <Text style={[styles.backButtonText, { fontSize: 14 }]}>로그아웃</Text>
-          </TouchableOpacity>
-        </View>
-      ) : (
-        <View style={styles.content}>
-          <Text style={styles.title}>학습 목적을 선택해주세요</Text>
-          <Text style={styles.subtitle}>
-            목적에 맞는 상황들을 먼저 배울 수 있어요
-          </Text>
-
-          <View style={styles.optionsContainer}>
-            {personas.map((persona) => (
-              <TouchableOpacity
-                key={persona.id}
-                style={styles.personaOption}
-                onPress={() => handlePersonaSelect(persona)}
-                disabled={saving}
-              >
-                <Text style={styles.optionIcon}>{persona.icon}</Text>
-                <View style={styles.personaInfo}>
-                  <Text style={styles.personaName}>{persona.name_ko}</Text>
-                  <Text style={styles.personaDesc}>{persona.description}</Text>
-                </View>
-              </TouchableOpacity>
-            ))}
-          </View>
-
-          <TouchableOpacity
-            style={styles.backButton}
-            onPress={() => setStep("gender")}
-          >
-            <Text style={styles.backButtonText}>뒤로</Text>
-          </TouchableOpacity>
-
-          {saving && <ActivityIndicator style={styles.loader} color={colors.primary} />}
-        </View>
-      )}
+        <TouchableOpacity
+          style={styles.primaryButton}
+          onPress={handleComplete}
+          disabled={saving}
+        >
+          {saving ? (
+            <ActivityIndicator color="#fff" />
+          ) : (
+            <Text style={styles.primaryButtonText}>도쿄 탐험 시작하기</Text>
+          )}
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 }
@@ -205,12 +226,16 @@ export default function OnboardingScreen({ navigation }: Props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
   },
   content: {
     flex: 1,
     padding: 24,
     justifyContent: "center",
+    alignItems: "center",
+  },
+  emoji: {
+    fontSize: 80,
+    marginBottom: 32,
   },
   title: {
     fontSize: 24,
@@ -225,60 +250,46 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 40,
   },
-  optionsContainer: {
-    gap: 16,
-  },
-  option: {
-    backgroundColor: colors.surface,
+  primaryButton: {
+    backgroundColor: colors.primary,
     borderRadius: 16,
-    padding: 20,
-    flexDirection: "row",
+    paddingVertical: 16,
+    paddingHorizontal: 32,
+    marginTop: 32,
+    minWidth: 200,
     alignItems: "center",
-    borderWidth: 1,
-    borderColor: colors.border,
   },
-  optionIcon: {
-    fontSize: 32,
-    marginRight: 16,
-  },
-  optionLabel: {
+  primaryButtonText: {
     fontSize: 18,
     fontWeight: "600",
-    color: colors.textDark,
+    color: "#fff",
   },
-  personaOption: {
-    backgroundColor: colors.surface,
-    borderRadius: 16,
-    padding: 20,
-    flexDirection: "row",
-    alignItems: "flex-start",
-    borderWidth: 1,
-    borderColor: colors.border,
+  recordingButton: {
+    backgroundColor: colors.danger,
   },
-  personaInfo: {
-    flex: 1,
+  secondaryButton: {
+    paddingVertical: 12,
+    marginTop: 16,
+    alignItems: "center",
   },
-  personaName: {
-    fontSize: 18,
-    fontWeight: "600",
-    color: colors.textDark,
-    marginBottom: 4,
-  },
-  personaDesc: {
-    fontSize: 14,
+  secondaryButtonText: {
+    fontSize: 16,
     color: colors.textMuted,
-    lineHeight: 20,
+    fontWeight: "500",
   },
-  backButton: {
-    marginTop: 24,
-    alignSelf: "center",
+  listenButton: {
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    marginTop: 8,
+    marginBottom: 16,
   },
-  backButtonText: {
+  listenButtonText: {
     fontSize: 16,
     color: colors.primary,
     fontWeight: "500",
   },
-  loader: {
-    marginTop: 16,
+  buttonGroup: {
+    alignItems: "center",
+    width: "100%",
   },
 });
