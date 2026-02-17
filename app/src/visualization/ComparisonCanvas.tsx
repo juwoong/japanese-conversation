@@ -28,11 +28,8 @@ export function ComparisonCanvas({ result }: ComparisonCanvasProps) {
 
   return (
     <View style={[styles.container, isDark && styles.containerDark]}>
-      {/* Score badge */}
+      {/* Rating badge — qualitative only, no numeric score */}
       <View style={[styles.scoreBadge, { backgroundColor: ratingConfig.bg }]}>
-        <Text style={[styles.scoreNumber, { color: ratingConfig.text }]}>
-          {result.score}
-        </Text>
         <Text style={[styles.scoreLabel, { color: ratingConfig.text }]}>
           {ratingConfig.label}
         </Text>
@@ -110,7 +107,7 @@ export function ComparisonCanvas({ result }: ComparisonCanvasProps) {
           {result.moraResults.map((m, i) => (
             <View key={`chk-${i}`} style={styles.moraLabelCell}>
               <Text style={styles.checkText}>
-                {m.expected === null ? "" : m.correct ? "✓" : "✗"}
+                {m.expected === null ? "" : m.correct ? "✓" : "·"}
               </Text>
             </View>
           ))}
@@ -122,10 +119,9 @@ export function ComparisonCanvas({ result }: ComparisonCanvasProps) {
         {result.feedback}
       </Text>
 
-      {/* Stats */}
+      {/* Stats — qualitative only */}
       <Text style={[styles.statsText, isDark && styles.textMuted]}>
-        {result.correctCount}/{result.totalScorable} 모라 정확
-        {result.accentNucleusCorrect ? " · 악센트 핵 ✓" : " · 악센트 핵 ✗"}
+        {result.accentNucleusCorrect ? "강세 위치 ✓" : "강세 위치를 확인해보세요"}
       </Text>
     </View>
   );
@@ -154,11 +150,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginBottom: 16,
     gap: 6,
-  },
-  scoreNumber: {
-    fontSize: 28,
-    fontWeight: "700",
-    fontVariant: ["tabular-nums"],
   },
   scoreLabel: {
     fontSize: 14,

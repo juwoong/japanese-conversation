@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   View,
   Text,
@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   FlatList,
   TextInput,
+  Animated,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Speech from "expo-speech";
@@ -128,6 +129,39 @@ export default function VocabularyScreen({ navigation }: Props) {
 
   const getPosColor = (pos: string): string => POS_COLORS[pos] ?? POS_DEFAULT_COLOR;
 
+  // --- Inline meaning reveal component with fade ---
+  const MeaningReveal = useCallback(({ meaningKo }: { meaningKo: string }) => {
+    const [revealed, setRevealed] = useState(false);
+    const fadeAnim = useState(() => new Animated.Value(1))[0];
+
+    const handleReveal = () => {
+      setRevealed(true);
+      fadeAnim.setValue(1);
+      // Auto-fade after 3 seconds
+      setTimeout(() => {
+        Animated.timing(fadeAnim, {
+          toValue: 0,
+          duration: 500,
+          useNativeDriver: true,
+        }).start(() => setRevealed(false));
+      }, 3000);
+    };
+
+    return (
+      <View style={styles.cardBottom}>
+        {revealed ? (
+          <Animated.Text style={[styles.meaningKo, { opacity: fadeAnim }]}>
+            {meaningKo}
+          </Animated.Text>
+        ) : (
+          <TouchableOpacity onPress={handleReveal} style={styles.meaningHintButton}>
+            <Text style={styles.meaningHintText}>[?] 뜻 보기</Text>
+          </TouchableOpacity>
+        )}
+      </View>
+    );
+  }, []);
+
   const renderItem = ({ item }: { item: VocabWord }) => (
     <TouchableOpacity
       style={styles.wordCard}
@@ -151,10 +185,7 @@ export default function VocabularyScreen({ navigation }: Props) {
         </View>
       </View>
 
-      <View style={styles.cardBottom}>
-        <Text style={styles.readingKo}>{item.reading_ko}</Text>
-        <Text style={styles.meaningKo}>{item.meaning_ko}</Text>
-      </View>
+      <MeaningReveal meaningKo={item.meaning_ko} />
 
       <Text style={styles.situationLabel}>{item.situation_name}</Text>
     </TouchableOpacity>
@@ -166,7 +197,7 @@ export default function VocabularyScreen({ navigation }: Props) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <BackHeader title="단어장" onBack={() => navigation.goBack()} />
+      <BackHeader title="표현 모음" onBack={() => navigation.goBack()} />
 
       {/* Search Bar */}
       <View style={styles.searchBar}>
@@ -348,15 +379,17 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: colors.borderLight,
   },
-  readingKo: {
-    fontSize: 16,
-    fontWeight: "600",
-    color: colors.textDark,
-    marginBottom: 4,
-  },
   meaningKo: {
     fontSize: 15,
     color: colors.textMuted,
+  },
+  meaningHintButton: {
+    paddingVertical: 4,
+  },
+  meaningHintText: {
+    fontSize: 14,
+    color: colors.textLight,
+    fontWeight: "500",
   },
   situationLabel: {
     fontSize: 12,

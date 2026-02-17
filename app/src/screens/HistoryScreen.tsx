@@ -137,9 +137,9 @@ export default function HistoryScreen({ navigation }: Props) {
           <View style={styles.summaryDivider} />
           <View style={styles.summaryItem}>
             <Text style={styles.summaryValue}>
-              {Math.round(totalStats.averageAccuracy * 100)}%
+              {totalStats.totalSituations > 0 ? "✓" : "—"}
             </Text>
-            <Text style={styles.summaryLabel}>평균 정확도</Text>
+            <Text style={styles.summaryLabel}>경험 중</Text>
           </View>
         </View>
 
@@ -161,9 +161,9 @@ export default function HistoryScreen({ navigation }: Props) {
                     {day.situationsCompleted}개 상황 완료
                   </Text>
                 </View>
-                <View style={styles.accuracyBadge}>
-                  <Text style={styles.accuracyText}>
-                    {Math.round(day.accuracy * 100)}%
+                <View style={styles.situationBadge}>
+                  <Text style={styles.situationBadgeText}>
+                    {day.situationsCompleted}곳
                   </Text>
                 </View>
               </View>
@@ -258,15 +258,15 @@ const styles = StyleSheet.create({
     color: colors.textMuted,
     marginTop: 2,
   },
-  accuracyBadge: {
-    backgroundColor: colors.successLight,
+  situationBadge: {
+    backgroundColor: colors.primaryLight,
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 8,
   },
-  accuracyText: {
+  situationBadgeText: {
     fontSize: 14,
     fontWeight: "600",
-    color: colors.success,
+    color: colors.primary,
   },
 });

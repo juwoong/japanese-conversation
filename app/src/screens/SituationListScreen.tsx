@@ -161,10 +161,9 @@ export default function SituationListScreen({ navigation }: Props) {
                       <Text style={styles.situationMeta}>
                         {situation.location_ko} · {getDifficultyStars(situation.difficulty)}
                       </Text>
-                      {situation.progress?.status === "completed" && situation.progress.best_accuracy != null && (
-                        <Text style={styles.bestAccuracy}>
-                          최고 기록: {Math.round(situation.progress.best_accuracy * 100)}%
-                          {situation.progress.attempt_count > 1 && ` · ${situation.progress.attempt_count}회 도전`}
+                      {situation.progress?.status === "completed" && situation.progress.attempt_count > 1 && (
+                        <Text style={styles.attemptCount}>
+                          {situation.progress.attempt_count}회 방문
                         </Text>
                       )}
                       {situation.progress?.status === "in_progress" && (
@@ -272,9 +271,9 @@ const styles = StyleSheet.create({
     color: colors.textLight,
     marginTop: 2,
   },
-  bestAccuracy: {
+  attemptCount: {
     fontSize: 12,
-    color: colors.success,
+    color: colors.textMuted,
     marginTop: 2,
   },
   inProgressLabel: {
