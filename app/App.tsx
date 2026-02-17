@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { ActivityIndicator, View, Text, StyleSheet } from "react-native";
+import React, { useState, useEffect, useCallback, createContext } from "react";
+import { ActivityIndicator, View, StyleSheet } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -21,58 +21,17 @@ import {
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
+export const AuthContext = createContext({
+  onOnboardingComplete: () => {},
+});
+
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [hasCompletedOnboarding, setHasCompletedOnboarding] = useState(false);
 
-  useEffect(() => {
-    checkAuth();
-
-    // Listen for auth changes
-    const { data: authListener } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        if (session?.user) {
-          setIsLoggedIn(true);
-          await checkOnboarding(session.user.id);
-        } else {
-          setIsLoggedIn(false);
-          setHasCompletedOnboarding(false);
-        }
-      }
-    );
-
-    return () => {
-      authListener.subscription.unsubscribe();
-    };
-  }, []);
-
-  const checkAuth = async () => {
-    try {
-      const timeoutPromise = new Promise((_, reject) =>
-        setTimeout(() => reject(new Error("Auth timeout")), 5000)
-      );
-      const sessionPromise = supabase.auth.getSession();
-
-      const { data: { session } } = await Promise.race([sessionPromise, timeoutPromise]) as any;
-
-      if (session?.user) {
-        setIsLoggedIn(true);
-        await checkOnboarding(session.user.id);
-      } else {
-        setIsLoggedIn(false);
-      }
-    } catch (error) {
-      console.error("Auth error:", error);
-      setIsLoggedIn(false);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   const checkOnboarding = async (userId: string) => {
     try {
-      // Check onboarding_completed flag on profile first
       const { data: profile } = await supabase
         .from("profiles")
         .select("onboarding_completed")
@@ -98,6 +57,36 @@ export default function App() {
     }
   };
 
+  useEffect(() => {
+    // Fallback timeout — if onAuthStateChange never fires (e.g. network down)
+    const timeout = setTimeout(() => setIsLoading(false), 5000);
+
+    const { data: authListener } = supabase.auth.onAuthStateChange(
+      async (_event, session) => {
+        if (session?.user) {
+          // Check onboarding BEFORE setting isLoggedIn
+          // so conditional rendering shows the correct screen immediately
+          await checkOnboarding(session.user.id);
+          setIsLoggedIn(true);
+        } else {
+          setIsLoggedIn(false);
+          setHasCompletedOnboarding(false);
+        }
+        clearTimeout(timeout);
+        setIsLoading(false);
+      }
+    );
+
+    return () => {
+      clearTimeout(timeout);
+      authListener.subscription.unsubscribe();
+    };
+  }, []);
+
+  const onOnboardingComplete = useCallback(() => {
+    setHasCompletedOnboarding(true);
+  }, []);
+
   if (isLoading) {
     return (
       <View style={styles.loadingContainer}>
@@ -107,6 +96,7 @@ export default function App() {
   }
 
   return (
+    <AuthContext.Provider value={{ onOnboardingComplete }}>
     <SafeAreaProvider>
     <ErrorBoundary>
       <NavigationContainer>
@@ -115,31 +105,35 @@ export default function App() {
             headerShown: false,
             animation: "slide_from_right",
           }}
-          initialRouteName={
-            !isLoggedIn ? "Auth" : hasCompletedOnboarding ? "Home" : "Onboarding"
-          }
         >
-          <Stack.Screen name="Auth" component={AuthScreen} />
-          <Stack.Screen name="Onboarding" component={OnboardingScreen} />
-          <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen
-            name="Session"
-            component={SessionScreen}
-            options={{
-              animation: "slide_from_bottom",
-              gestureEnabled: false,
-            }}
-          />
-          <Stack.Screen name="SituationList" component={SituationListScreen} />
-          <Stack.Screen name="Settings" component={SettingsScreen} />
-          <Stack.Screen name="History" component={HistoryScreen} />
-          <Stack.Screen name="Vocabulary" component={VocabularyScreen} />
-          <Stack.Screen name="Flashcard" component={FlashcardScreen} />
-          <Stack.Screen name="PitchTest" component={PitchTestScreen} />
+          {!isLoggedIn ? (
+            <Stack.Screen name="Auth" component={AuthScreen} />
+          ) : !hasCompletedOnboarding ? (
+            <Stack.Screen name="Onboarding" component={OnboardingScreen} />
+          ) : (
+            <>
+              <Stack.Screen name="Home" component={HomeScreen} />
+              <Stack.Screen
+                name="Session"
+                component={SessionScreen}
+                options={{
+                  animation: "slide_from_bottom",
+                  gestureEnabled: false,
+                }}
+              />
+              <Stack.Screen name="SituationList" component={SituationListScreen} />
+              <Stack.Screen name="Settings" component={SettingsScreen} />
+              <Stack.Screen name="History" component={HistoryScreen} />
+              <Stack.Screen name="Vocabulary" component={VocabularyScreen} />
+              <Stack.Screen name="Flashcard" component={FlashcardScreen} />
+              <Stack.Screen name="PitchTest" component={PitchTestScreen} />
+            </>
+          )}
         </Stack.Navigator>
       </NavigationContainer>
     </ErrorBoundary>
     </SafeAreaProvider>
+    </AuthContext.Provider>
   );
 }
 
