@@ -18,7 +18,7 @@ import WatchPhase from "../components/phases/WatchPhase";
 import CatchPhase from "../components/phases/CatchPhase";
 import EngagePhase from "../components/phases/EngagePhase";
 import ReviewPhase from "../components/phases/ReviewPhase";
-import type { RootStackParamList, SessionPhase } from "../types";
+import type { RootStackParamList, SessionPhase, EngagePerformance } from "../types";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Session">;
 
@@ -34,6 +34,7 @@ export default function SessionScreen({ navigation, route }: Props) {
   const fourPhase = useFourPhaseSession(situationId);
 
   const [showModeSelector, setShowModeSelector] = useState(true);
+  const [engagePerformance, setEngagePerformance] = useState<EngagePerformance | null>(null);
 
   // Phase transition animation
   const phaseOpacity = useRef(new Animated.Value(1)).current;
@@ -121,9 +122,28 @@ export default function SessionScreen({ navigation, route }: Props) {
           />
         );
       case "engage":
-        return <EngagePhase onComplete={handlePhaseTransition} />;
+        return (
+          <EngagePhase
+            keyExpressions={fourPhase.keyExpressions}
+            modelDialogue={fourPhase.modelDialogue}
+            inputMode={fourPhase.inputMode}
+            visitCount={fourPhase.visitCount}
+            onComplete={(perf) => {
+              setEngagePerformance(perf);
+              handlePhaseTransition();
+            }}
+          />
+        );
       case "review":
-        return <ReviewPhase onComplete={handleComplete} />;
+        return (
+          <ReviewPhase
+            keyExpressions={fourPhase.keyExpressions}
+            performance={engagePerformance ?? { totalTurns: 0, userTurns: 0, correctCount: 0, incorrectCount: 0 }}
+            situationName={fourPhase.situation?.name_ko ?? ""}
+            inputMode={fourPhase.inputMode}
+            onComplete={handleComplete}
+          />
+        );
     }
   };
 
