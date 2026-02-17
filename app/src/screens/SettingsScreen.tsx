@@ -216,10 +216,7 @@ export default function SettingsScreen({ navigation }: Props) {
           style: "destructive",
           onPress: async () => {
             await supabase.auth.signOut();
-            navigation.reset({
-              index: 0,
-              routes: [{ name: "Auth" }],
-            });
+            // onAuthStateChange가 화면 전환을 처리합니다
           },
         },
       ]

@@ -65,40 +65,21 @@ export default function AuthScreen({ navigation }: Props) {
 
     try {
       if (mode === "signup") {
-        const { data, error } = await supabase.auth.signUp({
+        const { error } = await supabase.auth.signUp({
           email,
           password,
         });
 
         if (error) throw error;
-
-        if (data?.user) {
-          // 회원가입 성공 - 온보딩으로 이동
-          navigation.replace("Onboarding");
-        }
+        // 성공 — onAuthStateChange가 화면 전환을 처리합니다
       } else {
-        const { data, error } = await supabase.auth.signInWithPassword({
+        const { error } = await supabase.auth.signInWithPassword({
           email,
           password,
         });
 
         if (error) throw error;
-
-        if (data?.user) {
-          // 로그인 성공 - 온보딩 완료 여부 확인
-          const { data: userPersona } = await supabase
-            .from("user_personas")
-            .select("id")
-            .eq("user_id", data.user.id)
-            .limit(1)
-            .single();
-
-          if (userPersona) {
-            navigation.replace("Home");
-          } else {
-            navigation.replace("Onboarding");
-          }
-        }
+        // 성공 — onAuthStateChange가 화면 전환을 처리합니다
       }
     } catch (error: any) {
       let message = "오류가 발생했습니다.";
@@ -112,7 +93,6 @@ export default function AuthScreen({ navigation }: Props) {
       }
 
       Alert.alert("오류", message);
-    } finally {
       setLoading(false);
     }
   };

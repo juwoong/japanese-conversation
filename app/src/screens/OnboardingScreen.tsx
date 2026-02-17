@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   View,
   Text,
@@ -16,6 +16,7 @@ import { transcribeAudio } from "../lib/stt";
 import { accuracyScore } from "../lib/textDiff";
 import type { RootStackParamList, UserLevel } from "../types";
 import { colors } from "../constants/theme";
+import { AuthContext } from "../../App";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Onboarding">;
 
@@ -30,6 +31,7 @@ function classifyLevel(score: number): UserLevel {
 }
 
 export default function OnboardingScreen({ navigation }: Props) {
+  const { onOnboardingComplete } = useContext(AuthContext);
   const [step, setStep] = useState<Step>(1);
   const [isRecording, setIsRecording] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -131,7 +133,7 @@ export default function OnboardingScreen({ navigation }: Props) {
         }
       }
 
-      navigation.replace("Home");
+      onOnboardingComplete();
     } catch {
       Alert.alert("오류", "저장 중 문제가 발생했습니다. 다시 시도해주세요.");
     } finally {
