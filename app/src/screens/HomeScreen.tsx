@@ -22,6 +22,8 @@ import { colors } from "../constants/theme";
 import OfflineBanner from "../components/OfflineBanner";
 import TravelMap, { MapNode, NodeStatus } from "../components/TravelMap";
 import AbilityStatement from "../components/AbilityStatement";
+import { countVariationsForSituation } from "../lib/variationEngine";
+import ToolkitView from "../components/ToolkitView";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Home">;
 
@@ -115,6 +117,7 @@ export default function HomeScreen({ navigation }: Props) {
   const [streakCount, setStreakCount] = useState(0);
   const [reviewSlugs, setReviewSlugs] = useState<Set<string>>(new Set());
   const [recommendedSituation, setRecommendedSituation] = useState<SituationWithProgress | null>(null);
+  const [showToolkit, setShowToolkit] = useState(false);
 
   const loadData = useCallback(async () => {
     try {
@@ -238,8 +241,12 @@ export default function HomeScreen({ navigation }: Props) {
   }, [loadData]);
 
   // Build map nodes from DB situations + map config
-  const completedSlugs: string[] = [];
   const situationBySlug = new Map(situations.map((s) => [s.slug, s]));
+
+  // Pre-compute completed slugs so variation counts are accurate
+  const completedSlugs: string[] = MAP_SITUATIONS
+    .filter((config) => situationBySlug.get(config.slug)?.progress?.status === "completed")
+    .map((config) => config.slug);
 
   const positions = buildNodePositions();
   const connections = buildConnections();
@@ -251,7 +258,6 @@ export default function HomeScreen({ navigation }: Props) {
     let status: NodeStatus = "available";
     if (progress?.status === "completed") {
       status = "completed";
-      completedSlugs.push(config.slug);
     } else if (reviewSlugs.has(config.slug)) {
       status = "recommended";
     } else if (progress?.status === "available" || progress?.status === "in_progress") {
@@ -270,6 +276,7 @@ export default function HomeScreen({ navigation }: Props) {
       status,
       connections: connections[i],
       situationId: sit?.id ?? null,
+      variationCount: countVariationsForSituation(config.slug, completedSlugs),
     };
   });
 
@@ -414,13 +421,20 @@ export default function HomeScreen({ navigation }: Props) {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.quickAction}
-            onPress={() => navigation.navigate("SituationList")}
+            onPress={() => setShowToolkit(true)}
           >
-            <MaterialIcons name="library-books" size={22} color={colors.primary} />
-            <Text style={styles.quickActionLabel}>전체 상황</Text>
+            <MaterialIcons name="build" size={22} color={colors.primary} />
+            <Text style={styles.quickActionLabel}>도구 세트</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
+
+      {/* Toolkit overlay */}
+      {showToolkit && (
+        <View style={styles.toolkitOverlay}>
+          <ToolkitView onClose={() => setShowToolkit(false)} />
+        </View>
+      )}
     </SafeAreaView>
   );
 }
@@ -523,5 +537,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
     color: colors.surface,
+  },
+  toolkitOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: colors.background,
+    zIndex: 100,
   },
 });
