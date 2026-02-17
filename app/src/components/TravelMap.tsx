@@ -21,6 +21,7 @@ export interface MapNode {
   status: NodeStatus;
   connections: string[];
   situationId: number | null;
+  variationCount?: number;
 }
 
 interface TravelMapProps {
@@ -98,10 +99,18 @@ function PulsingNode({
             <Text style={styles.checkMark}>{"✓"}</Text>
           </View>
         )}
+        {(node.variationCount ?? 0) > 0 && (
+          <View style={styles.variationBadge}>
+            <Text style={styles.variationBadgeText}>+{node.variationCount}</Text>
+          </View>
+        )}
       </TouchableOpacity>
       <Text style={[styles.nodeLabel, { opacity: Math.max(opacity, 0.6) }]}>
         {node.label}
       </Text>
+      {(node.variationCount ?? 0) > 0 && (
+        <Text style={styles.variationHint}>새로운 상황!</Text>
+      )}
     </Animated.View>
   );
 }
@@ -217,5 +226,31 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: colors.textDark,
     textAlign: "center",
+  },
+  variationBadge: {
+    position: "absolute",
+    bottom: -2,
+    right: -2,
+    minWidth: 22,
+    height: 22,
+    borderRadius: 11,
+    backgroundColor: colors.warning,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 4,
+    borderWidth: 2,
+    borderColor: colors.surface,
+  },
+  variationBadgeText: {
+    color: colors.surface,
+    fontSize: 11,
+    fontWeight: "700",
+  },
+  variationHint: {
+    fontSize: 10,
+    fontWeight: "600",
+    color: colors.warning,
+    textAlign: "center",
+    marginTop: 2,
   },
 });

@@ -2,14 +2,15 @@
 
 ## 다음 세션
 
-**v1 리디자인 진행 중** — Phase A (01 온보딩 + 02 여행지도) 병렬 실행.
+**v1 리디자인 진행 중** — Phase C (04/05/06) 병렬 실행 + 상호 리뷰 중.
+Phase D (07) 대기.
 
 ---
 
 # v1 리디자인 실행 계획
 
 > 시작일: 2026-02-17
-> 현재 Phase: A
+> 현재 Phase: C
 
 ## 의존 관계
 
@@ -22,44 +23,50 @@ Phase C (병렬):  04-ai-npc ──────┤
                  06-repetition ──┘
 ```
 
-## Phase A: 독립 실행 (병렬)
+## Phase A: 완료 ✅
 
 ### 01 - 온보딩 리디자인: 공항 도착 체험
-
-- [ ] Step 1: 현재 OnboardingScreen 분석 + 3단계 플로우 설계
-- [ ] Step 2: OnboardingScreen.tsx 리디자인 (3단계 state machine)
-- [ ] Step 3: SessionModeSelector.tsx 구현 (매 세션 음성/묵음 분기)
-- [ ] Step 4: 통합 테스트 + 시뮬레이터 검증
+- [x] OnboardingScreen.tsx 리디자인 (3단계 공항 도착 체험)
+- [x] SessionModeSelector.tsx 구현 (음성/묵음 분기)
 
 ### 02 - 메인 화면: 여행 동선 지도
+- [x] TravelMap.tsx (SVG 연결선 + pulse 애니메이션)
+- [x] AbilityStatement.tsx + "오늘의 추천" 로직
+- [x] HomeScreen 통합
 
-- [ ] Step 1: 현재 HomeScreen 분석 + 지도 데이터 모델 설계
-- [ ] Step 2: TravelMap.tsx 컴포넌트 구현
-- [ ] Step 3: AbilityStatement.tsx + "오늘의 추천" 구현
-- [ ] Step 4: HomeScreen 통합 + SituationListScreen 역할 정리
-- [ ] Step 5: 통합 테스트
-
-## Phase B: Phase A 완료 후
+## Phase B: 완료 ✅
 
 ### 03 - 4 Phase 학습 엔진
+- [x] useFourPhaseSession.ts state machine
+- [x] WatchPhase.tsx (모델 대화 자동 재생 + L1 안전망)
+- [x] CatchPhase.tsx (5개 활동 순차 통합 + visitCount 변주)
+- [x] EngagePhase.tsx (3단계 입력: 선택지→빈칸→자유)
+- [x] ReviewPhase.tsx (핵심 표현 + "왜 이렇게 말할까?" + 능력 서술)
+- [x] SessionScreen.tsx 4Phase 완전 연결
+- [x] 상호 리뷰: 불변 규칙 위반 수정 (accuracy%, 빨간 오답 등)
 
-- [ ] Step 1: 세션 state machine 설계 + 데이터 모델
-- [ ] Step 2: Phase 1 관찰(Watch) 구현
-- [ ] Step 3: Phase 2 포착(Catch) 구현
-- [ ] Step 4: Phase 3 참여(Engage) 구현
-- [ ] Step 5: Phase 4 정리(Review) 구현
-- [ ] Step 6: 식당 상황 전체 플로우 통합 테스트
-
-## Phase C: Phase B 완료 후 (병렬)
+## Phase C: 진행 중 🔄 (병렬)
 
 ### 04 - AI NPC & 피드백 계층화
-- [ ] NPC 프롬프트 + feedbackLayer + Edge Function + 통합 테스트
+- [ ] npcPrompts.ts (Claude 시스템 프롬프트)
+- [ ] feedbackLayer.ts (리캐스트/명확화/메타힌트)
+- [ ] npcEngine.ts (MVP 모의 응답)
+- [ ] EngagePhase NPC 연동
+- [ ] 상호 리뷰 → safety-engineer 코드 체크
 
 ### 05 - L1 안전망 & 문자 체계
-- [ ] SafetyNetTooltip + exposureTracker + 앰비언트 노출 + 통합
+- [ ] exposureTracker.ts (노출 횟수 추적)
+- [ ] SafetyNetTooltip.tsx ([?] 점진적 후퇴)
+- [ ] KanaDisplay.tsx (한국어 발음 없는 표시)
+- [ ] ReviewPhase 통합
+- [ ] 상호 리뷰 → npc-engineer 코드 체크
 
 ### 06 - 반복 학습 변주
-- [ ] 변주 시나리오 + 교차 반복 + 도구 세트 + FSRS 연동
+- [ ] variationEngine.ts (변주 시나리오)
+- [ ] crossSituationTracker.ts (교차 반복)
+- [ ] ToolkitView.tsx (도구 세트)
+- [ ] HomeScreen 변주 배지
+- [ ] 상호 리뷰 → safety-engineer 코드 체크
 
 ## Phase D: 전체 마무리
 

@@ -4,13 +4,19 @@
  * State machine:
  *   1. NPC turn: TTS + NpcBubble
  *   2. User turn: ChoiceInput / FillBlankInput / FreeInput based on visitCount
- *   3. After choice in voice mode: play model answer TTS
- *   4. Repeat for all dialogue turns, then complete
+ *   3. NPC feedback: recast / clarification / meta_hint / none
+ *   4. After choice in voice mode: play model answer TTS
+ *   5. Repeat for all dialogue turns, then complete
  *
  * Input difficulty:
  *   visitCount <= 2  -> ChoiceInput only
  *   visitCount 3~4   -> FillBlankInput
  *   visitCount >= 5  -> FreeInput
+ *
+ * Feedback (NPC stays in character):
+ *   - recast: NPC restates with correct form highlighted
+ *   - clarification: NPC asks user to repeat (in Japanese)
+ *   - meta_hint: collapsible Korean hint card after 2+ same-type errors
  */
 
 import React, { useState, useEffect, useRef } from "react";
@@ -20,6 +26,7 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  Animated,
 } from "react-native";
 import * as Speech from "expo-speech";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -31,6 +38,8 @@ import type {
   SessionMode,
   FuriganaSegment,
 } from "../../types";
+import { generateNpcResponse, buildErrorEntry } from "../../lib/npcEngine";
+import type { FeedbackType } from "../../lib/feedbackLayer";
 
 import ChoiceInput from "./inputs/ChoiceInput";
 import FillBlankInput from "./inputs/FillBlankInput";
@@ -44,14 +53,21 @@ interface EngagePhaseProps {
   onComplete: (performance: EngagePerformance) => void;
 }
 
-type TurnPhase = "npc_speaking" | "user_input" | "user_shadowing" | "done";
+type TurnPhase =
+  | "npc_speaking"
+  | "user_input"
+  | "npc_responding"
+  | "user_shadowing"
+  | "done";
 
 interface ConversationMessage {
   speaker: "npc" | "user";
   textJa: string;
   textKo: string;
   furigana?: FuriganaSegment[];
-  isCorrect?: boolean;
+  feedbackType?: FeedbackType;
+  recastHighlight?: string;
+  metaHint?: string;
 }
 
 /**
@@ -71,7 +87,6 @@ function buildChoices(
     isCorrect: false,
   }));
 
-  // If not enough distractors, create grammatically valid variations
   while (distractors.length < 2) {
     distractors.push({
       textJa: correctLine.textJa + "か",
@@ -88,7 +103,6 @@ function buildChoices(
 
 /**
  * Build fill-blank data from a user line.
- * Picks first ~3 chars as the blank portion.
  */
 function buildFillBlank(textJa: string) {
   const blankLen = Math.min(3, Math.ceil(textJa.length / 2));
@@ -127,14 +141,19 @@ export default function EngagePhase({
   const [correctCount, setCorrectCount] = useState(0);
   const [incorrectCount, setIncorrectCount] = useState(0);
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const [revealedTranslations, setRevealedTranslations] = useState<
-    Set<number>
-  >(new Set());
+  const [revealedTranslations, setRevealedTranslations] = useState<Set<number>>(
+    new Set()
+  );
+  const [expandedHints, setExpandedHints] = useState<Set<number>>(new Set());
   const scrollRef = useRef<ScrollView>(null);
 
-  // Use refs for mutable counters to avoid stale closures
+  // Mutable refs to avoid stale closures
   const correctRef = useRef(0);
   const incorrectRef = useRef(0);
+  const errorHistoryRef = useRef<{ text: string; type: string }[]>([]);
+
+  // Typing indicator animation
+  const typingDots = useRef(new Animated.Value(0)).current;
 
   const currentLine = modelDialogue[turnIndex] ?? null;
   const totalTurns = modelDialogue.length;
@@ -152,6 +171,30 @@ export default function EngagePhase({
   useEffect(() => {
     setTimeout(() => scrollRef.current?.scrollToEnd({ animated: true }), 100);
   }, [messages, turnPhase]);
+
+  // Typing indicator animation loop
+  useEffect(() => {
+    if (turnPhase !== "npc_responding") {
+      typingDots.setValue(0);
+      return;
+    }
+    const anim = Animated.loop(
+      Animated.sequence([
+        Animated.timing(typingDots, {
+          toValue: 1,
+          duration: 600,
+          useNativeDriver: true,
+        }),
+        Animated.timing(typingDots, {
+          toValue: 0,
+          duration: 600,
+          useNativeDriver: true,
+        }),
+      ])
+    );
+    anim.start();
+    return () => anim.stop();
+  }, [turnPhase]);
 
   // NPC auto-play on turn change
   useEffect(() => {
@@ -200,14 +243,26 @@ export default function EngagePhase({
     setTurnPhase(nextLine?.speaker === "user" ? "user_input" : "npc_speaking");
   };
 
-  const handleUserAnswer = (correct: boolean, chosenText: string) => {
+  /**
+   * Find the next NPC line in the model dialogue after the current turn.
+   */
+  const findNextNpcLine = (): string | undefined => {
+    for (let i = turnIndex + 1; i < modelDialogue.length; i++) {
+      if (modelDialogue[i].speaker === "npc") {
+        return modelDialogue[i].textJa;
+      }
+    }
+    return undefined;
+  };
+
+  const handleUserAnswer = async (correct: boolean, chosenText: string) => {
+    // Add user message
     setMessages((prev) => [
       ...prev,
       {
         speaker: "user",
         textJa: chosenText,
         textKo: currentLine?.textKo ?? "",
-        isCorrect: correct,
       },
     ]);
 
@@ -219,8 +274,94 @@ export default function EngagePhase({
       setIncorrectCount(incorrectRef.current);
     }
 
+    // For choice/fillblank, we know correct/incorrect directly.
+    // For free input, generate NPC response with feedback.
+    const inputType = getInputType();
+    if (inputType === "free" && currentLine) {
+      setTurnPhase("npc_responding");
+
+      const npcResponse = await generateNpcResponse({
+        situation: "",
+        userMessage: chosenText,
+        conversationHistory: messages.map((m) => ({
+          role: m.speaker === "npc" ? "npc" : "user",
+          text: m.textJa,
+        })),
+        expectedResponse: currentLine.textJa,
+        errorHistory: errorHistoryRef.current,
+        turnNumber: turnIndex,
+        nextNpcLine: findNextNpcLine(),
+        totalTurns,
+      });
+
+      // Track error if there was feedback
+      if (npcResponse.feedbackType !== "none") {
+        errorHistoryRef.current = [
+          ...errorHistoryRef.current,
+          buildErrorEntry(chosenText, currentLine.textJa),
+        ];
+      }
+
+      // Handle clarification: don't advance, let user retry
+      if (npcResponse.feedbackType === "clarification") {
+        setMessages((prev) => [
+          ...prev,
+          {
+            speaker: "npc",
+            textJa: npcResponse.text,
+            textKo: "",
+            feedbackType: "clarification",
+          },
+        ]);
+        setTurnPhase("user_input");
+        return;
+      }
+
+      // Add NPC feedback response
+      if (npcResponse.feedbackType !== "none") {
+        setMessages((prev) => [
+          ...prev,
+          {
+            speaker: "npc",
+            textJa: npcResponse.text,
+            textKo: "",
+            feedbackType: npcResponse.feedbackType,
+            recastHighlight: npcResponse.recastHighlight,
+            metaHint: npcResponse.metaHint,
+          },
+        ]);
+
+        // Speak the NPC feedback
+        setIsSpeaking(true);
+        Speech.speak(npcResponse.text, {
+          language: "ja-JP",
+          rate: 0.8,
+          onDone: () => {
+            setIsSpeaking(false);
+            if (npcResponse.shouldEnd) {
+              finishPhase();
+            } else {
+              advanceToNext();
+            }
+          },
+          onError: () => {
+            setIsSpeaking(false);
+            if (npcResponse.shouldEnd) {
+              finishPhase();
+            } else {
+              advanceToNext();
+            }
+          },
+        });
+        return;
+      }
+
+      // No feedback needed — fall through to normal advance
+      setTurnPhase("npc_speaking");
+    }
+
     // In voice mode, play model answer TTS before advancing
-    if (inputMode === "voice" && currentLine) {
+    if (inputMode === "voice" && currentLine && inputType !== "free") {
       setTurnPhase("user_shadowing");
       setIsSpeaking(true);
       Speech.speak(currentLine.textJa, {
@@ -235,6 +376,8 @@ export default function EngagePhase({
           advanceToNext();
         },
       });
+    } else if (inputType !== "free") {
+      advanceToNext();
     } else {
       advanceToNext();
     }
@@ -295,6 +438,15 @@ export default function EngagePhase({
     }, 3000);
   };
 
+  const toggleHint = (index: number) => {
+    setExpandedHints((prev) => {
+      const next = new Set(prev);
+      if (next.has(index)) next.delete(index);
+      else next.add(index);
+      return next;
+    });
+  };
+
   const renderUserInput = () => {
     if (turnPhase !== "user_input" || !currentLine) return null;
 
@@ -335,6 +487,92 @@ export default function EngagePhase({
     }
   };
 
+  /**
+   * Render NPC message bubble with feedback styling.
+   */
+  const renderNpcMessage = (msg: ConversationMessage, index: number) => {
+    const hasRecast = msg.feedbackType === "recast" || msg.feedbackType === "meta_hint";
+    const hasMetaHint = msg.feedbackType === "meta_hint" && msg.metaHint;
+
+    return (
+      <View key={index} style={styles.npcMessage}>
+        <View style={[styles.npcBubble, hasRecast && styles.npcBubbleRecast]}>
+          <View style={styles.npcTextRow}>
+            {hasRecast && msg.recastHighlight ? (
+              <Text style={styles.npcText}>
+                {renderRecastText(msg.textJa, msg.recastHighlight)}
+              </Text>
+            ) : (
+              <Text style={styles.npcText}>{msg.textJa}</Text>
+            )}
+            <TouchableOpacity onPress={() => speakText(msg.textJa)}>
+              <MaterialIcons
+                name="volume-up"
+                size={20}
+                color={isSpeaking ? colors.primary : colors.textLight}
+              />
+            </TouchableOpacity>
+          </View>
+
+          {msg.textKo ? (
+            <TouchableOpacity onPress={() => toggleTranslation(index)}>
+              {revealedTranslations.has(index) ? (
+                <Text style={styles.npcTranslation}>{msg.textKo}</Text>
+              ) : (
+                <View style={styles.translationBlur}>
+                  <Text style={styles.translationBlurText}>?</Text>
+                </View>
+              )}
+            </TouchableOpacity>
+          ) : null}
+
+          {hasMetaHint && (
+            <TouchableOpacity
+              style={styles.hintToggle}
+              onPress={() => toggleHint(index)}
+              activeOpacity={0.7}
+            >
+              <View style={styles.hintToggleRow}>
+                <Text style={styles.hintToggleIcon}>{'*'}</Text>
+                <Text style={styles.hintToggleText}>힌트 보기</Text>
+              </View>
+              {expandedHints.has(index) && (
+                <View style={styles.hintContent}>
+                  <Text style={styles.hintContentText}>{msg.metaHint}</Text>
+                </View>
+              )}
+            </TouchableOpacity>
+          )}
+        </View>
+      </View>
+    );
+  };
+
+  /**
+   * Highlight the recast portion within NPC text.
+   * Returns a React element with the corrected form highlighted.
+   */
+  const renderRecastText = (
+    fullText: string,
+    highlight: string
+  ): React.ReactNode => {
+    if (!highlight) return fullText;
+
+    const idx = fullText.indexOf(highlight);
+    if (idx === -1) return fullText;
+
+    const before = fullText.slice(0, idx);
+    const after = fullText.slice(idx + highlight.length);
+
+    return (
+      <>
+        {before}
+        <Text style={styles.recastHighlight}>{highlight}</Text>
+        {after}
+      </>
+    );
+  };
+
   return (
     <View style={styles.container}>
       {/* Header */}
@@ -360,31 +598,7 @@ export default function EngagePhase({
       >
         {messages.map((msg, i) => {
           if (msg.speaker === "npc") {
-            return (
-              <View key={i} style={styles.npcMessage}>
-                <View style={styles.npcBubble}>
-                  <View style={styles.npcTextRow}>
-                    <Text style={styles.npcText}>{msg.textJa}</Text>
-                    <TouchableOpacity onPress={() => speakText(msg.textJa)}>
-                      <MaterialIcons
-                        name="volume-up"
-                        size={20}
-                        color={isSpeaking ? colors.primary : colors.textLight}
-                      />
-                    </TouchableOpacity>
-                  </View>
-                  <TouchableOpacity onPress={() => toggleTranslation(i)}>
-                    {revealedTranslations.has(i) ? (
-                      <Text style={styles.npcTranslation}>{msg.textKo}</Text>
-                    ) : (
-                      <View style={styles.translationBlur}>
-                        <Text style={styles.translationBlurText}>?</Text>
-                      </View>
-                    )}
-                  </TouchableOpacity>
-                </View>
-              </View>
-            );
+            return renderNpcMessage(msg, i);
           }
 
           return (
@@ -395,6 +609,17 @@ export default function EngagePhase({
             </View>
           );
         })}
+
+        {/* Typing indicator */}
+        {turnPhase === "npc_responding" && (
+          <View style={styles.npcMessage}>
+            <Animated.View
+              style={[styles.typingBubble, { opacity: typingDots }]}
+            >
+              <Text style={styles.typingDots}>...</Text>
+            </Animated.View>
+          </View>
+        )}
 
         {turnPhase === "user_input" && (
           <View style={styles.inputArea}>{renderUserInput()}</View>
@@ -458,6 +683,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.border,
   },
+  npcBubbleRecast: {
+    borderColor: colors.secondary,
+    borderWidth: 1.5,
+  },
   npcTextRow: {
     flexDirection: "row",
     alignItems: "center",
@@ -469,6 +698,11 @@ const styles = StyleSheet.create({
     color: colors.textDark,
     flex: 1,
     lineHeight: 26,
+  },
+  recastHighlight: {
+    backgroundColor: colors.secondaryLight,
+    color: colors.secondary,
+    fontWeight: "600",
   },
   npcTranslation: {
     fontSize: 13,
@@ -487,6 +721,37 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: colors.textLight,
   },
+  hintToggle: {
+    marginTop: 8,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopColor: colors.border,
+    paddingTop: 8,
+  },
+  hintToggleRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+  },
+  hintToggleIcon: {
+    fontSize: 14,
+    color: colors.warning,
+  },
+  hintToggleText: {
+    fontSize: 13,
+    color: colors.warning,
+    fontWeight: "500",
+  },
+  hintContent: {
+    backgroundColor: colors.warningLight,
+    borderRadius: 8,
+    padding: 10,
+    marginTop: 6,
+  },
+  hintContentText: {
+    fontSize: 13,
+    color: colors.textMedium,
+    lineHeight: 18,
+  },
   userMessage: {
     alignItems: "flex-end",
     marginBottom: 12,
@@ -502,6 +767,21 @@ const styles = StyleSheet.create({
     fontSize: 17,
     color: colors.surface,
     lineHeight: 24,
+  },
+  typingBubble: {
+    backgroundColor: colors.npcBubble,
+    borderRadius: 16,
+    borderTopLeftRadius: 4,
+    paddingVertical: 10,
+    paddingHorizontal: 18,
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+  typingDots: {
+    fontSize: 24,
+    color: colors.textLight,
+    letterSpacing: 4,
+    lineHeight: 28,
   },
   inputArea: {
     marginTop: 8,

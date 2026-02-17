@@ -26,7 +26,7 @@ const PHASE_LABELS: Record<SessionPhase, string> = {
   watch: "관찰",
   catch: "포착",
   engage: "실전",
-  review: "복습",
+  review: "정리",
 };
 
 export default function SessionScreen({ navigation, route }: Props) {

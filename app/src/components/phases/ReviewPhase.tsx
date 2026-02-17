@@ -13,7 +13,7 @@
  *   - [?] shows Korean meaning for 3 seconds then fades
  */
 
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -25,6 +25,8 @@ import * as Speech from "expo-speech";
 import { MaterialIcons } from "@expo/vector-icons";
 import { colors, borderRadius } from "../../constants/theme";
 import FuriganaText from "../FuriganaText";
+import SafetyNetTooltip from "../SafetyNetTooltip";
+import { recordExposure } from "../../lib/exposureTracker";
 import type {
   KeyExpression,
   EngagePerformance,
@@ -123,17 +125,16 @@ export default function ReviewPhase({
   onComplete,
 }: ReviewPhaseProps) {
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const [revealedMeanings, setRevealedMeanings] = useState<Set<number>>(
-    new Set()
-  );
   const [expandedGrammar, setExpandedGrammar] = useState<Set<number>>(
     new Set()
   );
 
-  // Timeout refs for auto-hide
-  const hideTimeouts = useRef<Map<number, ReturnType<typeof setTimeout>>>(
-    new Map()
-  );
+  // Record exposure for each key expression when shown
+  useEffect(() => {
+    keyExpressions.forEach((expr) => {
+      recordExposure(expr.textJa);
+    });
+  }, [keyExpressions]);
 
   const speakText = (text: string) => {
     if (isSpeaking) return;
@@ -144,33 +145,6 @@ export default function ReviewPhase({
       onDone: () => setIsSpeaking(false),
       onError: () => setIsSpeaking(false),
     });
-  };
-
-  const toggleMeaning = (index: number) => {
-    // Clear existing timeout
-    const existing = hideTimeouts.current.get(index);
-    if (existing) clearTimeout(existing);
-
-    setRevealedMeanings((prev) => {
-      const next = new Set(prev);
-      if (next.has(index)) {
-        next.delete(index);
-        return next;
-      }
-      next.add(index);
-      return next;
-    });
-
-    // Auto-hide after 3 seconds
-    const timeout = setTimeout(() => {
-      setRevealedMeanings((prev) => {
-        const next = new Set(prev);
-        next.delete(index);
-        return next;
-      });
-      hideTimeouts.current.delete(index);
-    }, 3000);
-    hideTimeouts.current.set(index, timeout);
   };
 
   const toggleGrammar = (index: number) => {
@@ -219,7 +193,6 @@ export default function ReviewPhase({
         {keyExpressions.map((expr, i) => {
           const grammar = findGrammarExplanation(expr.textJa);
           const isGrammarOpen = expandedGrammar.has(i);
-          const isMeaningRevealed = revealedMeanings.has(i);
 
           return (
             <View key={i} style={styles.expressionCard}>
@@ -246,19 +219,13 @@ export default function ReviewPhase({
                     <Text style={styles.expressionJa}>{expr.textJa}</Text>
                   )}
                 </View>
-                {/* [?] button */}
-                <TouchableOpacity
-                  onPress={() => toggleMeaning(i)}
-                  style={styles.meaningButton}
-                >
-                  <Text style={styles.meaningButtonText}>?</Text>
-                </TouchableOpacity>
+                {/* [?] safety net tooltip */}
+                <SafetyNetTooltip
+                  word={expr.textJa}
+                  meaning={expr.textKo}
+                  emoji={expr.emoji}
+                />
               </View>
-
-              {/* Korean meaning (auto-hide after 3s) */}
-              {isMeaningRevealed && (
-                <Text style={styles.meaningText}>{expr.textKo}</Text>
-              )}
 
               {/* Grammar explanation toggle */}
               {grammar && (
@@ -366,25 +333,6 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     color: colors.textDark,
     lineHeight: 26,
-  },
-  meaningButton: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    backgroundColor: colors.borderLight,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  meaningButtonText: {
-    fontSize: 14,
-    fontWeight: "600",
-    color: colors.textMuted,
-  },
-  meaningText: {
-    fontSize: 14,
-    color: colors.textMuted,
-    marginTop: 8,
-    marginLeft: 36,
   },
   // Grammar
   grammarToggle: {
