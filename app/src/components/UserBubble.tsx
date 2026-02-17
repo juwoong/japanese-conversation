@@ -36,10 +36,6 @@ export default function UserBubble({ userInput, accuracy, diffSegments }: Props)
     ]).start();
   }, []);
 
-  const pct = Math.round(accuracy * 100);
-  const badgeColor =
-    accuracy >= 0.8 ? colors.success : accuracy >= 0.5 ? colors.warning : colors.danger;
-
   const renderText = () => {
     if (!diffSegments || diffSegments.length === 0) {
       return <Text style={styles.text}>{userInput}</Text>;
@@ -103,9 +99,6 @@ export default function UserBubble({ userInput, accuracy, diffSegments }: Props)
     >
       <View style={styles.bubble}>
         {renderText()}
-        <View style={[styles.badge, { backgroundColor: badgeColor }]}>
-          <Text style={styles.badgeText}>{pct}%</Text>
-        </View>
       </View>
     </Animated.View>
   );
@@ -127,17 +120,5 @@ const styles = StyleSheet.create({
     fontSize: 17,
     color: colors.surface,
     lineHeight: 24,
-  },
-  badge: {
-    alignSelf: "flex-end",
-    marginTop: 6,
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    borderRadius: 12,
-  },
-  badgeText: {
-    fontSize: 12,
-    fontWeight: "600",
-    color: colors.surface,
   },
 });

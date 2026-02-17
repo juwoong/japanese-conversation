@@ -410,7 +410,7 @@ export default function HomeScreen({ navigation }: Props) {
             onPress={() => navigation.navigate("Vocabulary")}
           >
             <MaterialIcons name="book" size={22} color={colors.primary} />
-            <Text style={styles.quickActionLabel}>단어장</Text>
+            <Text style={styles.quickActionLabel}>표현 모음</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.quickAction}
