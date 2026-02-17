@@ -112,7 +112,14 @@ export default function SessionScreen({ navigation, route }: Props) {
           />
         );
       case "catch":
-        return <CatchPhase onComplete={handlePhaseTransition} />;
+        return (
+          <CatchPhase
+            keyExpressions={fourPhase.keyExpressions}
+            inputMode={fourPhase.inputMode}
+            visitCount={fourPhase.visitCount}
+            onComplete={handlePhaseTransition}
+          />
+        );
       case "engage":
         return <EngagePhase onComplete={handlePhaseTransition} />;
       case "review":
