@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   View,
   Text,
@@ -17,6 +17,7 @@ import { colors } from "../constants/theme";
 import { MaterialIcons } from "@expo/vector-icons";
 import LoadingScreen from "../components/LoadingScreen";
 import BackHeader from "../components/BackHeader";
+
 
 type Props = NativeStackScreenProps<RootStackParamList, "Vocabulary">;
 
@@ -49,6 +50,9 @@ export default function VocabularyScreen({ navigation }: Props) {
   const [speakingId, setSpeakingId] = useState<number | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedPos, setSelectedPos] = useState<string | null>(null);
+  const [revealedId, setRevealedId] = useState<number | null>(null);
+  const revealTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const revealFadeAnim = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
     loadVocabulary();
@@ -129,45 +133,27 @@ export default function VocabularyScreen({ navigation }: Props) {
 
   const getPosColor = (pos: string): string => POS_COLORS[pos] ?? POS_DEFAULT_COLOR;
 
-  // --- Inline meaning reveal component with fade ---
-  const MeaningReveal = useCallback(({ meaningKo }: { meaningKo: string }) => {
-    const [revealed, setRevealed] = useState(false);
-    const fadeAnim = useState(() => new Animated.Value(1))[0];
+  const handleRevealMeaning = (id: number) => {
+    if (revealTimerRef.current) clearTimeout(revealTimerRef.current);
+    setRevealedId(id);
+    revealFadeAnim.setValue(1);
+    revealTimerRef.current = setTimeout(() => {
+      Animated.timing(revealFadeAnim, {
+        toValue: 0,
+        duration: 500,
+        useNativeDriver: true,
+      }).start(() => setRevealedId(null));
+    }, 3000);
+  };
 
-    const handleReveal = () => {
-      setRevealed(true);
-      fadeAnim.setValue(1);
-      // Auto-fade after 3 seconds
-      setTimeout(() => {
-        Animated.timing(fadeAnim, {
-          toValue: 0,
-          duration: 500,
-          useNativeDriver: true,
-        }).start(() => setRevealed(false));
-      }, 3000);
+  useEffect(() => {
+    return () => {
+      if (revealTimerRef.current) clearTimeout(revealTimerRef.current);
     };
-
-    return (
-      <View style={styles.cardBottom}>
-        {revealed ? (
-          <Animated.Text style={[styles.meaningKo, { opacity: fadeAnim }]}>
-            {meaningKo}
-          </Animated.Text>
-        ) : (
-          <TouchableOpacity onPress={handleReveal} style={styles.meaningHintButton}>
-            <Text style={styles.meaningHintText}>[?] 뜻 보기</Text>
-          </TouchableOpacity>
-        )}
-      </View>
-    );
   }, []);
 
   const renderItem = ({ item }: { item: VocabWord }) => (
-    <TouchableOpacity
-      style={styles.wordCard}
-      onPress={() => speakWord(item.word_ja, item.id)}
-      activeOpacity={0.7}
-    >
+    <View style={styles.wordCard}>
       <View style={styles.cardTop}>
         <View style={styles.wordSection}>
           <Text style={styles.wordJa}>{item.word_ja}</Text>
@@ -177,18 +163,30 @@ export default function VocabularyScreen({ navigation }: Props) {
           <View style={[styles.posBadge, { backgroundColor: getPosColor(item.pos) + "18" }]}>
             <Text style={[styles.posText, { color: getPosColor(item.pos) }]}>{item.pos}</Text>
           </View>
-          <MaterialIcons
-            name="volume-up"
-            size={22}
-            color={speakingId === item.id ? colors.primary : colors.textLight}
-          />
+          <TouchableOpacity onPress={() => speakWord(item.word_ja, item.id)} hitSlop={8}>
+            <MaterialIcons
+              name="volume-up"
+              size={22}
+              color={speakingId === item.id ? colors.primary : colors.textLight}
+            />
+          </TouchableOpacity>
         </View>
       </View>
 
-      <MeaningReveal meaningKo={item.meaning_ko} />
+      <View style={styles.cardBottom}>
+        {revealedId === item.id ? (
+          <Animated.Text style={[styles.meaningKo, { opacity: revealFadeAnim }]}>
+            {item.meaning_ko}
+          </Animated.Text>
+        ) : (
+          <TouchableOpacity onPress={() => handleRevealMeaning(item.id)} style={styles.meaningHintButton}>
+            <Text style={styles.meaningHintText}>[?] 뜻 보기</Text>
+          </TouchableOpacity>
+        )}
+      </View>
 
       <Text style={styles.situationLabel}>{item.situation_name}</Text>
-    </TouchableOpacity>
+    </View>
   );
 
   if (loading) {
@@ -266,6 +264,7 @@ export default function VocabularyScreen({ navigation }: Props) {
           keyExtractor={(item) => item.id.toString()}
           contentContainerStyle={styles.listContent}
           showsVerticalScrollIndicator={false}
+          extraData={revealedId}
         />
       )}
     </SafeAreaView>
@@ -384,7 +383,8 @@ const styles = StyleSheet.create({
     color: colors.textMuted,
   },
   meaningHintButton: {
-    paddingVertical: 4,
+    paddingVertical: 10,
+    paddingHorizontal: 8,
   },
   meaningHintText: {
     fontSize: 14,
