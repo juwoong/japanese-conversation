@@ -95,6 +95,10 @@ export interface SituationWithProgress extends Situation {
   progress?: UserSituationProgress;
 }
 
+export type SessionMode = 'voice' | 'silent';
+
+export type UserLevel = 'intermediate' | 'beginner' | 'conservative_beginner';
+
 // Session Types
 export interface SessionLine extends Line {
   situation: Situation;

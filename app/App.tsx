@@ -72,6 +72,19 @@ export default function App() {
 
   const checkOnboarding = async (userId: string) => {
     try {
+      // Check onboarding_completed flag on profile first
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("onboarding_completed")
+        .eq("id", userId)
+        .single();
+
+      if (profile?.onboarding_completed) {
+        setHasCompletedOnboarding(true);
+        return;
+      }
+
+      // Fallback: check if user has a persona (old onboarding flow)
       const { data: userPersona } = await supabase
         .from("user_personas")
         .select("id")
