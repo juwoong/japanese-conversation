@@ -1,6 +1,6 @@
-import React, { useState, useMemo, useCallback } from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { colors } from "../../constants/theme";
+import React, { useState, useMemo, useCallback, useRef, useEffect } from "react";
+import { View, Text, StyleSheet, TouchableOpacity, Animated } from "react-native";
+import { colors, borderRadius } from "../../constants/theme";
 import type { KeyExpression, SessionMode } from "../../types";
 import ChunkCatch from "./activities/ChunkCatch";
 import WordCatch from "./activities/WordCatch";
@@ -14,8 +14,18 @@ interface Props {
   keyExpressions: KeyExpression[];
   inputMode: SessionMode;
   visitCount: number;
+  situationEmoji: string;
   onComplete: () => void;
 }
+
+/** Minimal pair bank — common confusable Japanese words */
+const MINIMAL_PAIRS: { wordA: string; wordB: string; emojiA: string; emojiB: string }[] = [
+  { wordA: "おばさん", wordB: "おばあさん", emojiA: "👩", emojiB: "👵" },
+  { wordA: "びょういん", wordB: "びよういん", emojiA: "🏥", emojiB: "💇" },
+  { wordA: "おじさん", wordB: "おじいさん", emojiA: "👨", emojiB: "👴" },
+  { wordA: "きって", wordB: "きて", emojiA: "📮", emojiB: "👋" },
+  { wordA: "かわ", wordB: "かわ", emojiA: "🏞", emojiB: "🧶" },
+];
 
 function buildActivities(visitCount: number): ActivityType[] {
   if (visitCount === 1) return ["chunk", "word", "sound", "shadow", "picture"];
@@ -31,7 +41,6 @@ function makeChunkChoices(
   const correctEmoji = expression.emoji || "🗣";
   const correctLabel = expression.textKo;
 
-  // Pick 2 distractors from other expressions, or use generic fallbacks
   const distractors = allExpressions
     .filter((e) => e.textJa !== expression.textJa)
     .slice(0, 2)
@@ -55,6 +64,7 @@ function makeChunkChoices(
     distractors[0],
     distractors[1],
   ];
+  // Shuffle
   for (let i = choices.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [choices[i], choices[j]] = [choices[j], choices[i]];
@@ -90,40 +100,72 @@ function makeWordChoices(
   return choices;
 }
 
+/** Pick a minimal pair — either from the bank or create a same-word pair */
+function makeMinimalPair(expression: KeyExpression) {
+  const useDifferentPair = Math.random() > 0.5;
+  if (useDifferentPair && MINIMAL_PAIRS.length > 0) {
+    const pair = MINIMAL_PAIRS[Math.floor(Math.random() * MINIMAL_PAIRS.length)];
+    return { ...pair, isSame: false };
+  }
+  return {
+    wordA: expression.textJa,
+    wordB: expression.textJa,
+    emojiA: expression.emoji || "🔊",
+    emojiB: expression.emoji || "🔊",
+    isSame: true,
+  };
+}
+
 export default function CatchPhase({
   keyExpressions,
   inputMode,
   visitCount,
+  situationEmoji,
   onComplete,
 }: Props) {
   const activities = useMemo(() => buildActivities(visitCount), [visitCount]);
-
   const [exprIndex, setExprIndex] = useState(0);
   const [actIndex, setActIndex] = useState(0);
+  const fadeAnim = useRef(new Animated.Value(1)).current;
 
   const currentExpr = keyExpressions[exprIndex];
   const currentActivity = activities[actIndex];
 
+  const totalSteps = keyExpressions.length * activities.length;
+  const currentStep = exprIndex * activities.length + actIndex + 1;
+
   const advance = useCallback(() => {
-    const nextAct = actIndex + 1;
-    if (nextAct < activities.length) {
-      setActIndex(nextAct);
-    } else {
-      const nextExpr = exprIndex + 1;
-      if (nextExpr < keyExpressions.length) {
-        setExprIndex(nextExpr);
-        setActIndex(0);
+    // Fade out, update state, fade in
+    Animated.timing(fadeAnim, {
+      toValue: 0,
+      duration: 120,
+      useNativeDriver: true,
+    }).start(() => {
+      const nextAct = actIndex + 1;
+      if (nextAct < activities.length) {
+        setActIndex(nextAct);
       } else {
-        onComplete();
+        const nextExpr = exprIndex + 1;
+        if (nextExpr < keyExpressions.length) {
+          setExprIndex(nextExpr);
+          setActIndex(0);
+        } else {
+          onComplete();
+          return;
+        }
       }
-    }
-  }, [actIndex, activities.length, exprIndex, keyExpressions.length, onComplete]);
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 200,
+        useNativeDriver: true,
+      }).start();
+    });
+  }, [actIndex, activities.length, exprIndex, keyExpressions.length, onComplete, fadeAnim]);
 
-  // Skip sound distinction if visitCount !== 1
-  const shouldSkipSound =
-    currentActivity === "sound" && visitCount !== 1;
+  // Skip sound distinction on revisits
+  const shouldSkipSound = currentActivity === "sound" && visitCount !== 1;
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (shouldSkipSound) {
       advance();
     }
@@ -132,9 +174,6 @@ export default function CatchPhase({
   if (!currentExpr || shouldSkipSound) {
     return null;
   }
-
-  const totalSteps = keyExpressions.length * activities.length;
-  const currentStep = exprIndex * activities.length + actIndex + 1;
 
   return (
     <View style={styles.container}>
@@ -148,61 +187,61 @@ export default function CatchPhase({
         />
       </View>
 
-      <Text style={styles.phaseLabel}>
-        포착 {currentStep}/{totalSteps}
-      </Text>
-
-      {currentActivity === "chunk" && (
-        <ChunkCatch
-          key={`chunk-${exprIndex}`}
-          expression={currentExpr}
-          choices={makeChunkChoices(currentExpr, keyExpressions)}
-          onComplete={advance}
-        />
+      {/* Expert skip button */}
+      {visitCount >= 3 && (
+        <TouchableOpacity style={styles.skipButton} onPress={onComplete}>
+          <Text style={styles.skipText}>바로 대화로 →</Text>
+        </TouchableOpacity>
       )}
 
-      {currentActivity === "word" && (
-        <WordCatch
-          key={`word-${exprIndex}`}
-          expression={currentExpr}
-          choices={makeWordChoices(currentExpr, keyExpressions)}
-          onComplete={advance}
-        />
-      )}
+      {/* Activity content with fade */}
+      <Animated.View style={[styles.activityContainer, { opacity: fadeAnim }]}>
+        {currentActivity === "chunk" && (
+          <ChunkCatch
+            key={`chunk-${exprIndex}`}
+            expression={currentExpr}
+            choices={makeChunkChoices(currentExpr, keyExpressions)}
+            onComplete={advance}
+          />
+        )}
 
-      {currentActivity === "sound" && (
-        <SoundDistinction
-          key={`sound-${exprIndex}`}
-          pair={{
-            wordA: currentExpr.textJa,
-            wordB: currentExpr.textJa,
-            emojiA: currentExpr.emoji || "🔊",
-            emojiB: currentExpr.emoji || "🔊",
-            isSame: true,
-          }}
-          onComplete={advance}
-        />
-      )}
+        {currentActivity === "word" && (
+          <WordCatch
+            key={`word-${exprIndex}`}
+            expression={currentExpr}
+            choices={makeWordChoices(currentExpr, keyExpressions)}
+            onComplete={advance}
+          />
+        )}
 
-      {currentActivity === "shadow" && (
-        <ShadowSpeak
-          key={`shadow-${exprIndex}`}
-          expression={currentExpr}
-          inputMode={inputMode}
-          onComplete={advance}
-        />
-      )}
+        {currentActivity === "sound" && (
+          <SoundDistinction
+            key={`sound-${exprIndex}`}
+            pair={makeMinimalPair(currentExpr)}
+            onComplete={advance}
+          />
+        )}
 
-      {currentActivity === "picture" && (
-        <PictureSpeak
-          key={`picture-${exprIndex}`}
-          expression={currentExpr}
-          npcPrompt={currentExpr.textJa}
-          situationEmoji={currentExpr.emoji || "🏪"}
-          inputMode={inputMode}
-          onComplete={advance}
-        />
-      )}
+        {currentActivity === "shadow" && (
+          <ShadowSpeak
+            key={`shadow-${exprIndex}`}
+            expression={currentExpr}
+            inputMode={inputMode}
+            onComplete={advance}
+          />
+        )}
+
+        {currentActivity === "picture" && (
+          <PictureSpeak
+            key={`picture-${exprIndex}`}
+            expression={currentExpr}
+            npcPrompt={currentExpr.textJa}
+            situationEmoji={situationEmoji}
+            inputMode={inputMode}
+            onComplete={advance}
+          />
+        )}
+      </Animated.View>
     </View>
   );
 }
@@ -224,11 +263,21 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     borderRadius: 2,
   },
-  phaseLabel: {
-    fontSize: 13,
-    color: colors.textMuted,
-    textAlign: "center",
+  skipButton: {
+    alignSelf: "flex-end",
+    marginRight: 16,
     marginTop: 8,
-    marginBottom: 4,
+    paddingVertical: 6,
+    paddingHorizontal: 14,
+    backgroundColor: colors.backgroundAlt,
+    borderRadius: borderRadius.sm,
+  },
+  skipText: {
+    fontSize: 13,
+    fontWeight: "600",
+    color: colors.primary,
+  },
+  activityContainer: {
+    flex: 1,
   },
 });

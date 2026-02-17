@@ -135,8 +135,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.successLight,
   },
   choiceWrong: {
-    borderColor: colors.danger,
-    backgroundColor: colors.dangerLight,
+    borderColor: colors.border,
+    opacity: 0.5,
   },
   choiceCorrectHint: {
     borderColor: colors.success,

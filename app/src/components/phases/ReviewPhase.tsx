@@ -33,8 +33,8 @@ import type {
 
 interface ReviewPhaseProps {
   keyExpressions: KeyExpression[];
-  performance: EngagePerformance;
-  situationName: string;
+  performance?: EngagePerformance;
+  situationName?: string;
   inputMode: SessionMode;
   onComplete: () => void;
 }
@@ -182,6 +182,22 @@ export default function ReviewPhase({
     });
   };
 
+  // Determine ability statement based on performance (never show scores/percentages)
+  const getAbilityStatement = (): string => {
+    if (!performance || performance.userTurns === 0) {
+      return "이 상황을 혼자 해결할 수 있어요";
+    }
+    const correctRatio = performance.correctCount / performance.userTurns;
+    if (correctRatio >= 0.7) {
+      return "이 상황을 혼자 해결할 수 있어요";
+    }
+    return "조금 더 연습하면 혼자 할 수 있어요";
+  };
+
+  const headerTitle = situationName
+    ? `${situationName}에서 대화 완료!`
+    : "대화 완료!";
+
   return (
     <ScrollView
       style={styles.container}
@@ -190,17 +206,15 @@ export default function ReviewPhase({
       {/* Completion header */}
       <View style={styles.completionHeader}>
         <MaterialIcons name="check-circle" size={40} color={colors.success} />
-        <Text style={styles.completionTitle}>
-          {situationName}에서 대화 완료!
-        </Text>
+        <Text style={styles.completionTitle}>{headerTitle}</Text>
         <Text style={styles.completionSubtitle}>
-          이 상황을 혼자 해결할 수 있어요
+          {getAbilityStatement()}
         </Text>
       </View>
 
       {/* Key expressions list */}
       <View style={styles.expressionList}>
-        <Text style={styles.sectionTitle}>배운 핵심 표현</Text>
+        <Text style={styles.sectionTitle}>이번에 배운 표현</Text>
 
         {keyExpressions.map((expr, i) => {
           const grammar = findGrammarExplanation(expr.textJa);

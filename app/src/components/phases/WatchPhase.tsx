@@ -365,7 +365,7 @@ const styles = StyleSheet.create({
     lineHeight: 26,
   },
   userJaText: {
-    color: colors.textDark,
+    color: colors.surface,
   },
   koText: {
     fontSize: 13,
@@ -374,7 +374,7 @@ const styles = StyleSheet.create({
     lineHeight: 18,
   },
   userKoText: {
-    color: colors.textMuted,
+    color: "rgba(255,255,255,0.7)",
   },
 
   // Speaking indicator

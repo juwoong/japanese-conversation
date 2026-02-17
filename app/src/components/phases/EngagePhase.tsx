@@ -340,9 +340,6 @@ export default function EngagePhase({
       {/* Header */}
       <View style={styles.header}>
         <Text style={styles.headerTitle}>실전 대화</Text>
-        <Text style={styles.headerProgress}>
-          {Math.min(turnIndex + 1, totalTurns)} / {totalTurns}
-        </Text>
       </View>
 
       <View style={styles.progressBar}>
@@ -392,12 +389,7 @@ export default function EngagePhase({
 
           return (
             <View key={i} style={styles.userMessage}>
-              <View
-                style={[
-                  styles.userBubble,
-                  msg.isCorrect === false && styles.userBubbleWrong,
-                ]}
-              >
+              <View style={styles.userBubble}>
                 <Text style={styles.userText}>{msg.textJa}</Text>
               </View>
             </View>
@@ -434,11 +426,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
     color: colors.textDark,
-  },
-  headerProgress: {
-    fontSize: 13,
-    color: colors.textMuted,
-    fontVariant: ["tabular-nums"],
   },
   progressBar: {
     height: 3,
@@ -510,9 +497,6 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     borderTopRightRadius: 4,
     padding: 14,
-  },
-  userBubbleWrong: {
-    backgroundColor: colors.primaryMuted,
   },
   userText: {
     fontSize: 17,
