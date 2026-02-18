@@ -481,8 +481,8 @@ const introStyles = StyleSheet.create({
     backgroundColor: colors.surface,
   },
   image: {
-    width: 280,
-    height: 280,
+    width: "100%",
+    aspectRatio: 1,
     marginBottom: 20,
     borderRadius: 20,
   },
