@@ -51,14 +51,7 @@ export default function FuriganaText({
 
         return (
           <View key={i} style={styles.segment}>
-            <Text
-              style={[
-                styles.base,
-                { fontSize, color: segColor, lineHeight: fontSize + 8 },
-              ]}
-            >
-              {seg.text}
-            </Text>
+            {/* 한자는 위에 작게 */}
             {hasReading ? (
               <Text
                 style={[
@@ -70,11 +63,20 @@ export default function FuriganaText({
                   },
                 ]}
               >
-                {seg.reading}
+                {seg.text}
               </Text>
             ) : (
               <View style={{ height: readingLineHeight }} />
             )}
+            {/* 메인: 히라가나(reading) or 원문(카나/구두점) */}
+            <Text
+              style={[
+                styles.base,
+                { fontSize, color: segColor, lineHeight: fontSize + 8 },
+              ]}
+            >
+              {hasReading ? seg.reading : seg.text}
+            </Text>
           </View>
         );
       })}
@@ -86,7 +88,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     flexWrap: "wrap",
-    alignItems: "flex-start",
+    alignItems: "flex-end",
   },
   segment: {
     alignItems: "center",
