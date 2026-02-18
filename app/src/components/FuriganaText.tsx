@@ -51,6 +51,14 @@ export default function FuriganaText({
 
         return (
           <View key={i} style={styles.segment}>
+            <Text
+              style={[
+                styles.base,
+                { fontSize, color: segColor, lineHeight: fontSize + 8 },
+              ]}
+            >
+              {seg.text}
+            </Text>
             {hasReading ? (
               <Text
                 style={[
@@ -67,14 +75,6 @@ export default function FuriganaText({
             ) : (
               <View style={{ height: readingLineHeight }} />
             )}
-            <Text
-              style={[
-                styles.base,
-                { fontSize, color: segColor, lineHeight: fontSize + 8 },
-              ]}
-            >
-              {seg.text}
-            </Text>
           </View>
         );
       })}
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     flexWrap: "wrap",
-    alignItems: "flex-end",
+    alignItems: "flex-start",
   },
   segment: {
     alignItems: "center",
