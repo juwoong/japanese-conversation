@@ -209,7 +209,7 @@ function VocabPresentation({
       {/* Japanese with furigana */}
       <View style={vocabStyles.japaneseRow}>
         {expr.furigana ? (
-          <FuriganaText segments={expr.furigana} fontSize={28} color={colors.textDark} />
+          <FuriganaText segments={expr.furigana} fontSize={28} color={colors.textDark} highlightColor={colors.primary} readingColor="#E8636F80" />
         ) : (
           <Text style={vocabStyles.japaneseText}>{expr.textJa}</Text>
         )}

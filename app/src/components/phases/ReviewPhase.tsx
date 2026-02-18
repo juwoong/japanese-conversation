@@ -214,6 +214,8 @@ export default function ReviewPhase({
                       segments={expr.furigana}
                       fontSize={18}
                       color={colors.textDark}
+                      highlightColor={colors.primary}
+                      readingColor="#E8636F80"
                     />
                   ) : (
                     <Text style={styles.expressionJa}>{expr.textJa}</Text>
