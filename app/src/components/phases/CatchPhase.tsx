@@ -1,7 +1,8 @@
 import React, { useState, useMemo, useCallback, useRef, useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Animated } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity, Animated, ImageSourcePropType } from "react-native";
 import * as Speech from "expo-speech";
 import { colors, borderRadius } from "../../constants/theme";
+import { getSituationImage } from "../../constants/situationImages";
 import FuriganaText from "../FuriganaText";
 import type { KeyExpression, SessionMode } from "../../types";
 import ChunkCatch from "./activities/ChunkCatch";
@@ -18,6 +19,7 @@ interface Props {
   inputMode: SessionMode;
   visitCount: number;
   situationEmoji: string;
+  situationSlug: string;
   situationName: string;
   locationName: string;
   onComplete: () => void;
@@ -138,18 +140,24 @@ function makeMinimalPair(expression: KeyExpression) {
 
 function SituationIntro({
   emoji,
+  image,
   situationName,
   locationName,
   onStart,
 }: {
   emoji: string;
+  image?: ImageSourcePropType;
   situationName: string;
   locationName: string;
   onStart: () => void;
 }) {
   return (
     <View style={introStyles.container}>
-      <Text style={introStyles.emoji}>{emoji}</Text>
+      {image ? (
+        <Image source={image} style={introStyles.image} resizeMode="contain" />
+      ) : (
+        <Text style={introStyles.emoji}>{emoji}</Text>
+      )}
       {locationName ? (
         <Text style={introStyles.location}>{locationName}에서</Text>
       ) : null}
@@ -231,6 +239,7 @@ export default function CatchPhase({
   inputMode,
   visitCount,
   situationEmoji,
+  situationSlug,
   situationName,
   locationName,
   onComplete,
@@ -294,6 +303,7 @@ export default function CatchPhase({
       <View style={styles.container}>
         <SituationIntro
           emoji={situationEmoji}
+          image={getSituationImage(situationSlug)}
           situationName={situationName}
           locationName={locationName}
           onStart={() => setCatchStep("present")}
@@ -441,6 +451,12 @@ const introStyles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     paddingHorizontal: 32,
+  },
+  image: {
+    width: 200,
+    height: 200,
+    marginBottom: 20,
+    borderRadius: borderRadius.lg,
   },
   emoji: {
     fontSize: 64,

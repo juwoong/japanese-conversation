@@ -120,6 +120,7 @@ export default function SessionScreen({ navigation, route }: Props) {
             inputMode={fourPhase.inputMode}
             visitCount={fourPhase.visitCount}
             situationEmoji={getSituationTheme(fourPhase.situation?.slug ?? "").emoji}
+            situationSlug={fourPhase.situation?.slug ?? ""}
             situationName={fourPhase.situation?.name_ko ?? ""}
             locationName={fourPhase.situation?.location_ko ?? ""}
             onComplete={handlePhaseTransition}
