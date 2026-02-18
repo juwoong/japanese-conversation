@@ -396,7 +396,7 @@ export default function CatchPhase({
           <PictureSpeak
             key={`picture-${exprIndex}`}
             expression={currentExpr}
-            npcPrompt={currentExpr.textJa}
+            npcPrompt={currentExpr.npcPrompt || currentExpr.textJa}
             situationEmoji={situationEmoji}
             inputMode={inputMode}
             onComplete={advance}

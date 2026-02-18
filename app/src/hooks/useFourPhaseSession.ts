@@ -65,11 +65,23 @@ export function useFourPhaseSession(situationId: number): UseFourPhaseSessionRet
   const keyExpressions = useMemo<KeyExpression[]>(() => {
     return session.lines
       .filter((line) => line.speaker === "user")
-      .map((line) => ({
-        textJa: line.text_ja,
-        textKo: line.text_ko,
-        furigana: line.furigana,
-      }));
+      .map((line) => {
+        // Find the preceding NPC line for PictureSpeak prompt
+        const idx = session.lines.indexOf(line);
+        let npcPrompt = "";
+        for (let j = idx - 1; j >= 0; j--) {
+          if (session.lines[j].speaker === "npc") {
+            npcPrompt = session.lines[j].text_ja;
+            break;
+          }
+        }
+        return {
+          textJa: line.text_ja,
+          textKo: line.text_ko,
+          furigana: line.furigana,
+          npcPrompt,
+        };
+      });
   }, [session.lines]);
 
   const setInputMode = useCallback((mode: SessionMode) => {

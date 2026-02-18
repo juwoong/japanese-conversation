@@ -12,6 +12,7 @@ import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { MaterialIcons } from "@expo/vector-icons";
 import { colors } from "../constants/theme";
 import { getSituationTheme } from "../constants/situationThemes";
+import { getSituationImage } from "../constants/situationImages";
 import { useFourPhaseSession } from "../hooks/useFourPhaseSession";
 import LoadingScreen from "../components/LoadingScreen";
 import SessionModeSelector from "../components/SessionModeSelector";
@@ -110,6 +111,10 @@ export default function SessionScreen({ navigation, route }: Props) {
           <WatchPhase
             modelDialogue={fourPhase.modelDialogue}
             inputMode={fourPhase.inputMode}
+            situationImage={getSituationImage(fourPhase.situation?.slug ?? "")}
+            situationEmoji={getSituationTheme(fourPhase.situation?.slug ?? "").emoji}
+            situationName={fourPhase.situation?.name_ko ?? ""}
+            locationName={fourPhase.situation?.location_ko ?? ""}
             onComplete={handlePhaseTransition}
           />
         );

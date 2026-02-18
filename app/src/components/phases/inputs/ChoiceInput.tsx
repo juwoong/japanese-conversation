@@ -19,10 +19,13 @@ import { MaterialIcons } from "@expo/vector-icons";
 import * as Speech from "expo-speech";
 import * as Haptics from "expo-haptics";
 import { colors, borderRadius } from "../../../constants/theme";
+import type { FuriganaSegment } from "../../../types";
+import FuriganaText from "../../FuriganaText";
 
 interface Choice {
   textJa: string;
   isCorrect: boolean;
+  furigana?: FuriganaSegment[];
 }
 
 interface ChoiceInputProps {
@@ -94,7 +97,19 @@ export default function ChoiceInput({
           activeOpacity={0.7}
           disabled={revealed}
         >
-          <Text style={styles.choiceText}>{choice.textJa}</Text>
+          <View style={{ flex: 1 }}>
+            {choice.furigana && choice.furigana.length > 0 ? (
+              <FuriganaText
+                segments={choice.furigana}
+                fontSize={18}
+                color={colors.textDark}
+                highlightColor={colors.primary}
+                readingColor="#E8636F80"
+              />
+            ) : (
+              <Text style={styles.choiceText}>{choice.textJa}</Text>
+            )}
+          </View>
           <TouchableOpacity
             onPress={(e) => {
               e.stopPropagation();
@@ -149,6 +164,5 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "500",
     color: colors.textDark,
-    flex: 1,
   },
 });

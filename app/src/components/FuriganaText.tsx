@@ -10,6 +10,12 @@ interface Props {
   color?: string;
   /** Show furigana readings above kanji (default true) */
   showReading?: boolean;
+  /** Color for kanji segments (has reading) — overrides color */
+  highlightColor?: string;
+  /** Color for non-kanji segments (no reading) — overrides color */
+  dimColor?: string;
+  /** Color for furigana reading text above kanji */
+  readingColor?: string;
 }
 
 /**
@@ -26,6 +32,9 @@ export default function FuriganaText({
   fontSize = 18,
   color = "#1a1a1a",
   showReading = true,
+  highlightColor,
+  dimColor,
+  readingColor,
 }: Props) {
   const readingSize = Math.round(fontSize * 0.5);
   // Fixed spacer height so baselines align even when reading is absent
@@ -35,6 +44,10 @@ export default function FuriganaText({
     <View style={styles.container}>
       {segments.map((seg, i) => {
         const hasReading = showReading && !!seg.reading;
+        // Kanji segment (has reading) → highlightColor, otherwise dimColor
+        const segColor = seg.reading
+          ? (highlightColor ?? color)
+          : (dimColor ?? color);
 
         return (
           <View key={i} style={styles.segment}>
@@ -42,7 +55,11 @@ export default function FuriganaText({
               <Text
                 style={[
                   styles.reading,
-                  { fontSize: readingSize, lineHeight: readingLineHeight },
+                  {
+                    fontSize: readingSize,
+                    lineHeight: readingLineHeight,
+                    color: readingColor ?? "#9ca3af",
+                  },
                 ]}
               >
                 {seg.reading}
@@ -53,7 +70,7 @@ export default function FuriganaText({
             <Text
               style={[
                 styles.base,
-                { fontSize, color, lineHeight: fontSize + 8 },
+                { fontSize, color: segColor, lineHeight: fontSize + 8 },
               ]}
             >
               {seg.text}
@@ -75,7 +92,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   reading: {
-    color: "#9ca3af",
     textAlign: "center",
   },
   base: {

@@ -115,6 +115,8 @@ export interface KeyExpression {
   textKo: string;
   emoji?: string;
   furigana?: FuriganaSegment[];
+  /** Preceding NPC line — used as the prompt in PictureSpeak */
+  npcPrompt?: string;
 }
 
 export interface EngagePerformance {

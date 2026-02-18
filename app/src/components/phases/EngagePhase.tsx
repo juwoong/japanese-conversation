@@ -41,6 +41,7 @@ import type {
 import { generateNpcResponse, buildErrorEntry } from "../../lib/npcEngine";
 import type { FeedbackType } from "../../lib/feedbackLayer";
 
+import FuriganaText from "../FuriganaText";
 import ChoiceInput from "./inputs/ChoiceInput";
 import FillBlankInput from "./inputs/FillBlankInput";
 import FreeInput from "./inputs/FreeInput";
@@ -76,7 +77,7 @@ interface ConversationMessage {
 function buildChoices(
   correctLine: ModelLine,
   allLines: ModelLine[]
-): { textJa: string; isCorrect: boolean }[] {
+): { textJa: string; isCorrect: boolean; furigana?: FuriganaSegment[] }[] {
   const otherUserLines = allLines.filter(
     (l) => l.speaker === "user" && l.textJa !== correctLine.textJa
   );
@@ -85,17 +86,19 @@ function buildChoices(
   const distractors = shuffled.slice(0, 2).map((l) => ({
     textJa: l.textJa,
     isCorrect: false,
+    furigana: l.furigana,
   }));
 
   while (distractors.length < 2) {
     distractors.push({
       textJa: correctLine.textJa + "か",
       isCorrect: false,
+      furigana: undefined,
     });
   }
 
   const choices = [
-    { textJa: correctLine.textJa, isCorrect: true },
+    { textJa: correctLine.textJa, isCorrect: true, furigana: correctLine.furigana },
     ...distractors,
   ];
   return choices.sort(() => Math.random() - 0.5);
@@ -256,6 +259,11 @@ export default function EngagePhase({
   };
 
   const handleUserAnswer = async (correct: boolean, chosenText: string) => {
+    // Find furigana for the chosen text from model dialogue
+    const matchedFurigana = modelDialogue.find(
+      (l) => l.textJa === chosenText
+    )?.furigana;
+
     // Add user message
     setMessages((prev) => [
       ...prev,
@@ -263,6 +271,7 @@ export default function EngagePhase({
         speaker: "user",
         textJa: chosenText,
         textKo: currentLine?.textKo ?? "",
+        furigana: matchedFurigana,
       },
     ]);
 
@@ -502,6 +511,16 @@ export default function EngagePhase({
               <Text style={styles.npcText}>
                 {renderRecastText(msg.textJa, msg.recastHighlight)}
               </Text>
+            ) : msg.furigana && msg.furigana.length > 0 ? (
+              <View style={{ flex: 1 }}>
+                <FuriganaText
+                  segments={msg.furigana}
+                  fontSize={18}
+                  color={colors.textDark}
+                  highlightColor={colors.primary}
+                  readingColor="#E8636F80"
+                />
+              </View>
             ) : (
               <Text style={styles.npcText}>{msg.textJa}</Text>
             )}
@@ -604,7 +623,18 @@ export default function EngagePhase({
           return (
             <View key={i} style={styles.userMessage}>
               <View style={styles.userBubble}>
-                <Text style={styles.userText}>{msg.textJa}</Text>
+                {msg.furigana && msg.furigana.length > 0 ? (
+                  <FuriganaText
+                    segments={msg.furigana}
+                    fontSize={17}
+                    color={colors.surface}
+                    highlightColor="#FFFFFF"
+                    dimColor="rgba(255,255,255,0.6)"
+                    readingColor="rgba(255,255,255,0.5)"
+                  />
+                ) : (
+                  <Text style={styles.userText}>{msg.textJa}</Text>
+                )}
               </View>
             </View>
           );

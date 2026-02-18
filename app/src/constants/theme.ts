@@ -6,7 +6,7 @@ const lightColors = {
   primaryMuted: "#F1A3AA",
   secondary: "#5BA19B",
   secondaryLight: "#E5F2F0",
-  background: "#FAFAF8",
+  background: "#FFFFFF",
   backgroundAlt: "#F5F4F0",
   surface: "#FFFFFF",
   textDark: "#1A1A1A",

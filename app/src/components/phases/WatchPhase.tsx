@@ -13,28 +13,40 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import {
   View,
   Text,
+  Image,
   StyleSheet,
   TouchableOpacity,
   ScrollView,
   Animated,
+  ImageSourcePropType,
 } from "react-native";
 import * as Speech from "expo-speech";
 import { MaterialIcons } from "@expo/vector-icons";
-import { colors } from "../../constants/theme";
+import { colors, borderRadius } from "../../constants/theme";
 import FuriganaText from "../FuriganaText";
 import type { ModelLine, SessionMode } from "../../types";
 
 interface WatchPhaseProps {
   modelDialogue: ModelLine[];
   inputMode: SessionMode;
+  situationImage?: ImageSourcePropType;
+  situationEmoji?: string;
+  situationName?: string;
+  locationName?: string;
   onComplete: () => void;
 }
 
 export default function WatchPhase({
   modelDialogue,
   inputMode,
+  situationImage,
+  situationEmoji,
+  situationName,
+  locationName,
   onComplete,
 }: WatchPhaseProps) {
+  // Situation intro screen
+  const [showIntro, setShowIntro] = useState(true);
   // Which lines have been revealed so far
   const [revealedCount, setRevealedCount] = useState(0);
   // Which line is currently speaking
@@ -60,13 +72,13 @@ export default function WatchPhase({
     }).start();
   }, []);
 
-  // Start auto-play sequence when dialogue loads
+  // Start auto-play sequence when dialogue loads and intro is dismissed
   useEffect(() => {
-    if (modelDialogue.length > 0 && revealedCount === 0) {
+    if (modelDialogue.length > 0 && revealedCount === 0 && !showIntro) {
       autoPlayingRef.current = true;
       playNextLine(0);
     }
-  }, [modelDialogue.length]);
+  }, [modelDialogue.length, showIntro]);
 
   // Scroll to bottom when new lines are revealed
   useEffect(() => {
@@ -188,7 +200,8 @@ export default function WatchPhase({
           style={[
             styles.bubble,
             isNpc ? styles.npcBubble : styles.userBubble,
-            isKey && styles.keyBubble,
+            isKey && isNpc && styles.keyBubble,
+            isKey && !isNpc && styles.userKeyBubble,
             isSpeaking && styles.speakingBubble,
           ]}
         >
@@ -204,6 +217,9 @@ export default function WatchPhase({
               fontSize={17}
               color={isNpc ? colors.textDark : colors.surface}
               showReading={true}
+              highlightColor={isNpc ? colors.primary : "#FFFFFF"}
+              dimColor={isNpc ? colors.textDark : "rgba(255,255,255,0.6)"}
+              readingColor={isNpc ? "#E8636F80" : "rgba(255,255,255,0.5)"}
             />
           ) : (
             <Text
@@ -243,6 +259,31 @@ export default function WatchPhase({
       </TouchableOpacity>
     );
   };
+
+  if (showIntro) {
+    return (
+      <Animated.View style={[styles.container, { opacity: fadeAnim }]}>
+        <View style={introStyles.container}>
+          {situationImage ? (
+            <Image source={situationImage} style={introStyles.image} resizeMode="contain" />
+          ) : (
+            <Text style={introStyles.emoji}>{situationEmoji || ""}</Text>
+          )}
+          {locationName ? (
+            <Text style={introStyles.location}>{locationName}</Text>
+          ) : null}
+          <Text style={introStyles.name}>{situationName || ""}</Text>
+          <TouchableOpacity
+            style={introStyles.button}
+            onPress={() => setShowIntro(false)}
+            activeOpacity={0.8}
+          >
+            <Text style={introStyles.buttonText}>대화 보기</Text>
+          </TouchableOpacity>
+        </View>
+      </Animated.View>
+    );
+  }
 
   return (
     <Animated.View style={[styles.container, { opacity: fadeAnim }]}>
@@ -339,6 +380,10 @@ const styles = StyleSheet.create({
     borderColor: `${colors.primary}40`,
     borderTopRightRadius: 4,
   },
+  userKeyBubble: {
+    borderWidth: 1.5,
+    borderColor: "rgba(255,255,255,0.4)",
+  },
   speakingBubble: {
     borderWidth: 1.5,
     borderColor: colors.primary,
@@ -424,5 +469,48 @@ const styles = StyleSheet.create({
   },
   nextButtonTextDisabled: {
     color: colors.textLight,
+  },
+});
+
+const introStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 32,
+    backgroundColor: colors.surface,
+  },
+  image: {
+    width: 280,
+    height: 280,
+    marginBottom: 20,
+    borderRadius: 20,
+  },
+  emoji: {
+    fontSize: 72,
+    marginBottom: 16,
+  },
+  location: {
+    fontSize: 15,
+    color: colors.textMuted,
+    marginBottom: 4,
+  },
+  name: {
+    fontSize: 22,
+    fontWeight: "700",
+    color: colors.textDark,
+    marginBottom: 32,
+    textAlign: "center",
+  },
+  button: {
+    backgroundColor: colors.primary,
+    paddingHorizontal: 40,
+    paddingVertical: 14,
+    borderRadius: borderRadius.lg,
+  },
+  buttonText: {
+    fontSize: 17,
+    fontWeight: "bold",
+    color: colors.surface,
   },
 });

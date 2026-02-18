@@ -64,6 +64,8 @@ export default function NpcBubble({
                 segments={line.furigana}
                 fontSize={18}
                 color={colors.textDark}
+                highlightColor={colors.primary}
+                readingColor="#E8636F80"
               />
             ) : (
               <Text style={styles.japanese}>{displayText}</Text>
