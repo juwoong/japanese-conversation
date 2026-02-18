@@ -16,7 +16,7 @@ import { transcribeAudio } from "../lib/stt";
 import { accuracyScore } from "../lib/textDiff";
 import type { RootStackParamList, UserLevel } from "../types";
 import { colors } from "../constants/theme";
-import { AuthContext } from "../../App";
+import { AuthContext } from "../contexts/AuthContext";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Onboarding">;
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, createContext } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { ActivityIndicator, View, StyleSheet } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { NavigationContainer } from "@react-navigation/native";
@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { supabase } from "./src/lib/supabase";
 import type { RootStackParamList } from "./src/types";
 import ErrorBoundary from "./src/components/ErrorBoundary";
+import { AuthContext } from "./src/contexts/AuthContext";
 import {
   AuthScreen,
   OnboardingScreen,
@@ -20,10 +21,6 @@ import {
 } from "./src/screens";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
-
-export const AuthContext = createContext({
-  onOnboardingComplete: () => {},
-});
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
