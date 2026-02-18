@@ -1,6 +1,8 @@
 import React, { useState, useMemo, useCallback, useRef, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Animated } from "react-native";
+import * as Speech from "expo-speech";
 import { colors, borderRadius } from "../../constants/theme";
+import FuriganaText from "../FuriganaText";
 import type { KeyExpression, SessionMode } from "../../types";
 import ChunkCatch from "./activities/ChunkCatch";
 import WordCatch from "./activities/WordCatch";
@@ -9,12 +11,15 @@ import ShadowSpeak from "./activities/ShadowSpeak";
 import PictureSpeak from "./activities/PictureSpeak";
 
 type ActivityType = "chunk" | "word" | "sound" | "shadow" | "picture";
+type CatchStep = "intro" | "present" | "activities";
 
 interface Props {
   keyExpressions: KeyExpression[];
   inputMode: SessionMode;
   visitCount: number;
   situationEmoji: string;
+  situationName: string;
+  locationName: string;
   onComplete: () => void;
 }
 
@@ -72,26 +77,39 @@ function makeChunkChoices(
   return choices;
 }
 
-/** Generate word-catch emoji choices */
+/** Generate word-catch emoji choices with Korean labels */
 function makeWordChoices(
   expression: KeyExpression,
   allExpressions: KeyExpression[],
-): { emoji: string; isCorrect: boolean }[] {
+): { emoji: string; label: string; isCorrect: boolean }[] {
   const correct = expression.emoji || "🗣";
+  const correctLabel = expression.textKo;
+
   const others = allExpressions
     .filter((e) => e.textJa !== expression.textJa)
-    .map((e) => e.emoji || "❓")
     .slice(0, 2);
 
-  const fallbacks = ["🏪", "🚃", "💰"];
-  while (others.length < 2) {
-    others.push(fallbacks[others.length]);
+  const fallbackChoices = [
+    { emoji: "🏪", label: "가게" },
+    { emoji: "🚃", label: "전철" },
+    { emoji: "💰", label: "돈" },
+  ];
+
+  const distractors: { emoji: string; label: string; isCorrect: boolean }[] = others.map((e) => ({
+    emoji: e.emoji || "❓",
+    label: e.textKo,
+    isCorrect: false,
+  }));
+
+  while (distractors.length < 2) {
+    const fb = fallbackChoices[distractors.length];
+    distractors.push({ emoji: fb.emoji, label: fb.label, isCorrect: false });
   }
 
   const choices = [
-    { emoji: correct, isCorrect: true },
-    { emoji: others[0], isCorrect: false },
-    { emoji: others[1], isCorrect: false },
+    { emoji: correct, label: correctLabel, isCorrect: true },
+    distractors[0],
+    distractors[1],
   ];
   for (let i = choices.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -116,13 +134,112 @@ function makeMinimalPair(expression: KeyExpression) {
   };
 }
 
+// --- Inline sub-components ---
+
+function SituationIntro({
+  emoji,
+  situationName,
+  locationName,
+  onStart,
+}: {
+  emoji: string;
+  situationName: string;
+  locationName: string;
+  onStart: () => void;
+}) {
+  return (
+    <View style={introStyles.container}>
+      <Text style={introStyles.emoji}>{emoji}</Text>
+      {locationName ? (
+        <Text style={introStyles.location}>{locationName}에서</Text>
+      ) : null}
+      <Text style={introStyles.name}>{situationName}</Text>
+      <Text style={introStyles.description}>
+        이 상황에서 쓸 표현을 배워볼게요
+      </Text>
+      <TouchableOpacity style={introStyles.button} onPress={onStart} activeOpacity={0.8}>
+        <Text style={introStyles.buttonText}>시작하기</Text>
+      </TouchableOpacity>
+    </View>
+  );
+}
+
+function VocabPresentation({
+  expressions,
+  currentIndex,
+  onNext,
+}: {
+  expressions: KeyExpression[];
+  currentIndex: number;
+  onNext: () => void;
+}) {
+  const expr = expressions[currentIndex];
+  const [isSpeaking, setIsSpeaking] = useState(false);
+
+  const playTTS = useCallback(() => {
+    setIsSpeaking(true);
+    Speech.speak(expr.textJa, {
+      language: "ja-JP",
+      rate: 0.85,
+      onDone: () => setIsSpeaking(false),
+      onError: () => setIsSpeaking(false),
+    });
+  }, [expr.textJa]);
+
+  return (
+    <View style={vocabStyles.container}>
+      {/* Progress */}
+      <Text style={vocabStyles.progress}>
+        {currentIndex + 1} / {expressions.length}
+      </Text>
+
+      {/* Emoji */}
+      {expr.emoji ? (
+        <Text style={vocabStyles.emoji}>{expr.emoji}</Text>
+      ) : null}
+
+      {/* Japanese with furigana */}
+      <View style={vocabStyles.japaneseRow}>
+        {expr.furigana ? (
+          <FuriganaText segments={expr.furigana} fontSize={28} color={colors.textDark} />
+        ) : (
+          <Text style={vocabStyles.japaneseText}>{expr.textJa}</Text>
+        )}
+      </View>
+
+      {/* Korean meaning */}
+      <Text style={vocabStyles.koreanText}>{expr.textKo}</Text>
+
+      {/* TTS button */}
+      <TouchableOpacity style={vocabStyles.ttsButton} onPress={playTTS} activeOpacity={0.7}>
+        <Text style={vocabStyles.ttsIcon}>{isSpeaking ? "🔊" : "🔈"}</Text>
+        <Text style={vocabStyles.ttsLabel}>발음 듣기</Text>
+      </TouchableOpacity>
+
+      {/* Next button */}
+      <TouchableOpacity style={vocabStyles.nextButton} onPress={onNext} activeOpacity={0.8}>
+        <Text style={vocabStyles.nextButtonText}>배웠어요 →</Text>
+      </TouchableOpacity>
+    </View>
+  );
+}
+
+// --- Main component ---
+
 export default function CatchPhase({
   keyExpressions,
   inputMode,
   visitCount,
   situationEmoji,
+  situationName,
+  locationName,
   onComplete,
 }: Props) {
+  // On first visit, start with intro. On revisits, skip to activities.
+  const initialStep: CatchStep = visitCount === 1 ? "intro" : "activities";
+  const [catchStep, setCatchStep] = useState<CatchStep>(initialStep);
+  const [vocabIndex, setVocabIndex] = useState(0);
+
   const activities = useMemo(() => buildActivities(visitCount), [visitCount]);
   const [exprIndex, setExprIndex] = useState(0);
   const [actIndex, setActIndex] = useState(0);
@@ -163,7 +280,7 @@ export default function CatchPhase({
   }, [actIndex, activities.length, exprIndex, keyExpressions.length, onComplete, fadeAnim]);
 
   // Skip sound distinction on revisits
-  const shouldSkipSound = currentActivity === "sound" && visitCount !== 1;
+  const shouldSkipSound = catchStep === "activities" && currentActivity === "sound" && visitCount !== 1;
 
   useEffect(() => {
     if (shouldSkipSound) {
@@ -171,6 +288,40 @@ export default function CatchPhase({
     }
   }, [shouldSkipSound, advance]);
 
+  // --- Intro step ---
+  if (catchStep === "intro") {
+    return (
+      <View style={styles.container}>
+        <SituationIntro
+          emoji={situationEmoji}
+          situationName={situationName}
+          locationName={locationName}
+          onStart={() => setCatchStep("present")}
+        />
+      </View>
+    );
+  }
+
+  // --- Present step ---
+  if (catchStep === "present") {
+    return (
+      <View style={styles.container}>
+        <VocabPresentation
+          expressions={keyExpressions}
+          currentIndex={vocabIndex}
+          onNext={() => {
+            if (vocabIndex + 1 < keyExpressions.length) {
+              setVocabIndex(vocabIndex + 1);
+            } else {
+              setCatchStep("activities");
+            }
+          }}
+        />
+      </View>
+    );
+  }
+
+  // --- Activities step (existing behavior) ---
   if (!currentExpr || shouldSkipSound) {
     return null;
   }
@@ -246,6 +397,8 @@ export default function CatchPhase({
   );
 }
 
+// --- Styles ---
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -279,5 +432,109 @@ const styles = StyleSheet.create({
   },
   activityContainer: {
     flex: 1,
+  },
+});
+
+const introStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 32,
+  },
+  emoji: {
+    fontSize: 64,
+    marginBottom: 16,
+  },
+  location: {
+    fontSize: 16,
+    color: colors.textMuted,
+    marginBottom: 4,
+  },
+  name: {
+    fontSize: 24,
+    fontWeight: "700",
+    color: colors.textDark,
+    marginBottom: 12,
+    textAlign: "center",
+  },
+  description: {
+    fontSize: 15,
+    color: colors.textMedium,
+    textAlign: "center",
+    marginBottom: 40,
+    lineHeight: 22,
+  },
+  button: {
+    backgroundColor: colors.primary,
+    paddingHorizontal: 40,
+    paddingVertical: 14,
+    borderRadius: borderRadius.lg,
+  },
+  buttonText: {
+    fontSize: 17,
+    fontWeight: "bold",
+    color: colors.surface,
+  },
+});
+
+const vocabStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 32,
+  },
+  progress: {
+    fontSize: 13,
+    color: colors.textMuted,
+    marginBottom: 24,
+  },
+  emoji: {
+    fontSize: 48,
+    marginBottom: 16,
+  },
+  japaneseRow: {
+    marginBottom: 12,
+    alignItems: "center",
+  },
+  japaneseText: {
+    fontSize: 28,
+    fontWeight: "600",
+    color: colors.textDark,
+  },
+  koreanText: {
+    fontSize: 18,
+    color: colors.textMedium,
+    marginBottom: 32,
+  },
+  ttsButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    backgroundColor: colors.backgroundAlt,
+    borderRadius: borderRadius.md,
+    marginBottom: 32,
+  },
+  ttsIcon: {
+    fontSize: 24,
+  },
+  ttsLabel: {
+    fontSize: 15,
+    color: colors.textMedium,
+    fontWeight: "500",
+  },
+  nextButton: {
+    backgroundColor: colors.primary,
+    paddingHorizontal: 32,
+    paddingVertical: 14,
+    borderRadius: borderRadius.lg,
+  },
+  nextButtonText: {
+    fontSize: 17,
+    fontWeight: "bold",
+    color: colors.surface,
   },
 });

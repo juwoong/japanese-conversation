@@ -11,6 +11,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { MaterialIcons } from "@expo/vector-icons";
 import { colors } from "../constants/theme";
+import { getSituationTheme } from "../constants/situationThemes";
 import { useFourPhaseSession } from "../hooks/useFourPhaseSession";
 import LoadingScreen from "../components/LoadingScreen";
 import SessionModeSelector from "../components/SessionModeSelector";
@@ -118,7 +119,9 @@ export default function SessionScreen({ navigation, route }: Props) {
             keyExpressions={fourPhase.keyExpressions}
             inputMode={fourPhase.inputMode}
             visitCount={fourPhase.visitCount}
-            situationEmoji="🍽"
+            situationEmoji={getSituationTheme(fourPhase.situation?.slug ?? "").emoji}
+            situationName={fourPhase.situation?.name_ko ?? ""}
+            locationName={fourPhase.situation?.location_ko ?? ""}
             onComplete={handlePhaseTransition}
           />
         );

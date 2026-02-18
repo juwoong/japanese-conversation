@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import * as Speech from "expo-speech";
 import { colors, borderRadius } from "../../../constants/theme";
+import FuriganaText from "../../FuriganaText";
 import type { KeyExpression } from "../../../types";
 
 interface Choice {
@@ -65,6 +66,15 @@ export default function ChunkCatch({ expression, choices, onComplete }: Props) {
 
   return (
     <View style={styles.container}>
+      {/* Japanese text with furigana */}
+      <View style={styles.japaneseRow}>
+        {expression.furigana ? (
+          <FuriganaText segments={expression.furigana} fontSize={22} color={colors.textDark} />
+        ) : (
+          <Text style={styles.japaneseText}>{expression.textJa}</Text>
+        )}
+      </View>
+
       {/* TTS play button */}
       <TouchableOpacity style={styles.playButton} onPress={playTTS}>
         <Text style={styles.playIcon}>{isSpeaking ? "🔊" : "🔈"}</Text>
@@ -72,7 +82,7 @@ export default function ChunkCatch({ expression, choices, onComplete }: Props) {
       </TouchableOpacity>
 
       {/* Question */}
-      <Text style={styles.question}>이 말은 어떤 상황일까요?</Text>
+      <Text style={styles.question}>이 표현은 어떤 뜻일까요?</Text>
 
       {/* Choices */}
       <View style={styles.choicesRow}>
@@ -113,6 +123,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     paddingHorizontal: 24,
+  },
+  japaneseRow: {
+    alignItems: "center",
+    marginBottom: 16,
+  },
+  japaneseText: {
+    fontSize: 22,
+    fontWeight: "600",
+    color: colors.textDark,
   },
   playButton: {
     alignItems: "center",

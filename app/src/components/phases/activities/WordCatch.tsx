@@ -7,10 +7,12 @@ import {
 } from "react-native";
 import * as Speech from "expo-speech";
 import { colors, borderRadius } from "../../../constants/theme";
+import FuriganaText from "../../FuriganaText";
 import type { KeyExpression } from "../../../types";
 
 interface Choice {
   emoji: string;
+  label: string;
   isCorrect: boolean;
 }
 
@@ -58,20 +60,27 @@ export default function WordCatch({ expression, choices, onComplete }: Props) {
     [choices, expression.textJa, onComplete, selected],
   );
 
-  const handleMeaningPeek = useCallback(() => {
-    setShowMeaning(true);
-    setTimeout(() => setShowMeaning(false), 3000);
-  }, []);
-
   return (
     <View style={styles.container}>
+      {/* Japanese text with furigana */}
+      <View style={styles.japaneseRow}>
+        {expression.furigana ? (
+          <FuriganaText segments={expression.furigana} fontSize={24} color={colors.textDark} />
+        ) : (
+          <Text style={styles.japaneseText}>{expression.textJa}</Text>
+        )}
+      </View>
+
       {/* TTS play */}
       <TouchableOpacity style={styles.playButton} onPress={playTTS}>
         <Text style={styles.playIcon}>{isSpeaking ? "🔊" : "🔈"}</Text>
-        <Text style={styles.playLabel}>단어 듣기</Text>
+        <Text style={styles.playLabel}>발음 듣기</Text>
       </TouchableOpacity>
 
-      {/* Emoji choices */}
+      {/* Guide text */}
+      <Text style={styles.question}>이 단어의 뜻은?</Text>
+
+      {/* Choices with emoji + Korean label */}
       <View style={styles.choicesRow}>
         {choices.map((choice, i) => {
           const isSelected = selected === i;
@@ -90,21 +99,16 @@ export default function WordCatch({ expression, choices, onComplete }: Props) {
               activeOpacity={0.7}
             >
               <Text style={styles.choiceEmoji}>{choice.emoji}</Text>
+              <Text style={styles.choiceLabel}>{choice.label}</Text>
             </TouchableOpacity>
           );
         })}
       </View>
 
-      {/* Sound→Meaning direct link (no Korean) */}
+      {/* Correct feedback */}
       {selected !== null && choices[selected]?.isCorrect && (
         <View style={styles.resultRow}>
-          <Text style={styles.resultSound}>🔊</Text>
-          <Text style={styles.resultArrow}>→</Text>
-          <TouchableOpacity onPress={handleMeaningPeek}>
-            <Text style={styles.resultMeaning}>
-              {showMeaning ? expression.emoji || "✓" : "[?]"}
-            </Text>
-          </TouchableOpacity>
+          <Text style={styles.resultText}>{expression.textKo}</Text>
         </View>
       )}
     </View>
@@ -118,31 +122,45 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingHorizontal: 24,
   },
+  japaneseRow: {
+    alignItems: "center",
+    marginBottom: 12,
+  },
+  japaneseText: {
+    fontSize: 24,
+    fontWeight: "600",
+    color: colors.textDark,
+  },
   playButton: {
     alignItems: "center",
-    marginBottom: 40,
+    marginBottom: 24,
   },
   playIcon: {
-    fontSize: 48,
+    fontSize: 36,
   },
   playLabel: {
-    fontSize: 14,
+    fontSize: 13,
     color: colors.textMuted,
-    marginTop: 8,
+    marginTop: 4,
+  },
+  question: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: colors.textMedium,
+    marginBottom: 20,
   },
   choicesRow: {
     flexDirection: "row",
-    gap: 16,
+    gap: 12,
   },
   choiceCard: {
-    width: 80,
-    height: 80,
+    flex: 1,
     backgroundColor: colors.surface,
     borderRadius: borderRadius.lg,
     borderWidth: 2,
     borderColor: colors.border,
+    paddingVertical: 16,
     alignItems: "center",
-    justifyContent: "center",
   },
   choiceCorrect: {
     borderColor: colors.success,
@@ -153,23 +171,20 @@ const styles = StyleSheet.create({
     backgroundColor: colors.dangerLight,
   },
   choiceEmoji: {
-    fontSize: 36,
+    fontSize: 32,
+    marginBottom: 6,
+  },
+  choiceLabel: {
+    fontSize: 12,
+    color: colors.textMedium,
+    textAlign: "center",
   },
   resultRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginTop: 32,
-    gap: 12,
+    marginTop: 24,
   },
-  resultSound: {
-    fontSize: 28,
-  },
-  resultArrow: {
-    fontSize: 20,
-    color: colors.textMuted,
-  },
-  resultMeaning: {
-    fontSize: 28,
-    color: colors.primary,
+  resultText: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: colors.success,
   },
 });
