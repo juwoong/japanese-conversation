@@ -216,6 +216,7 @@ export default function ReviewPhase({
                       color={colors.textDark}
                       highlightColor={colors.primary}
                       readingColor="#E8636F80"
+                      speakOnTap
                     />
                   ) : (
                     <Text style={styles.expressionJa}>{expr.textJa}</Text>

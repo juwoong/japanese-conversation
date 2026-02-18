@@ -25,15 +25,6 @@ interface Props {
   onComplete: () => void;
 }
 
-/** Minimal pair bank — common confusable Japanese words */
-const MINIMAL_PAIRS: { wordA: string; wordB: string; emojiA: string; emojiB: string }[] = [
-  { wordA: "おばさん", wordB: "おばあさん", emojiA: "👩", emojiB: "👵" },
-  { wordA: "びょういん", wordB: "びよういん", emojiA: "🏥", emojiB: "💇" },
-  { wordA: "おじさん", wordB: "おじいさん", emojiA: "👨", emojiB: "👴" },
-  { wordA: "きって", wordB: "きて", emojiA: "📮", emojiB: "👋" },
-  { wordA: "かわ", wordB: "かわ", emojiA: "🏞", emojiB: "🧶" },
-];
-
 function buildActivities(visitCount: number): ActivityType[] {
   if (visitCount === 1) return ["chunk", "word", "sound", "shadow", "picture"];
   if (visitCount === 2) return ["shadow", "picture"];
@@ -120,13 +111,22 @@ function makeWordChoices(
   return choices;
 }
 
-/** Pick a minimal pair — either from the bank or create a same-word pair */
-function makeMinimalPair(expression: KeyExpression) {
-  const useDifferentPair = Math.random() > 0.5;
-  if (useDifferentPair && MINIMAL_PAIRS.length > 0) {
-    const pair = MINIMAL_PAIRS[Math.floor(Math.random() * MINIMAL_PAIRS.length)];
-    return { ...pair, isSame: false };
+/** Pick a minimal pair from current keyExpressions */
+function makeMinimalPair(expression: KeyExpression, allExpressions: KeyExpression[]) {
+  const others = allExpressions.filter(e => e.textJa !== expression.textJa);
+  const useDifferent = others.length > 0 && Math.random() > 0.5;
+
+  if (useDifferent) {
+    const other = others[Math.floor(Math.random() * others.length)];
+    return {
+      wordA: expression.textJa,
+      wordB: other.textJa,
+      emojiA: expression.emoji || "🔊",
+      emojiB: other.emoji || "🔊",
+      isSame: false,
+    };
   }
+
   return {
     wordA: expression.textJa,
     wordB: expression.textJa,
@@ -209,7 +209,7 @@ function VocabPresentation({
       {/* Japanese with furigana */}
       <View style={vocabStyles.japaneseRow}>
         {expr.furigana ? (
-          <FuriganaText segments={expr.furigana} fontSize={28} color={colors.textDark} highlightColor={colors.primary} readingColor="#E8636F80" />
+          <FuriganaText segments={expr.furigana} fontSize={28} color={colors.textDark} highlightColor={colors.primary} readingColor="#E8636F80" speakOnTap />
         ) : (
           <Text style={vocabStyles.japaneseText}>{expr.textJa}</Text>
         )}
@@ -378,7 +378,7 @@ export default function CatchPhase({
         {currentActivity === "sound" && (
           <SoundDistinction
             key={`sound-${exprIndex}`}
-            pair={makeMinimalPair(currentExpr)}
+            pair={makeMinimalPair(currentExpr, keyExpressions)}
             onComplete={advance}
           />
         )}

@@ -105,6 +105,7 @@ export default function ChoiceInput({
                 color={colors.textDark}
                 highlightColor={colors.primary}
                 readingColor="#E8636F80"
+                speakOnTap
               />
             ) : (
               <Text style={styles.choiceText}>{choice.textJa}</Text>

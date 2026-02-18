@@ -1,5 +1,6 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import * as Speech from "expo-speech";
 import type { FuriganaSegment } from "../types";
 
 interface Props {
@@ -16,6 +17,8 @@ interface Props {
   dimColor?: string;
   /** Color for furigana reading text above kanji */
   readingColor?: string;
+  /** Tap highlighted segments to hear pronunciation */
+  speakOnTap?: boolean;
 }
 
 /**
@@ -35,6 +38,7 @@ export default function FuriganaText({
   highlightColor,
   dimColor,
   readingColor,
+  speakOnTap,
 }: Props) {
   const readingSize = Math.round(fontSize * 0.5);
   // Fixed spacer height so baselines align even when reading is absent
@@ -48,9 +52,10 @@ export default function FuriganaText({
         const segColor = seg.reading
           ? (highlightColor ?? color)
           : (dimColor ?? color);
+        const tappable = speakOnTap && !!seg.reading;
 
-        return (
-          <View key={i} style={styles.segment}>
+        const inner = (
+          <>
             {/* 한자는 위에 작게 */}
             {hasReading ? (
               <Text
@@ -77,6 +82,25 @@ export default function FuriganaText({
             >
               {hasReading ? seg.reading : seg.text}
             </Text>
+          </>
+        );
+
+        if (tappable) {
+          return (
+            <TouchableOpacity
+              key={i}
+              style={styles.segment}
+              onPress={() => Speech.speak(seg.text, { language: "ja-JP", rate: 0.85 })}
+              activeOpacity={0.6}
+            >
+              {inner}
+            </TouchableOpacity>
+          );
+        }
+
+        return (
+          <View key={i} style={styles.segment}>
+            {inner}
           </View>
         );
       })}

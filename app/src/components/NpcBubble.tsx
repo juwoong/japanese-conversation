@@ -66,6 +66,7 @@ export default function NpcBubble({
                 color={colors.textDark}
                 highlightColor={colors.primary}
                 readingColor="#E8636F80"
+                speakOnTap
               />
             ) : (
               <Text style={styles.japanese}>{displayText}</Text>

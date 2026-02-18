@@ -220,6 +220,7 @@ export default function WatchPhase({
               highlightColor={isNpc ? colors.primary : "#FFFFFF"}
               dimColor={isNpc ? colors.textDark : "rgba(255,255,255,0.6)"}
               readingColor={isNpc ? "#E8636F80" : "rgba(255,255,255,0.5)"}
+              speakOnTap
             />
           ) : (
             <Text

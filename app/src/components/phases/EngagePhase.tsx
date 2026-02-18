@@ -519,6 +519,7 @@ export default function EngagePhase({
                   color={colors.textDark}
                   highlightColor={colors.primary}
                   readingColor="#E8636F80"
+                  speakOnTap
                 />
               </View>
             ) : (
@@ -631,6 +632,7 @@ export default function EngagePhase({
                     highlightColor="#FFFFFF"
                     dimColor="rgba(255,255,255,0.6)"
                     readingColor="rgba(255,255,255,0.5)"
+                    speakOnTap
                   />
                 ) : (
                   <Text style={styles.userText}>{msg.textJa}</Text>
