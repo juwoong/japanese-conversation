@@ -482,7 +482,7 @@ const introStyles = StyleSheet.create({
   },
   image: {
     width: "100%",
-    aspectRatio: 1,
+    height: 300,
     marginBottom: 20,
     borderRadius: 20,
   },
