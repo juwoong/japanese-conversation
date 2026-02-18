@@ -44,7 +44,7 @@ def generate_image(description: str, destination: str) -> None:
 
     print(f"Generating image for: {description}")
     response = client.models.generate_content(
-        model="gemini-2.0-flash-exp-image-generation",
+        model="gemini-3-pro-image-preview",
         contents=prompt,
         config=types.GenerateContentConfig(
             response_modalities=["IMAGE", "TEXT"],
