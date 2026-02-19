@@ -45,6 +45,10 @@ export default function FreeInput({
   const glowAnim = useRef(new Animated.Value(0.4)).current;
   const silenceStartRef = useRef<number | null>(null);
   const hasSpokenRef = useRef(false);
+  const autoStopRef = useRef(false);
+
+  const SILENCE_THRESHOLD_DB = -45;
+  const SILENCE_REQUIRED_MS = 900;
 
   useEffect(() => {
     if (!isRecording) return;
@@ -76,14 +80,18 @@ export default function FreeInput({
         );
         setAudioLevel(normalized);
 
-        const isSilent = status.metering < -45;
+        const isSilent = status.metering < SILENCE_THRESHOLD_DB;
         if (!isSilent) {
           hasSpokenRef.current = true;
           silenceStartRef.current = null;
         } else if (hasSpokenRef.current) {
           if (!silenceStartRef.current) {
             silenceStartRef.current = Date.now();
-          } else if (Date.now() - silenceStartRef.current >= 1500) {
+          } else if (
+            !autoStopRef.current &&
+            Date.now() - silenceStartRef.current >= SILENCE_REQUIRED_MS
+          ) {
+            autoStopRef.current = true;
             handleStopRecording();
           }
         }
@@ -101,6 +109,9 @@ export default function FreeInput({
     try {
       setError(null);
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+      autoStopRef.current = false;
+      silenceStartRef.current = null;
+      hasSpokenRef.current = false;
       await startRecording();
       setIsRecording(true);
     } catch {
@@ -110,6 +121,7 @@ export default function FreeInput({
 
   const handleStopRecording = async () => {
     if (!isRecording) return;
+    autoStopRef.current = true;
     setIsRecording(false);
     setIsProcessing(true);
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
@@ -118,6 +130,7 @@ export default function FreeInput({
       const result = await stopRecording();
       if (!result || result.duration < 200) {
         setIsProcessing(false);
+        setError("말씀이 짧습니다. 다시 눌러 말해보세요.");
         return;
       }
 
@@ -195,7 +208,7 @@ export default function FreeInput({
           <View style={styles.recordingInner}>
             <View style={styles.recordingDot} />
           </View>
-          <Text style={styles.recordingHint}>탭하여 완료</Text>
+          <Text style={styles.recordingHint}>말이 끝나면 자동으로 인식됩니다</Text>
         </TouchableOpacity>
       ) : (
         <TouchableOpacity
@@ -216,7 +229,8 @@ export default function FreeInput({
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: "center",
+    width: "100%",
+    alignItems: "flex-end",
     paddingHorizontal: 16,
     gap: 8,
   },

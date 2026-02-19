@@ -431,7 +431,7 @@ export default function EngagePhase({
   const advanceToNext = () => {
     const nextIdx = turnIndex + 1;
     if (nextIdx >= totalTurns) {
-      setTimeout(() => finishPhase(), 400);
+      finishPhase();
       return;
     }
     setTurnIndex(nextIdx);
@@ -707,7 +707,11 @@ export default function EngagePhase({
         )}
 
         {turnPhase === "user_input" && (
-          <View style={styles.inputArea}>{renderUserInput()}</View>
+          <View style={styles.userMessage}>
+            <View style={[styles.userBubble, styles.userInputBubble]}>
+              {renderUserInput()}
+            </View>
+          </View>
         )}
 
         {turnPhase === "user_shadowing" && (
@@ -868,9 +872,15 @@ const styles = StyleSheet.create({
     letterSpacing: 4,
     lineHeight: 28,
   },
-  inputArea: {
-    marginTop: 8,
-    marginBottom: 16,
+  userInputBubble: {
+    maxWidth: "100%",
+    width: "100%",
+    backgroundColor: colors.surface,
+    borderColor: colors.primary,
+    borderWidth: 1.5,
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    alignItems: "stretch",
   },
   shadowingArea: {
     flexDirection: "row",
