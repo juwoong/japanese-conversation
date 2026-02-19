@@ -150,6 +150,7 @@ export default function EngagePhase({
   );
   const [expandedHints, setExpandedHints] = useState<Set<number>>(new Set());
   const scrollRef = useRef<ScrollView>(null);
+  const messagesRef = useRef<ConversationMessage[]>([]);
 
   // Mutable refs to avoid stale closures
   const correctRef = useRef(0);
@@ -171,6 +172,11 @@ export default function EngagePhase({
     if (visitCount <= 4) return "fillblank";
     return "free";
   };
+
+  // Keep messagesRef in sync
+  useEffect(() => {
+    messagesRef.current = messages;
+  }, [messages]);
 
   // Auto-scroll
   useEffect(() => {
@@ -447,29 +453,24 @@ export default function EngagePhase({
       errorBreakdown[entry.type] = (errorBreakdown[entry.type] ?? 0) + 1;
     }
 
-    // Snapshot conversation log from messages state
-    // Use a callback to read latest messages
-    setMessages((currentMessages) => {
-      const conversationLog = currentMessages
-        .filter((m) => m.feedbackType !== "clarification")
-        .map((m) => ({
-          speaker: m.speaker,
-          textJa: m.textJa,
-          textKo: m.textKo,
-          feedbackType: m.feedbackType,
-        }));
+    // Read latest messages from ref (avoids calling onComplete inside setState)
+    const conversationLog = messagesRef.current
+      .filter((m) => m.feedbackType !== "clarification")
+      .map((m) => ({
+        speaker: m.speaker,
+        textJa: m.textJa,
+        textKo: m.textKo,
+        feedbackType: m.feedbackType,
+      }));
 
-      onComplete({
-        totalTurns,
-        userTurns: userTurnCount,
-        correctCount: correctRef.current,
-        incorrectCount: incorrectRef.current,
-        turnRecords: turnRecordsRef.current,
-        errorBreakdown,
-        conversationLog,
-      });
-
-      return currentMessages;
+    onComplete({
+      totalTurns,
+      userTurns: userTurnCount,
+      correctCount: correctRef.current,
+      incorrectCount: incorrectRef.current,
+      turnRecords: turnRecordsRef.current,
+      errorBreakdown,
+      conversationLog,
     });
   };
 
