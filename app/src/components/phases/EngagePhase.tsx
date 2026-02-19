@@ -35,11 +35,12 @@ import type {
   KeyExpression,
   ModelLine,
   EngagePerformance,
+  TurnRecord,
   SessionMode,
   FuriganaSegment,
 } from "../../types";
 import { generateNpcResponse, buildErrorEntry } from "../../lib/npcEngine";
-import type { FeedbackType } from "../../lib/feedbackLayer";
+import { classifyErrorType, type FeedbackType } from "../../lib/feedbackLayer";
 
 import FuriganaText from "../FuriganaText";
 import ChoiceInput from "./inputs/ChoiceInput";
@@ -154,6 +155,7 @@ export default function EngagePhase({
   const correctRef = useRef(0);
   const incorrectRef = useRef(0);
   const errorHistoryRef = useRef<{ text: string; type: string }[]>([]);
+  const turnRecordsRef = useRef<TurnRecord[]>([]);
 
   // Typing indicator animation
   const typingDots = useRef(new Animated.Value(0)).current;
@@ -283,9 +285,22 @@ export default function EngagePhase({
       setIncorrectCount(incorrectRef.current);
     }
 
-    // For choice/fillblank, we know correct/incorrect directly.
-    // For free input, generate NPC response with feedback.
     const inputType = getInputType();
+    const expectedText = currentLine?.textJa ?? "";
+
+    // Record turn data for ReviewPhase
+    const matchedKe = keyExpressions.find(
+      (ke) => expectedText.includes(ke.textJa) || ke.textJa.includes(expectedText)
+    )?.textJa;
+
+    const turnRecord: TurnRecord = {
+      userText: chosenText,
+      expectedText,
+      correct,
+      feedbackType: 'none',
+      errorType: correct ? undefined : classifyErrorType(chosenText, expectedText),
+      keyExpressionJa: matchedKe,
+    };
     if (inputType === "free" && currentLine) {
       setTurnPhase("npc_responding");
 
@@ -303,6 +318,10 @@ export default function EngagePhase({
         totalTurns,
       });
 
+      // Update turn record with actual feedback type
+      turnRecord.feedbackType = npcResponse.feedbackType;
+      turnRecord.recastHighlight = npcResponse.recastHighlight;
+
       // Track error if there was feedback
       if (npcResponse.feedbackType !== "none") {
         errorHistoryRef.current = [
@@ -313,6 +332,7 @@ export default function EngagePhase({
 
       // Handle clarification: don't advance, let user retry
       if (npcResponse.feedbackType === "clarification") {
+        turnRecordsRef.current.push(turnRecord);
         setMessages((prev) => [
           ...prev,
           {
@@ -325,6 +345,8 @@ export default function EngagePhase({
         setTurnPhase("user_input");
         return;
       }
+
+      turnRecordsRef.current.push(turnRecord);
 
       // Add NPC feedback response
       if (npcResponse.feedbackType !== "none") {
@@ -367,6 +389,12 @@ export default function EngagePhase({
 
       // No feedback needed — fall through to normal advance
       setTurnPhase("npc_speaking");
+    }
+
+    // For choice/fillblank: record with feedbackType based on correctness
+    if (inputType !== "free") {
+      turnRecord.feedbackType = correct ? 'none' : 'recast';
+      turnRecordsRef.current.push(turnRecord);
     }
 
     // In voice mode, play model answer TTS before advancing
@@ -412,11 +440,36 @@ export default function EngagePhase({
 
   const finishPhase = () => {
     setTurnPhase("done");
-    onComplete({
-      totalTurns,
-      userTurns: userTurnCount,
-      correctCount: correctRef.current,
-      incorrectCount: incorrectRef.current,
+
+    // Build error breakdown from error history
+    const errorBreakdown: Record<string, number> = {};
+    for (const entry of errorHistoryRef.current) {
+      errorBreakdown[entry.type] = (errorBreakdown[entry.type] ?? 0) + 1;
+    }
+
+    // Snapshot conversation log from messages state
+    // Use a callback to read latest messages
+    setMessages((currentMessages) => {
+      const conversationLog = currentMessages
+        .filter((m) => m.feedbackType !== "clarification")
+        .map((m) => ({
+          speaker: m.speaker,
+          textJa: m.textJa,
+          textKo: m.textKo,
+          feedbackType: m.feedbackType,
+        }));
+
+      onComplete({
+        totalTurns,
+        userTurns: userTurnCount,
+        correctCount: correctRef.current,
+        incorrectCount: incorrectRef.current,
+        turnRecords: turnRecordsRef.current,
+        errorBreakdown,
+        conversationLog,
+      });
+
+      return currentMessages;
     });
   };
 

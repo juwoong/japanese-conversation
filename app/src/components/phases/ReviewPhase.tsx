@@ -1,16 +1,18 @@
 /**
- * ReviewPhase — Phase 4: Key expression review.
+ * ReviewPhase — Phase 4: Session feedback & key expression review.
  *
- * Shows:
- *   - Completion message (no score/percentage)
- *   - Each key expression with TTS, [?] for meaning, collapsible grammar
- *   - "지도로 돌아가기" button
+ * Sections:
+ *   A. Completion header with feedback-based ability statement
+ *   B. Conversation replay (collapsible)
+ *   C. Key expression cards with session diagnosis (smooth / helped / not practiced)
+ *   D. Pattern hint card (conditional, only when errors exist)
+ *   E. "왜 이렇게 말할까?" grammar + 지도 버튼 (unchanged)
  *
  * Rules:
  *   - No scores, levels, XP
  *   - No Korean pronunciation
  *   - No grammar terminology
- *   - [?] shows Korean meaning for 3 seconds then fades
+ *   - No "틀렸습니다" — forward-looking language only
  */
 
 import React, { useState, useEffect } from "react";
@@ -117,6 +119,16 @@ function findGrammarExplanation(textJa: string) {
   return null;
 }
 
+/** Error type labels for pattern hint */
+const ERROR_TYPE_HINTS: Record<string, string> = {
+  particle: "조사 (で, に, を) 사용에 집중해보세요",
+  conjugation: "문장 끝 표현에 집중해보세요",
+  politeness: "정중한 표현에 집중해보세요",
+  other: "모델 대화를 다시 들어보세요",
+};
+
+type ExpressionStatus = "smooth" | "helped" | "not_practiced";
+
 export default function ReviewPhase({
   keyExpressions,
   performance,
@@ -128,6 +140,7 @@ export default function ReviewPhase({
   const [expandedGrammar, setExpandedGrammar] = useState<Set<number>>(
     new Set()
   );
+  const [replayOpen, setReplayOpen] = useState(false);
 
   // Record exposure for each key expression when shown
   useEffect(() => {
@@ -156,18 +169,38 @@ export default function ReviewPhase({
     });
   };
 
-  // Determine ability statement based on performance (never show scores/percentages)
+  // --- A. Ability statement based on feedback count ---
   const getAbilityStatement = (): string => {
-    if (!performance || performance.userTurns === 0) {
-      return "이 상황을 혼자 해결할 수 있어요";
-    }
-    const correctRatio = performance.correctCount / performance.userTurns;
-    if (correctRatio >= 0.7) {
-      return "이 상황을 혼자 해결할 수 있어요";
-    }
+    if (!performance) return "이 상황을 혼자 해결할 수 있어요";
+    const feedbackCount = performance.turnRecords.filter(
+      (t) => t.feedbackType !== "none"
+    ).length;
+    if (feedbackCount === 0) return "이 상황을 혼자 해결할 수 있어요";
+    if (feedbackCount === 1) return "거의 혼자 해결할 수 있어요";
     return "조금 더 연습하면 혼자 할 수 있어요";
   };
 
+  // --- C. Expression diagnosis ---
+  const getExpressionStatus = (textJa: string): ExpressionStatus => {
+    if (!performance) return "not_practiced";
+    const matchingTurns = performance.turnRecords.filter(
+      (t) => t.keyExpressionJa === textJa
+    );
+    if (matchingTurns.length === 0) return "not_practiced";
+    const hadFeedback = matchingTurns.some((t) => t.feedbackType !== "none");
+    return hadFeedback ? "helped" : "smooth";
+  };
+
+  // --- D. Pattern hint ---
+  const getTopErrorType = (): string | null => {
+    if (!performance) return null;
+    const entries = Object.entries(performance.errorBreakdown);
+    if (entries.length === 0) return null;
+    entries.sort((a, b) => b[1] - a[1]);
+    return entries[0][0];
+  };
+
+  const topError = getTopErrorType();
   const headerTitle = situationName
     ? `${situationName}에서 대화 완료!`
     : "대화 완료!";
@@ -177,7 +210,7 @@ export default function ReviewPhase({
       style={styles.container}
       contentContainerStyle={styles.content}
     >
-      {/* Completion header */}
+      {/* A. Completion header */}
       <View style={styles.completionHeader}>
         <MaterialIcons name="check-circle" size={40} color={colors.success} />
         <Text style={styles.completionTitle}>{headerTitle}</Text>
@@ -186,13 +219,73 @@ export default function ReviewPhase({
         </Text>
       </View>
 
-      {/* Key expressions list */}
+      {/* B. Conversation replay (collapsible) */}
+      {performance && performance.conversationLog.length > 0 && (
+        <View style={styles.replaySection}>
+          <TouchableOpacity
+            style={styles.replayToggle}
+            onPress={() => setReplayOpen(!replayOpen)}
+            activeOpacity={0.7}
+          >
+            <Text style={styles.replayToggleText}>
+              대화 다시보기 {replayOpen ? "▴" : "▾"}
+            </Text>
+          </TouchableOpacity>
+
+          {replayOpen && (
+            <View style={styles.replayContent}>
+              {performance.conversationLog.map((msg, i) => (
+                <View
+                  key={i}
+                  style={[
+                    styles.replayRow,
+                    msg.speaker === "user" && styles.replayRowUser,
+                  ]}
+                >
+                  <Text style={styles.replayIcon}>
+                    {msg.speaker === "npc" ? "🧑‍🍳" : "🧑"}
+                  </Text>
+                  <Text style={styles.replayText}>{msg.textJa}</Text>
+                  {msg.speaker === "user" && !msg.feedbackType && (
+                    <MaterialIcons
+                      name="check"
+                      size={16}
+                      color={colors.success}
+                      style={styles.replayCheck}
+                    />
+                  )}
+                  {msg.speaker === "npc" &&
+                    (msg.feedbackType === "recast" ||
+                      msg.feedbackType === "meta_hint") && (
+                      <View style={styles.recastBadge}>
+                        <Text style={styles.recastBadgeText}>recast</Text>
+                      </View>
+                    )}
+                </View>
+              ))}
+            </View>
+          )}
+        </View>
+      )}
+
+      {/* D. Pattern hint card (conditional) */}
+      {topError && (
+        <View style={styles.patternHintCard}>
+          <Text style={styles.patternHintIcon}>💡</Text>
+          <Text style={styles.patternHintText}>
+            다음에는 {ERROR_TYPE_HINTS[topError] ?? ERROR_TYPE_HINTS.other}
+          </Text>
+        </View>
+      )}
+
+      {/* C. Key expressions with diagnosis */}
       <View style={styles.expressionList}>
         <Text style={styles.sectionTitle}>이번에 배운 표현</Text>
 
         {keyExpressions.map((expr, i) => {
           const grammar = findGrammarExplanation(expr.textJa);
           const isGrammarOpen = expandedGrammar.has(i);
+          const status = getExpressionStatus(expr.textJa);
 
           return (
             <View key={i} style={styles.expressionCard}>
@@ -229,6 +322,30 @@ export default function ReviewPhase({
                   emoji={expr.emoji}
                 />
               </View>
+
+              {/* Session diagnosis label */}
+              {status === "smooth" && (
+                <View style={styles.diagnosisRow}>
+                  <MaterialIcons
+                    name="check-circle"
+                    size={14}
+                    color={colors.success}
+                  />
+                  <Text style={styles.diagnosisSmooth}>혼자 말했어요</Text>
+                </View>
+              )}
+              {status === "helped" && (
+                <View style={styles.diagnosisRow}>
+                  <MaterialIcons
+                    name="support-agent"
+                    size={14}
+                    color={colors.secondary}
+                  />
+                  <Text style={styles.diagnosisHelped}>
+                    NPC가 도와줬어요
+                  </Text>
+                </View>
+              )}
 
               {/* Grammar explanation toggle */}
               {grammar && (
@@ -284,7 +401,7 @@ const styles = StyleSheet.create({
   // Completion header
   completionHeader: {
     alignItems: "center",
-    marginBottom: 32,
+    marginBottom: 24,
     gap: 8,
   },
   completionTitle: {
@@ -298,6 +415,80 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: colors.textMuted,
     textAlign: "center",
+  },
+  // B. Conversation replay
+  replaySection: {
+    marginBottom: 20,
+    backgroundColor: colors.surface,
+    borderRadius: borderRadius.md,
+    borderWidth: 1,
+    borderColor: colors.border,
+    overflow: "hidden",
+  },
+  replayToggle: {
+    padding: 14,
+  },
+  replayToggleText: {
+    fontSize: 14,
+    fontWeight: "600",
+    color: colors.textMedium,
+  },
+  replayContent: {
+    paddingHorizontal: 14,
+    paddingBottom: 14,
+    gap: 8,
+  },
+  replayRow: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    gap: 8,
+  },
+  replayRowUser: {
+    paddingLeft: 20,
+  },
+  replayIcon: {
+    fontSize: 16,
+    marginTop: 2,
+  },
+  replayText: {
+    fontSize: 15,
+    color: colors.textDark,
+    lineHeight: 22,
+    flex: 1,
+  },
+  replayCheck: {
+    marginTop: 3,
+  },
+  recastBadge: {
+    backgroundColor: colors.secondaryLight,
+    borderRadius: 4,
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    marginTop: 2,
+  },
+  recastBadgeText: {
+    fontSize: 10,
+    color: colors.secondary,
+    fontWeight: "600",
+  },
+  // D. Pattern hint
+  patternHintCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    backgroundColor: colors.warningLight,
+    borderRadius: borderRadius.md,
+    padding: 14,
+    marginBottom: 20,
+  },
+  patternHintIcon: {
+    fontSize: 18,
+  },
+  patternHintText: {
+    fontSize: 14,
+    color: colors.textMedium,
+    lineHeight: 20,
+    flex: 1,
   },
   // Section
   sectionTitle: {
@@ -336,6 +527,24 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     color: colors.textDark,
     lineHeight: 26,
+  },
+  // Diagnosis labels
+  diagnosisRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+    marginTop: 8,
+    marginLeft: 36,
+  },
+  diagnosisSmooth: {
+    fontSize: 12,
+    color: colors.success,
+    fontWeight: "500",
+  },
+  diagnosisHelped: {
+    fontSize: 12,
+    color: colors.secondary,
+    fontWeight: "500",
   },
   // Grammar
   grammarToggle: {

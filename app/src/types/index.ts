@@ -119,11 +119,29 @@ export interface KeyExpression {
   npcPrompt?: string;
 }
 
+export interface TurnRecord {
+  userText: string;
+  expectedText: string;
+  correct: boolean;
+  feedbackType: 'none' | 'recast' | 'clarification' | 'meta_hint';
+  errorType?: string;
+  recastHighlight?: string;
+  keyExpressionJa?: string;
+}
+
 export interface EngagePerformance {
   totalTurns: number;
   userTurns: number;
   correctCount: number;
   incorrectCount: number;
+  turnRecords: TurnRecord[];
+  errorBreakdown: Record<string, number>;
+  conversationLog: Array<{
+    speaker: 'npc' | 'user';
+    textJa: string;
+    textKo: string;
+    feedbackType?: string;
+  }>;
 }
 
 export type UserLevel = 'intermediate' | 'beginner' | 'conservative_beginner';

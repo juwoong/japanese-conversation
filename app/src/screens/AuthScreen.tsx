@@ -93,6 +93,7 @@ export default function AuthScreen({ navigation }: Props) {
       }
 
       Alert.alert("오류", message);
+    } finally {
       setLoading(false);
     }
   };
