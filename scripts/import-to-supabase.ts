@@ -32,9 +32,19 @@ interface Line {
   key_expressions: string[];
 }
 
+interface VocabItem {
+  word_ja: string;
+  reading_hiragana: string;
+  reading_ko: string;
+  meaning_ko: string;
+  pos: string;
+  appears_in_lines: number[];
+}
+
 interface GeneratedContent {
   situation_slug: string;
   lines: Line[];
+  vocabulary?: VocabItem[];
 }
 
 interface Situation {
@@ -180,6 +190,48 @@ async function linkLineExpression(
   }
 }
 
+async function insertVocabulary(
+  vocab: VocabItem,
+  situationId: number
+): Promise<number> {
+  const { data, error } = await supabase
+    .from("vocabulary")
+    .upsert(
+      {
+        situation_id: situationId,
+        word_ja: vocab.word_ja,
+        reading_hiragana: vocab.reading_hiragana,
+        reading_ko: vocab.reading_ko,
+        meaning_ko: vocab.meaning_ko,
+        pos: vocab.pos,
+      },
+      { onConflict: "situation_id,word_ja" }
+    )
+    .select("id")
+    .single();
+
+  if (error || !data) {
+    throw new Error(`Failed to insert vocabulary: ${vocab.word_ja} - ${error?.message}`);
+  }
+  return data.id;
+}
+
+async function linkLineVocabulary(
+  lineId: number,
+  vocabularyId: number
+): Promise<void> {
+  const { error } = await supabase
+    .from("line_vocabulary")
+    .upsert(
+      { line_id: lineId, vocabulary_id: vocabularyId },
+      { onConflict: "line_id,vocabulary_id" }
+    );
+
+  if (error) {
+    console.warn(`Failed to link line ${lineId} to vocabulary ${vocabularyId}: ${error.message}`);
+  }
+}
+
 // ============ Main ============
 
 async function main() {
@@ -198,6 +250,7 @@ async function main() {
 
   let totalLines = 0;
   let totalExpressions = 0;
+  let totalVocabulary = 0;
   const errors: string[] = [];
 
   for (const file of files) {
@@ -227,9 +280,11 @@ async function main() {
         fs.readFileSync(contentPath, "utf-8")
       );
 
-      // Insert lines and expressions
+      // Insert lines and expressions, build lineOrder → lineId map
+      const lineOrderToId = new Map<number, number>();
       for (const line of content.lines) {
         const lineId = await insertLine(line, situationId);
+        lineOrderToId.set(line.line_order, lineId);
         totalLines++;
 
         // Insert expressions and link
@@ -240,7 +295,22 @@ async function main() {
         }
       }
 
-      console.log(`   ✅ ${content.lines.length} lines imported`);
+      // Insert vocabulary and link to lines
+      if (content.vocabulary) {
+        for (const vocab of content.vocabulary) {
+          const vocabularyId = await insertVocabulary(vocab, situationId);
+          totalVocabulary++;
+
+          for (const lineOrder of vocab.appears_in_lines) {
+            const lineId = lineOrderToId.get(lineOrder);
+            if (lineId) {
+              await linkLineVocabulary(lineId, vocabularyId);
+            }
+          }
+        }
+      }
+
+      console.log(`   ✅ ${content.lines.length} lines, ${content.vocabulary?.length ?? 0} vocab imported`);
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
       console.error(`   ❌ Error: ${message}`);
@@ -251,6 +321,7 @@ async function main() {
   // Summary
   console.log("\n========== Summary ==========");
   console.log(`✅ Total lines: ${totalLines}`);
+  console.log(`✅ Total vocabulary: ${totalVocabulary}`);
   console.log(`✅ Total expressions: ${totalExpressions}`);
   console.log(`❌ Errors: ${errors.length}`);
 

@@ -29,6 +29,7 @@ interface VocabWord {
   meaning_ko: string;
   pos: string;
   situation_name: string;
+  jlpt_target: string | null;
 }
 
 const POS_COLORS: Record<string, string> = {
@@ -50,6 +51,7 @@ export default function VocabularyScreen({ navigation }: Props) {
   const [speakingId, setSpeakingId] = useState<number | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedPos, setSelectedPos] = useState<string | null>(null);
+  const [selectedJlpt, setSelectedJlpt] = useState<string | null>(null);
   const [revealedId, setRevealedId] = useState<number | null>(null);
   const revealTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const revealFadeAnim = useRef(new Animated.Value(1)).current;
@@ -70,7 +72,7 @@ export default function VocabularyScreen({ navigation }: Props) {
         reading_ko,
         meaning_ko,
         pos,
-        situations!inner ( name_ko )
+        situations!inner ( name_ko, jlpt_target )
       `)
       .order("id", { ascending: true });
 
@@ -88,6 +90,7 @@ export default function VocabularyScreen({ navigation }: Props) {
       meaning_ko: row.meaning_ko,
       pos: row.pos,
       situation_name: row.situations.name_ko,
+      jlpt_target: row.situations.jlpt_target,
     }));
 
     setWords(vocabWords);
@@ -97,7 +100,12 @@ export default function VocabularyScreen({ navigation }: Props) {
   // Collect unique POS tags for filter
   const posTags = Array.from(new Set(words.map((w) => w.pos)));
 
+  const JLPT_LEVELS = ["N5", "N4", "N3"];
+
   const filteredWords = words.filter((word) => {
+    // JLPT filter
+    if (selectedJlpt && word.jlpt_target !== selectedJlpt) return false;
+
     // POS filter
     if (selectedPos && word.pos !== selectedPos) return false;
 
@@ -215,7 +223,40 @@ export default function VocabularyScreen({ navigation }: Props) {
         <Text style={styles.totalCount}>
           전체 {words.length}개 단어
           {filteredWords.length !== words.length && ` (${filteredWords.length}개 표시)`}
+          {" · "}
+          {JLPT_LEVELS.map(
+            (level) => `${level} ${words.filter((w) => w.jlpt_target === level).length}`
+          ).join(" / ")}
         </Text>
+      </View>
+
+      {/* JLPT Filter Tabs */}
+      <View style={styles.filterScroll}>
+        <FlatList
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          data={[null, ...JLPT_LEVELS]}
+          keyExtractor={(item) => item ?? "all-jlpt"}
+          contentContainerStyle={styles.filterContent}
+          renderItem={({ item: level }) => (
+            <TouchableOpacity
+              style={[
+                styles.filterTab,
+                (level === null ? selectedJlpt === null : selectedJlpt === level) && styles.filterTabActive,
+              ]}
+              onPress={() => setSelectedJlpt(level)}
+            >
+              <Text
+                style={[
+                  styles.filterTabText,
+                  (level === null ? selectedJlpt === null : selectedJlpt === level) && styles.filterTabTextActive,
+                ]}
+              >
+                {level ?? "전체"}
+              </Text>
+            </TouchableOpacity>
+          )}
+        />
       </View>
 
       {/* POS Filter Tabs */}
