@@ -313,10 +313,6 @@ export default function EngagePhase({
       const npcResponse = await generateNpcResponse({
         situation: "",
         userMessage: chosenText,
-        conversationHistory: messages.map((m) => ({
-          role: m.speaker === "npc" ? "npc" : "user",
-          text: m.textJa,
-        })),
         expectedResponse: currentLine.textJa,
         errorHistory: errorHistoryRef.current,
         turnNumber: turnIndex,

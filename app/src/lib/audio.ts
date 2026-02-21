@@ -154,11 +154,3 @@ export async function audioToBase64(uri: string): Promise<string> {
   return base64;
 }
 
-/**
- * Play audio from text using TTS
- */
-export async function playTTS(text: string, language: string = "ja-JP"): Promise<void> {
-  // Note: expo-speech is imported in the component that uses it
-  // This function is a placeholder for potential future enhancements
-  throw new Error("Use expo-speech directly for TTS");
-}

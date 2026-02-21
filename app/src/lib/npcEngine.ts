@@ -68,7 +68,6 @@ function pickClarification(): string {
 export async function generateNpcResponse(params: {
   situation: string;
   userMessage: string;
-  conversationHistory: { role: "npc" | "user"; text: string }[];
   expectedResponse?: string;
   errorHistory: { text: string; type: string }[];
   turnNumber: number;
