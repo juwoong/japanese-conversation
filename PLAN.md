@@ -7,15 +7,17 @@
 
 ## 다음 세션
 
-**Phase 1 완료. Phase 2 — 핵심 루프 검증 시작.**
+**Phase 2 핵심 루프 검증 완료. Phase 3 — 어휘 데이터 고도화.**
 
 재개에 필요한 맥락:
-- Phase 1 (안정화 & 디바이스 검증) 전체 완료
-- 다음: Phase 2 핵심 루프 검증 (Watch→Catch→Engage→Review 각 단계 동작 확인)
+- Phase 1, 2 전체 완료
+- Phase 2에서 구현: SRS 자동 grading, 변주 시스템 MVP 연결, NPC Claude API 전환
+- 변주 시스템 known limitation: Watch/Engage는 base 대사 사용 (DB 레코드 별도 생성 필요)
+- 다음: Phase 3 어휘 데이터 고도화
 
 ---
 
-## 현재 상태 (2026-02-19)
+## 현재 상태 (2026-02-22)
 
 ### 완료
 
@@ -30,13 +32,9 @@
 - [x] v1 리디자인 (온보딩, 여행지도, AI NPC, 안전망, 반복변주, 지속성)
 - [x] 발음 피드백 시스템 코드 (피치 감지, H/L 패턴 비교, STT diff, 후리가나)
 - [x] 안티패턴 전수 감사 (77파일, 18위반 → 0위반)
-
-### 미완료
-
-- [x] EngagePhase / FreeInput 현재 작업 마무리
-- [x] 발음 시스템 디바이스 테스트 (Phase 1-4 전부)
-- [x] furigana 스크립트 실행 + DB migration 적용
-- [x] 시뮬레이터/실기기 통합 테스트
+- [x] SRS 자동 grading (Engage 성과 → FSRS rating → gradeFlashcard)
+- [x] 변주 시스템 MVP 연결 (visitCount >= 2 gating, Catch/Review 태그)
+- [x] NPC 엔진 Claude API 전환 (npc-respond Edge Function + 폴백)
 
 ---
 
@@ -59,12 +57,12 @@
 
 > "관찰 → 포착 → 발화 → 반복" — 이 루프가 실제로 인출 연습이 되는지.
 
-- [ ] Watch: NPC 대사 자동 재생 + 후리가나 표시 확인
-- [ ] Catch: 5개 활동 (빈칸, 매칭 등) 정상 동작 확인
-- [ ] Engage: 3단계 입력 (선택지 → 빈칸 → 자유) 힌트 점진적 제거 확인
-- [ ] Review: 틀린 표현 재연습 + "왜 이렇게 말할까?" + 능력 서술문 확인
-- [ ] SRS: 세션 완료 → FSRS 카드 업데이트 → 다음 복습일 계산 확인
-- [ ] 변주 시스템: 재방문 시 변형 시나리오 제시 확인
+- [x] Watch: NPC 대사 자동 재생 + 후리가나 표시 확인
+- [x] Catch: 5개 활동 (빈칸, 매칭 등) 정상 동작 확인
+- [x] Engage: 3단계 입력 (선택지 → 빈칸 → 자유) 힌트 점진적 제거 확인
+- [x] Review: 틀린 표현 재연습 + "왜 이렇게 말할까?" + 능력 서술문 확인
+- [x] SRS: 세션 완료 → FSRS 카드 업데이트 → 다음 복습일 계산 확인
+- [x] 변주 시스템: 재방문 시 변형 시나리오 제시 확인 (MVP: Catch/Review 태그만, Watch/Engage는 base)
 
 ---
 
