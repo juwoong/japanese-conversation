@@ -5,6 +5,12 @@
  * Key rule: expressions that were "wrong choices" in a base scenario
  * become the correct answers in variation scenarios.
  * No "wrong/incorrect" framing — variations are simply "new situations."
+ *
+ * TODO: 현재 MVP는 하드코딩된 메타데이터만 제공 (식당 3개 변주).
+ *       Watch/Engage 단계는 base 대화를 그대로 사용하고,
+ *       Catch/Review에서 "이 표현도 알아두세요" 수준의 태그만 표시.
+ *       향후 DB에 variation별 situation + lines 레코드를 추가하면
+ *       실제 변주 대사 재생 + SRS 추적이 가능해짐.
  */
 
 export interface ReusedExpression {

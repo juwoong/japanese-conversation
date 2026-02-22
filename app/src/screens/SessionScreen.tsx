@@ -144,6 +144,8 @@ export default function SessionScreen({ navigation, route }: Props) {
             onComplete={(perf) => {
               setEngagePerformance(perf);
               // SRS 자동 grading (비동기, UI 블로킹 안 함)
+              // TODO: 변주 신규 표현은 base lines에 없어 grading 스킵됨.
+              //       variation별 DB lines 추가 후 해결.
               gradeSessionExpressions(perf.turnRecords, fourPhase.lines).catch(
                 (err) => console.error("SRS auto-grading failed:", err)
               );

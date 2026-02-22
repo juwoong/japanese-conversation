@@ -56,6 +56,9 @@ export function useFourPhaseSession(
   const session = useSession(situationId);
 
   // 변주 시나리오 메타데이터
+  // TODO: 현재 MVP는 메타데이터 오버레이만 — Watch/Engage는 base 대화 그대로 재생.
+  //       실제 변주 대사를 보여주려면 DB에 variation별 situation + lines 레코드 필요.
+  //       SRS도 variation 신규 표현은 line_id가 없어 grading 스킵됨.
   const variationInfo = useMemo<VariationInfo | null>(() => {
     if (!variationSlug) return null;
     const data = getVariationData(variationSlug);
