@@ -14,6 +14,7 @@ import { colors } from "../constants/theme";
 import { getSituationTheme } from "../constants/situationThemes";
 import { getSituationImage } from "../constants/situationImages";
 import { useFourPhaseSession } from "../hooks/useFourPhaseSession";
+import { gradeSessionExpressions } from "../lib/flashcardGrading";
 import LoadingScreen from "../components/LoadingScreen";
 import SessionModeSelector from "../components/SessionModeSelector";
 import WatchPhase from "../components/phases/WatchPhase";
@@ -140,6 +141,10 @@ export default function SessionScreen({ navigation, route }: Props) {
             visitCount={fourPhase.visitCount}
             onComplete={(perf) => {
               setEngagePerformance(perf);
+              // SRS 자동 grading (비동기, UI 블로킹 안 함)
+              gradeSessionExpressions(perf.turnRecords, fourPhase.lines).catch(
+                (err) => console.error("SRS auto-grading failed:", err)
+              );
               handlePhaseTransition();
             }}
           />
