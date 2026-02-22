@@ -276,7 +276,9 @@ export default function HomeScreen({ navigation }: Props) {
       status,
       connections: connections[i],
       situationId: sit?.id ?? null,
-      variationCount: countVariationsForSituation(config.slug, completedSlugs),
+      variationCount: (sit?.progress?.attempt_count ?? 0) >= VARIATION_MIN_VISITS
+        ? countVariationsForSituation(config.slug, completedSlugs)
+        : 0,
     };
   });
 
