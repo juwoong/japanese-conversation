@@ -2,12 +2,23 @@
 // Claude API를 사용해 NPC 응답 생성
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers":
     "authorization, x-client-info, apikey, content-type",
 };
+
+const VALID_FEEDBACK_TYPES = new Set([
+  "none",
+  "recast",
+  "clarification",
+  "meta_hint",
+]);
+
+const MAX_INPUT_LENGTH = 200;
+const CLAUDE_TIMEOUT_MS = 12_000;
 
 interface NpcRespondRequest {
   userText: string;
@@ -17,26 +28,7 @@ interface NpcRespondRequest {
   errorHistory: { text: string; type: string }[];
 }
 
-interface NpcRespondResponse {
-  npcText: string;
-  feedbackType: "none" | "recast" | "clarification" | "meta_hint";
-  errorType?: string;
-  recastHighlight?: string;
-  metaHint?: string;
-}
-
-function buildPrompt(req: NpcRespondRequest): string {
-  const errorSummary =
-    req.errorHistory.length > 0
-      ? `\n학습자 오류 이력: ${req.errorHistory.map((e) => `"${e.text}" (${e.type})`).join(", ")}`
-      : "";
-
-  return `당신은 일본어 회화 연습 상대(NPC)입니다. 자연스러운 일본어로 응답하세요.
-
-상황: ${req.situation || "일상 대화"}
-학습자가 말한 문장: "${req.userText}"
-기대했던 문장: "${req.expectedText}"
-${req.nextNpcLine ? `다음 NPC 대사 (대화 흐름용): "${req.nextNpcLine}"` : ""}${errorSummary}
+const SYSTEM_PROMPT = `당신은 일본어 회화 연습 상대(NPC)입니다. 자연스러운 일본어로 응답하세요.
 
 규칙:
 1. 학습자의 문장과 기대 문장을 비교하세요.
@@ -52,6 +44,28 @@ JSON으로만 응답하세요:
   "recastHighlight": "교정된 부분 (recast/meta_hint일 때만)",
   "metaHint": "한국어 학습 힌트 (meta_hint일 때만)"
 }`;
+
+function truncate(text: string, max: number): string {
+  return text.length > max ? text.slice(0, max) : text;
+}
+
+function buildUserMessage(req: NpcRespondRequest): string {
+  const errorSummary =
+    req.errorHistory.length > 0
+      ? `\n학습자 오류 이력: ${req.errorHistory.map((e) => `"${e.text}" (${e.type})`).join(", ")}`
+      : "";
+
+  return `상황: ${req.situation || "일상 대화"}
+학습자가 말한 문장: "${truncate(req.userText, MAX_INPUT_LENGTH)}"
+기대했던 문장: "${truncate(req.expectedText, MAX_INPUT_LENGTH)}"
+${req.nextNpcLine ? `다음 NPC 대사 (대화 흐름용): "${req.nextNpcLine}"` : ""}${errorSummary}`;
+}
+
+function jsonResponse(body: unknown, status = 200) {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: { ...corsHeaders, "Content-Type": "application/json" },
+  });
 }
 
 serve(async (req) => {
@@ -60,86 +74,110 @@ serve(async (req) => {
   }
 
   try {
+    // #1: Auth 검증 — submit-attempt 패턴과 동일
+    const authHeader = req.headers.get("Authorization");
+    if (!authHeader) {
+      return jsonResponse({ error: "Missing authorization header" }, 401);
+    }
+
+    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+    const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
+    const token = authHeader.replace("Bearer ", "");
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser(token);
+
+    if (userError || !user) {
+      return jsonResponse({ error: "Invalid token" }, 401);
+    }
+
     const body: NpcRespondRequest = await req.json();
 
     if (!body.userText || !body.expectedText) {
-      return new Response(
-        JSON.stringify({ error: "userText and expectedText are required" }),
-        {
-          status: 400,
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
-        },
+      return jsonResponse(
+        { error: "userText and expectedText are required" },
+        400,
       );
     }
 
     const anthropicApiKey = Deno.env.get("ANTHROPIC_API_KEY");
     if (!anthropicApiKey) {
-      return new Response(
-        JSON.stringify({ error: "Anthropic API key not configured" }),
-        {
-          status: 500,
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
-        },
-      );
+      return jsonResponse({ error: "Anthropic API key not configured" }, 500);
     }
 
-    const prompt = buildPrompt(body);
+    // #7: Fetch timeout via AbortController
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), CLAUDE_TIMEOUT_MS);
 
-    const response = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": anthropicApiKey,
-        "anthropic-version": "2023-06-01",
-      },
-      body: JSON.stringify({
-        model: "claude-haiku-4-5-20251001",
-        max_tokens: 300,
-        messages: [{ role: "user", content: prompt }],
-      }),
-    });
+    let response: Response;
+    try {
+      response = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": anthropicApiKey,
+          "anthropic-version": "2023-06-01",
+        },
+        body: JSON.stringify({
+          model: "claude-haiku-4-5-20251001",
+          max_tokens: 400,
+          system: SYSTEM_PROMPT,
+          messages: [{ role: "user", content: buildUserMessage(body) }],
+        }),
+        signal: controller.signal,
+      });
+    } catch (fetchError) {
+      if (fetchError instanceof DOMException && fetchError.name === "AbortError") {
+        console.error("Claude API timeout after", CLAUDE_TIMEOUT_MS, "ms");
+        return jsonResponse({ error: "Claude API timeout" }, 504);
+      }
+      throw fetchError;
+    } finally {
+      clearTimeout(timeout);
+    }
 
     if (!response.ok) {
       const errorText = await response.text();
       console.error("Claude API error:", errorText);
-      return new Response(
-        JSON.stringify({ error: "Claude API call failed" }),
-        {
-          status: 502,
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
-        },
-      );
+      return jsonResponse({ error: "Claude API call failed" }, 502);
     }
 
     const result = await response.json();
     const textContent = result.content?.[0]?.text ?? "";
 
-    // Claude 응답에서 JSON 파싱
+    // Claude 응답에서 JSON 추출
     const jsonMatch = textContent.match(/\{[\s\S]*\}/);
     if (!jsonMatch) {
-      console.error("Failed to parse Claude response:", textContent);
-      return new Response(
-        JSON.stringify({ error: "Invalid Claude response format" }),
-        {
-          status: 502,
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
-        },
-      );
+      console.error("No JSON found in Claude response:", textContent);
+      return jsonResponse({ error: "Invalid Claude response format" }, 502);
     }
 
-    const parsed: NpcRespondResponse = JSON.parse(jsonMatch[0]);
+    // #2: JSON.parse 가드
+    let parsed: Record<string, unknown>;
+    try {
+      parsed = JSON.parse(jsonMatch[0]);
+    } catch (parseError) {
+      console.error("JSON parse failed:", jsonMatch[0]);
+      return jsonResponse({ error: "Malformed JSON from Claude" }, 502);
+    }
 
-    return new Response(JSON.stringify(parsed), {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    // #3: feedbackType 유효성 검증
+    if (!parsed.npcText || !VALID_FEEDBACK_TYPES.has(parsed.feedbackType as string)) {
+      console.error("Invalid response shape:", parsed);
+      return jsonResponse({ error: "Invalid Claude response shape" }, 502);
+    }
+
+    return jsonResponse({
+      npcText: parsed.npcText,
+      feedbackType: parsed.feedbackType,
+      recastHighlight: parsed.recastHighlight ?? undefined,
+      metaHint: parsed.metaHint ?? undefined,
     });
   } catch (error) {
     console.error("Error in npc-respond:", error);
-    return new Response(
-      JSON.stringify({ error: "Internal server error" }),
-      {
-        status: 500,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      },
-    );
+    return jsonResponse({ error: "Internal server error" }, 500);
   }
 });
