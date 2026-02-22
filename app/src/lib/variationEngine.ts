@@ -168,3 +168,13 @@ export function getVariationSlugsForSituation(
     (link) => link.variationSlug
   );
 }
+
+/** MVP 변주 라벨 (UI 표시용) */
+export const VARIATION_LABELS: Record<string, string> = {
+  restaurant_allergy: "알레르기 상황",
+  restaurant_missing_menu: "품절 상황",
+  restaurant_friend_order: "친구와 함께",
+};
+
+/** 변주 접근에 필요한 최소 방문 횟수 */
+export const VARIATION_MIN_VISITS = 2;

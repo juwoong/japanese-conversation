@@ -22,7 +22,7 @@ import { colors } from "../constants/theme";
 import OfflineBanner from "../components/OfflineBanner";
 import TravelMap, { MapNode, NodeStatus } from "../components/TravelMap";
 import AbilityStatement from "../components/AbilityStatement";
-import { countVariationsForSituation, getAvailableVariations } from "../lib/variationEngine";
+import { countVariationsForSituation, getAvailableVariations, VARIATION_LABELS, VARIATION_MIN_VISITS } from "../lib/variationEngine";
 import ToolkitView from "../components/ToolkitView";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Home">;
@@ -279,13 +279,6 @@ export default function HomeScreen({ navigation }: Props) {
       variationCount: countVariationsForSituation(config.slug, completedSlugs),
     };
   });
-
-  // 변주 시나리오 라벨 (MVP)
-  const VARIATION_LABELS: Record<string, string> = {
-    restaurant_allergy: "알레르기 상황",
-    restaurant_missing_menu: "품절 상황",
-    restaurant_friend_order: "친구와 함께",
-  };
 
   const handleNodePress = (node: MapNode) => {
     if (!node.situationId) {
