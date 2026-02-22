@@ -103,9 +103,9 @@ export async function gradeSessionExpressions(
     const rating = turnRecordsToRating(records);
     if (!rating) continue;
 
-    // text_ja로 line_id 찾기
+    // text_ja로 line_id 찾기 (exact match — keyExpressionJa는 line.text_ja에서 직접 옴)
     const line = lines.find(
-      (l) => l.speaker === "user" && (l.text_ja === expressionJa || l.text_ja.includes(expressionJa) || expressionJa.includes(l.text_ja))
+      (l) => l.speaker === "user" && l.text_ja === expressionJa
     );
     if (!line) continue;
 
