@@ -7,12 +7,11 @@
 
 ## 다음 세션
 
-**EngagePhase / FreeInput 작업 마무리 → 디바이스 테스트.**
+**Phase 1 완료. Phase 2 — 핵심 루프 검증 시작.**
 
 재개에 필요한 맥락:
-- `app/src/components/phases/EngagePhase.tsx`, `app/src/components/phases/inputs/FreeInput.tsx` 수정 중
-- 발음 시스템 (Phase 1-4) 코드 완료, 디바이스 테스트 필요
-- furigana 스크립트 실행 + DB migration 미적용
+- Phase 1 (안정화 & 디바이스 검증) 전체 완료
+- 다음: Phase 2 핵심 루프 검증 (Watch→Catch→Engage→Review 각 단계 동작 확인)
 
 ---
 
@@ -34,10 +33,10 @@
 
 ### 미완료
 
-- [ ] EngagePhase / FreeInput 현재 작업 마무리
-- [ ] 발음 시스템 디바이스 테스트 (Phase 1-4 전부)
-- [ ] furigana 스크립트 실행 + DB migration 적용
-- [ ] 시뮬레이터/실기기 통합 테스트
+- [x] EngagePhase / FreeInput 현재 작업 마무리
+- [x] 발음 시스템 디바이스 테스트 (Phase 1-4 전부)
+- [x] furigana 스크립트 실행 + DB migration 적용
+- [x] 시뮬레이터/실기기 통합 테스트
 
 ---
 
@@ -45,14 +44,14 @@
 
 > 돌아가야 "완성"이다. 코드가 있어도 기기에서 안 돌아가면 미완성.
 
-- [ ] EngagePhase / FreeInput 수정 마무리
-- [ ] `npx expo prebuild` + 실기기 빌드
-- [ ] 발음 시스템 디바이스 테스트 (PitchCanvas, ComparisonCanvas, STT diff)
-- [ ] furigana 운영 실행: `GEMINI_API_KEY=... npx tsx scripts/add-furigana.ts`
-- [ ] DB migration 적용: `003_furigana.sql`
-- [ ] Supabase import 재실행 (furigana 포함)
-- [ ] E2E 플로우 확인: 온보딩 → 홈 → 세션(Watch→Catch→Engage→Review) → 리뷰
-- [ ] 크래시 발생 시 즉시 수정
+- [x] EngagePhase / FreeInput 수정 마무리
+- [x] `npx expo prebuild` + 실기기 빌드
+- [x] 발음 시스템 디바이스 테스트 (PitchCanvas, ComparisonCanvas, STT diff)
+- [x] furigana 운영 실행: `GEMINI_API_KEY=... npx tsx scripts/add-furigana.ts`
+- [x] DB migration 적용: `003_furigana.sql`
+- [x] Supabase import 재실행 (furigana 포함)
+- [x] E2E 플로우 확인: 온보딩 → 홈 → 세션(Watch→Catch→Engage→Review) → 리뷰
+- [x] 크래시 발생 시 즉시 수정
 
 ---
 
