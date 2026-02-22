@@ -1,11 +1,8 @@
 /**
  * NPC response engine for the Engage phase.
  *
- * MVP implementation: uses situation model dialogue lines as NPC responses
- * rather than calling Claude API. Applies feedbackLayer to classify user
- * input and generate contextually appropriate feedback.
- *
- * When the Edge Function is ready, this can be swapped to call the real API.
+ * Claude API를 Supabase Edge Function으로 호출하여 NPC 응답 생성.
+ * Edge Function 실패 시 로컬 MVP 로직으로 폴백.
  */
 
 import {
@@ -14,6 +11,7 @@ import {
   type FeedbackType,
   type FeedbackResult,
 } from "./feedbackLayer";
+import { supabase } from "./supabase";
 
 export interface NpcResponse {
   text: string;
@@ -34,70 +32,35 @@ const CLARIFICATION_PHRASES = [
 
 /**
  * Build a recast NPC response that naturally includes the corrected form.
- * The NPC restates what the user meant to say in correct Japanese.
  */
 function buildRecastResponse(
   expectedUserText: string,
   nextNpcLine: string | null,
   recastHighlight: string,
 ): string {
-  // If there's a next NPC line, prefix it with a natural acknowledgment
-  // that includes the correct form
   if (nextNpcLine) {
     return `「${expectedUserText}」ですね。${nextNpcLine}`;
   }
   return `「${expectedUserText}」ですね。`;
 }
 
-/**
- * Pick a random clarification phrase.
- */
 function pickClarification(): string {
   const idx = Math.floor(Math.random() * CLARIFICATION_PHRASES.length);
   return CLARIFICATION_PHRASES[idx];
 }
 
 /**
- * Generate an NPC response for the conversation.
- *
- * For MVP, this uses the model dialogue lines as a script:
- * - NPC lines are returned in order
- * - User input is classified via feedbackLayer
- * - Recasts and clarifications are generated without API calls
+ * 로컬 MVP 폴백 로직 — Edge Function 실패 시 사용
  */
-export async function generateNpcResponse(params: {
-  situation: string;
+function generateLocalResponse(params: {
   userMessage: string;
-  expectedResponse?: string;
+  expectedResponse: string;
   errorHistory: { text: string; type: string }[];
-  turnNumber: number;
-  /** The next NPC line from the model dialogue (if available) */
   nextNpcLine?: string;
-  /** Total dialogue turns in this situation */
-  totalTurns?: number;
-}): Promise<NpcResponse> {
-  const {
-    userMessage,
-    expectedResponse,
-    errorHistory,
-    turnNumber,
-    nextNpcLine,
-    totalTurns = 10,
-  } = params;
+  shouldEnd: boolean;
+}): NpcResponse {
+  const { userMessage, expectedResponse, errorHistory, nextNpcLine, shouldEnd } = params;
 
-  // Determine if conversation should end (5-7 turns)
-  const shouldEnd = turnNumber >= Math.min(totalTurns - 1, 7);
-
-  // If no expected response, just return the next NPC line
-  if (!expectedResponse) {
-    return {
-      text: nextNpcLine ?? "はい。",
-      feedbackType: "none",
-      shouldEnd,
-    };
-  }
-
-  // Classify user input
   const feedback: FeedbackResult = classifyFeedback({
     userText: userMessage,
     expectedText: expectedResponse,
@@ -106,7 +69,6 @@ export async function generateNpcResponse(params: {
 
   switch (feedback.type) {
     case "none":
-      // User got it right — continue with next NPC line
       return {
         text: nextNpcLine ?? "はい、ありがとうございます。",
         feedbackType: "none",
@@ -129,7 +91,7 @@ export async function generateNpcResponse(params: {
       return {
         text: pickClarification(),
         feedbackType: "clarification",
-        shouldEnd: false, // Don't end on clarification — give user another chance
+        shouldEnd: false,
       };
 
     case "meta_hint":
@@ -143,6 +105,119 @@ export async function generateNpcResponse(params: {
         shouldEnd,
       };
   }
+}
+
+/**
+ * Edge Function을 호출하여 Claude API NPC 응답 생성.
+ * 실패 시 null 반환 → 호출부에서 폴백 처리.
+ */
+async function callNpcEdgeFunction(params: {
+  userText: string;
+  expectedText: string;
+  situation: string;
+  nextNpcLine?: string;
+  errorHistory: { text: string; type: string }[];
+}): Promise<{
+  npcText: string;
+  feedbackType: FeedbackType;
+  recastHighlight?: string;
+  metaHint?: string;
+} | null> {
+  try {
+    const { data, error } = await supabase.functions.invoke("npc-respond", {
+      body: {
+        userText: params.userText,
+        expectedText: params.expectedText,
+        situation: params.situation,
+        nextNpcLine: params.nextNpcLine,
+        errorHistory: params.errorHistory,
+      },
+    });
+
+    if (error) {
+      console.warn("npc-respond Edge Function error:", error);
+      return null;
+    }
+
+    // 응답 검증
+    if (!data?.npcText || !data?.feedbackType) {
+      console.warn("npc-respond: invalid response shape", data);
+      return null;
+    }
+
+    return {
+      npcText: data.npcText,
+      feedbackType: data.feedbackType,
+      recastHighlight: data.recastHighlight,
+      metaHint: data.metaHint,
+    };
+  } catch (err) {
+    console.warn("npc-respond call failed:", err);
+    return null;
+  }
+}
+
+/**
+ * NPC 응답 생성 — Claude API 우선, 실패 시 로컬 폴백.
+ * 인터페이스는 기존과 동일 (EngagePhase 변경 불필요).
+ */
+export async function generateNpcResponse(params: {
+  situation: string;
+  userMessage: string;
+  expectedResponse?: string;
+  errorHistory: { text: string; type: string }[];
+  turnNumber: number;
+  nextNpcLine?: string;
+  totalTurns?: number;
+}): Promise<NpcResponse> {
+  const {
+    situation,
+    userMessage,
+    expectedResponse,
+    errorHistory,
+    turnNumber,
+    nextNpcLine,
+    totalTurns = 10,
+  } = params;
+
+  const shouldEnd = turnNumber >= Math.min(totalTurns - 1, 7);
+
+  // expectedResponse 없으면 다음 NPC 대사 반환
+  if (!expectedResponse) {
+    return {
+      text: nextNpcLine ?? "はい。",
+      feedbackType: "none",
+      shouldEnd,
+    };
+  }
+
+  // Claude API 호출 시도
+  const apiResult = await callNpcEdgeFunction({
+    userText: userMessage,
+    expectedText: expectedResponse,
+    situation,
+    nextNpcLine,
+    errorHistory,
+  });
+
+  if (apiResult) {
+    return {
+      text: apiResult.npcText,
+      feedbackType: apiResult.feedbackType,
+      recastHighlight: apiResult.recastHighlight,
+      metaHint: apiResult.metaHint,
+      shouldEnd: apiResult.feedbackType === "clarification" ? false : shouldEnd,
+    };
+  }
+
+  // 폴백: 로컬 MVP 로직
+  return generateLocalResponse({
+    userMessage,
+    expectedResponse,
+    errorHistory,
+    nextNpcLine,
+    shouldEnd,
+  });
 }
 
 /**
