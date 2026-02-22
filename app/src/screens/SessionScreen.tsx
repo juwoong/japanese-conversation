@@ -180,11 +180,11 @@ export default function SessionScreen({ navigation, route }: Props) {
         </Text>
       </View>
 
-      {/* Variation banner */}
+      {/* Variation banner — 같은 대화를 새로운 관점으로 복습 */}
       {fourPhase.variationInfo && (
         <View style={styles.variationBanner}>
           <Text style={styles.variationBannerText}>
-            {VARIATION_LABELS[fourPhase.variationInfo.slug] ?? "변주 상황"}
+            {VARIATION_LABELS[fourPhase.variationInfo.slug] ?? "변주"} · 새로운 표현에 집중해보세요
           </Text>
         </View>
       )}
