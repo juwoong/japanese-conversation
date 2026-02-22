@@ -32,9 +32,16 @@ const PHASE_LABELS: Record<SessionPhase, string> = {
   review: "정리",
 };
 
+// 변주 시나리오 라벨 (MVP: 하드코딩)
+const VARIATION_LABELS: Record<string, string> = {
+  restaurant_allergy: "알레르기 상황",
+  restaurant_missing_menu: "품절 상황",
+  restaurant_friend_order: "친구와 함께",
+};
+
 export default function SessionScreen({ navigation, route }: Props) {
-  const { situationId } = route.params;
-  const fourPhase = useFourPhaseSession(situationId);
+  const { situationId, variationSlug } = route.params;
+  const fourPhase = useFourPhaseSession(situationId, variationSlug);
 
   const [showModeSelector, setShowModeSelector] = useState(true);
   const [engagePerformance, setEngagePerformance] = useState<EngagePerformance | null>(null);
@@ -129,6 +136,7 @@ export default function SessionScreen({ navigation, route }: Props) {
             situationSlug={fourPhase.situation?.slug ?? ""}
             situationName={fourPhase.situation?.name_ko ?? ""}
             locationName={fourPhase.situation?.location_ko ?? ""}
+            variationNewExpressions={fourPhase.variationInfo?.newExpressions}
             onComplete={handlePhaseTransition}
           />
         );
@@ -156,6 +164,7 @@ export default function SessionScreen({ navigation, route }: Props) {
             performance={engagePerformance ?? undefined}
             situationName={fourPhase.situation?.name_ko}
             inputMode={fourPhase.inputMode}
+            variationNewExpressions={fourPhase.variationInfo?.newExpressions}
             onComplete={handleComplete}
           />
         );
@@ -176,6 +185,15 @@ export default function SessionScreen({ navigation, route }: Props) {
           {PHASE_LABELS[fourPhase.phase]}
         </Text>
       </View>
+
+      {/* Variation banner */}
+      {fourPhase.variationInfo && (
+        <View style={styles.variationBanner}>
+          <Text style={styles.variationBannerText}>
+            {VARIATION_LABELS[fourPhase.variationInfo.slug] ?? "변주 상황"}
+          </Text>
+        </View>
+      )}
 
       {/* Phase progress dots */}
       <View style={styles.phaseProgressRow}>
@@ -258,6 +276,21 @@ const styles = StyleSheet.create({
   },
   phaseDotDone: {
     backgroundColor: colors.success,
+  },
+
+  // Variation banner
+  variationBanner: {
+    backgroundColor: colors.warningLight,
+    paddingVertical: 4,
+    paddingHorizontal: 12,
+    alignSelf: "center",
+    borderRadius: 8,
+    marginBottom: 4,
+  },
+  variationBannerText: {
+    fontSize: 12,
+    fontWeight: "600",
+    color: colors.warning,
   },
 
   // Phase content

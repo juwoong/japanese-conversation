@@ -22,7 +22,7 @@ import { colors } from "../constants/theme";
 import OfflineBanner from "../components/OfflineBanner";
 import TravelMap, { MapNode, NodeStatus } from "../components/TravelMap";
 import AbilityStatement from "../components/AbilityStatement";
-import { countVariationsForSituation } from "../lib/variationEngine";
+import { countVariationsForSituation, getAvailableVariations } from "../lib/variationEngine";
 import ToolkitView from "../components/ToolkitView";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Home">;
@@ -280,6 +280,13 @@ export default function HomeScreen({ navigation }: Props) {
     };
   });
 
+  // 변주 시나리오 라벨 (MVP)
+  const VARIATION_LABELS: Record<string, string> = {
+    restaurant_allergy: "알레르기 상황",
+    restaurant_missing_menu: "품절 상황",
+    restaurant_friend_order: "친구와 함께",
+  };
+
   const handleNodePress = (node: MapNode) => {
     if (!node.situationId) {
       showToast("이 상황은 아직 준비 중이에요");
@@ -298,10 +305,31 @@ export default function HomeScreen({ navigation }: Props) {
       if (suggestion) {
         showToast(suggestion);
       }
-      // Still navigate
       navigation.navigate("Session", { situationId: node.situationId });
     } else if (node.status === "recommended") {
       navigation.navigate("Session", { situationId: node.situationId, isReview: true });
+    } else if (node.status === "completed" && (node.variationCount ?? 0) > 0) {
+      // 완료된 상황 + 변주가 있으면 선택지 제공
+      const sitId = node.situationId!;
+      const variations = getAvailableVariations(completedSlugs)
+        .filter((v) => v.baseSituation === node.situationSlug);
+
+      const buttons = [
+        {
+          text: "기본 복습",
+          onPress: () => navigation.navigate("Session", { situationId: sitId }),
+        },
+        ...variations.map((v) => ({
+          text: VARIATION_LABELS[v.variationSlug] ?? v.variationSlug,
+          onPress: () => navigation.navigate("Session", {
+            situationId: sitId,
+            variationSlug: v.variationSlug,
+          }),
+        })),
+        { text: "취소", style: "cancel" as const },
+      ];
+
+      Alert.alert("어떤 상황으로 연습할까요?", undefined, buttons);
     } else {
       navigation.navigate("Session", { situationId: node.situationId });
     }

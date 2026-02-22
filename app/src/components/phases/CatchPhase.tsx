@@ -22,6 +22,7 @@ interface Props {
   situationSlug: string;
   situationName: string;
   locationName: string;
+  variationNewExpressions?: string[];
   onComplete: () => void;
 }
 
@@ -175,10 +176,12 @@ function SituationIntro({
 function VocabPresentation({
   expressions,
   currentIndex,
+  variationNewExpressions,
   onNext,
 }: {
   expressions: KeyExpression[];
   currentIndex: number;
+  variationNewExpressions?: string[];
   onNext: () => void;
 }) {
   const expr = expressions[currentIndex];
@@ -218,6 +221,13 @@ function VocabPresentation({
       {/* Korean meaning */}
       <Text style={vocabStyles.koreanText}>{expr.textKo}</Text>
 
+      {/* 변주에서 새로 등장하는 표현 태그 */}
+      {variationNewExpressions?.includes(expr.textJa) && (
+        <View style={vocabStyles.variationTag}>
+          <Text style={vocabStyles.variationTagText}>이 상황에서 새로 배워요</Text>
+        </View>
+      )}
+
       {/* TTS button */}
       <TouchableOpacity style={vocabStyles.ttsButton} onPress={playTTS} activeOpacity={0.7}>
         <Text style={vocabStyles.ttsIcon}>{isSpeaking ? "🔊" : "🔈"}</Text>
@@ -242,6 +252,7 @@ export default function CatchPhase({
   situationSlug,
   situationName,
   locationName,
+  variationNewExpressions,
   onComplete,
 }: Props) {
   // On first visit, start with intro. On revisits, skip to activities.
@@ -319,6 +330,7 @@ export default function CatchPhase({
         <VocabPresentation
           expressions={keyExpressions}
           currentIndex={vocabIndex}
+          variationNewExpressions={variationNewExpressions}
           onNext={() => {
             if (vocabIndex + 1 < keyExpressions.length) {
               setVocabIndex(vocabIndex + 1);
@@ -523,6 +535,19 @@ const vocabStyles = StyleSheet.create({
     fontSize: 18,
     color: colors.textMedium,
     marginBottom: 32,
+  },
+  variationTag: {
+    marginTop: -20,
+    backgroundColor: colors.warningLight,
+    paddingVertical: 4,
+    paddingHorizontal: 10,
+    borderRadius: 6,
+    marginBottom: 20,
+  },
+  variationTagText: {
+    fontSize: 12,
+    fontWeight: "600",
+    color: colors.warning,
   },
   ttsButton: {
     flexDirection: "row",

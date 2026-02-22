@@ -40,6 +40,7 @@ interface ReviewPhaseProps {
   performance?: EngagePerformance;
   situationName?: string;
   inputMode: SessionMode;
+  variationNewExpressions?: string[];
   onComplete: () => void;
 }
 
@@ -134,6 +135,7 @@ export default function ReviewPhase({
   performance,
   situationName,
   inputMode,
+  variationNewExpressions,
   onComplete,
 }: ReviewPhaseProps) {
   const [isSpeaking, setIsSpeaking] = useState(false);
@@ -322,6 +324,20 @@ export default function ReviewPhase({
                   emoji={expr.emoji}
                 />
               </View>
+
+              {/* 변주에서 새로 등장한 표현 태그 */}
+              {variationNewExpressions?.includes(expr.textJa) && (
+                <View style={styles.diagnosisRow}>
+                  <MaterialIcons
+                    name="fiber-new"
+                    size={14}
+                    color={colors.warning}
+                  />
+                  <Text style={styles.diagnosisVariation}>
+                    이 상황에서 새로 배운 표현
+                  </Text>
+                </View>
+              )}
 
               {/* Session diagnosis label */}
               {status === "smooth" && (
@@ -544,6 +560,11 @@ const styles = StyleSheet.create({
   diagnosisHelped: {
     fontSize: 12,
     color: colors.secondary,
+    fontWeight: "500",
+  },
+  diagnosisVariation: {
+    fontSize: 12,
+    color: colors.warning,
     fontWeight: "500",
   },
   // Grammar

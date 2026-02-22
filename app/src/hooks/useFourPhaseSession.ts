@@ -7,12 +7,19 @@
 
 import { useState, useCallback, useMemo } from "react";
 import { useSession } from "./useSession";
+import { getVariationData } from "../lib/variationEngine";
 import type { SessionPhase, SessionMode, ModelLine, KeyExpression, Line } from "../types";
 
 interface FourPhaseState {
   phase: SessionPhase;
   inputMode: SessionMode;
   visitCount: number;
+}
+
+export interface VariationInfo {
+  slug: string;
+  newExpressions: string[];
+  reusedFromBase: string[];
 }
 
 interface UseFourPhaseSessionReturn {
@@ -27,6 +34,9 @@ interface UseFourPhaseSessionReturn {
   inputMode: SessionMode;
   visitCount: number;
 
+  // Variation
+  variationInfo: VariationInfo | null;
+
   // Derived data
   modelDialogue: ModelLine[];
   keyExpressions: KeyExpression[];
@@ -39,8 +49,23 @@ interface UseFourPhaseSessionReturn {
   session: ReturnType<typeof useSession>;
 }
 
-export function useFourPhaseSession(situationId: number): UseFourPhaseSessionReturn {
+export function useFourPhaseSession(
+  situationId: number,
+  variationSlug?: string,
+): UseFourPhaseSessionReturn {
   const session = useSession(situationId);
+
+  // 변주 시나리오 메타데이터
+  const variationInfo = useMemo<VariationInfo | null>(() => {
+    if (!variationSlug) return null;
+    const data = getVariationData(variationSlug);
+    if (!data) return null;
+    return {
+      slug: variationSlug,
+      newExpressions: data.newExpressions,
+      reusedFromBase: data.reusedFromBase,
+    };
+  }, [variationSlug]);
 
   const [state, setState] = useState<FourPhaseState>({
     phase: "watch",
@@ -108,6 +133,7 @@ export function useFourPhaseSession(situationId: number): UseFourPhaseSessionRet
     phase: state.phase,
     inputMode: state.inputMode,
     visitCount: state.visitCount,
+    variationInfo,
     modelDialogue,
     keyExpressions,
     setInputMode,
