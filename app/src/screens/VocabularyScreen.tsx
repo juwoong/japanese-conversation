@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import {
   View,
   Text,
@@ -12,12 +12,12 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import * as Speech from "expo-speech";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { supabase } from "../lib/supabase";
-import type { RootStackParamList } from "../types";
+import type { RootStackParamList, FuriganaSegment } from "../types";
 import { colors } from "../constants/theme";
 import { MaterialIcons } from "@expo/vector-icons";
 import LoadingScreen from "../components/LoadingScreen";
 import BackHeader from "../components/BackHeader";
-
+import FuriganaText from "../components/FuriganaText";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Vocabulary">;
 
@@ -32,6 +32,7 @@ interface VocabWord {
   jlpt_target: string | null;
 }
 
+// 품사별 색상
 const POS_COLORS: Record<string, string> = {
   "명사": colors.primary,
   "동사": colors.success,
@@ -42,8 +43,18 @@ const POS_COLORS: Record<string, string> = {
   "감탄사": "#D98A5B",
   "조동사": "#6BAA8A",
 };
-
 const POS_DEFAULT_COLOR = colors.textMuted;
+
+// JLPT 레벨별 색상
+const JLPT_COLORS: Record<string, string> = {
+  "N5": colors.success,
+  "N4": colors.secondary,
+  "N3": colors.warning,
+  "N2": colors.primary,
+  "N1": colors.danger,
+};
+
+const JLPT_LEVELS = ["N5", "N4", "N3"];
 
 export default function VocabularyScreen({ navigation }: Props) {
   const [words, setWords] = useState<VocabWord[]>([]);
@@ -58,6 +69,12 @@ export default function VocabularyScreen({ navigation }: Props) {
 
   useEffect(() => {
     loadVocabulary();
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (revealTimerRef.current) clearTimeout(revealTimerRef.current);
+    };
   }, []);
 
   const loadVocabulary = async () => {
@@ -97,19 +114,11 @@ export default function VocabularyScreen({ navigation }: Props) {
     setLoading(false);
   };
 
-  // Collect unique POS tags for filter
   const posTags = Array.from(new Set(words.map((w) => w.pos)));
 
-  const JLPT_LEVELS = ["N5", "N4", "N3"];
-
   const filteredWords = words.filter((word) => {
-    // JLPT filter
     if (selectedJlpt && word.jlpt_target !== selectedJlpt) return false;
-
-    // POS filter
     if (selectedPos && word.pos !== selectedPos) return false;
-
-    // Search filter
     if (searchQuery.trim()) {
       const q = searchQuery.trim().toLowerCase();
       return (
@@ -119,17 +128,15 @@ export default function VocabularyScreen({ navigation }: Props) {
         word.meaning_ko.toLowerCase().includes(q)
       );
     }
-
     return true;
   });
 
-  const speakWord = (text: string, id: number) => {
+  const speakWord = useCallback((text: string, id: number) => {
     if (speakingId === id) {
       Speech.stop();
       setSpeakingId(null);
       return;
     }
-
     setSpeakingId(id);
     Speech.speak(text, {
       language: "ja-JP",
@@ -137,11 +144,12 @@ export default function VocabularyScreen({ navigation }: Props) {
       onDone: () => setSpeakingId(null),
       onError: () => setSpeakingId(null),
     });
-  };
+  }, [speakingId]);
 
   const getPosColor = (pos: string): string => POS_COLORS[pos] ?? POS_DEFAULT_COLOR;
+  const getJlptColor = (level: string | null): string => JLPT_COLORS[level ?? ""] ?? colors.textMuted;
 
-  const handleRevealMeaning = (id: number) => {
+  const handleRevealMeaning = useCallback((id: number) => {
     if (revealTimerRef.current) clearTimeout(revealTimerRef.current);
     setRevealedId(id);
     revealFadeAnim.setValue(1);
@@ -152,50 +160,85 @@ export default function VocabularyScreen({ navigation }: Props) {
         useNativeDriver: true,
       }).start(() => setRevealedId(null));
     }, 3000);
+  }, [revealFadeAnim]);
+
+  // 한자가 포함된 단어 → FuriganaSegment 변환
+  const makeFuriganaSegments = (wordJa: string, reading: string): FuriganaSegment[] => {
+    const hasKanji = /[\u4E00-\u9FFF\u3400-\u4DBF]/.test(wordJa);
+    if (hasKanji) {
+      return [{ text: wordJa, reading }];
+    }
+    // 히라가나/카타카나만 → reading 없이
+    return [{ text: wordJa }];
   };
 
-  useEffect(() => {
-    return () => {
-      if (revealTimerRef.current) clearTimeout(revealTimerRef.current);
-    };
-  }, []);
+  const renderItem = ({ item }: { item: VocabWord }) => {
+    const furiganaSegments = makeFuriganaSegments(item.word_ja, item.reading_hiragana);
+    const jlptColor = getJlptColor(item.jlpt_target);
+    const posColor = getPosColor(item.pos);
 
-  const renderItem = ({ item }: { item: VocabWord }) => (
-    <View style={styles.wordCard}>
-      <View style={styles.cardTop}>
-        <View style={styles.wordSection}>
-          <Text style={styles.wordJa}>{item.word_ja}</Text>
-          <Text style={styles.readingHiragana}>{item.reading_hiragana}</Text>
-        </View>
-        <View style={styles.cardRight}>
-          <View style={[styles.posBadge, { backgroundColor: getPosColor(item.pos) + "18" }]}>
-            <Text style={[styles.posText, { color: getPosColor(item.pos) }]}>{item.pos}</Text>
-          </View>
-          <TouchableOpacity onPress={() => speakWord(item.word_ja, item.id)} hitSlop={8}>
-            <MaterialIcons
-              name="volume-up"
-              size={22}
-              color={speakingId === item.id ? colors.primary : colors.textLight}
+    return (
+      <View style={styles.wordCard}>
+        {/* 상단: 후리가나 + 배지 + 스피커 */}
+        <View style={styles.cardTop}>
+          <View style={styles.wordSection}>
+            <FuriganaText
+              segments={furiganaSegments}
+              fontSize={26}
+              color={colors.textDark}
+              highlightColor={colors.textDark}
+              readingColor={colors.primary}
+              showReading={true}
             />
-          </TouchableOpacity>
+            <Text style={styles.readingKo}>{item.reading_ko}</Text>
+          </View>
+
+          <View style={styles.cardRight}>
+            <View style={styles.badgeRow}>
+              {/* JLPT 배지 */}
+              {item.jlpt_target && (
+                <View style={[styles.jlptBadge, { backgroundColor: jlptColor + "18" }]}>
+                  <Text style={[styles.jlptText, { color: jlptColor }]}>{item.jlpt_target}</Text>
+                </View>
+              )}
+              {/* 품사 배지 */}
+              <View style={[styles.posBadge, { backgroundColor: posColor + "18" }]}>
+                <Text style={[styles.posText, { color: posColor }]}>{item.pos}</Text>
+              </View>
+            </View>
+            <TouchableOpacity
+              onPress={() => speakWord(item.word_ja, item.id)}
+              hitSlop={8}
+              style={styles.speakerButton}
+            >
+              <MaterialIcons
+                name="volume-up"
+                size={22}
+                color={speakingId === item.id ? colors.primary : colors.textLight}
+              />
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
 
-      <View style={styles.cardBottom}>
-        {revealedId === item.id ? (
-          <Animated.Text style={[styles.meaningKo, { opacity: revealFadeAnim }]}>
-            {item.meaning_ko}
-          </Animated.Text>
-        ) : (
-          <TouchableOpacity onPress={() => handleRevealMeaning(item.id)} style={styles.meaningHintButton}>
-            <Text style={styles.meaningHintText}>[?] 뜻 보기</Text>
-          </TouchableOpacity>
-        )}
-      </View>
+        {/* 하단: 뜻 보기 */}
+        <View style={styles.cardBottom}>
+          {revealedId === item.id ? (
+            <Animated.Text style={[styles.meaningKo, { opacity: revealFadeAnim }]}>
+              {item.meaning_ko}
+            </Animated.Text>
+          ) : (
+            <TouchableOpacity onPress={() => handleRevealMeaning(item.id)} style={styles.meaningHintButton}>
+              <MaterialIcons name="visibility" size={16} color={colors.textLight} />
+              <Text style={styles.meaningHintText}>뜻 보기</Text>
+            </TouchableOpacity>
+          )}
+        </View>
 
-      <Text style={styles.situationLabel}>{item.situation_name}</Text>
-    </View>
-  );
+        {/* 상황 라벨 */}
+        <Text style={styles.situationLabel}>{item.situation_name}</Text>
+      </View>
+    );
+  };
 
   if (loading) {
     return <LoadingScreen />;
@@ -205,32 +248,36 @@ export default function VocabularyScreen({ navigation }: Props) {
     <SafeAreaView style={styles.container}>
       <BackHeader title="표현 모음" onBack={() => navigation.goBack()} />
 
-      {/* Search Bar */}
+      {/* 검색 바 */}
       <View style={styles.searchBar}>
-        <TextInput
-          style={styles.searchInput}
-          placeholder="단어, 읽기, 뜻으로 검색..."
-          placeholderTextColor={colors.textLight}
-          value={searchQuery}
-          onChangeText={setSearchQuery}
-          clearButtonMode="while-editing"
-          autoCorrect={false}
-        />
+        <View style={styles.searchInputWrapper}>
+          <MaterialIcons name="search" size={20} color={colors.textLight} style={styles.searchIcon} />
+          <TextInput
+            style={styles.searchInput}
+            placeholder="단어, 읽기, 뜻으로 검색..."
+            placeholderTextColor={colors.textLight}
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+            clearButtonMode="while-editing"
+            autoCorrect={false}
+          />
+        </View>
       </View>
 
-      {/* Stats */}
+      {/* 통계 */}
       <View style={styles.statsBar}>
         <Text style={styles.totalCount}>
-          전체 {words.length}개 단어
-          {filteredWords.length !== words.length && ` (${filteredWords.length}개 표시)`}
-          {" · "}
+          전체 {words.length}개
+          {filteredWords.length !== words.length && ` · ${filteredWords.length}개 표시`}
+        </Text>
+        <Text style={styles.jlptSummary}>
           {JLPT_LEVELS.map(
             (level) => `${level} ${words.filter((w) => w.jlpt_target === level).length}`
           ).join(" / ")}
         </Text>
       </View>
 
-      {/* JLPT Filter Tabs */}
+      {/* JLPT 필터 */}
       <View style={styles.filterScroll}>
         <FlatList
           horizontal
@@ -238,57 +285,55 @@ export default function VocabularyScreen({ navigation }: Props) {
           data={[null, ...JLPT_LEVELS]}
           keyExtractor={(item) => item ?? "all-jlpt"}
           contentContainerStyle={styles.filterContent}
-          renderItem={({ item: level }) => (
-            <TouchableOpacity
-              style={[
-                styles.filterTab,
-                (level === null ? selectedJlpt === null : selectedJlpt === level) && styles.filterTabActive,
-              ]}
-              onPress={() => setSelectedJlpt(level)}
-            >
-              <Text
+          renderItem={({ item: level }) => {
+            const isActive = level === null ? selectedJlpt === null : selectedJlpt === level;
+            const chipColor = level ? getJlptColor(level) : colors.primary;
+            return (
+              <TouchableOpacity
                 style={[
-                  styles.filterTabText,
-                  (level === null ? selectedJlpt === null : selectedJlpt === level) && styles.filterTabTextActive,
+                  styles.filterTab,
+                  isActive && { backgroundColor: chipColor, borderColor: chipColor },
                 ]}
+                onPress={() => setSelectedJlpt(level)}
               >
-                {level ?? "전체"}
-              </Text>
-            </TouchableOpacity>
-          )}
+                <Text style={[styles.filterTabText, isActive && styles.filterTabTextActive]}>
+                  {level ?? "전체"}
+                </Text>
+              </TouchableOpacity>
+            );
+          }}
         />
       </View>
 
-      {/* POS Filter Tabs */}
+      {/* 품사 필터 */}
       <View style={styles.filterScroll}>
         <FlatList
           horizontal
           showsHorizontalScrollIndicator={false}
           data={[null, ...posTags]}
-          keyExtractor={(item) => item ?? "all"}
+          keyExtractor={(item) => item ?? "all-pos"}
           contentContainerStyle={styles.filterContent}
-          renderItem={({ item: pos }) => (
-            <TouchableOpacity
-              style={[
-                styles.filterTab,
-                (pos === null ? selectedPos === null : selectedPos === pos) && styles.filterTabActive,
-              ]}
-              onPress={() => setSelectedPos(pos)}
-            >
-              <Text
+          renderItem={({ item: pos }) => {
+            const isActive = pos === null ? selectedPos === null : selectedPos === pos;
+            const chipColor = pos ? getPosColor(pos) : colors.primary;
+            return (
+              <TouchableOpacity
                 style={[
-                  styles.filterTabText,
-                  (pos === null ? selectedPos === null : selectedPos === pos) && styles.filterTabTextActive,
+                  styles.filterTab,
+                  isActive && { backgroundColor: chipColor, borderColor: chipColor },
                 ]}
+                onPress={() => setSelectedPos(pos)}
               >
-                {pos ?? "전체"}
-              </Text>
-            </TouchableOpacity>
-          )}
+                <Text style={[styles.filterTabText, isActive && styles.filterTabTextActive]}>
+                  {pos ?? "전체"}
+                </Text>
+              </TouchableOpacity>
+            );
+          }}
         />
       </View>
 
-      {/* Word List */}
+      {/* 단어 리스트 */}
       {filteredWords.length === 0 ? (
         <View style={styles.emptyContainer}>
           <MaterialIcons name="library-books" size={64} color={colors.textLight} style={{ marginBottom: 16 }} />
@@ -317,22 +362,35 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background,
   },
+  // 검색
   searchBar: {
     paddingHorizontal: 16,
     paddingVertical: 8,
     backgroundColor: colors.surface,
   },
-  searchInput: {
+  searchInputWrapper: {
+    flexDirection: "row",
+    alignItems: "center",
     backgroundColor: colors.backgroundAlt,
     borderRadius: 10,
-    paddingHorizontal: 14,
-    paddingVertical: 10,
-    fontSize: 15,
-    color: colors.textDark,
     borderWidth: 1,
     borderColor: colors.border,
   },
+  searchIcon: {
+    marginLeft: 12,
+  },
+  searchInput: {
+    flex: 1,
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    fontSize: 15,
+    color: colors.textDark,
+  },
+  // 통계
   statsBar: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     paddingHorizontal: 20,
     paddingVertical: 10,
     backgroundColor: colors.surface,
@@ -340,47 +398,51 @@ const styles = StyleSheet.create({
     borderBottomColor: colors.border,
   },
   totalCount: {
-    fontSize: 14,
+    fontSize: 13,
+    fontWeight: "600",
     color: colors.textMuted,
   },
+  jlptSummary: {
+    fontSize: 12,
+    color: colors.textLight,
+  },
+  // 필터
   filterScroll: {
     backgroundColor: colors.background,
   },
   filterContent: {
     paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingVertical: 8,
     gap: 8,
   },
   filterTab: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 20,
+    paddingHorizontal: 14,
+    paddingVertical: 6,
+    borderRadius: 16,
     backgroundColor: colors.backgroundAlt,
     borderWidth: 1,
     borderColor: colors.border,
   },
-  filterTabActive: {
-    backgroundColor: colors.primary,
-  },
   filterTabText: {
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: "500",
     color: colors.textMuted,
   },
   filterTabTextActive: {
     color: colors.surface,
+    fontWeight: "600",
   },
+  // 카드
   listContent: {
     padding: 16,
-    gap: 12,
+    gap: 10,
   },
   wordCard: {
     backgroundColor: colors.surface,
-    borderRadius: 16,
+    borderRadius: 14,
     padding: 16,
     borderWidth: 1,
     borderColor: colors.border,
-    marginBottom: 12,
   },
   cardTop: {
     flexDirection: "row",
@@ -389,54 +451,71 @@ const styles = StyleSheet.create({
   },
   wordSection: {
     flex: 1,
+    marginRight: 12,
   },
-  wordJa: {
-    fontSize: 28,
-    fontWeight: "700",
-    color: colors.textDark,
-  },
-  readingHiragana: {
-    fontSize: 15,
-    color: colors.primary,
-    marginTop: 2,
+  readingKo: {
+    fontSize: 13,
+    color: colors.textLight,
+    marginTop: 4,
   },
   cardRight: {
     alignItems: "flex-end",
     gap: 8,
   },
+  badgeRow: {
+    flexDirection: "row",
+    gap: 6,
+  },
+  jlptBadge: {
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 8,
+  },
+  jlptText: {
+    fontSize: 11,
+    fontWeight: "700",
+  },
   posBadge: {
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderRadius: 10,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 8,
   },
   posText: {
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: "600",
   },
+  speakerButton: {
+    padding: 4,
+  },
+  // 뜻
   cardBottom: {
     marginTop: 12,
-    paddingTop: 12,
+    paddingTop: 10,
     borderTopWidth: 1,
     borderTopColor: colors.borderLight,
   },
   meaningKo: {
     fontSize: 15,
-    color: colors.textMuted,
+    color: colors.textMedium,
+    fontWeight: "500",
   },
   meaningHintButton: {
-    paddingVertical: 10,
-    paddingHorizontal: 8,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    paddingVertical: 4,
   },
   meaningHintText: {
-    fontSize: 14,
+    fontSize: 13,
     color: colors.textLight,
     fontWeight: "500",
   },
   situationLabel: {
-    fontSize: 12,
+    fontSize: 11,
     color: colors.textLight,
-    marginTop: 10,
+    marginTop: 8,
   },
+  // 빈 상태
   emptyContainer: {
     flex: 1,
     justifyContent: "center",
