@@ -63,7 +63,7 @@ INSERT INTO vocabulary (situation_id, word_ja, reading_hiragana, reading_ko, mea
   ((SELECT id FROM situations WHERE slug = 'bank_account'), '作る', 'つくる', '츠쿠루', '만들다', '동사', 'N5'),
   ((SELECT id FROM situations WHERE slug = 'bank_account'), '在留カード', 'ざいりゅうカード', '자이류-카-도', '재류 카드', '명사', NULL),
   ((SELECT id FROM situations WHERE slug = 'bank_account'), '住所', 'じゅうしょ', '쥬-쇼', '주소', '명사', NULL),
-  ((SELECT id FROM situations WHERE slug = 'bank_account'), '確認', 'かくにん', '카쿠닌', '확인', '명사', NULL),
+  ((SELECT id FROM situations WHERE slug = 'bank_account'), '確認', 'かくにん', '카쿠닌', '확인', '명사', 'N4'),
   ((SELECT id FROM situations WHERE slug = 'bank_account'), '書類', 'しょるい', '쇼류이', '서류', '명사', NULL),
   ((SELECT id FROM situations WHERE slug = 'bank_account'), '電気', 'でんき', '뎅키', '전기', '명사', NULL),
   ((SELECT id FROM situations WHERE slug = 'bank_account'), '請求書', 'せいきゅうしょ', '세-큐-쇼', '청구서', '명사', NULL),
@@ -86,7 +86,7 @@ INSERT INTO vocabulary (situation_id, word_ja, reading_hiragana, reading_ko, mea
   ((SELECT id FROM situations WHERE slug = 'business_card'), '韓国', 'かんこく', '칸코쿠', '한국', '명사', NULL),
   ((SELECT id FROM situations WHERE slug = 'business_card'), 'キム', 'キム', '키무', '김 (성씨)', '명사', NULL),
   ((SELECT id FROM situations WHERE slug = 'business_card'), '名刺', 'めいし', '메-시', '명함', '명사', NULL),
-  ((SELECT id FROM situations WHERE slug = 'business_card'), 'どうぞ', 'どうぞ', '도-조', 'どうぞ (권유, 부탁)', '표현', NULL),
+  ((SELECT id FROM situations WHERE slug = 'business_card'), 'どうぞ', 'どうぞ', '도-조', 'どうぞ (권유, 부탁)', '표현', 'N5'),
   ((SELECT id FROM situations WHERE slug = 'business_card'), '頂戴いたします', 'ちょうだいいたします', '쵸-다이 이타시마스', '받겠습니다 (겸양어)', '표현', NULL),
   ((SELECT id FROM situations WHERE slug = 'business_card'), 'こちらこそ', 'こちらこそ', '코치라코소', '저야말로', '표현', NULL),
   ((SELECT id FROM situations WHERE slug = 'business_card'), 'よろしく', 'よろしく', '요로시쿠', '잘 부탁드립니다', '표현', 'N5'),
@@ -125,7 +125,7 @@ INSERT INTO vocabulary (situation_id, word_ja, reading_hiragana, reading_ko, mea
   ((SELECT id FROM situations WHERE slug = 'business_taxi'), 'ご乗車', 'ごじょうしゃ', '고죠-샤', '승차', '명사', NULL),
   ((SELECT id FROM situations WHERE slug = 'business_taxi'), 'ありがとうございます', 'ありがとうございます', '아리가토-고자이마스', '감사합니다', '표현', 'N5'),
   ((SELECT id FROM situations WHERE slug = 'business_taxi'), 'どちら', 'どちら', '도치라', '어느 쪽, 어디', '명사', 'N5'),
-  ((SELECT id FROM situations WHERE slug = 'business_taxi'), 'まで', 'まで', '마데', '~까지', '조사', NULL),
+  ((SELECT id FROM situations WHERE slug = 'business_taxi'), 'まで', 'まで', '마데', '~까지', '조사', 'N5'),
   ((SELECT id FROM situations WHERE slug = 'business_taxi'), '新宿駅', 'しんじゅくえき', '신쥬쿠에키', '신주쿠역', '명사', NULL),
   ((SELECT id FROM situations WHERE slug = 'business_taxi'), '西口', 'にしぐち', '니시구치', '서쪽 출구', '명사', NULL),
   ((SELECT id FROM situations WHERE slug = 'business_taxi'), 'お願いします', 'おねがいします', '오네가이시마스', '부탁드립니다', '표현', 'N5'),
@@ -208,11 +208,11 @@ INSERT INTO vocabulary (situation_id, word_ja, reading_hiragana, reading_ko, mea
 -- Vocabulary INSERT for convenience_store (10 words)
 INSERT INTO vocabulary (situation_id, word_ja, reading_hiragana, reading_ko, meaning_ko, pos, jlpt_level) VALUES
   ((SELECT id FROM situations WHERE slug = 'convenience_store'), 'いらっしゃいませ', 'いらっしゃいませ', '이랏샤이마세', '어서 오세요', '표현', NULL),
-  ((SELECT id FROM situations WHERE slug = 'convenience_store'), 'これ', 'これ', '코레', '이것', '명사', NULL),
+  ((SELECT id FROM situations WHERE slug = 'convenience_store'), 'これ', 'これ', '코레', '이것', '명사', 'N5'),
   ((SELECT id FROM situations WHERE slug = 'convenience_store'), 'ください', 'ください', '쿠다사이', '주세요', '표현', 'N5'),
   ((SELECT id FROM situations WHERE slug = 'convenience_store'), '袋', 'ふくろ', '후쿠로', '봉투, 가방', '명사', NULL),
   ((SELECT id FROM situations WHERE slug = 'convenience_store'), 'いる', 'いる', '이루', '필요하다, 있다', '동사', NULL),
-  ((SELECT id FROM situations WHERE slug = 'convenience_store'), 'いいえ', 'いいえ', '이-에', '아니오', '감탄사', NULL),
+  ((SELECT id FROM situations WHERE slug = 'convenience_store'), 'いいえ', 'いいえ', '이-에', '아니오', '감탄사', 'N5'),
   ((SELECT id FROM situations WHERE slug = 'convenience_store'), '大丈夫', 'だいじょうぶ', '다이죠-부', '괜찮음', '형용사', 'N5'),
   ((SELECT id FROM situations WHERE slug = 'convenience_store'), '三百', 'さんびゃく', '삼뱌쿠', '삼백', '명사', NULL),
   ((SELECT id FROM situations WHERE slug = 'convenience_store'), '円', 'えん', '엔', '엔 (일본 화폐 단위)', '명사', 'N5'),
@@ -323,7 +323,7 @@ INSERT INTO vocabulary (situation_id, word_ja, reading_hiragana, reading_ko, mea
   ((SELECT id FROM situations WHERE slug = 'emotions_v2'), 'いらっしゃる', 'いらっしゃる', '이랏샤루', '계시다/오시다 (존경)', '동사', 'N4'),
   ((SELECT id FROM situations WHERE slug = 'emotions_v2'), 'くださる', 'くださる', '쿠다사루', '주시다 (존경)', '동사', 'N4'),
   ((SELECT id FROM situations WHERE slug = 'emotions_v2'), '致す', 'いたす', '이타스', '하다 (겸양)', '동사', 'N4'),
-  ((SELECT id FROM situations WHERE slug = 'emotions_v2'), '差し上がる', 'さしあがる', '사시아가루', '드리다 (겸양)', '동사', 'N4')
+  ((SELECT id FROM situations WHERE slug = 'emotions_v2'), '差し上がる', 'さしあがる', '사시아가루', '드리다 (겸양)', '동사', NULL)
 ;
 
 -- Vocabulary INSERT for family_intro (16 words)
@@ -447,12 +447,12 @@ INSERT INTO vocabulary (situation_id, word_ja, reading_hiragana, reading_ko, mea
 INSERT INTO vocabulary (situation_id, word_ja, reading_hiragana, reading_ko, meaning_ko, pos, jlpt_level) VALUES
   ((SELECT id FROM situations WHERE slug = 'hotel_checkin'), 'いらっしゃいませ', 'いらっしゃいませ', '이랏샤이마세', '어서 오세요', '표현', NULL),
   ((SELECT id FROM situations WHERE slug = 'hotel_checkin'), 'ご予約', 'ごよやく', '고요야쿠', '예약', '명사', NULL),
-  ((SELECT id FROM situations WHERE slug = 'hotel_checkin'), '名前', 'なまえ', '나마에', '이름', '명사', NULL),
+  ((SELECT id FROM situations WHERE slug = 'hotel_checkin'), '名前', 'なまえ', '나마에', '이름', '명사', 'N5'),
   ((SELECT id FROM situations WHERE slug = 'hotel_checkin'), 'お願いします', 'おねがいします', '오네가이시마스', '부탁드립니다', '표현', 'N5'),
   ((SELECT id FROM situations WHERE slug = 'hotel_checkin'), '山田', 'やまだ', '야마다', '야마다 (성씨)', '명사', NULL),
   ((SELECT id FROM situations WHERE slug = 'hotel_checkin'), '今日', 'きょう', '쿄-', '오늘', '명사', 'N5'),
   ((SELECT id FROM situations WHERE slug = 'hotel_checkin'), '二泊', 'にはく', '니하쿠', '2박', '명사', NULL),
-  ((SELECT id FROM situations WHERE slug = 'hotel_checkin'), '確認', 'かくにん', '카쿠닌', '확인', '명사', NULL),
+  ((SELECT id FROM situations WHERE slug = 'hotel_checkin'), '確認', 'かくにん', '카쿠닌', '확인', '명사', 'N4'),
   ((SELECT id FROM situations WHERE slug = 'hotel_checkin'), 'できました', 'できました', '데키마시타', '되었습니다, 가능합니다', '표현', NULL),
   ((SELECT id FROM situations WHERE slug = 'hotel_checkin'), 'サイン', 'サイン', '사인', '사인', '명사', NULL),
   ((SELECT id FROM situations WHERE slug = 'hotel_checkin'), 'チェックアウト', 'チェックアウト', '첵쿠아우토', '체크아웃', '명사', NULL),
@@ -493,7 +493,7 @@ INSERT INTO vocabulary (situation_id, word_ja, reading_hiragana, reading_ko, mea
   ((SELECT id FROM situations WHERE slug = 'meeting_response'), '承知', 'しょうち', '쇼-치', '알겠습니다, 승낙', '명사, 동사(する)', NULL),
   ((SELECT id FROM situations WHERE slug = 'meeting_response'), '検討', 'けんとう', '켄토-', '검토', '명사, 동사(する)', NULL),
   ((SELECT id FROM situations WHERE slug = 'meeting_response'), '社内', 'しゃない', '샤나이', '사내', '명사', NULL),
-  ((SELECT id FROM situations WHERE slug = 'meeting_response'), '確認', 'かくにん', '카쿠닌', '확인', '명사, 동사(する)', NULL),
+  ((SELECT id FROM situations WHERE slug = 'meeting_response'), '確認', 'かくにん', '카쿠닌', '확인', '명사, 동사(する)', 'N4'),
   ((SELECT id FROM situations WHERE slug = 'meeting_response'), '改めて', 'あらためて', '아라타메테', '다시, 재차', '부사', NULL),
   ((SELECT id FROM situations WHERE slug = 'meeting_response'), '連絡', 'れんらく', '렌라쿠', '연락', '명사, 동사(する)', 'N4'),
   ((SELECT id FROM situations WHERE slug = 'meeting_response'), '忙しい', 'いそがしい', '이소가시이', '바쁘다', '형용사', 'N5'),
@@ -582,7 +582,7 @@ INSERT INTO vocabulary (situation_id, word_ja, reading_hiragana, reading_ko, mea
   ((SELECT id FROM situations WHERE slug = 'office_guide'), 'オフィス', 'オフィス', '오피스', '사무실', '명사', NULL),
   ((SELECT id FROM situations WHERE slug = 'office_guide'), '恐れ入ります', 'おそれいります', '오소레이리마스', '죄송합니다 / 감사합니다 (겸양)', '표현', NULL),
   ((SELECT id FROM situations WHERE slug = 'office_guide'), 'お待ちください', 'おまちください', '오마치 쿠다사이', '기다려 주세요', '표현', NULL),
-  ((SELECT id FROM situations WHERE slug = 'office_guide'), 'どうぞ', 'どうぞ', '도-조', '어서, 자', '부사', NULL),
+  ((SELECT id FROM situations WHERE slug = 'office_guide'), 'どうぞ', 'どうぞ', '도-조', '어서, 자', '부사', 'N5'),
   ((SELECT id FROM situations WHERE slug = 'office_guide'), 'こちら', 'こちら', '코치라', '이쪽', '명사', NULL)
 ;
 
@@ -676,11 +676,11 @@ INSERT INTO vocabulary (situation_id, word_ja, reading_hiragana, reading_ko, mea
 -- Vocabulary INSERT for real_estate (20 words)
 INSERT INTO vocabulary (situation_id, word_ja, reading_hiragana, reading_ko, meaning_ko, pos, jlpt_level) VALUES
   ((SELECT id FROM situations WHERE slug = 'real_estate'), 'いらっしゃいませ', 'いらっしゃいませ', '이랏샤이마세', '어서 오세요', '표현', NULL),
-  ((SELECT id FROM situations WHERE slug = 'real_estate'), '部屋(へや)', 'へや', '헤야', '방', '명사', NULL),
+  ((SELECT id FROM situations WHERE slug = 'real_estate'), '部屋(へや)', 'へや', '헤야', '방', '명사', 'N5'),
   ((SELECT id FROM situations WHERE slug = 'real_estate'), '探す(さがす)', 'さがす', '사가스', '찾다', '동사', NULL),
-  ((SELECT id FROM situations WHERE slug = 'real_estate'), '駅(えき)', 'えき', '에키', '역', '명사', NULL),
-  ((SELECT id FROM situations WHERE slug = 'real_estate'), '近い(ちかい)', 'ちかい', '치카이', '가깝다', '형용사', NULL),
-  ((SELECT id FROM situations WHERE slug = 'real_estate'), '家賃(やちん)', 'やちん', '야칭', '집세', '명사', NULL),
+  ((SELECT id FROM situations WHERE slug = 'real_estate'), '駅(えき)', 'えき', '에키', '역', '명사', 'N5'),
+  ((SELECT id FROM situations WHERE slug = 'real_estate'), '近い(ちかい)', 'ちかい', '치카이', '가깝다', '형용사', 'N5'),
+  ((SELECT id FROM situations WHERE slug = 'real_estate'), '家賃(やちん)', 'やちん', '야칭', '집세', '명사', 'N4'),
   ((SELECT id FROM situations WHERE slug = 'real_estate'), '五万円(ごまんえん)', 'ごまんえん', '고망엔', '5만 엔', '명사', NULL),
   ((SELECT id FROM situations WHERE slug = 'real_estate'), '以下(いか)', 'いか', '이카', '이하', '명사', NULL),
   ((SELECT id FROM situations WHERE slug = 'real_estate'), 'ワンルーム', 'ワンルーム', '완루-무', '원룸', '명사', NULL),
@@ -722,7 +722,7 @@ INSERT INTO vocabulary (situation_id, word_ja, reading_hiragana, reading_ko, mea
   ((SELECT id FROM situations WHERE slug = 'restaurant'), '決まる', 'きまる', '키마루', '정해지다, 결정되다', '동사', 'N4'),
   ((SELECT id FROM situations WHERE slug = 'restaurant'), 'お呼び(する)', 'および(する)', '오요비(스루)', '부르다', '동사', NULL),
   ((SELECT id FROM situations WHERE slug = 'restaurant'), 'すみません', 'すみません', '스미마센', '죄송합니다, 실례합니다', '표현', 'N5'),
-  ((SELECT id FROM situations WHERE slug = 'restaurant'), 'これ', 'これ', '코레', '이것', '명사', NULL),
+  ((SELECT id FROM situations WHERE slug = 'restaurant'), 'これ', 'これ', '코레', '이것', '명사', 'N5'),
   ((SELECT id FROM situations WHERE slug = 'restaurant'), 'かしこまりました', 'かしこまりました', '카시코마리마시타', '알겠습니다, 분부대로 하겠습니다', '표현', NULL),
   ((SELECT id FROM situations WHERE slug = 'restaurant'), '少々', 'しょうしょう', '쇼-쇼-', '잠시, 잠깐', '부사', NULL),
   ((SELECT id FROM situations WHERE slug = 'restaurant'), '待つ', 'まつ', '마츠', '기다리다', '동사', 'N5')
@@ -811,7 +811,7 @@ INSERT INTO vocabulary (situation_id, word_ja, reading_hiragana, reading_ko, mea
   ((SELECT id FROM situations WHERE slug = 'supermarket'), '円', 'えん', '엔', '엔 (화폐 단위)', '명사', 'N5'),
   ((SELECT id FROM situations WHERE slug = 'supermarket'), 'Paypay', 'ペイペイ', '페-페이', '페이페이', '명사', NULL),
   ((SELECT id FROM situations WHERE slug = 'supermarket'), '使う', 'つかう', '츠카우', '사용하다', '동사', 'N5'),
-  ((SELECT id FROM situations WHERE slug = 'supermarket'), 'いいえ', 'いいえ', '이-에', '아니오', '감탄사', NULL)
+  ((SELECT id FROM situations WHERE slug = 'supermarket'), 'いいえ', 'いいえ', '이-에', '아니오', '감탄사', 'N5')
 ;
 
 -- Vocabulary INSERT for taxi (12 words)
@@ -873,16 +873,16 @@ INSERT INTO vocabulary (situation_id, word_ja, reading_hiragana, reading_ko, mea
 INSERT INTO vocabulary (situation_id, word_ja, reading_hiragana, reading_ko, meaning_ko, pos, jlpt_level) VALUES
   ((SELECT id FROM situations WHERE slug = 'train_station'), 'いらっしゃいませ', 'いらっしゃいませ', '이랏샤이마세', '어서 오세요', '표현', NULL),
   ((SELECT id FROM situations WHERE slug = 'train_station'), 'どちら', 'どちら', '도치라', '어디', '명사', 'N5'),
-  ((SELECT id FROM situations WHERE slug = 'train_station'), 'まで', 'まで', '마데', '~까지', '조사', NULL),
+  ((SELECT id FROM situations WHERE slug = 'train_station'), 'まで', 'まで', '마데', '~까지', '조사', 'N5'),
   ((SELECT id FROM situations WHERE slug = 'train_station'), '東京駅', 'とうきょうえき', '토-쿄-에키', '도쿄역', '명사', NULL),
-  ((SELECT id FROM situations WHERE slug = 'train_station'), 'お願い(おねがい)します', 'おねがいします', '오네가이시마스', '부탁합니다', '표현', NULL),
+  ((SELECT id FROM situations WHERE slug = 'train_station'), 'お願い(おねがい)します', 'おねがいします', '오네가이시마스', '부탁합니다', '표현', 'N5'),
   ((SELECT id FROM situations WHERE slug = 'train_station'), '片道(かたみち)', 'かたみち', '카타미치', '편도', '명사', NULL),
   ((SELECT id FROM situations WHERE slug = 'train_station'), '往復(おうふく)', 'おうふく', '오-후쿠', '왕복', '명사', NULL),
   ((SELECT id FROM situations WHERE slug = 'train_station'), 'ですか', 'ですか', '데스카', '~입니까?', '조사', NULL),
   ((SELECT id FROM situations WHERE slug = 'train_station'), '一枚(いちまい)', 'いちまい', '이치마이', '한 장', '명사', NULL),
   ((SELECT id FROM situations WHERE slug = 'train_station'), '五百円(ごひゃくえん)', 'ごひゃくえん', '고햐쿠엔', '500엔', '명사', NULL),
   ((SELECT id FROM situations WHERE slug = 'train_station'), '番線(ばんせん)', 'ばんせん', '반센', '승강장 번호', '명사', NULL),
-  ((SELECT id FROM situations WHERE slug = 'train_station'), 'どうぞ', 'どうぞ', '도-조', '어서, 자', '표현', NULL)
+  ((SELECT id FROM situations WHERE slug = 'train_station'), 'どうぞ', 'どうぞ', '도-조', '어서, 자', '표현', 'N5')
 ;
 
 -- Vocabulary INSERT for transport_advanced (11 words)
