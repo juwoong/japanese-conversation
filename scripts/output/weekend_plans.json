@@ -310,7 +310,8 @@
       "pos": "형용사(な)",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "好き",
@@ -322,7 +323,8 @@
         1,
         2,
         3
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "泳ぐ",
@@ -332,7 +334,8 @@
       "pos": "동사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "大好き",
@@ -342,7 +345,8 @@
       "pos": "형용사(な)",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "遊ぶ",
@@ -353,7 +357,8 @@
       "appears_in_lines": [
         2,
         5
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "思う",
@@ -363,7 +368,8 @@
       "pos": "동사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "散歩する",
@@ -373,7 +379,8 @@
       "pos": "동사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "楽しい",
@@ -383,7 +390,8 @@
       "pos": "형용사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "嫌い",
@@ -393,7 +401,8 @@
       "pos": "형용사(な)",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "面白い",
@@ -403,7 +412,8 @@
       "pos": "형용사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "電話する",
@@ -413,7 +423,8 @@
       "pos": "동사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "言う",
@@ -423,7 +434,8 @@
       "pos": "동사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "分かる",
@@ -434,7 +446,8 @@
       "appears_in_lines": [
         4,
         5
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "呼ぶ",
@@ -444,7 +457,8 @@
       "pos": "동사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "答える",
@@ -454,7 +468,8 @@
       "pos": "동사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": "N5"
     }
   ]
 }

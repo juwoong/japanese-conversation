@@ -268,7 +268,8 @@
       "pos": "동사",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "ドア",
@@ -279,7 +280,8 @@
       "appears_in_lines": [
         1,
         5
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "開ける",
@@ -290,7 +292,8 @@
       "appears_in_lines": [
         1,
         3
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "座る",
@@ -300,7 +303,8 @@
       "pos": "동사",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "テレビ",
@@ -311,7 +315,8 @@
       "appears_in_lines": [
         2,
         4
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "付ける",
@@ -321,7 +326,8 @@
       "pos": "동사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "机",
@@ -331,7 +337,8 @@
       "pos": "명사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "窓",
@@ -341,7 +348,8 @@
       "pos": "명사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "ベッド",
@@ -351,7 +359,8 @@
       "pos": "명사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "立つ",
@@ -361,7 +370,8 @@
       "pos": "동사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "テーブル",
@@ -371,7 +381,8 @@
       "pos": "명사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "出かける",
@@ -381,7 +392,8 @@
       "pos": "동사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "消す",
@@ -392,7 +404,8 @@
       "appears_in_lines": [
         4,
         5
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "閉める",
@@ -402,7 +415,8 @@
       "pos": "동사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": "N5"
     }
   ]
 }

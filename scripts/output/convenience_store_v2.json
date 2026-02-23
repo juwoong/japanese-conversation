@@ -227,7 +227,8 @@
         1,
         2,
         3
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "肉",
@@ -237,7 +238,8 @@
       "pos": "명사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "魚",
@@ -247,7 +249,8 @@
       "pos": "명사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "卵",
@@ -257,7 +260,8 @@
       "pos": "명사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "美味しい",
@@ -267,7 +271,8 @@
       "pos": "형용사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "野菜",
@@ -277,7 +282,8 @@
       "pos": "명사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "甘い",
@@ -287,7 +293,8 @@
       "pos": "형용사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "多い",
@@ -297,7 +304,8 @@
       "pos": "형용사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "お茶",
@@ -307,7 +315,8 @@
       "pos": "명사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "あちら",
@@ -317,7 +326,8 @@
       "pos": "명사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": null
     }
   ]
 }

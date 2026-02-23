@@ -244,7 +244,8 @@
       "pos": "명사",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "シャツ",
@@ -254,7 +255,8 @@
       "pos": "명사",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "帽子",
@@ -264,7 +266,8 @@
       "pos": "명사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "服",
@@ -275,7 +278,8 @@
       "appears_in_lines": [
         2,
         4
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "傘",
@@ -285,7 +289,8 @@
       "pos": "명사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "ネクタイ",
@@ -295,7 +300,8 @@
       "pos": "명사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "太い",
@@ -305,7 +311,8 @@
       "pos": "형용사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "細い",
@@ -316,7 +323,8 @@
       "appears_in_lines": [
         3,
         4
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "軽い",
@@ -326,7 +334,8 @@
       "pos": "형용사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "電話",
@@ -336,7 +345,8 @@
       "pos": "명사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "丈夫",
@@ -346,7 +356,8 @@
       "pos": "형용사(な)",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "大切",
@@ -356,7 +367,8 @@
       "pos": "형용사(な)",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": "N5"
     }
   ]
 }

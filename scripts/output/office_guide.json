@@ -195,7 +195,8 @@
       "pos": "표현",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "会議室",
@@ -206,7 +207,8 @@
       "appears_in_lines": [
         1,
         5
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "ご案内",
@@ -216,7 +218,8 @@
       "pos": "명사",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "ご案内いたします",
@@ -226,7 +229,8 @@
       "pos": "표현",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "お手数",
@@ -236,7 +240,8 @@
       "pos": "명사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "おかけします",
@@ -246,7 +251,8 @@
       "pos": "표현",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "足元",
@@ -256,7 +262,8 @@
       "pos": "명사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "気をつける",
@@ -266,7 +273,8 @@
       "pos": "동사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "立派",
@@ -276,7 +284,8 @@
       "pos": "형용사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "オフィス",
@@ -286,7 +295,8 @@
       "pos": "명사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "恐れ入ります",
@@ -296,7 +306,8 @@
       "pos": "표현",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "お待ちください",
@@ -306,7 +317,8 @@
       "pos": "표현",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "どうぞ",
@@ -316,7 +328,8 @@
       "pos": "부사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "こちら",
@@ -326,7 +339,8 @@
       "pos": "명사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": null
     }
   ]
 }

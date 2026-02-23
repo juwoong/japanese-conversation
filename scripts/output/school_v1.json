@@ -284,7 +284,8 @@
       "pos": "명사",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "先生",
@@ -294,7 +295,8 @@
       "pos": "명사",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "学生",
@@ -304,7 +306,8 @@
       "pos": "명사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "火曜日",
@@ -314,7 +317,8 @@
       "pos": "명사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "水曜日",
@@ -324,7 +328,8 @@
       "pos": "명사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "勉強する",
@@ -334,7 +339,8 @@
       "pos": "동사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "金曜日",
@@ -344,7 +350,8 @@
       "pos": "명사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "教える",
@@ -354,7 +361,8 @@
       "pos": "동사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "ノート",
@@ -364,7 +372,8 @@
       "pos": "명사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "鉛筆",
@@ -374,7 +383,8 @@
       "pos": "명사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "土曜日",
@@ -384,7 +394,8 @@
       "pos": "명사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "日曜日",
@@ -394,7 +405,8 @@
       "pos": "명사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "ペン",
@@ -404,7 +416,8 @@
       "pos": "명사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "質問する",
@@ -414,7 +427,8 @@
       "pos": "동사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "習う",
@@ -424,7 +438,8 @@
       "pos": "동사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "練習する",
@@ -434,7 +449,8 @@
       "pos": "동사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": "N5"
     }
   ]
 }

@@ -320,7 +320,8 @@
       "pos": "명사",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "新聞",
@@ -330,7 +331,8 @@
       "pos": "명사",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "読む",
@@ -340,7 +342,8 @@
       "pos": "동사",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "起きる",
@@ -350,7 +353,8 @@
       "pos": "동사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "洗う",
@@ -360,7 +364,8 @@
       "pos": "동사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "飲む",
@@ -370,7 +375,8 @@
       "pos": "동사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "牛乳",
@@ -380,7 +386,8 @@
       "pos": "명사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "昼ご飯",
@@ -390,7 +397,8 @@
       "pos": "명사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "書く",
@@ -400,7 +408,8 @@
       "pos": "동사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "時計",
@@ -410,7 +419,8 @@
       "pos": "명사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "見る",
@@ -420,7 +430,8 @@
       "pos": "동사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "眼鏡",
@@ -430,7 +441,8 @@
       "pos": "명사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "晩ご飯",
@@ -440,7 +452,8 @@
       "pos": "명사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "話す",
@@ -450,7 +463,8 @@
       "pos": "동사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "寝る",
@@ -460,7 +474,8 @@
       "pos": "동사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": "N5"
     }
   ]
 }

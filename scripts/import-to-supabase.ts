@@ -39,6 +39,7 @@ interface VocabItem {
   meaning_ko: string;
   pos: string;
   appears_in_lines: number[];
+  jlpt_level?: string | null;
 }
 
 interface GeneratedContent {
@@ -204,6 +205,7 @@ async function insertVocabulary(
         reading_ko: vocab.reading_ko,
         meaning_ko: vocab.meaning_ko,
         pos: vocab.pos,
+        jlpt_level: vocab.jlpt_level ?? null,
       },
       { onConflict: "situation_id,word_ja" }
     )

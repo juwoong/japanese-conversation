@@ -253,7 +253,8 @@
       "pos": "명사",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "いつ",
@@ -263,7 +264,8 @@
       "pos": "부사",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "どの",
@@ -273,7 +275,8 @@
       "pos": "연체사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "どれ",
@@ -283,7 +286,8 @@
       "pos": "명사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "ちょっと",
@@ -293,7 +297,8 @@
       "pos": "부사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "いくつ",
@@ -303,7 +308,8 @@
       "pos": "명사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "なぜ",
@@ -313,7 +319,8 @@
       "pos": "부사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "たくさん",
@@ -323,7 +330,8 @@
       "pos": "부사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "どうして",
@@ -333,7 +341,8 @@
       "pos": "부사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "全部",
@@ -343,7 +352,8 @@
       "pos": "명사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "だから",
@@ -353,7 +363,8 @@
       "pos": "접속사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "そして",
@@ -363,7 +374,8 @@
       "pos": "접속사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "それから",
@@ -373,7 +385,8 @@
       "pos": "접속사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "まだ",
@@ -383,7 +396,8 @@
       "pos": "부사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "もう",
@@ -393,7 +407,8 @@
       "pos": "부사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": "N5"
     }
   ]
 }

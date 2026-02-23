@@ -256,7 +256,8 @@
       "pos": "표현",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "本日",
@@ -266,7 +267,8 @@
       "pos": "명사",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "どのような",
@@ -276,7 +278,8 @@
       "pos": "표현",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "ご用件",
@@ -286,7 +289,8 @@
       "pos": "명사",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "口座",
@@ -296,7 +300,8 @@
       "pos": "명사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "開設",
@@ -306,7 +311,8 @@
       "pos": "명사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "する",
@@ -316,7 +322,8 @@
       "pos": "동사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "外国人",
@@ -326,7 +333,8 @@
       "pos": "명사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "作る",
@@ -336,7 +344,8 @@
       "pos": "동사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "在留カード",
@@ -347,7 +356,8 @@
       "appears_in_lines": [
         3,
         4
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "住所",
@@ -357,7 +367,8 @@
       "pos": "명사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "確認",
@@ -367,7 +378,8 @@
       "pos": "명사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "書類",
@@ -377,7 +389,8 @@
       "pos": "명사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "電気",
@@ -387,7 +400,8 @@
       "pos": "명사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "請求書",
@@ -397,7 +411,8 @@
       "pos": "명사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "大丈夫",
@@ -407,7 +422,8 @@
       "pos": "형용사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "用紙",
@@ -417,7 +433,8 @@
       "pos": "명사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "記入",
@@ -427,7 +444,8 @@
       "pos": "명사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "お願い",
@@ -437,7 +455,8 @@
       "pos": "명사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "キャッシュカード",
@@ -447,7 +466,8 @@
       "pos": "명사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "一週間後",
@@ -457,7 +477,8 @@
       "pos": "명사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "届く",
@@ -467,7 +488,8 @@
       "pos": "동사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": "N4"
     }
   ]
 }

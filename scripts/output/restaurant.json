@@ -175,7 +175,8 @@
       "pos": "표현",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "何名様",
@@ -185,7 +186,8 @@
       "pos": "명사",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "一人",
@@ -195,7 +197,8 @@
       "pos": "명사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "メニュー",
@@ -205,7 +208,8 @@
       "pos": "명사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "お願い(する)",
@@ -216,7 +220,8 @@
       "appears_in_lines": [
         2,
         4
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "ご注文",
@@ -226,7 +231,8 @@
       "pos": "명사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "決まる",
@@ -236,7 +242,8 @@
       "pos": "동사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": "N4"
     },
     {
       "word_ja": "お呼び(する)",
@@ -246,7 +253,8 @@
       "pos": "동사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "すみません",
@@ -256,7 +264,8 @@
       "pos": "표현",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "これ",
@@ -266,7 +275,8 @@
       "pos": "명사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "かしこまりました",
@@ -276,7 +286,8 @@
       "pos": "표현",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "少々",
@@ -286,7 +297,8 @@
       "pos": "부사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "待つ",
@@ -296,7 +308,8 @@
       "pos": "동사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": "N5"
     }
   ]
 }

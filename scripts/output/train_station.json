@@ -160,7 +160,8 @@
       "pos": "표현",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "どちら",
@@ -170,7 +171,8 @@
       "pos": "명사",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "まで",
@@ -181,7 +183,8 @@
       "appears_in_lines": [
         1,
         2
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "東京駅",
@@ -191,7 +194,8 @@
       "pos": "명사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "お願い(おねがい)します",
@@ -202,7 +206,8 @@
       "appears_in_lines": [
         2,
         4
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "片道(かたみち)",
@@ -213,7 +218,8 @@
       "appears_in_lines": [
         3,
         4
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "往復(おうふく)",
@@ -223,7 +229,8 @@
       "pos": "명사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "ですか",
@@ -233,7 +240,8 @@
       "pos": "조사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "一枚(いちまい)",
@@ -243,7 +251,8 @@
       "pos": "명사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "五百円(ごひゃくえん)",
@@ -253,7 +262,8 @@
       "pos": "명사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "番線(ばんせん)",
@@ -263,7 +273,8 @@
       "pos": "명사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "どうぞ",
@@ -273,7 +284,8 @@
       "pos": "표현",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": null
     }
   ]
 }

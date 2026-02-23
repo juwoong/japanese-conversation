@@ -120,7 +120,8 @@
       "pos": "표현",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "これ",
@@ -130,7 +131,8 @@
       "pos": "명사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "ください",
@@ -140,7 +142,8 @@
       "pos": "표현",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "袋",
@@ -150,7 +153,8 @@
       "pos": "명사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "いる",
@@ -160,7 +164,8 @@
       "pos": "동사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "いいえ",
@@ -170,7 +175,8 @@
       "pos": "감탄사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "大丈夫",
@@ -180,7 +186,8 @@
       "pos": "형용사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "三百",
@@ -190,7 +197,8 @@
       "pos": "명사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "円",
@@ -200,7 +208,8 @@
       "pos": "명사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "ありがとうございました",
@@ -210,7 +219,8 @@
       "pos": "표현",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": null
     }
   ]
 }

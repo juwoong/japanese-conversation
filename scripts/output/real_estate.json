@@ -248,7 +248,8 @@
       "pos": "표현",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "部屋(へや)",
@@ -259,7 +260,8 @@
       "appears_in_lines": [
         1,
         2
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "探す(さがす)",
@@ -270,7 +272,8 @@
       "appears_in_lines": [
         1,
         2
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "駅(えき)",
@@ -280,7 +283,8 @@
       "pos": "명사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "近い(ちかい)",
@@ -290,7 +294,8 @@
       "pos": "형용사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "家賃(やちん)",
@@ -300,7 +305,8 @@
       "pos": "명사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "五万円(ごまんえん)",
@@ -310,7 +316,8 @@
       "pos": "명사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "以下(いか)",
@@ -320,7 +327,8 @@
       "pos": "명사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "ワンルーム",
@@ -330,7 +338,8 @@
       "pos": "명사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "物件(ぶっけん)",
@@ -340,7 +349,8 @@
       "pos": "명사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "いかが",
@@ -350,7 +360,8 @@
       "pos": "표현",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "初期費用(しょきひよう)",
@@ -360,7 +371,8 @@
       "pos": "명사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "どのくらい",
@@ -370,7 +382,8 @@
       "pos": "표현",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "かかる",
@@ -380,7 +393,8 @@
       "pos": "동사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "敷金(しききん)",
@@ -390,7 +404,8 @@
       "pos": "명사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "礼金(れいきん)",
@@ -400,7 +415,8 @@
       "pos": "명사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "約(やく)",
@@ -410,7 +426,8 @@
       "pos": "부사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "十五万円(じゅうごまんえん)",
@@ -420,7 +437,8 @@
       "pos": "명사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "内見(ないけん)",
@@ -430,7 +448,8 @@
       "pos": "명사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "する",
@@ -440,7 +459,8 @@
       "pos": "동사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": null
     }
   ]
 }

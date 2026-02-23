@@ -217,7 +217,8 @@
       "pos": "명사",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "いかが",
@@ -227,7 +228,8 @@
       "pos": "부사",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "考える",
@@ -237,7 +239,8 @@
       "pos": "동사",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "ご提案",
@@ -247,7 +250,8 @@
       "pos": "명사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "内容",
@@ -257,7 +261,8 @@
       "pos": "명사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "承知",
@@ -267,7 +272,8 @@
       "pos": "명사, 동사(する)",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "検討",
@@ -277,7 +283,8 @@
       "pos": "명사, 동사(する)",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "社内",
@@ -287,7 +294,8 @@
       "pos": "명사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "確認",
@@ -297,7 +305,8 @@
       "pos": "명사, 동사(する)",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "改めて",
@@ -307,7 +316,8 @@
       "pos": "부사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "連絡",
@@ -317,7 +327,8 @@
       "pos": "명사, 동사(する)",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": "N4"
     },
     {
       "word_ja": "忙しい",
@@ -327,7 +338,8 @@
       "pos": "형용사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "恐れ入ります",
@@ -337,7 +349,8 @@
       "pos": "표현",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "よろしくお願いいたします",
@@ -347,7 +360,8 @@
       "pos": "표현",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": null
     }
   ]
 }

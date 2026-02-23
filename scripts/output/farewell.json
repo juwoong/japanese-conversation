@@ -205,7 +205,8 @@
       "pos": "명사",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "お忙しい",
@@ -215,7 +216,8 @@
       "pos": "형용사",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "中",
@@ -225,7 +227,8 @@
       "pos": "명사",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "お越し",
@@ -235,7 +238,8 @@
       "pos": "명사",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "いただき",
@@ -245,7 +249,8 @@
       "pos": "동사",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "ありがとう",
@@ -256,7 +261,8 @@
       "appears_in_lines": [
         1,
         4
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "ございました",
@@ -267,7 +273,8 @@
       "appears_in_lines": [
         1,
         2
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "こちらこそ",
@@ -277,7 +284,8 @@
       "pos": "표현",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "大変",
@@ -287,7 +295,8 @@
       "pos": "형용동사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "お世話",
@@ -297,7 +306,8 @@
       "pos": "명사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "気",
@@ -307,7 +317,8 @@
       "pos": "명사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "つける",
@@ -317,7 +328,8 @@
       "pos": "동사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "お帰り",
@@ -327,7 +339,8 @@
       "pos": "명사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "また",
@@ -338,7 +351,8 @@
       "appears_in_lines": [
         4,
         5
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "近いうち",
@@ -348,7 +362,8 @@
       "pos": "명사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "会う",
@@ -358,7 +373,8 @@
       "pos": "동사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "できれば",
@@ -368,7 +384,8 @@
       "pos": "표현",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "ぜひ",
@@ -378,7 +395,8 @@
       "pos": "부사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "お待ちしております",
@@ -388,7 +406,8 @@
       "pos": "표현",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "失礼",
@@ -398,7 +417,8 @@
       "pos": "명사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": null
     }
   ]
 }

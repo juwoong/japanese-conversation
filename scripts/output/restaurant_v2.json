@@ -215,7 +215,8 @@
       "appears_in_lines": [
         2,
         5
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "人",
@@ -225,7 +226,8 @@
       "pos": "명사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "椅子",
@@ -235,7 +237,8 @@
       "pos": "명사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "お父さん",
@@ -245,7 +248,8 @@
       "pos": "명사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "食べる",
@@ -255,7 +259,8 @@
       "pos": "동사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "ご飯",
@@ -265,7 +270,8 @@
       "pos": "명사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "魚",
@@ -275,7 +281,8 @@
       "pos": "명사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "友達",
@@ -283,7 +290,8 @@
       "reading_ko": "토모다치",
       "meaning_ko": "친구",
       "pos": "명사",
-      "appears_in_lines": []
+      "appears_in_lines": [],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "メニュー",
@@ -293,7 +301,8 @@
       "pos": "명사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "用意",
@@ -303,7 +312,8 @@
       "pos": "명사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": null
     }
   ]
 }

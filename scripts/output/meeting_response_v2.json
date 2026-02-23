@@ -230,7 +230,8 @@
       "pos": "동사",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": "N4"
     },
     {
       "word_ja": "伺う",
@@ -240,7 +241,8 @@
       "pos": "동사",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": "N4"
     },
     {
       "word_ja": "おっしゃる",
@@ -250,7 +252,8 @@
       "pos": "동사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": "N4"
     },
     {
       "word_ja": "部長",
@@ -260,7 +263,8 @@
       "pos": "명사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": "N4"
     },
     {
       "word_ja": "説明",
@@ -271,7 +275,8 @@
       "appears_in_lines": [
         1,
         3
-      ]
+      ],
+      "jlpt_level": "N4"
     },
     {
       "word_ja": "ご覧になる",
@@ -281,7 +286,8 @@
       "pos": "동사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": "N4"
     },
     {
       "word_ja": "会議",
@@ -291,7 +297,8 @@
       "pos": "명사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": "N4"
     },
     {
       "word_ja": "準備",
@@ -301,7 +308,8 @@
       "pos": "명사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": "N4"
     },
     {
       "word_ja": "参る",
@@ -311,7 +319,8 @@
       "pos": "동사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": "N4"
     },
     {
       "word_ja": "質問",
@@ -321,7 +330,8 @@
       "pos": "명사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": null
     }
   ]
 }

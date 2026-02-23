@@ -258,7 +258,8 @@
       "pos": "동사",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": "N4"
     },
     {
       "word_ja": "足りる",
@@ -268,7 +269,8 @@
       "pos": "동사",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": "N4"
     },
     {
       "word_ja": "増える",
@@ -278,7 +280,8 @@
       "pos": "동사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": "N4"
     },
     {
       "word_ja": "減る",
@@ -288,7 +291,8 @@
       "pos": "동사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": "N4"
     },
     {
       "word_ja": "足す",
@@ -298,7 +302,8 @@
       "pos": "동사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": "N4"
     },
     {
       "word_ja": "捨てる",
@@ -308,7 +313,8 @@
       "pos": "동사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": "N4"
     },
     {
       "word_ja": "拾う",
@@ -318,7 +324,8 @@
       "pos": "동사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": "N4"
     },
     {
       "word_ja": "片付ける",
@@ -328,7 +335,8 @@
       "pos": "동사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": "N4"
     },
     {
       "word_ja": "届け出",
@@ -338,7 +346,8 @@
       "pos": "명사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": "N4"
     },
     {
       "word_ja": "届ける",
@@ -348,7 +357,8 @@
       "pos": "동사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": "N4"
     },
     {
       "word_ja": "洗濯物",
@@ -358,7 +368,8 @@
       "pos": "명사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": "N4"
     },
     {
       "word_ja": "集める",
@@ -368,7 +379,8 @@
       "pos": "동사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": "N4"
     }
   ]
 }

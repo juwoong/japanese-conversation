@@ -224,7 +224,8 @@
       "pos": "명사",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "合う",
@@ -234,7 +235,8 @@
       "pos": "동사",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "どう",
@@ -244,7 +246,8 @@
       "pos": "부사",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "召し上がる",
@@ -254,7 +257,8 @@
       "pos": "동사",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": "N4"
     },
     {
       "word_ja": "いただく",
@@ -264,7 +268,8 @@
       "pos": "표현",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "乾杯",
@@ -275,7 +280,8 @@
       "appears_in_lines": [
         3,
         4
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "今日",
@@ -285,7 +291,8 @@
       "pos": "명사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "ご成功",
@@ -295,7 +302,8 @@
       "pos": "명사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "祝して",
@@ -305,7 +313,8 @@
       "pos": "표현",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "とても",
@@ -315,7 +324,8 @@
       "pos": "부사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "おいしい",
@@ -325,7 +335,8 @@
       "pos": "형용사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "料理",
@@ -335,7 +346,8 @@
       "pos": "명사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "何という",
@@ -345,7 +357,8 @@
       "pos": "표현",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "郷土料理",
@@ -355,7 +368,8 @@
       "pos": "명사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "京都",
@@ -365,7 +379,8 @@
       "pos": "명사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "気",
@@ -375,7 +390,8 @@
       "pos": "명사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "召す",
@@ -385,7 +401,8 @@
       "pos": "동사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "嬉しい",
@@ -395,7 +412,8 @@
       "pos": "형용사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": "N4"
     }
   ]
 }

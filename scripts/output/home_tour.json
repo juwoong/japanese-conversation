@@ -250,7 +250,8 @@
       "pos": "명사",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "玄関",
@@ -260,7 +261,8 @@
       "pos": "명사",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "新しい",
@@ -271,7 +273,8 @@
       "appears_in_lines": [
         2,
         3
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "アパート",
@@ -281,7 +284,8 @@
       "pos": "명사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "台所",
@@ -292,7 +296,8 @@
       "appears_in_lines": [
         2,
         3
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "冷蔵庫",
@@ -302,7 +307,8 @@
       "pos": "명사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "エアコン",
@@ -312,7 +318,8 @@
       "pos": "명사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "洗濯機",
@@ -322,7 +329,8 @@
       "pos": "명사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "お風呂",
@@ -332,7 +340,8 @@
       "pos": "명사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "トイレ",
@@ -342,7 +351,8 @@
       "pos": "명사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "庭",
@@ -353,7 +363,8 @@
       "appears_in_lines": [
         4,
         5
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "喫茶店",
@@ -363,7 +374,8 @@
       "pos": "명사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "ホテル",
@@ -373,7 +385,8 @@
       "pos": "명사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "プール",
@@ -383,7 +396,8 @@
       "pos": "명사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "古い",
@@ -393,7 +407,8 @@
       "pos": "형용사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": "N5"
     }
   ]
 }

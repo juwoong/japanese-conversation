@@ -29,7 +29,7 @@ interface VocabWord {
   meaning_ko: string;
   pos: string;
   situation_name: string;
-  jlpt_target: string | null;
+  jlpt_level: string | null;
 }
 
 // 품사별 색상
@@ -89,6 +89,7 @@ export default function VocabularyScreen({ navigation }: Props) {
         reading_ko,
         meaning_ko,
         pos,
+        jlpt_level,
         situations!inner ( name_ko, jlpt_target )
       `)
       .order("id", { ascending: true });
@@ -107,7 +108,8 @@ export default function VocabularyScreen({ navigation }: Props) {
       meaning_ko: row.meaning_ko,
       pos: row.pos,
       situation_name: row.situations.name_ko,
-      jlpt_target: row.situations.jlpt_target,
+      // 단어별 JLPT → 상황별 JLPT 폴백
+      jlpt_level: row.jlpt_level ?? row.situations.jlpt_target,
     }));
 
     setWords(vocabWords);
@@ -117,7 +119,7 @@ export default function VocabularyScreen({ navigation }: Props) {
   const posTags = Array.from(new Set(words.map((w) => w.pos)));
 
   const filteredWords = words.filter((word) => {
-    if (selectedJlpt && word.jlpt_target !== selectedJlpt) return false;
+    if (selectedJlpt && word.jlpt_level !== selectedJlpt) return false;
     if (selectedPos && word.pos !== selectedPos) return false;
     if (searchQuery.trim()) {
       const q = searchQuery.trim().toLowerCase();
@@ -174,7 +176,7 @@ export default function VocabularyScreen({ navigation }: Props) {
 
   const renderItem = ({ item }: { item: VocabWord }) => {
     const furiganaSegments = makeFuriganaSegments(item.word_ja, item.reading_hiragana);
-    const jlptColor = getJlptColor(item.jlpt_target);
+    const jlptColor = getJlptColor(item.jlpt_level);
     const posColor = getPosColor(item.pos);
 
     return (
@@ -196,9 +198,9 @@ export default function VocabularyScreen({ navigation }: Props) {
           <View style={styles.cardRight}>
             <View style={styles.badgeRow}>
               {/* JLPT 배지 */}
-              {item.jlpt_target && (
+              {item.jlpt_level && (
                 <View style={[styles.jlptBadge, { backgroundColor: jlptColor + "18" }]}>
-                  <Text style={[styles.jlptText, { color: jlptColor }]}>{item.jlpt_target}</Text>
+                  <Text style={[styles.jlptText, { color: jlptColor }]}>{item.jlpt_level}</Text>
                 </View>
               )}
               {/* 품사 배지 */}
@@ -272,7 +274,7 @@ export default function VocabularyScreen({ navigation }: Props) {
         </Text>
         <Text style={styles.jlptSummary}>
           {JLPT_LEVELS.map(
-            (level) => `${level} ${words.filter((w) => w.jlpt_target === level).length}`
+            (level) => `${level} ${words.filter((w) => w.jlpt_level === level).length}`
           ).join(" / ")}
         </Text>
       </View>

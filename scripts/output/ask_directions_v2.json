@@ -261,7 +261,8 @@
       "pos": "명사",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "降りる",
@@ -272,7 +273,8 @@
       "appears_in_lines": [
         2,
         4
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "乗り換える",
@@ -283,7 +285,8 @@
       "appears_in_lines": [
         2,
         3
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "地下鉄",
@@ -294,7 +297,8 @@
       "appears_in_lines": [
         3,
         4
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "切符",
@@ -304,7 +308,8 @@
       "pos": "명사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "買う",
@@ -314,7 +319,8 @@
       "pos": "동사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "左",
@@ -324,7 +330,8 @@
       "pos": "명사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "階段",
@@ -334,7 +341,8 @@
       "pos": "명사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": "N4"
     },
     {
       "word_ja": "バス",
@@ -344,7 +352,8 @@
       "pos": "명사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "乗る",
@@ -355,7 +364,8 @@
       "appears_in_lines": [
         2,
         3
-      ]
+      ],
+      "jlpt_level": "N5"
     }
   ]
 }

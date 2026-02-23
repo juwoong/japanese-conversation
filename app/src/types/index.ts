@@ -164,5 +164,6 @@ export interface Vocabulary {
   reading_ko: string;        // 한글 발음
   meaning_ko: string;        // 한국어 의미
   pos: string;               // 품사 (명사, 동사, 형용사 등)
+  jlpt_level: string | null; // 단어별 JLPT 레벨 (N5, N4, N3 등)
   appears_in_lines?: number[]; // 등장 대사 번호
 }

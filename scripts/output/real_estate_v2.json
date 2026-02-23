@@ -223,7 +223,8 @@
       "pos": "명사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": "N4"
     },
     {
       "word_ja": "水道",
@@ -233,7 +234,8 @@
       "pos": "명사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": "N4"
     },
     {
       "word_ja": "暖房",
@@ -243,7 +245,8 @@
       "pos": "명사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": "N4"
     },
     {
       "word_ja": "冷房",
@@ -253,7 +256,8 @@
       "pos": "명사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": "N4"
     },
     {
       "word_ja": "布団",
@@ -263,7 +267,8 @@
       "pos": "명사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": "N4"
     },
     {
       "word_ja": "畳",
@@ -274,7 +279,8 @@
       "appears_in_lines": [
         4,
         5
-      ]
+      ],
+      "jlpt_level": "N4"
     },
     {
       "word_ja": "ゴミ",
@@ -284,7 +290,8 @@
       "pos": "명사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": "N4"
     },
     {
       "word_ja": "案内",
@@ -294,7 +301,8 @@
       "pos": "명사",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": "N4"
     },
     {
       "word_ja": "月曜日",
@@ -304,7 +312,8 @@
       "pos": "명사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "木曜日",
@@ -314,7 +323,8 @@
       "pos": "명사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": "N5"
     }
   ]
 }

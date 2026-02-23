@@ -295,7 +295,8 @@
       "pos": "형용사(な)",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": "N4"
     },
     {
       "word_ja": "危険",
@@ -305,7 +306,8 @@
       "pos": "형용사(な)",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": "N4"
     },
     {
       "word_ja": "安心",
@@ -315,7 +317,8 @@
       "pos": "명사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": "N4"
     },
     {
       "word_ja": "簡単",
@@ -325,7 +328,8 @@
       "pos": "형용사(な)",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": "N4"
     },
     {
       "word_ja": "複雑",
@@ -335,7 +339,8 @@
       "pos": "형용사(な)",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": "N4"
     },
     {
       "word_ja": "特別",
@@ -345,7 +350,8 @@
       "pos": "형용사(な)",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": "N4"
     },
     {
       "word_ja": "普通",
@@ -355,7 +361,8 @@
       "pos": "형용사(な)",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": "N4"
     },
     {
       "word_ja": "自由",
@@ -365,7 +372,8 @@
       "pos": "형용사(な)",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": "N4"
     },
     {
       "word_ja": "お見舞い",
@@ -375,7 +383,8 @@
       "pos": "명사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": "N4"
     },
     {
       "word_ja": "歯医者",
@@ -385,7 +394,8 @@
       "pos": "명사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": "N4"
     },
     {
       "word_ja": "退院",
@@ -395,7 +405,8 @@
       "pos": "명사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": "N4"
     },
     {
       "word_ja": "ご主人",
@@ -405,7 +416,8 @@
       "pos": "명사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": "N4"
     },
     {
       "word_ja": "ご存じ",
@@ -415,7 +427,8 @@
       "pos": "표현",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": "N4"
     },
     {
       "word_ja": "いらっしゃる",
@@ -425,7 +438,8 @@
       "pos": "동사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": "N4"
     },
     {
       "word_ja": "くださる",
@@ -435,7 +449,8 @@
       "pos": "동사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": "N4"
     },
     {
       "word_ja": "致す",
@@ -445,7 +460,8 @@
       "pos": "동사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": "N4"
     },
     {
       "word_ja": "差し上がる",
@@ -453,7 +469,8 @@
       "reading_ko": "사시아가루",
       "meaning_ko": "드리다 (겸양)",
       "pos": "동사",
-      "appears_in_lines": []
+      "appears_in_lines": [],
+      "jlpt_level": "N4"
     }
   ]
 }

@@ -270,7 +270,8 @@
       "pos": "표현",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "おはようございます",
@@ -280,7 +281,8 @@
       "pos": "표현",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "こんにちは",
@@ -290,7 +292,8 @@
       "pos": "표현",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "こんばんは",
@@ -300,7 +303,8 @@
       "pos": "표현",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "さようなら",
@@ -310,7 +314,8 @@
       "pos": "표현",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "ごめんなさい",
@@ -320,7 +325,8 @@
       "pos": "표현",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "ごちそうさま",
@@ -328,7 +334,8 @@
       "reading_ko": "고치소-사마",
       "meaning_ko": "잘 먹었습니다",
       "pos": "표현",
-      "appears_in_lines": []
+      "appears_in_lines": [],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "お元気ですか",
@@ -338,7 +345,8 @@
       "pos": "표현",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "朝",
@@ -348,7 +356,8 @@
       "pos": "명사",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "昼",
@@ -359,7 +368,8 @@
       "appears_in_lines": [
         2,
         3
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "夜",
@@ -369,7 +379,8 @@
       "pos": "명사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "晩",
@@ -379,7 +390,8 @@
       "pos": "명사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "今",
@@ -389,7 +401,8 @@
       "pos": "명사",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "明日",
@@ -399,7 +412,8 @@
       "pos": "명사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "元気",
@@ -410,7 +424,8 @@
       "appears_in_lines": [
         1,
         2
-      ]
+      ],
+      "jlpt_level": "N5"
     }
   ]
 }

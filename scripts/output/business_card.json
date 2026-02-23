@@ -205,7 +205,8 @@
       "appears_in_lines": [
         1,
         2
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "株式会社",
@@ -215,7 +216,8 @@
       "pos": "명사",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "山田",
@@ -225,7 +227,8 @@
       "pos": "명사",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "田中",
@@ -235,7 +238,8 @@
       "pos": "명사",
       "appears_in_lines": [
         1
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "申します",
@@ -246,7 +250,8 @@
       "appears_in_lines": [
         1,
         2
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "韓国",
@@ -256,7 +261,8 @@
       "pos": "명사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "キム",
@@ -266,7 +272,8 @@
       "pos": "명사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "名刺",
@@ -276,7 +283,8 @@
       "pos": "명사",
       "appears_in_lines": [
         2
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "どうぞ",
@@ -287,7 +295,8 @@
       "appears_in_lines": [
         2,
         3
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "頂戴いたします",
@@ -297,7 +306,8 @@
       "pos": "표현",
       "appears_in_lines": [
         3
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "こちらこそ",
@@ -308,7 +318,8 @@
       "appears_in_lines": [
         3,
         5
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "よろしく",
@@ -319,7 +330,8 @@
       "appears_in_lines": [
         3,
         4
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "今後とも",
@@ -329,7 +341,8 @@
       "pos": "부사",
       "appears_in_lines": [
         4
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "本日",
@@ -339,7 +352,8 @@
       "pos": "명사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "貴重",
@@ -349,7 +363,8 @@
       "pos": "형용사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "時間",
@@ -359,7 +374,8 @@
       "pos": "명사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "いただく",
@@ -369,7 +385,8 @@
       "pos": "동사",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": null
     },
     {
       "word_ja": "ありがとうございます",
@@ -379,7 +396,8 @@
       "pos": "표현",
       "appears_in_lines": [
         5
-      ]
+      ],
+      "jlpt_level": "N5"
     }
   ]
 }
