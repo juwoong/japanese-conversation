@@ -184,7 +184,7 @@
         1,
         2
       ],
-      "jlpt_level": null
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "東京駅",
@@ -207,7 +207,7 @@
         2,
         4
       ],
-      "jlpt_level": null
+      "jlpt_level": "N5"
     },
     {
       "word_ja": "片道(かたみち)",
@@ -285,7 +285,7 @@
       "appears_in_lines": [
         5
       ],
-      "jlpt_level": null
+      "jlpt_level": "N5"
     }
   ]
 }
