@@ -165,10 +165,12 @@ export default function VocabularyScreen({ navigation }: Props) {
   }, [revealFadeAnim]);
 
   // 한자가 포함된 단어 → FuriganaSegment 변환
+  // FuriganaText는 seg.text를 위에 작게, seg.reading을 아래에 크게 표시
+  // 어휘 카드: 한자를 크게(reading), 히라가나를 위에 작게(text) 표시
   const makeFuriganaSegments = (wordJa: string, reading: string): FuriganaSegment[] => {
     const hasKanji = /[\u4E00-\u9FFF\u3400-\u4DBF]/.test(wordJa);
     if (hasKanji) {
-      return [{ text: wordJa, reading }];
+      return [{ text: reading, reading: wordJa }];
     }
     // 히라가나/카타카나만 → reading 없이
     return [{ text: wordJa }];
