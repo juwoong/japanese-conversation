@@ -7,13 +7,13 @@
 
 ## 다음 세션
 
-**Phase 2 핵심 루프 검증 완료. Phase 3 — 어휘 데이터 고도화.**
+**Phase 3 완료. Phase 4 — 온보딩 고도화.**
 
 재개에 필요한 맥락:
-- Phase 1, 2 전체 완료
-- Phase 2에서 구현: SRS 자동 grading, 변주 시스템 MVP 연결, NPC Claude API 전환
+- Phase 1, 2, 3 전체 완료
+- Phase 3: JLPT 태깅 파이프라인 (731단어, 63.7% 커버리지), VocabularyScreen UI 개편
 - 변주 시스템 known limitation: Watch/Engage는 base 대사 사용 (DB 레코드 별도 생성 필요)
-- 다음: Phase 3 어휘 데이터 고도화
+- 다음: Phase 4 온보딩 고도화 (목적지 선택, D-Day 일정, 경어/반말 분기)
 
 ---
 
@@ -35,6 +35,8 @@
 - [x] SRS 자동 grading (Engage 성과 → FSRS rating → gradeFlashcard)
 - [x] 변주 시스템 MVP 연결 (visitCount >= 2 gating, Catch/Review 태그)
 - [x] NPC 엔진 Claude API 전환 (npc-respond Edge Function + 폴백)
+- [x] 어휘 JLPT 태깅 파이프라인 (731단어, N5 349 / N4 117)
+- [x] VocabularyScreen UI 개편 (FuriganaText, 배지, 검색, 필터)
 
 ---
 
@@ -70,12 +72,12 @@
 
 > 문장장이 아닌 진짜 단어장. 개별 어휘 단위의 인출 연습.
 
-- [ ] Vocabulary 타입 추가 (word_ja, reading_hiragana, meaning_ko, pos)
-- [ ] vocabulary 테이블 DB migration
-- [ ] 어휘 추출 스크립트 (scripts/generate-vocabulary.ts)
-- [ ] 51개 시나리오 JSON에 vocabulary 배열 추가
-- [ ] VocabularyScreen 단어별 UI 개편
-- [ ] JLPT 레벨 태깅 (N5/N4/N3 필터)
+- [x] Vocabulary 타입 추가 (word_ja, reading_hiragana, meaning_ko, pos, jlpt_level)
+- [x] vocabulary 테이블 DB migration (004_vocabulary_jlpt_level.sql)
+- [x] 어휘 추출 스크립트 (scripts/generate-vocabulary.ts) — 731개 단어
+- [x] 51개 시나리오 JSON에 vocabulary 배열 추가
+- [x] VocabularyScreen 단어별 UI 개편 (FuriganaText, JLPT 배지, 검색, 필터)
+- [x] JLPT 레벨 태깅 (N5 349 / N4 117 / 미태깅 265)
 
 ---
 
