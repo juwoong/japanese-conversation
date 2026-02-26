@@ -384,6 +384,49 @@
 
 ---
 
+### 2026-02-23 Phase 4a - 대화 분기 다양화 (Depth-1 Reconvergence)
+
+**완료 항목:**
+- NPC 톤 반응 규칙 추가 (경어 → 정중 응답, 반말 → 놀란 뉘앙스)
+- BranchOption 타입 정의 + Line.branches / ModelLine.branches / EngagePerformance.selectedBranches 확장
+- DB migration 생성 (005_line_branches.sql — branches JSONB 컬럼)
+- import-to-supabase.ts에 branches 필드 지원 추가
+- EngagePhase 분기 처리 (분기 감지 → 선택지 표시 → NPC 반응 삽입 → 다음 라인 합류)
+- ChoiceInput isBranch 모드 (정답/오답 없이 선택만, 선택 시 하이라이트)
+- useFourPhaseSession에서 branches → modelDialogue 전달 + keyExpressions에 분기 표현 포함
+- ReviewPhase "다른 표현도 있어요" 힌트 UI (선택하지 않은 분기 대안 표시)
+- 3개 시나리오 분기 콘텐츠 제작:
+  - cafe (line_order 2): 아이스커피 / 핫커피 / 메뉴 보기
+  - restaurant (line_order 4): 직접 주문 / 추천 요청 / 알레르기 확인
+  - convenience_store (line_order 4): 봉투 거절 / 봉투 요청 / 데워주기
+
+**결과:**
+- 수정된 파일: 12개 (신규 1개 + 수정 11개)
+- TypeScript 컴파일: 통과 (기존 @expo/vector-icons 에러만 존재)
+- JSON 유효성: 3개 모두 통과
+- 기존 51개 시나리오 하위호환: branches 필드 optional이므로 영향 없음
+
+**수정 파일:**
+- `backend/supabase/functions/npc-respond/index.ts` — 톤 반응 프롬프트
+- `app/src/types/index.ts` — BranchOption + Line/ModelLine/EngagePerformance 확장
+- `backend/supabase/migrations/005_line_branches.sql` — 신규
+- `scripts/import-to-supabase.ts` — branches 필드 임포트
+- `app/src/hooks/useFourPhaseSession.ts` — branches 전달 + keyExpressions 확장
+- `app/src/components/phases/EngagePhase.tsx` — 분기 핵심 로직
+- `app/src/components/phases/inputs/ChoiceInput.tsx` — isBranch 모드
+- `app/src/components/phases/ReviewPhase.tsx` — 분기 힌트 UI
+- `app/src/screens/SessionScreen.tsx` — ReviewPhase에 lines prop
+- `scripts/output/cafe.json` — 분기 콘텐츠
+- `scripts/output/restaurant.json` — 분기 콘텐츠
+- `scripts/output/convenience_store.json` — 분기 콘텐츠
+
+**다음 작업:**
+- DB migration 적용 (005_line_branches.sql)
+- import 재실행 (branches 포함)
+- 실기기 E2E 테스트 (분기 선택 → NPC 반응 → 합류 → Review 힌트)
+
+---
+
 ## 다음 단계
 
 1. ~~Supabase 마이그레이션 실행~~ ✅

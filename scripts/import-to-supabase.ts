@@ -19,6 +19,18 @@ const __dirname = path.dirname(__filename);
 
 // ============ Types ============
 
+interface BranchOption {
+  id: string;
+  text_ja: string;
+  text_ko: string;
+  furigana?: { text: string; reading?: string }[];
+  npc_reaction: {
+    text_ja: string;
+    text_ko: string;
+    furigana?: { text: string; reading?: string }[];
+  };
+}
+
 interface Line {
   line_order: number;
   speaker: "npc" | "user";
@@ -30,6 +42,7 @@ interface Line {
   grammar_hint?: string | null;
   furigana?: { text: string; reading?: string }[] | null;
   key_expressions: string[];
+  branches?: BranchOption[] | null;
 }
 
 interface VocabItem {
@@ -130,6 +143,7 @@ async function insertLine(
         text_ko: line.text_ko,
         grammar_hint: line.grammar_hint || null,
         furigana: line.furigana || null,
+        branches: line.branches || null,
       },
       { onConflict: "situation_id,line_order" }
     )

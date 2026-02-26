@@ -7,13 +7,17 @@
 
 ## 다음 세션
 
-**Phase 3 완료. Phase 4 — 온보딩 고도화.**
+**Phase 4-branch 완료. 대화 분기 다양화 구현됨.**
 
 재개에 필요한 맥락:
 - Phase 1, 2, 3 전체 완료
-- Phase 3: JLPT 태깅 파이프라인 (731단어, 63.7% 커버리지), VocabularyScreen UI 개편
-- 변주 시스템 known limitation: Watch/Engage는 base 대사 사용 (DB 레코드 별도 생성 필요)
-- 다음: Phase 4 온보딩 고도화 (목적지 선택, D-Day 일정, 경어/반말 분기)
+- Phase 4-branch: Depth-1 Reconvergence 분기 시스템 구현 완료
+  - 3개 시나리오 (cafe, restaurant, convenience_store)에 분기 추가
+  - EngagePhase에서 분기 선택 → NPC 반응 → 합류 동작
+  - ReviewPhase에서 "다른 표현도 있어요" 힌트
+  - DB migration: `005_line_branches.sql` (아직 적용 안됨, 적용 필요)
+  - import 스크립트에 branches 필드 지원 추가
+- 다음: DB migration 적용 + import 재실행 → 실기기 E2E 테스트 → Phase 4 온보딩 고도화
 
 ---
 
@@ -37,6 +41,7 @@
 - [x] NPC 엔진 Claude API 전환 (npc-respond Edge Function + 폴백)
 - [x] 어휘 JLPT 태깅 파이프라인 (731단어, N5 349 / N4 117)
 - [x] VocabularyScreen UI 개편 (FuriganaText, 배지, 검색, 필터)
+- [x] 대화 분기 시스템 (Depth-1 Reconvergence, 3개 시나리오 MVP)
 
 ---
 
@@ -81,7 +86,23 @@
 
 ---
 
-## Phase 4 — 온보딩 고도화
+## Phase 4a — 대화 분기 다양화
+
+> "선택에 따라 대화가 달라진다" — Depth-1 Reconvergence
+
+- [x] NPC 톤 반응 (경어/반말 감지 → 프롬프트 규칙 추가)
+- [x] BranchOption 타입 + Line.branches optional 필드
+- [x] DB migration (005_line_branches.sql — branches JSONB 컬럼)
+- [x] import 스크립트 branches 필드 지원
+- [x] EngagePhase 분기 처리 (분기 감지 → 선택지 표시 → NPC 반응 삽입 → 합류)
+- [x] ChoiceInput 분기 모드 (isBranch — 정답/오답 없이 선택만)
+- [x] useFourPhaseSession에서 branches → modelDialogue + keyExpressions 반영
+- [x] ReviewPhase "다른 표현도 있어요" 힌트
+- [x] 콘텐츠: cafe, restaurant, convenience_store 3개 시나리오 분기 추가
+- [ ] DB migration 적용 + import 재실행
+- [ ] 실기기 E2E 테스트
+
+## Phase 4b — 온보딩 고도화
 
 > "방문 목적과 목적지를 입력하면 개인 페르소나가 설정된다"
 

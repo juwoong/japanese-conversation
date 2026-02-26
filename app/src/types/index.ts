@@ -38,6 +38,18 @@ export interface FuriganaSegment {
   reading?: string;
 }
 
+export interface BranchOption {
+  id: string;
+  text_ja: string;
+  text_ko: string;
+  furigana?: FuriganaSegment[];
+  npc_reaction: {
+    text_ja: string;
+    text_ko: string;
+    furigana?: FuriganaSegment[];
+  };
+}
+
 export interface Line {
   id: number;
   situation_id: number;
@@ -50,6 +62,7 @@ export interface Line {
   text_ko: string;
   grammar_hint: string | null;
   furigana?: FuriganaSegment[];
+  branches?: BranchOption[];
 }
 
 export interface SRSCard {
@@ -108,6 +121,7 @@ export interface ModelLine {
   furigana?: FuriganaSegment[];
   isKeyExpression?: boolean;
   audioPlayed?: boolean;
+  branches?: BranchOption[];
 }
 
 export interface KeyExpression {
@@ -142,6 +156,8 @@ export interface EngagePerformance {
     textKo: string;
     feedbackType?: string;
   }>;
+  /** Map of turnIndex → selected BranchOption (for ReviewPhase) */
+  selectedBranches?: Record<number, BranchOption>;
 }
 
 export type UserLevel = 'intermediate' | 'beginner' | 'conservative_beginner';

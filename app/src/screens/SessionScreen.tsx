@@ -161,6 +161,7 @@ export default function SessionScreen({ navigation, route }: Props) {
             situationName={fourPhase.situation?.name_ko}
             inputMode={fourPhase.inputMode}
             variationNewExpressions={fourPhase.variationInfo?.newExpressions}
+            lines={fourPhase.lines}
             onComplete={handleComplete}
           />
         );

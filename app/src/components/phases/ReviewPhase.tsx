@@ -33,6 +33,8 @@ import type {
   KeyExpression,
   EngagePerformance,
   SessionMode,
+  BranchOption,
+  Line,
 } from "../../types";
 
 interface ReviewPhaseProps {
@@ -41,6 +43,7 @@ interface ReviewPhaseProps {
   situationName?: string;
   inputMode: SessionMode;
   variationNewExpressions?: string[];
+  lines?: Line[];
   onComplete: () => void;
 }
 
@@ -136,6 +139,7 @@ export default function ReviewPhase({
   situationName,
   inputMode,
   variationNewExpressions,
+  lines,
   onComplete,
 }: ReviewPhaseProps) {
   const [isSpeaking, setIsSpeaking] = useState(false);
@@ -200,6 +204,20 @@ export default function ReviewPhase({
     if (entries.length === 0) return null;
     entries.sort((a, b) => b[1] - a[1]);
     return entries[0][0];
+  };
+
+  // --- Branch alternatives: find other branch options for expressions that came from a branching turn ---
+  const getBranchAlternatives = (textJa: string): BranchOption[] => {
+    if (!lines || !performance?.selectedBranches) return [];
+    for (const [turnIdx, selected] of Object.entries(performance.selectedBranches)) {
+      if (selected.text_ja === textJa) {
+        const line = lines[Number(turnIdx)];
+        if (line?.branches) {
+          return line.branches.filter((b) => b.text_ja !== textJa);
+        }
+      }
+    }
+    return [];
   };
 
   const topError = getTopErrorType();
@@ -288,6 +306,7 @@ export default function ReviewPhase({
           const grammar = findGrammarExplanation(expr.textJa);
           const isGrammarOpen = expandedGrammar.has(i);
           const status = getExpressionStatus(expr.textJa);
+          const branchAlts = getBranchAlternatives(expr.textJa);
 
           return (
             <View key={i} style={styles.expressionCard}>
@@ -360,6 +379,24 @@ export default function ReviewPhase({
                   <Text style={styles.diagnosisHelped}>
                     NPC가 도와줬어요
                   </Text>
+                </View>
+              )}
+
+              {/* Branch alternatives hint */}
+              {branchAlts.length > 0 && (
+                <View style={styles.branchHint}>
+                  <Text style={styles.branchHintLabel}>다른 표현도 있어요</Text>
+                  {branchAlts.map((alt, j) => (
+                    <TouchableOpacity
+                      key={j}
+                      style={styles.branchAltRow}
+                      onPress={() => speakText(alt.text_ja)}
+                      activeOpacity={0.7}
+                    >
+                      <Text style={styles.branchAltJa}>{alt.text_ja}</Text>
+                      <Text style={styles.branchAltKo}>{alt.text_ko}</Text>
+                    </TouchableOpacity>
+                  ))}
                 </View>
               )}
 
@@ -566,6 +603,35 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: colors.warning,
     fontWeight: "500",
+  },
+  // Branch alternatives
+  branchHint: {
+    marginTop: 10,
+    marginLeft: 36,
+    backgroundColor: `${colors.primary}10`,
+    borderRadius: borderRadius.sm,
+    padding: 10,
+  },
+  branchHintLabel: {
+    fontSize: 12,
+    fontWeight: "600",
+    color: colors.primary,
+    marginBottom: 6,
+  },
+  branchAltRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    paddingVertical: 4,
+  },
+  branchAltJa: {
+    fontSize: 15,
+    fontWeight: "500",
+    color: colors.textDark,
+  },
+  branchAltKo: {
+    fontSize: 13,
+    color: colors.textMuted,
   },
   // Grammar
   grammarToggle: {

@@ -34,6 +34,7 @@ import { colors } from "../../constants/theme";
 import type {
   KeyExpression,
   ModelLine,
+  BranchOption,
   EngagePerformance,
   TurnRecord,
   SessionMode,
@@ -106,6 +107,19 @@ function buildChoices(
 }
 
 /**
+ * Build choices from branch options (all are "correct" — user picks a path).
+ */
+function buildBranchChoices(
+  branches: BranchOption[]
+): { textJa: string; isCorrect: boolean; furigana?: FuriganaSegment[] }[] {
+  return branches.map((b) => ({
+    textJa: b.text_ja,
+    isCorrect: true,
+    furigana: b.furigana,
+  }));
+}
+
+/**
  * Build fill-blank data from a user line.
  */
 function buildFillBlank(textJa: string) {
@@ -157,6 +171,8 @@ export default function EngagePhase({
   const incorrectRef = useRef(0);
   const errorHistoryRef = useRef<{ text: string; type: string }[]>([]);
   const turnRecordsRef = useRef<TurnRecord[]>([]);
+  // Track selected branch per turn index for review
+  const selectedBranchesRef = useRef<Map<number, BranchOption>>(new Map());
 
   // Typing indicator animation
   const typingDots = useRef(new Animated.Value(0)).current;
@@ -267,10 +283,15 @@ export default function EngagePhase({
   };
 
   const handleUserAnswer = async (correct: boolean, chosenText: string) => {
-    // Find furigana for the chosen text from model dialogue
-    const matchedFurigana = modelDialogue.find(
-      (l) => l.textJa === chosenText
-    )?.furigana;
+    // Check if this is a branch turn
+    const hasBranches = currentLine?.branches && currentLine.branches.length > 0;
+    const selectedBranch = hasBranches
+      ? currentLine!.branches!.find((b) => b.text_ja === chosenText)
+      : null;
+
+    // Find furigana for the chosen text — check branches first, then model dialogue
+    const matchedFurigana = selectedBranch?.furigana
+      ?? modelDialogue.find((l) => l.textJa === chosenText)?.furigana;
 
     // Add user message
     setMessages((prev) => [
@@ -278,10 +299,53 @@ export default function EngagePhase({
       {
         speaker: "user",
         textJa: chosenText,
-        textKo: currentLine?.textKo ?? "",
+        textKo: selectedBranch?.text_ko ?? currentLine?.textKo ?? "",
         furigana: matchedFurigana,
       },
     ]);
+
+    // Branch path: insert npc_reaction, then reconverge
+    if (selectedBranch) {
+      selectedBranchesRef.current.set(turnIndex, selectedBranch);
+      correctRef.current += 1;
+      setCorrectCount(correctRef.current);
+
+      turnRecordsRef.current.push({
+        userText: chosenText,
+        expectedText: currentLine?.textJa ?? "",
+        correct: true,
+        feedbackType: 'none',
+        keyExpressionJa: chosenText,
+      });
+
+      // Insert NPC reaction bubble
+      const reaction = selectedBranch.npc_reaction;
+      setMessages((prev) => [
+        ...prev,
+        {
+          speaker: "npc",
+          textJa: reaction.text_ja,
+          textKo: reaction.text_ko,
+          furigana: reaction.furigana,
+        },
+      ]);
+
+      // Play NPC reaction TTS then reconverge to next line
+      setIsSpeaking(true);
+      Speech.speak(reaction.text_ja, {
+        language: "ja-JP",
+        rate: 0.8,
+        onDone: () => {
+          setIsSpeaking(false);
+          advanceToNext();
+        },
+        onError: () => {
+          setIsSpeaking(false);
+          advanceToNext();
+        },
+      });
+      return;
+    }
 
     if (correct) {
       correctRef.current += 1;
@@ -459,6 +523,10 @@ export default function EngagePhase({
         feedbackType: m.feedbackType,
       }));
 
+    // Convert selectedBranches Map to plain object
+    const selectedBranches: Record<number, BranchOption> = {};
+    selectedBranchesRef.current.forEach((v, k) => { selectedBranches[k] = v; });
+
     onComplete({
       totalTurns,
       userTurns: userTurnCount,
@@ -467,6 +535,7 @@ export default function EngagePhase({
       turnRecords: turnRecordsRef.current,
       errorBreakdown,
       conversationLog,
+      selectedBranches: Object.keys(selectedBranches).length > 0 ? selectedBranches : undefined,
     });
   };
 
@@ -508,6 +577,18 @@ export default function EngagePhase({
 
   const renderUserInput = () => {
     if (turnPhase !== "user_input" || !currentLine) return null;
+
+    // Branch turn: always show branch choices regardless of visitCount
+    if (currentLine.branches && currentLine.branches.length > 0) {
+      return (
+        <ChoiceInput
+          npcQuestion={modelDialogue[turnIndex - 1]?.textJa ?? ""}
+          choices={buildBranchChoices(currentLine.branches)}
+          onAnswer={handleUserAnswer}
+          isBranch
+        />
+      );
+    }
 
     const inputType = getInputType();
 

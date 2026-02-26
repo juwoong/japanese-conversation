@@ -86,30 +86,45 @@ export function useFourPhaseSession(
       furigana: line.furigana,
       isKeyExpression: line.speaker === "user",
       audioPlayed: false,
+      branches: line.branches,
     }));
   }, [session.lines]);
 
-  // Extract key expressions (user lines are the ones to practice)
+  // Extract key expressions (user lines + all branch options for Catch exposure)
   const keyExpressions = useMemo<KeyExpression[]>(() => {
-    return session.lines
-      .filter((line) => line.speaker === "user")
-      .map((line) => {
-        // Find the preceding NPC line for PictureSpeak prompt
-        const idx = session.lines.indexOf(line);
-        let npcPrompt = "";
-        for (let j = idx - 1; j >= 0; j--) {
-          if (session.lines[j].speaker === "npc") {
-            npcPrompt = session.lines[j].text_ja;
-            break;
-          }
+    const expressions: KeyExpression[] = [];
+    for (const line of session.lines) {
+      if (line.speaker !== "user") continue;
+      const idx = session.lines.indexOf(line);
+      let npcPrompt = "";
+      for (let j = idx - 1; j >= 0; j--) {
+        if (session.lines[j].speaker === "npc") {
+          npcPrompt = session.lines[j].text_ja;
+          break;
         }
-        return {
-          textJa: line.text_ja,
-          textKo: line.text_ko,
-          furigana: line.furigana,
-          npcPrompt,
-        };
+      }
+      // Base expression (default path)
+      expressions.push({
+        textJa: line.text_ja,
+        textKo: line.text_ko,
+        furigana: line.furigana,
+        npcPrompt,
       });
+      // Branch expressions (extra vocab exposure for Catch)
+      if (line.branches) {
+        for (const branch of line.branches) {
+          // Skip if same as base text
+          if (branch.text_ja === line.text_ja) continue;
+          expressions.push({
+            textJa: branch.text_ja,
+            textKo: branch.text_ko,
+            furigana: branch.furigana,
+            npcPrompt,
+          });
+        }
+      }
+    }
+    return expressions;
   }, [session.lines]);
 
   const setInputMode = useCallback((mode: SessionMode) => {

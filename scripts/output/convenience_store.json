@@ -85,6 +85,65 @@
         {
           "text": "です。"
         }
+      ],
+      "branches": [
+        {
+          "id": "conv_4a",
+          "text_ja": "いいえ、大丈夫です。",
+          "text_ko": "아니요, 괜찮아요.",
+          "furigana": [
+            { "text": "いいえ、" },
+            { "text": "大丈夫", "reading": "だいじょうぶ" },
+            { "text": "です。" }
+          ],
+          "npc_reaction": {
+            "text_ja": "わかりました。",
+            "text_ko": "알겠습니다.",
+            "furigana": [
+              { "text": "わかりました。" }
+            ]
+          }
+        },
+        {
+          "id": "conv_4b",
+          "text_ja": "はい、お願いします。",
+          "text_ko": "네, 부탁드려요.",
+          "furigana": [
+            { "text": "はい、" },
+            { "text": "お願い", "reading": "ねが" },
+            { "text": "します。" }
+          ],
+          "npc_reaction": {
+            "text_ja": "袋は五円になります。",
+            "text_ko": "봉투는 5엔입니다.",
+            "furigana": [
+              { "text": "袋", "reading": "ふくろ" },
+              { "text": "は" },
+              { "text": "五円", "reading": "ごえん" },
+              { "text": "になります。" }
+            ]
+          }
+        },
+        {
+          "id": "conv_4c",
+          "text_ja": "温めてもらえますか。",
+          "text_ko": "데워주실 수 있나요?",
+          "furigana": [
+            { "text": "温", "reading": "あたた" },
+            { "text": "めてもらえますか。" }
+          ],
+          "npc_reaction": {
+            "text_ja": "はい、少々お待ちください。",
+            "text_ko": "네, 잠시만 기다려주세요.",
+            "furigana": [
+              { "text": "はい、" },
+              { "text": "少々", "reading": "しょうしょう" },
+              { "text": "お" },
+              { "text": "待", "reading": "ま" },
+              { "text": "ちください。" }
+            ]
+          }
+        }
       ]
     },
     {

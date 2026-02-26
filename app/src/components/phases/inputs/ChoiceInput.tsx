@@ -32,12 +32,14 @@ interface ChoiceInputProps {
   npcQuestion: string;
   choices: Choice[];
   onAnswer: (correct: boolean, chosenText: string) => void;
+  isBranch?: boolean;
 }
 
 export default function ChoiceInput({
   npcQuestion,
   choices,
   onAnswer,
+  isBranch = false,
 }: ChoiceInputProps) {
   const [selected, setSelected] = useState<number | null>(null);
   const [revealed, setRevealed] = useState(false);
@@ -60,6 +62,15 @@ export default function ChoiceInput({
     setSelected(index);
     setRevealed(true);
 
+    if (isBranch) {
+      // Branch mode: all choices are valid, light success feedback
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+      setTimeout(() => {
+        onAnswer(true, choice.textJa);
+      }, 500);
+      return;
+    }
+
     if (choice.isCorrect) {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     } else {
@@ -74,6 +85,12 @@ export default function ChoiceInput({
 
   const getChoiceStyle = (index: number) => {
     if (!revealed) return styles.choice;
+    if (isBranch) {
+      // Branch mode: selected gets highlight, others fade
+      return index === selected
+        ? [styles.choice, styles.choiceBranchSelected]
+        : [styles.choice, styles.choiceFaded];
+    }
     const choice = choices[index];
     if (index === selected) {
       return [
@@ -153,6 +170,10 @@ const styles = StyleSheet.create({
   choiceWrong: {
     borderColor: colors.border,
     opacity: 0.5,
+  },
+  choiceBranchSelected: {
+    borderColor: colors.primary,
+    backgroundColor: `${colors.primary}15`,
   },
   choiceCorrectHint: {
     borderColor: colors.success,
