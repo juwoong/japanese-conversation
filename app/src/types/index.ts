@@ -1,10 +1,21 @@
 // Database Types
 
+export type Destination = 'tokyo' | 'osaka' | 'kyoto' | 'fukuoka';
+
+export const DESTINATION_LABELS: Record<Destination, string> = {
+  tokyo: '도쿄',
+  osaka: '오사카',
+  kyoto: '교토',
+  fukuoka: '후쿠오카',
+};
+
 export interface Profile {
   id: string;
   gender: "male" | "female" | "neutral" | null;
   current_level: number;
   daily_goal: number;
+  destination: Destination | null;
+  departure_date: string | null;
   created_at: string;
   updated_at: string;
 }

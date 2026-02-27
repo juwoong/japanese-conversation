@@ -26,9 +26,19 @@ interface NpcRespondRequest {
   situation: string;
   nextNpcLine?: string;
   errorHistory: { text: string; type: string }[];
+  personaSlug?: string;
 }
 
-const SYSTEM_PROMPT = `당신은 일본어 회화 연습 상대(NPC)입니다. 자연스러운 일본어로 응답하세요.
+const PERSONA_TONE_RULES: Record<string, string> = {
+  business:
+    "학습자는 비즈니스 상황입니다. 경어(です/ます/敬語) 사용을 기대하세요. 반말을 쓰면 정중한 표현으로 부드럽게 교정(recast)하세요.",
+  tourist:
+    "학습자는 관광 중입니다. 기본 정중체(です/ます)를 사용하되, 약간 단순한 표현도 자연스럽게 허용하세요.",
+  workingholiday:
+    "학습자는 일상 생활에서 대화 중입니다. 친근한 표현이나 반말도 자연스럽게 받아들이세요. 경어를 쓰면 칭찬하되 강요하지 마세요.",
+};
+
+const BASE_SYSTEM_PROMPT = `당신은 일본어 회화 연습 상대(NPC)입니다. 자연스러운 일본어로 응답하세요.
 
 규칙:
 1. 학습자의 문장과 기대 문장을 비교하세요.
@@ -36,7 +46,6 @@ const SYSTEM_PROMPT = `당신은 일본어 회화 연습 상대(NPC)입니다. �
 3. 의미는 통하지만 문법/표현이 다르면 feedbackType: "recast"로 올바른 표현을 자연스럽게 되풀이하세요.
 4. 의미를 알 수 없으면 feedbackType: "clarification"으로 다시 말해달라고 요청하세요.
 5. 같은 유형의 오류가 2회 이상 반복되면 feedbackType: "meta_hint"로 한국어 힌트를 제공하세요.
-6. 톤 반응: 학습자가 경어(です/ます)를 쓰면 NPC도 정중하게 응답하세요. 반말(タメ口)을 쓰면 NPC는 약간 놀란 뉘앙스를 섞되 대화를 이어가세요.
 
 JSON으로만 응답하세요:
 {
@@ -45,6 +54,12 @@ JSON으로만 응답하세요:
   "recastHighlight": "교정된 부분 (recast/meta_hint일 때만)",
   "metaHint": "한국어 학습 힌트 (meta_hint일 때만)"
 }`;
+
+function buildSystemPrompt(personaSlug?: string): string {
+  const toneRule =
+    PERSONA_TONE_RULES[personaSlug ?? "tourist"] ?? PERSONA_TONE_RULES.tourist;
+  return `${BASE_SYSTEM_PROMPT}\n\n톤 규칙: ${toneRule}`;
+}
 
 function truncate(text: string, max: number): string {
   return text.length > max ? text.slice(0, max) : text;
@@ -125,7 +140,7 @@ serve(async (req) => {
         body: JSON.stringify({
           model: "claude-haiku-4-5-20251001",
           max_tokens: 400,
-          system: SYSTEM_PROMPT,
+          system: buildSystemPrompt(body.personaSlug),
           messages: [{ role: "user", content: buildUserMessage(body) }],
         }),
         signal: controller.signal,

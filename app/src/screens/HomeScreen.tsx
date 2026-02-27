@@ -17,41 +17,31 @@ import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useFocusEffect } from "@react-navigation/native";
 import { supabase } from "../lib/supabase";
 import { getLocalDateString } from "../lib/sessionProgress";
-import type { RootStackParamList, Persona, SituationWithProgress } from "../types";
+import type { RootStackParamList, Persona, SituationWithProgress, Destination } from "../types";
+import { DESTINATION_LABELS } from "../types";
 import { colors } from "../constants/theme";
 import OfflineBanner from "../components/OfflineBanner";
 import TravelMap, { MapNode, NodeStatus } from "../components/TravelMap";
 import AbilityStatement from "../components/AbilityStatement";
 import { countVariationsForSituation, getAvailableVariations, VARIATION_LABELS, VARIATION_MIN_VISITS } from "../lib/variationEngine";
+import { getMapSituations, getDailyPace, type MapSituationConfig } from "../lib/situationPriority";
 import ToolkitView from "../components/ToolkitView";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Home">;
 
-// MVP 8 map situations — order defines the travel route
-const MAP_SITUATIONS = [
-  { slug: "airport_pickup", label: "공항", emoji: "\u2708\uFE0F", color: "#87CEEB" },
-  { slug: "train_station", label: "전철", emoji: "\uD83D\uDE83", color: "#4CAF50" },
-  { slug: "hotel_checkin", label: "호텔", emoji: "\uD83C\uDFE8", color: "#D2B48C" },
-  { slug: "convenience_store", label: "편의점", emoji: "\uD83C\uDFEA", color: "#FF9800" },
-  { slug: "restaurant", label: "식당", emoji: "\uD83C\uDF5C", color: "#FF5722" },
-  { slug: "ask_directions", label: "관광지", emoji: "\u26E9\uFE0F", color: "#E53935" },
-  { slug: "shopping_market", label: "쇼핑", emoji: "\uD83D\uDECD\uFE0F", color: "#E91E63" },
-  { slug: "taxi", label: "긴급상황", emoji: "\uD83C\uDD98", color: "#1976D2" },
-];
-
 // Zigzag layout positions: alternating left/right, evenly spaced vertically
-function buildNodePositions(): { x: number; y: number }[] {
+function buildNodePositions(count: number): { x: number; y: number }[] {
   const rowHeight = 120;
-  return MAP_SITUATIONS.map((_, i) => ({
+  return Array.from({ length: count }, (_, i) => ({
     x: i % 2 === 0 ? 0.15 : 0.65,
     y: i * rowHeight + 10,
   }));
 }
 
 // Connections: each node connects to the next
-function buildConnections(): string[][] {
-  return MAP_SITUATIONS.map((_, i) =>
-    i < MAP_SITUATIONS.length - 1 ? [MAP_SITUATIONS[i + 1].slug] : []
+function buildConnections(configs: MapSituationConfig[]): string[][] {
+  return configs.map((_, i) =>
+    i < configs.length - 1 ? [configs[i + 1].slug] : []
   );
 }
 
@@ -118,12 +108,26 @@ export default function HomeScreen({ navigation }: Props) {
   const [reviewSlugs, setReviewSlugs] = useState<Set<string>>(new Set());
   const [recommendedSituation, setRecommendedSituation] = useState<SituationWithProgress | null>(null);
   const [showToolkit, setShowToolkit] = useState(false);
+  const [destination, setDestination] = useState<Destination | null>(null);
+  const [departureDate, setDepartureDate] = useState<string | null>(null);
 
   const loadData = useCallback(async () => {
     try {
       setError(null);
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
+
+      // Load profile (destination, departure_date)
+      const { data: profileData } = await supabase
+        .from("profiles")
+        .select("destination, departure_date")
+        .eq("id", user.id)
+        .single();
+
+      if (profileData) {
+        setDestination(profileData.destination as Destination | null);
+        setDepartureDate(profileData.departure_date as string | null);
+      }
 
       // Load primary persona
       const { data: userPersona } = await supabase
@@ -240,18 +244,22 @@ export default function HomeScreen({ navigation }: Props) {
     loadData();
   }, [loadData]);
 
-  // Build map nodes from DB situations + map config
+  // Build map nodes from DB situations + persona-specific map config
+  const mapSituations = persona ? getMapSituations(persona.slug) : getMapSituations("tourist");
   const situationBySlug = new Map(situations.map((s) => [s.slug, s]));
 
   // Pre-compute completed slugs so variation counts are accurate
-  const completedSlugs: string[] = MAP_SITUATIONS
+  const completedSlugs: string[] = mapSituations
     .filter((config) => situationBySlug.get(config.slug)?.progress?.status === "completed")
     .map((config) => config.slug);
 
-  const positions = buildNodePositions();
-  const connections = buildConnections();
+  const positions = buildNodePositions(mapSituations.length);
+  const connections = buildConnections(mapSituations);
 
-  const mapNodes: MapNode[] = MAP_SITUATIONS.map((config, i) => {
+  // D-Day pace
+  const dailyPace = getDailyPace(departureDate, mapSituations.length, completedSlugs.length);
+
+  const mapNodes: MapNode[] = mapSituations.map((config, i) => {
     const sit = situationBySlug.get(config.slug);
     const progress = sit?.progress;
 
@@ -376,12 +384,27 @@ export default function HomeScreen({ navigation }: Props) {
           <View>
             <Text style={styles.greeting}>
               {streakCount > 0
-                ? `도쿄 여행 ${streakCount}일차!`
-                : "도쿄 여행을 시작해요"}
+                ? `${destination ? DESTINATION_LABELS[destination] : "도쿄"} 여행 ${streakCount}일차!`
+                : `${destination ? DESTINATION_LABELS[destination] : "도쿄"} 여행을 시작해요`}
             </Text>
-            <Text style={styles.personaLabel}>
-              {persona?.icon} {persona?.name_ko}
-            </Text>
+            <View style={styles.headerSub}>
+              <Text style={styles.personaLabel}>
+                {persona?.icon} {persona?.name_ko}
+              </Text>
+              {departureDate && (() => {
+                const now = new Date();
+                const todayMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                const dep = new Date(departureDate);
+                const depMidnight = new Date(dep.getFullYear(), dep.getMonth(), dep.getDate());
+                const daysLeft = Math.round((depMidnight.getTime() - todayMidnight.getTime()) / (1000 * 60 * 60 * 24));
+                if (daysLeft < 0) return null;
+                return (
+                  <View style={styles.ddayBadge}>
+                    <Text style={styles.ddayText}>D-{daysLeft}</Text>
+                  </View>
+                );
+              })()}
+            </View>
           </View>
           <TouchableOpacity
             style={styles.settingsButton}
@@ -396,6 +419,16 @@ export default function HomeScreen({ navigation }: Props) {
 
         {/* Ability Statement */}
         <AbilityStatement completedSlugs={completedSlugs} />
+
+        {/* D-Day Pace */}
+        {dailyPace !== null && dailyPace > 0 && (
+          <View style={styles.paceCard}>
+            <MaterialIcons name="schedule" size={18} color={colors.primary} />
+            <Text style={styles.paceText}>
+              출발까지 하루 {dailyPace}곳 페이스로 준비하면 딱이에요
+            </Text>
+          </View>
+        )}
 
         {/* Today's Recommendation */}
         {recommendedSituation && (
@@ -483,13 +516,45 @@ const styles = StyleSheet.create({
     color: colors.textDark,
     letterSpacing: -0.3,
   },
+  headerSub: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    marginTop: 4,
+  },
   personaLabel: {
     fontSize: 15,
     color: colors.textMuted,
-    marginTop: 4,
+  },
+  ddayBadge: {
+    backgroundColor: colors.primary,
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 2,
+  },
+  ddayText: {
+    fontSize: 13,
+    fontWeight: "700",
+    color: "#fff",
   },
   settingsButton: {
     padding: 8,
+  },
+  paceCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    marginHorizontal: 20,
+    marginTop: 12,
+    padding: 12,
+    backgroundColor: colors.primaryLight,
+    borderRadius: 10,
+  },
+  paceText: {
+    fontSize: 13,
+    fontWeight: "500",
+    color: colors.primary,
+    flex: 1,
   },
   recommendCard: {
     flexDirection: "row",

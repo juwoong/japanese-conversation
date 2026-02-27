@@ -117,6 +117,7 @@ async function callNpcEdgeFunction(params: {
   situation: string;
   nextNpcLine?: string;
   errorHistory: { text: string; type: string }[];
+  personaSlug?: string;
 }): Promise<{
   npcText: string;
   feedbackType: FeedbackType;
@@ -131,6 +132,7 @@ async function callNpcEdgeFunction(params: {
         situation: params.situation,
         nextNpcLine: params.nextNpcLine,
         errorHistory: params.errorHistory,
+        personaSlug: params.personaSlug,
       },
     });
 
@@ -169,6 +171,7 @@ export async function generateNpcResponse(params: {
   turnNumber: number;
   nextNpcLine?: string;
   totalTurns?: number;
+  personaSlug?: string;
 }): Promise<NpcResponse> {
   const {
     situation,
@@ -178,6 +181,7 @@ export async function generateNpcResponse(params: {
     turnNumber,
     nextNpcLine,
     totalTurns = 10,
+    personaSlug,
   } = params;
 
   const shouldEnd = turnNumber >= Math.min(totalTurns - 1, 7);
@@ -198,6 +202,7 @@ export async function generateNpcResponse(params: {
     situation,
     nextNpcLine,
     errorHistory,
+    personaSlug,
   });
 
   if (apiResult) {

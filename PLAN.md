@@ -7,21 +7,18 @@
 
 ## 다음 세션
 
-**Phase 4-branch 완료. 대화 분기 다양화 구현됨.**
+**Phase 4b 온보딩 고도화 완료.**
 
 재개에 필요한 맥락:
-- Phase 1, 2, 3 전체 완료
-- Phase 4-branch: Depth-1 Reconvergence 분기 시스템 구현 완료
-  - 3개 시나리오 (cafe, restaurant, convenience_store)에 분기 추가
-  - EngagePhase에서 분기 선택 → NPC 반응 → 합류 동작
-  - ReviewPhase에서 "다른 표현도 있어요" 힌트
-  - DB migration: `005_line_branches.sql` (아직 적용 안됨, 적용 필요)
-  - import 스크립트에 branches 필드 지원 추가
-- 다음: DB migration 적용 + import 재실행 → 실기기 E2E 테스트 → Phase 4 온보딩 고도화
+- Phase 1, 2, 3, 4a, 4b 전체 완료
+- 미적용 DB migration 2개:
+  - `005_line_branches.sql` (branches JSONB)
+  - `006_onboarding_fields.sql` (destination, departure_date, onboarding_completed)
+- 다음: DB migration 적용 + import 재실행 → 실기기 E2E 테스트 → Phase 5 또는 목적지별 특화 시나리오
 
 ---
 
-## 현재 상태 (2026-02-22)
+## 현재 상태 (2026-02-27)
 
 ### 완료
 
@@ -42,6 +39,7 @@
 - [x] 어휘 JLPT 태깅 파이프라인 (731단어, N5 349 / N4 117)
 - [x] VocabularyScreen UI 개편 (FuriganaText, 배지, 검색, 필터)
 - [x] 대화 분기 시스템 (Depth-1 Reconvergence, 3개 시나리오 MVP)
+- [x] 온보딩 고도화 (페르소나+목적지+출발일 선택, D-Day 페이스, 경어/반말 자동 분기)
 
 ---
 
@@ -106,11 +104,12 @@
 
 > "방문 목적과 목적지를 입력하면 개인 페르소나가 설정된다"
 
-- [ ] 온보딩 확장: 목적지 선택 (오사카/도쿄/후쿠오카 등)
-- [ ] 출발일 → D-Day 기반 학습 일정 자동 생성
-- [ ] 페르소나별 상황 우선순위 (출장자: 비즈니스 먼저, 여행자: 식당/교통 먼저)
-- [ ] 경어체/반말체 자동 분기 (비즈니스 → 경어, 여행/워홀 → 반말)
-- [ ] 목적지별 특화 시나리오 (오사카 타코야키, 교토 신사 등)
+- [x] 온보딩 확장: 6스텝 (인트로→목적→목적지→출발일→발음→완료)
+- [x] DB migration: profiles에 destination, departure_date 추가
+- [x] 출발일 → D-Day 기반 학습 페이스 배너 (하루 N곳 추천)
+- [x] 페르소나별 상황 우선순위 (tourist 7곳/business 7곳/WH 8곳 동적 맵)
+- [x] 경어체/반말체 자동 분기 (personaSlug → Edge Function 톤 규칙 분기)
+- [ ] 목적지별 특화 시나리오 (오사카 타코야키, 교토 신사 등) — 별도 콘텐츠 생성 필요
 
 ---
 

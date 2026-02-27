@@ -141,6 +141,7 @@ export default function SessionScreen({ navigation, route }: Props) {
             modelDialogue={fourPhase.modelDialogue}
             inputMode={fourPhase.inputMode}
             visitCount={fourPhase.visitCount}
+            personaSlug={fourPhase.personaSlug}
             onComplete={(perf) => {
               setEngagePerformance(perf);
               // SRS 자동 grading (비동기, UI 블로킹 안 함)

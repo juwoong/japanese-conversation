@@ -53,6 +53,7 @@ interface EngagePhaseProps {
   modelDialogue: ModelLine[];
   inputMode: SessionMode;
   visitCount: number;
+  personaSlug?: string;
   onComplete: (performance: EngagePerformance) => void;
 }
 
@@ -151,6 +152,7 @@ export default function EngagePhase({
   modelDialogue,
   inputMode,
   visitCount,
+  personaSlug,
   onComplete,
 }: EngagePhaseProps) {
   const [turnIndex, setTurnIndex] = useState(0);
@@ -382,6 +384,7 @@ export default function EngagePhase({
         turnNumber: turnIndex,
         nextNpcLine: findNextNpcLine(),
         totalTurns,
+        personaSlug,
       });
 
       // Update turn record with actual feedback type

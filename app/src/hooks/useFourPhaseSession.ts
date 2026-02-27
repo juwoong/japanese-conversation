@@ -5,9 +5,10 @@
  * Wraps useSession and adds phase management on top.
  */
 
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useEffect } from "react";
 import { useSession } from "./useSession";
 import { getVariationData } from "../lib/variationEngine";
+import { supabase } from "../lib/supabase";
 import type { SessionPhase, SessionMode, ModelLine, KeyExpression, Line } from "../types";
 
 interface FourPhaseState {
@@ -34,6 +35,9 @@ interface UseFourPhaseSessionReturn {
   inputMode: SessionMode;
   visitCount: number;
 
+  // Persona
+  personaSlug: string;
+
   // Variation
   variationInfo: VariationInfo | null;
 
@@ -54,6 +58,22 @@ export function useFourPhaseSession(
   variationSlug?: string,
 ): UseFourPhaseSessionReturn {
   const session = useSession(situationId);
+
+  // 페르소나 슬러그 — 경어/반말 톤 분기용
+  const [personaSlug, setPersonaSlug] = useState<string>("tourist");
+
+  useEffect(() => {
+    if (session.situation?.persona_id) {
+      supabase
+        .from("personas")
+        .select("slug")
+        .eq("id", session.situation.persona_id)
+        .single()
+        .then(({ data }) => {
+          if (data?.slug) setPersonaSlug(data.slug);
+        });
+    }
+  }, [session.situation?.persona_id]);
 
   // 변주 시나리오 메타데이터
   // TODO: 현재 MVP는 메타데이터 오버레이만 — Watch/Engage는 base 대화 그대로 재생.
@@ -151,6 +171,7 @@ export function useFourPhaseSession(
     phase: state.phase,
     inputMode: state.inputMode,
     visitCount: state.visitCount,
+    personaSlug,
     variationInfo,
     modelDialogue,
     keyExpressions,
